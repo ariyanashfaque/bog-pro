@@ -1,0 +1,7 @@
+{
+  "name": "bog-pro",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
