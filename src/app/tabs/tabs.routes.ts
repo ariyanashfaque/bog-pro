@@ -1,36 +1,42 @@
-import { Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
+import { Routes } from "@angular/router";
+import { TabsPage } from "./tabs.page";
 
 export const routes: Routes = [
   {
-    path: 'tabs',
+    path: "",
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadComponent: () =>
-          import('../tab1/tab1.page').then((m) => m.Tab1Page),
+        path: "",
+        pathMatch: "full",
+        redirectTo: "/dashboard",
       },
       {
-        path: 'tab2',
+        path: "dashboard",
         loadComponent: () =>
-          import('../tab2/tab2.page').then((m) => m.Tab2Page),
+          import("../pages/dashboard/dashboard.page").then(
+            (page) => page.DashboardPage
+          ),
       },
       {
-        path: 'tab3',
+        path: "map-view",
         loadComponent: () =>
-          import('../tab3/tab3.page').then((m) => m.Tab3Page),
+          import("../pages/map-view/map-view.page").then(
+            (page) => page.MapViewPage
+          ),
       },
       {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full',
+        path: "asset-register",
+        loadComponent: () =>
+          import("../pages/asset-register/asset-register.page").then(
+            (page) => page.AssetRegisterPage
+          ),
       },
     ],
   },
   {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full',
+    path: "",
+    pathMatch: "full",
+    redirectTo: "/dashboard",
   },
 ];

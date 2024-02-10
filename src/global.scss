@@ -1,26 +1,64 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
 
-/* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/display.css";
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/flex-utils.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+
+@font-face {
+  font-weight: 300;
+  font-style: normal;
+  font-family: "Gotham Light";
+  src: url("./assets/fonts/woff2/Gotham-Light_Web.woff2") format("woff2"),
+    url("./assets/fonts/woff/Gotham-Light_Web.woff") format("woff");
+}
+
+@font-face {
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Gotham Book";
+  src: url("./assets/fonts/woff2/Gotham-Book_Web.woff2") format("woff2"),
+    url("./assets/fonts/woff/Gotham-Book_Web.woff") format("woff");
+}
+
+@font-face {
+  font-weight: 500;
+  font-style: normal;
+  font-family: "Gotham Medium";
+  src: url("./assets/fonts/woff2/Gotham-Medium_Web.woff2") format("woff2"),
+    url("./assets/fonts/woff/Gotham-Medium_Web.woff") format("woff");
+}
+
+@font-face {
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Gotham Bold";
+  src: url("./assets/fonts/woff2/Gotham-Bold_Web.woff2") format("woff2"),
+    url("./assets/fonts/woff/Gotham-Bold_Web.woff") format("woff");
+}
+
+* {
+  font-family: "Gotham Book";
+  --ion-font-family: "Gotham Book";
+}
+
+.ion-color-background {
+  --ion-color-base: var(--ion-color-background);
+  --ion-color-tint: var(--ion-color-background-tint);
+  --ion-color-shade: var(--ion-color-background-shade);
+  --ion-color-base-rgb: var(--ion-color-background-rgb);
+  --ion-color-contrast: var(--ion-color-background-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-background-contrast-rgb);
+}

@@ -31,8 +31,10 @@
                 "output": "assets"
               }
             ],
+            "scripts": [],
+            "optimization": { "styles": { "inlineCritical": false } },
             "styles": ["src/theme/variables.scss", "src/global.scss"],
-            "scripts": []
+            "allowedCommonJsDependencies": ["localforage", "rxjs-compat"]
           },
           "configurations": {
             "production": {
@@ -78,9 +80,6 @@
             },
             "development": {
               "buildTarget": "app:build:development"
-            },
-            "ci": {
-              "progress": false
             }
           },
           "defaultConfiguration": "development"
