@@ -43,8 +43,8 @@
                 @for (plant of plants; track $index) {
                   <ion-col size="12" sizeMd="6" sizeLg="6">
                     <app-plant-card
-                      routerLink="/asset-register/asset-mapped"
                       (isMenuToggleOpen)="handleErrorModal($event)"
+                      [routerLink]="['/asset-register/asset-mapped', plant.id]"
                     >
                     </app-plant-card>
                   </ion-col>

@@ -27,7 +27,7 @@ import { Input, OnInit, Component } from "@angular/core";
 export class HeaderComponent implements OnInit {
   @Input() headerTitle: string = "";
   @Input() showIcons: boolean = true;
-  @Input() isDefaultHref: boolean = false;
+  @Input() isDefaultHref: boolean = true;
 
   constructor() {}
 
