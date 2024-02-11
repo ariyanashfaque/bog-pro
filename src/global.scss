@@ -1,3 +1,5 @@
+@use "node_modules/@ngneat/hot-toast/src/styles/styles.scss";
+
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
@@ -21,7 +23,8 @@
   font-weight: 300;
   font-style: normal;
   font-family: "Gotham Light";
-  src: url("./assets/fonts/woff2/Gotham-Light_Web.woff2") format("woff2"),
+  src:
+    url("./assets/fonts/woff2/Gotham-Light_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Light_Web.woff") format("woff");
 }
 
@@ -29,7 +32,8 @@
   font-weight: 400;
   font-style: normal;
   font-family: "Gotham Book";
-  src: url("./assets/fonts/woff2/Gotham-Book_Web.woff2") format("woff2"),
+  src:
+    url("./assets/fonts/woff2/Gotham-Book_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Book_Web.woff") format("woff");
 }
 
@@ -37,7 +41,8 @@
   font-weight: 500;
   font-style: normal;
   font-family: "Gotham Medium";
-  src: url("./assets/fonts/woff2/Gotham-Medium_Web.woff2") format("woff2"),
+  src:
+    url("./assets/fonts/woff2/Gotham-Medium_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Medium_Web.woff") format("woff");
 }
 
@@ -45,7 +50,8 @@
   font-weight: 700;
   font-style: normal;
   font-family: "Gotham Bold";
-  src: url("./assets/fonts/woff2/Gotham-Bold_Web.woff2") format("woff2"),
+  src:
+    url("./assets/fonts/woff2/Gotham-Bold_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Bold_Web.woff") format("woff");
 }
 

@@ -29,7 +29,7 @@
     "@ionic/angular": "^7.5.0",
     "@ionic/storage-angular": "^4.0.0",
     "@ngneat/hot-toast": "^6.1.0",
-    "@ngneat/overview": "^5.1.1",
+    "@ngneat/overview": "5.1.1",
     "@ngrx/store": "^17.1.0",
     "@ngrx/store-devtools": "^17.1.0",
     "ionicons": "^7.2.1",
@@ -65,6 +65,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.4.35",
+    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
     "typescript": "~5.2.2"
   },

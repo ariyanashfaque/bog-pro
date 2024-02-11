@@ -25,7 +25,7 @@
                 <ion-col size="12" sizeMd="6" sizeLg="6">
                   <ion-select
                     fill="outline"
-                    label="Selet Unit"
+                    label="Select Unit"
                     [multiple]="true"
                     label-placement="floating"
                   >
@@ -39,11 +39,33 @@
           </div>
           <ion-grid>
             <ion-row>
-              @for (plant of plants; track $index) {
-              <ion-col size="12" sizeMd="6" sizeLg="6">
-                <app-plant-card (isMenuToggleOpen)="handleErrorModal($event)">
-                </app-plant-card>
-              </ion-col>
+              @defer (when !isLoading()) {
+                @for (plant of plants; track $index) {
+                  <ion-col size="12" sizeMd="6" sizeLg="6">
+                    <app-plant-card
+                      routerLink="/asset-register/asset-mapped"
+                      (isMenuToggleOpen)="handleErrorModal($event)"
+                    >
+                    </app-plant-card>
+                  </ion-col>
+                } @empty {
+                  @if (!isLoading()) {
+                    <ion-col size="12">
+                      <div
+                        class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+                      >
+                        <h3 class="text-center">No plants found</h3>
+                      </div>
+                    </ion-col>
+                  }
+                }
+              } @placeholder {
+                <ion-col size="12" sizeMd="6" sizeLg="6">
+                  <app-loading-skeleton></app-loading-skeleton>
+                </ion-col>
+                <ion-col size="12" sizeMd="6" sizeLg="6">
+                  <app-loading-skeleton></app-loading-skeleton>
+                </ion-col>
               }
             </ion-row>
           </ion-grid>

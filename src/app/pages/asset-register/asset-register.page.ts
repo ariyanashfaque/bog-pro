@@ -1,10 +1,18 @@
 import {
+  OnInit,
+  inject,
+  signal,
+  Component,
+  WritableSignal,
+} from "@angular/core";
+import {
   IonRow,
   IonCol,
   IonGrid,
   IonItem,
   IonList,
   IonAlert,
+  IonLabel,
   IonSelect,
   IonAvatar,
   IonContent,
@@ -13,17 +21,19 @@ import {
   IonSkeletonText,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
+import { RouterModule } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnInit, inject } from "@angular/core";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
+import { ADD_PLANTS, UPDATE_PLANT } from "src/app/store/actions/plant.action";
 import { PlantsModel, PlantsResponse } from "src/app/store/models/plant.model";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { PlantCardComponent } from "src/app/components/plant-card/plant-card.component";
-import { ADD_PLANTS, UPDATE_PLANT } from "src/app/store/actions/plant.action";
+import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 
 @Component({
   imports: [
+    IonLabel,
     IonCol,
     IonRow,
     IonList,
@@ -34,10 +44,12 @@ import { ADD_PLANTS, UPDATE_PLANT } from "src/app/store/actions/plant.action";
     IonSelect,
     IonLoading,
     IonContent,
+    RouterModule,
     IonSkeletonText,
     HeaderComponent,
     IonSelectOption,
     PlantCardComponent,
+    LoadingSkeletonComponent,
   ],
   standalone: true,
   selector: "app-asset-register",
@@ -50,6 +62,7 @@ export class AssetRegisterPage implements OnInit {
   toastService = inject(ToastService);
 
   plants: PlantsModel[];
+  isLoading: WritableSignal<boolean> = signal(false);
 
   constructor() {
     this.plants = [];
@@ -68,22 +81,17 @@ export class AssetRegisterPage implements OnInit {
   handleErrorModal = (event: any) => {};
 
   GetAllPlants = async () => {
+    this.isLoading.set(true);
     this.httpService.GetAllPlants().subscribe({
       next: (response: PlantsResponse) => {
         this.store.dispatch(ADD_PLANTS(response?.data?.plants));
       },
       error: (error: HttpErrorResponse) => {
-        this.toastService.toastFailed(error.error.message);
+        this.isLoading.set(false);
+        this.toastService.toastFailed("error.error.message");
       },
       complete: () => {
-        console.log("Completed");
-
-        this.store.dispatch(
-          UPDATE_PLANT({
-            id: "PLANT00001",
-            createdBy: "uttam.roy.ext@holcim.com",
-          })
-        );
+        this.isLoading.set(false);
       },
     });
   };

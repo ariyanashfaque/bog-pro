@@ -15,24 +15,24 @@ export const routes: Routes = [
         path: "dashboard",
         loadComponent: () =>
           import("../pages/dashboard/dashboard.page").then(
-            (page) => page.DashboardPage
+            (page) => page.DashboardPage,
           ),
       },
       {
         path: "map-view",
         loadComponent: () =>
           import("../pages/map-view/map-view.page").then(
-            (page) => page.MapViewPage
-          ),
-      },
-      {
-        path: "asset-register",
-        loadComponent: () =>
-          import("../pages/asset-register/asset-register.page").then(
-            (page) => page.AssetRegisterPage
+            (page) => page.MapViewPage,
           ),
       },
     ],
+  },
+  {
+    path: "asset-register",
+    loadChildren: () =>
+      import("../pages/asset-register/asset-register.routes").then(
+        (route) => route.routes,
+      ),
   },
   {
     path: "",
