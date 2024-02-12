@@ -1,5 +1,3 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { PlantsModel } from "src/app/store/models/plant.model";
 import {
   IonCol,
   IonRow,
@@ -7,6 +5,8 @@ import {
   IonIcon,
   IonButton,
 } from "@ionic/angular/standalone";
+import { Component, Input, OnInit } from "@angular/core";
+import { PlantsModel } from "src/app/store/models/plant.model";
 
 @Component({
   standalone: true,
@@ -21,8 +21,6 @@ export class PlantCardComponent implements OnInit {
   constructor() {
     this.plant = {};
   }
-  ngOnInit() {
-    console.log(this.plant);
-  }
+  ngOnInit() {}
   handleMenuToggle = () => {};
 }
