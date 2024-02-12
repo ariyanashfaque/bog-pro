@@ -27,10 +27,22 @@ export const routes: Routes = [
       },
       {
         path: "asset-register",
-        loadChildren: () =>
-          import("../pages/asset-register/asset-register.routes").then(
-            (route) => route.routes,
-          ),
+        children: [
+          {
+            path: "",
+            loadComponent: () =>
+              import("../pages/asset-register/asset-register.page").then(
+                (page) => page.AssetRegisterPage,
+              ),
+          },
+          {
+            path: "asset-mapped/:id",
+            loadComponent: () =>
+              import(
+                "../pages/asset-register/asset-mapped/asset-mapped.page"
+              ).then((page) => page.AssetMappedPage),
+          },
+        ],
       },
     ],
   },
