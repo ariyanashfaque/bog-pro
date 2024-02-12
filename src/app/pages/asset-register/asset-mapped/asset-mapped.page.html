@@ -8,7 +8,11 @@
           class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
         >
           <ion-label>Assets</ion-label>
-          <app-asset-mapped-accordion></app-asset-mapped-accordion>
+          @defer (when !isLoading()) {
+            @for (asset of assets; track $index) {
+              <app-asset-mapped-accordion></app-asset-mapped-accordion>
+            }
+          }
         </div>
       </ion-col>
     </ion-row>

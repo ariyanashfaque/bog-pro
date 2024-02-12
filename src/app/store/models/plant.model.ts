@@ -100,6 +100,7 @@ interface AssetInfoModel {
 
 // * Asset Model * //
 export interface AssetsModel {
+data: AssetsModel;
   id?: string;
   assetInfo?: AssetInfoModel;
   assetSource?: AssetSourceModel;

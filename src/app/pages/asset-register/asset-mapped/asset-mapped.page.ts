@@ -71,5 +71,7 @@ export class AssetMappedPage implements OnInit {
     this.assets = [];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.assets);
+  }
 }

@@ -6,7 +6,9 @@ import {
   IonCardContent,
   IonAccordionGroup,
 } from "@ionic/angular/standalone";
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
+import { AssetMappedCardComponent } from "../asset-mapped-card/asset-mapped-card.component";
+import { AssetsModel } from "src/app/store/models/plant.model";
 
 @Component({
   imports: [
@@ -16,6 +18,7 @@ import { Component, OnInit } from "@angular/core";
     IonAccordion,
     IonCardContent,
     IonAccordionGroup,
+    AssetMappedCardComponent,
   ],
   standalone: true,
   selector: "app-asset-mapped-accordion",
@@ -23,7 +26,12 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./asset-mapped-accordion.component.scss"],
 })
 export class AssetMappedAccordionComponent implements OnInit {
-  constructor() {}
+  @Input() asset: AssetsModel[];
 
-  ngOnInit() {}
+  constructor() {
+    this.asset = [];
+  }
+  ngOnInit() {
+    console.log(this.asset);
+  }
 }
