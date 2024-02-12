@@ -7,7 +7,7 @@ export const routes: Routes = [
     component: AssetRegisterPage,
   },
   {
-    path: "asset-mapped",
+    path: "asset-mapped/:id",
     loadComponent: () =>
       import("./asset-mapped/asset-mapped.page").then(
         (page) => page.AssetMappedPage,

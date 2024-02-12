@@ -25,14 +25,14 @@ export const routes: Routes = [
             (page) => page.MapViewPage,
           ),
       },
+      {
+        path: "asset-register",
+        loadChildren: () =>
+          import("../pages/asset-register/asset-register.routes").then(
+            (route) => route.routes,
+          ),
+      },
     ],
-  },
-  {
-    path: "asset-register",
-    loadChildren: () =>
-      import("../pages/asset-register/asset-register.routes").then(
-        (route) => route.routes,
-      ),
   },
   {
     path: "",

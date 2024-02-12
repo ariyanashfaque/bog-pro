@@ -88,7 +88,7 @@ export class AssetRegisterPage implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);
-        this.toastService.toastFailed("error.error.message");
+        this.toastService.toastFailed(error.error.message);
       },
       complete: () => {
         this.isLoading.set(false);
