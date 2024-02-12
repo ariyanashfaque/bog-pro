@@ -5,7 +5,14 @@ import {
   IonIcon,
   IonButton,
 } from "@ionic/angular/standalone";
-import { Component, Input, OnInit, input } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  WritableSignal,
+  input,
+  signal,
+} from "@angular/core";
 import { PlantsModel } from "src/app/store/models/plant.model";
 import { DatePipe } from "@angular/common";
 
@@ -18,7 +25,12 @@ import { DatePipe } from "@angular/common";
 })
 export class PlantCardComponent implements OnInit {
   @Input() plant: PlantsModel;
-  assetValues: any[] = [];
+
+  isApprovedAssets: boolean = false;
+  isRejectedAssets: boolean = false;
+  isMappedAssets: boolean = false;
+
+  // isAssetZero: boolean = false;
 
   constructor() {
     this.plant = {};
@@ -27,8 +39,16 @@ export class PlantCardComponent implements OnInit {
   ngOnInit() {
     console.log(this.plant);
 
+    if (this.plant.totalApprovedAssets != 0) {
+      this.isApprovedAssets = true;
+    }
+
+    if (this.plant.totalRejectedAssets != 0) {
+      this.isRejectedAssets = true;
+    }
+
     if (this.plant.totalMappedAssets != 0) {
-      console.log(this.plant.totalMappedAssets);
+      this.isMappedAssets = true;
     }
 
     // this.plant.values.forEach((i: any) => {
