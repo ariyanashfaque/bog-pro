@@ -13,6 +13,7 @@
       </div>
     </div>
     <div>
+      <!-- Plant Name part -->
       <div class="flex justify-between px-2">
         <ion-grid>
           <ion-row>
@@ -24,47 +25,53 @@
               <p
                 class="font-bold text-[14px] md:text-[14px] lg:text-[16px] text-wrap"
               >
-                5701 Mt Keith Debottlenecking con...
+                {{ plant.plantName }}
               </p>
             </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
+      <!-- createdAt part -->
       <div class="flex justify-between px-2">
         <ion-grid class="dashborderColor border-t-[1.5px] border-dashed">
           <ion-row>
-            <ion-col size="7" class="sideborder border-r"
-              ><div>
+            <ion-col size="7" class="sideborder border-r">
+              <div>
                 <p class="text-[12px]">Created by</p>
                 <p class="font-bold text-[14px]">
-                  {{ "john.doe.ext@holcim.com" }}
+                  {{ plant.createdBy }}
                 </p>
-              </div></ion-col
-            >
+              </div>
+            </ion-col>
             <ion-col size="5">
               <div class="ml-2">
                 <p class="text-[12px]">Last modified date</p>
-                <p class="font-bold text-[14px]">14 Mar 2023</p>
-              </div></ion-col
-            >
+                <p class="font-bold text-[14px]">
+                  {{ plant.createdAt }}
+                </p>
+              </div>
+            </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
+      <!-- Mapped Assets part -->
+
+      @defer (when isMappedAssets) {}
       <div class="customcolor flex justify-between px-2">
         <ion-grid>
           <ion-row>
-            <ion-col size="10"
-              ><div>
+            <ion-col size="10">
+              <div>
                 <p class="text-[16px]" style="color: #007382">
                   Total Number of assets Mapped
                 </p>
                 <p class="font-bold text-[12px]">
-                  Asset rejected by approver(3)
+                  Asset rejected by approver({{ plant.totalRejectedAssets }})
                 </p>
-              </div></ion-col
-            >
+              </div>
+            </ion-col>
             <ion-col class="flex justify-center" size="2">
               <ion-button
                 style="color: #007382"
@@ -73,8 +80,8 @@
                 class="md:w-16 w-12 h-10 border-2 dashborderColor bg-white rounded-full"
               >
                 <div class="flex">
-                  <p>6</p>
-                  <ion-icon name="chevron-down-outline"></ion-icon>
+                  <p>{{ plant.totalMappedAssets }}</p>
+                  <ion-icon name="chevron-down-outline"> </ion-icon>
                 </div>
               </ion-button>
             </ion-col>
@@ -82,60 +89,67 @@
         </ion-grid>
       </div>
 
-      <div class="customcolor redBg flex justify-between px-2">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="10"
-              ><div>
-                <p class="mt-3 font-bold text-[16px] text-red-800">
-                  Fix all the errors for this plant
-                </p>
-              </div></ion-col
-            >
-            <ion-col class="flex justify-center" size="2">
-              <ion-button
-                fill="clear"
-                shape="round"
-                color="danger"
-                (click)="handleMenuToggle()"
-                class="md:w-16 w-12 h-10 border-2 borderRed rounded-full"
-              >
-                <div class="flex">
-                  <p>3</p>
-                  <ion-icon name="chevron-down-outline"></ion-icon>
+      <!-- Error Assets part -->
+      @defer (when isRejectedAssets) {
+        <div class="customcolor redBg flex justify-between px-2">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="10">
+                <div>
+                  <p class="mt-3 font-bold text-[16px] text-red-800">
+                    Fix all the errors for this plant
+                  </p>
                 </div>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
+              </ion-col>
+              <ion-col class="flex justify-center" size="2">
+                <ion-button
+                  fill="clear"
+                  shape="round"
+                  color="danger"
+                  (click)="handleMenuToggle()"
+                  class="md:w-16 w-12 h-10 border-2 borderRed rounded-full"
+                >
+                  <div class="flex">
+                    <p>{{ plant.totalRejectedAssets }}</p>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                  </div>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      }
 
-      <div class="customcolor bgcolor flex justify-between px-2">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="10"
-              ><div>
-                <p class="text-[16px]" style="color: #007382">
-                  Zero asset mapped in this plant
-                </p>
-                <p class="font-bold text-[12px]">
-                  Click on the map to add asset
-                </p>
-              </div></ion-col
-            >
-            <ion-col class="flex justify-center" size="2">
-              <ion-button
-                shape="round"
-                fill="clear"
-                color="secondary"
-                class="md:w-16 w-12 h-10 border-2 dashborderColor bg-white rounded-full text-[10px]"
-              >
-                <p class="">map</p>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
+      <!-- Zero asset Mapped part -->
+
+      @defer (when isMappedAssets) {
+        <div class="customcolor bgcolor flex justify-between px-2">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="10">
+                <div>
+                  <p class="text-[16px]" style="color: #007382">
+                    Zero asset mapped in this plant
+                  </p>
+                  <p class="font-bold text-[12px]">
+                    Click on the map to add asset
+                  </p>
+                </div>
+              </ion-col>
+              <ion-col class="flex justify-center" size="2">
+                <ion-button
+                  shape="round"
+                  fill="clear"
+                  color="secondary"
+                  class="md:w-16 w-12 h-10 border-2 dashborderColor bg-white rounded-full text-[10px]"
+                >
+                  <p class="">map</p>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      }
     </div>
   </div>
 </div>
