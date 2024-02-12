@@ -23,9 +23,9 @@ import {
 import { Store } from "@ngrx/store";
 import { RouterModule } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
+import { ADD_PLANT, ADD_PLANTS } from "src/app/store/actions/plant.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
-import { ADD_PLANTS, UPDATE_PLANT } from "src/app/store/actions/plant.action";
 import { PlantsModel, PlantsResponse } from "src/app/store/models/plant.model";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { PlantCardComponent } from "src/app/components/plant-card/plant-card.component";
@@ -94,5 +94,9 @@ export class AssetRegisterPage implements OnInit {
         this.isLoading.set(false);
       },
     });
+  };
+
+  handlePlantStore = (plant: PlantsModel) => {
+    this.store.dispatch(ADD_PLANT(plant));
   };
 }

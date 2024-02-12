@@ -16,12 +16,18 @@ import {
   IonCardTitle,
   IonCardHeader,
 } from "@ionic/angular/standalone";
+import {
+  AssetsModel,
+  PlantsModel,
+  AssetsResponse,
+} from "src/app/store/models/plant.model";
 import { Store } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
-import { AssetsModel } from "src/app/store/models/plant.model";
+import { UPDATE_PLANT } from "src/app/store/actions/plant.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
+import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedAccordionComponent } from "src/app/components/asset-mapped-accordion/asset-mapped-accordion.component";
 
 @Component({
@@ -35,6 +41,7 @@ import { AssetMappedAccordionComponent } from "src/app/components/asset-mapped-a
     IonCardTitle,
     IonCardHeader,
     HeaderComponent,
+    LoadingSkeletonComponent,
     AssetMappedAccordionComponent,
   ],
   standalone: true,
@@ -54,8 +61,12 @@ export class AssetMappedPage implements OnInit {
   set id(plantId: string) {
     this.isLoading.set(true);
     this.httpService.GetAllAssets({ plantId }).subscribe({
-      next: (response) => {
-        console.log(response);
+      next: (response: AssetsResponse) => {
+        this.store.dispatch(
+          UPDATE_PLANT({
+            assets: response?.data,
+          }),
+        );
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);
@@ -72,6 +83,10 @@ export class AssetMappedPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.assets);
+    this.store.select("plant").subscribe({
+      next: (plant: PlantsModel) => {
+        if (plant?.assets) this.assets = plant.assets;
+      },
+    });
   }
 }

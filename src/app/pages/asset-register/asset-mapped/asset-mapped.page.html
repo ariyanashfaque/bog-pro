@@ -8,11 +8,32 @@
           class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
         >
           <ion-label>Assets</ion-label>
-          <!-- @defer (when !isLoading()) {
-            @for (asset of assets; track $index) { -->
-          <app-asset-mapped-accordion></app-asset-mapped-accordion>
-          <!-- }
-          } -->
+          @defer (when !isLoading()) {
+            @for (asset of assets; track $index) {
+              <ion-col size="12" sizeMd="6" sizeLg="6">
+                <app-asset-mapped-accordion
+                  [asset]="asset"
+                ></app-asset-mapped-accordion>
+              </ion-col>
+            } @empty {
+              @if (!isLoading()) {
+                <ion-col size="12">
+                  <div
+                    class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+                  >
+                    <h3 class="text-center">No assets found</h3>
+                  </div>
+                </ion-col>
+              }
+            }
+          } @placeholder {
+            <ion-col size="12" sizeMd="6" sizeLg="6">
+              <app-loading-skeleton></app-loading-skeleton>
+            </ion-col>
+            <ion-col size="12" sizeMd="6" sizeLg="6">
+              <app-loading-skeleton></app-loading-skeleton>
+            </ion-col>
+          }
         </div>
       </ion-col>
     </ion-row>

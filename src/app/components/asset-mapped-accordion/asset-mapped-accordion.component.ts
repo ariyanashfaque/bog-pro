@@ -26,10 +26,10 @@ import { AssetsModel } from "src/app/store/models/plant.model";
   styleUrls: ["./asset-mapped-accordion.component.scss"],
 })
 export class AssetMappedAccordionComponent implements OnInit {
-  @Input() asset: AssetsModel[];
+  @Input() asset: AssetsModel;
 
   constructor() {
-    this.asset = [];
+    this.asset = {};
   }
   ngOnInit() {
     console.log(this.asset);

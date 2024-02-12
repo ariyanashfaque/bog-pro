@@ -100,7 +100,6 @@ interface AssetInfoModel {
 
 // * Asset Model * //
 export interface AssetsModel {
-data: AssetsModel;
   id?: string;
   assetInfo?: AssetInfoModel;
   assetSource?: AssetSourceModel;
@@ -143,11 +142,14 @@ export interface CategoriesModel {
 }
 
 export interface PlantsStoreModel {
-  isLoading: boolean;
   plants: PlantsModel[];
   categories: CategoriesModel[];
 }
 export interface PlantsResponse {
   message: string;
   data: PlantsStoreModel;
+}
+export interface AssetsResponse {
+  message: string;
+  data: AssetsModel[];
 }

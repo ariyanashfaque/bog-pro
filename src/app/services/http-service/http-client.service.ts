@@ -1,8 +1,11 @@
+import {
+  AssetsResponse,
+  PlantsResponse,
+} from "src/app/store/models/plant.model";
 import { Observable } from "rxjs";
 import { ApiEndPoint } from "./endPoint";
 import { Injectable, inject } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { AssetsModel, PlantsResponse } from "src/app/store/models/plant.model";
 
 @Injectable({ providedIn: "root" })
 export class HttpService {
@@ -26,8 +29,8 @@ export class HttpService {
     return this.http.post<PlantsResponse>(ApiEndPoint.getAllPlants, data);
   };
 
-  GetAllAssets = (data?: any): Observable<AssetsModel[]> => {
-    return this.http.post<AssetsModel[]>(ApiEndPoint.getAllAssets, data);
+  GetAllAssets = (data?: any): Observable<AssetsResponse> => {
+    return this.http.post<AssetsResponse>(ApiEndPoint.getAllAssets, data);
   };
 
   AddGuidedInspection = (data?: any): Observable<any> => {
