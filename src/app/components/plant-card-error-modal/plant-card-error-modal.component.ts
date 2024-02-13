@@ -1,14 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { IonIcon, IonGrid, IonButton, IonCol, IonRow } from "@ionic/angular/standalone";
 
 @Component({
-  selector: 'app-plant-card-error-modal',
-  templateUrl: './plant-card-error-modal.component.html',
-  styleUrls: ['./plant-card-error-modal.component.scss'],
+  standalone: true,
+  imports: [IonCol, IonRow, IonButton, IonGrid, IonIcon],
+  selector: "app-plant-card-error-modal",
+  templateUrl: "./plant-card-error-modal.component.html",
+  styleUrls: ["./plant-card-error-modal.component.scss"],
 })
-export class PlantCardErrorModalComponent  implements OnInit {
+export class PlantCardErrorModalComponent implements OnInit {
 
-  constructor() { }
+  @Input() isMenuOpen: boolean = false;
+  @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
+
+  
+  constructor() {}
 
   ngOnInit() {}
 
+  menuToggle() {
+    this.isMenuOpen = !this.isMenuOpen;
+    this.isMenuToggleOpen.emit(this.isMenuOpen);
+  }
 }

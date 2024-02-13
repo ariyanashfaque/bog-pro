@@ -1,4 +1,5 @@
 import {
+  close,
   business,
   mapOutline,
   homeOutline,
@@ -23,6 +24,7 @@ import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
 export class AppComponent {
   constructor() {
     addIcons({
+      close,
       business,
       mapOutline,
       homeOutline,

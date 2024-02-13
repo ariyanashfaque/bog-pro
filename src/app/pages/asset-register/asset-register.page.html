@@ -46,7 +46,6 @@
                       [plant]="plant"
                       (click)="handlePlantStore(plant)"
                       (isMenuToggleOpen)="handleErrorModal($event)"
-                      [routerLink]="['/asset-register/asset-mapped', plant.id]"
                     >
                     </app-plant-card>
                   </ion-col>
@@ -75,4 +74,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <app-plant-card-error-modal
+    [isMenuOpen]="isMenuOpen"
+    (isMenuToggleOpen)="handleErrorModal($event)"
+  ></app-plant-card-error-modal>
 </ion-content>

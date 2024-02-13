@@ -5,7 +5,7 @@ import {
   IonIcon,
   IonButton,
 } from "@ionic/angular/standalone";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { PlantsModel } from "src/app/store/models/plant.model";
 
 @Component({
@@ -17,10 +17,15 @@ import { PlantsModel } from "src/app/store/models/plant.model";
 })
 export class PlantCardComponent implements OnInit {
   @Input() plant: PlantsModel;
+  isMenuOpen: boolean = false;
+  @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
   constructor() {
     this.plant = {};
   }
   ngOnInit() {}
-  handleMenuToggle = () => {};
+
+  handleMenuToggle = () => {
+    this.isMenuToggleOpen.emit(!this.isMenuOpen);
+  };
 }

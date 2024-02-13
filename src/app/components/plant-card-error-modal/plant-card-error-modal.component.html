@@ -1,3 +1,102 @@
-<p>
-  plant-card-error-modal works!
-</p>
+<div
+  class="custom fixed w-full bottom-[-60px] h-3/4 md:h-2/4 border border-white-200 rounded-lg shadow bg-white-800 transform transition-transform duration-800"
+  [class]="!isMenuOpen ? 'translate-y-full' : ''"
+>
+  <div
+    class="buttonBg absolute right-6 -mt-7 md:-mt-10 md:w-20 md:h-20 w-12 h-12 rounded-full"
+  >
+    <div
+      class="cursor-pointer absolute md:mt-2 md:ml-2 mt-1 ml-1 md:w-16 md:h-16 w-10 h-10 bg-black rounded-full"
+      (click)="menuToggle()"
+    >
+      <ion-icon
+        size="large"
+        class="w-full h-full fill-white"
+        name="close"
+      ></ion-icon>
+    </div>
+  </div>
+
+  <div class="mx-12 mt-8">
+    <div class="assetName font-bold text-[20px] md:text-[28px]">
+      <p>5701 MT Keith Debottlenecking Concrete Plant</p>
+    </div>
+    <div class="Showerror font-bold text-[20px] md:text-[24px]">3 errors</div>
+  </div>
+
+  <ion-grid class="mx-8">
+    <ion-row class="h-96 overflow-y-scroll">
+      <ion-col size="12">
+        <div class="modalInnerCard p-4">
+          <p class="text-red-600 font-bold md:text-[20px]">Silo 1</p>
+          <p class="md:text-[20px]">
+            industry's standard dummy text ever since the 1500s, when an unknown
+            printer took a galley of type and scrambled
+          </p>
+          <div
+            class="flex items-center shadow-red-300 shadow-sm border-2 text-red-600 text-sm border-red-300 w-[200px] h-[40px] rounded-full mt-2"
+          >
+            <div class="">
+              <ion-icon
+                class="ml-3 mt-2"
+                style="font-size: 16px"
+                name="navigate"
+              ></ion-icon>
+            </div>
+            <div class="ml-2">
+              <p class="md:text-[15px]">View asset locations</p>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+
+      <ion-col size="12">
+        <div class="modalInnerCard p-4">
+          <p class="text-red-600 font-bold md:text-[20px]">Silo 1</p>
+          <p class="md:text-[20px]">
+            industry's standard dummy text ever since the 1500s, when an unknown
+            printer took a galley of type and scrambled
+          </p>
+          <div
+            class="flex items-center shadow-red-300 shadow-sm border-2 text-red-600 text-sm border-red-300 w-[200px] h-[40px] rounded-full mt-2"
+          >
+            <div class="">
+              <ion-icon
+                class="ml-3 mt-2"
+                style="font-size: 16px"
+                name="navigate"
+              ></ion-icon>
+            </div>
+            <div class="ml-2">
+              <p class="md:text-[15px]">View asset locations</p>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+
+      <ion-col size="12">
+        <div class="modalInnerCard p-4">
+          <p class="text-red-600 font-bold md:text-[20px]">Silo 1</p>
+          <p class="md:text-[20px]">
+            industry's standard dummy text ever since the 1500s, when an unknown
+            printer took a galley of type and scrambled
+          </p>
+          <div
+            class="flex items-center shadow-red-300 shadow-sm border-2 text-red-600 text-sm border-red-300 w-[200px] h-[40px] rounded-full mt-2"
+          >
+            <div class="">
+              <ion-icon
+                class="ml-3 mt-2"
+                style="font-size: 16px"
+                name="navigate"
+              ></ion-icon>
+            </div>
+            <div class="ml-2">
+              <p class="md:text-[15px]">View asset locations</p>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

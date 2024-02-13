@@ -30,6 +30,7 @@ import { PlantsModel, PlantsResponse } from "src/app/store/models/plant.model";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { PlantCardComponent } from "src/app/components/plant-card/plant-card.component";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
+import { PlantCardErrorModalComponent } from "src/app/components/plant-card-error-modal/plant-card-error-modal.component";
 
 @Component({
   imports: [
@@ -50,6 +51,7 @@ import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/lo
     IonSelectOption,
     PlantCardComponent,
     LoadingSkeletonComponent,
+    PlantCardErrorModalComponent,
   ],
   standalone: true,
   selector: "app-asset-register",
@@ -78,7 +80,13 @@ export class AssetRegisterPage implements OnInit {
     this.GetAllPlants();
   }
 
-  handleErrorModal = (event: any) => {};
+  isMenuOpen: boolean = false;
+
+  handleErrorModal(event: any) {
+    this.isMenuOpen = event;
+    console.log(this.isMenuOpen);
+  }
+  // handleErrorModal = (event: any) => {};
 
   GetAllPlants = async () => {
     this.isLoading.set(true);
