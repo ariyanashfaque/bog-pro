@@ -93,8 +93,9 @@ export class AssetMappedPage implements OnInit {
     this.store.select("plant").subscribe({
       next: (plant: PlantsModel) => {
         if (plant?.assets) {
+          this.groupedAssets = [];
           this.assets = plant.assets;
-          let parentTypes = new Set(
+          const parentTypes = new Set(
             this.assets.map((asset) => asset?.assetInfo?.assetParentType),
           );
 
