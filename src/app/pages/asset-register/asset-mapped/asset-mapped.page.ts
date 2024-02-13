@@ -11,10 +11,13 @@ import {
   IonCol,
   IonGrid,
   IonCard,
+  IonItem,
   IonLabel,
   IonContent,
   IonCardTitle,
+  IonAccordion,
   IonCardHeader,
+  IonAccordionGroup,
 } from "@ionic/angular/standalone";
 import {
   AssetsModel,
@@ -28,21 +31,24 @@ import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
-import { AssetMappedAccordionComponent } from "src/app/components/asset-mapped-accordion/asset-mapped-accordion.component";
+import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
 
 @Component({
   imports: [
     IonCol,
     IonRow,
+    IonItem,
     IonCard,
     IonGrid,
     IonLabel,
     IonContent,
+    IonAccordion,
     IonCardTitle,
     IonCardHeader,
     HeaderComponent,
+    IonAccordionGroup,
     LoadingSkeletonComponent,
-    AssetMappedAccordionComponent,
+    AssetMappedCardComponent,
   ],
   standalone: true,
   selector: "app-asset-mapped",
@@ -56,6 +62,7 @@ export class AssetMappedPage implements OnInit {
 
   assets: AssetsModel[];
   isLoading: WritableSignal<boolean> = signal(false);
+  groupedAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
 
   @Input()
   set id(plantId: string) {
@@ -80,12 +87,27 @@ export class AssetMappedPage implements OnInit {
 
   constructor() {
     this.assets = [];
+    this.groupedAssets = [];
   }
 
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: PlantsModel) => {
-        if (plant?.assets) this.assets = plant.assets;
+        if (plant?.assets) {
+          this.assets = plant.assets;
+          let parentTypes = new Set(
+            this.assets.map((asset) => asset?.assetInfo?.assetParentType),
+          );
+
+          parentTypes.forEach((parentType) =>
+            this.groupedAssets.push({
+              assetParentType: parentType,
+              assets: this.assets.filter(
+                (asset) => asset?.assetInfo?.assetParentType === parentType,
+              ),
+            }),
+          );
+        }
       },
     });
   }

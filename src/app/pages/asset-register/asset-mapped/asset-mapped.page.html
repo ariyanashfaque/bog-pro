@@ -9,11 +9,33 @@
         >
           <ion-label>Assets</ion-label>
           @defer (when !isLoading()) {
-            @for (asset of assets; track $index) {
+            @for (groupedAsset of groupedAssets; track $index) {
               <ion-col size="12" sizeMd="6" sizeLg="6">
-                <app-asset-mapped-accordion
-                  [asset]="asset"
-                ></app-asset-mapped-accordion>
+                <ion-accordion-group>
+                  <ion-accordion value="first">
+                    <ion-item color="background" slot="header">
+                      <!-- <ion-img
+                        class="w-6 mr-2"
+                        src="../../../../../assets/icon/edit.svg"
+                        alt=""
+                      ></ion-img> -->
+                      <ion-label class="font-bold">
+                        {{ groupedAsset?.assetParentType }}
+                        ({{ groupedAsset?.assets?.length }} assets)
+                      </ion-label>
+                    </ion-item>
+                    <div
+                      slot="content"
+                      class="border-x-2 p-2 border-b-2 rounded-b-lg borderColor sm:grid md:grid md:grid-cols-2 md:gap-2 sm:gap-2"
+                    >
+                      @for (asset of groupedAsset.assets; track $index) {
+                        <app-asset-mapped-card
+                          [asset]="asset"
+                        ></app-asset-mapped-card>
+                      }
+                    </div>
+                  </ion-accordion>
+                </ion-accordion-group>
               </ion-col>
             } @empty {
               @if (!isLoading()) {
