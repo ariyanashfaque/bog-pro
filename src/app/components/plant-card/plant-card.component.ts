@@ -5,13 +5,9 @@ import {
   IonIcon,
   IonButton,
 } from "@ionic/angular/standalone";
-<<<<<<< HEAD
-import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
-=======
 import { RouterModule } from "@angular/router";
-import { Component, Input, OnInit } from "@angular/core";
->>>>>>> 53a1be7169f618218a01999e104227ea13d56dd3
 import { PlantsModel } from "src/app/store/models/plant.model";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 
 @Component({
   standalone: true,
