@@ -68,3 +68,12 @@
   --ion-color-contrast: var(--ion-color-background-contrast);
   --ion-color-contrast-rgb: var(--ion-color-background-contrast-rgb);
 }
+
+.ion-color-accordion {
+  --ion-color-base: var(--ion-color-accordion);
+  --ion-color-tint: var(--ion-color-accordion-tint);
+  --ion-color-shade: var(--ion-color-accordion-shade);
+  --ion-color-base-rgb: var(--ion-color-accordion-rgb);
+  --ion-color-contrast: var(--ion-color-accordion-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-accordion-contrast-rgb);
+}
