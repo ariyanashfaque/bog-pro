@@ -1,9 +1,16 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { IonCol, IonGrid, IonRow } from "@ionic/angular/standalone";
+import {
+  IonCol,
+  IonGrid,
+  IonRow,
+  IonLabel,
+  IonBadge,
+  IonText,
+} from "@ionic/angular/standalone";
 import { AssetsModel } from "src/app/store/models/plant.model";
 
 @Component({
-  imports: [IonRow, IonGrid, IonCol],
+  imports: [IonText, IonBadge, IonLabel, IonRow, IonGrid, IonCol],
   standalone: true,
   selector: "app-asset-mapped-card",
   templateUrl: "./asset-mapped-card.component.html",
@@ -11,10 +18,11 @@ import { AssetsModel } from "src/app/store/models/plant.model";
 })
 export class AssetMappedCardComponent implements OnInit {
   @Input() asset: AssetsModel;
-
   constructor() {
     this.asset = {};
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.asset);
+  }
 }
