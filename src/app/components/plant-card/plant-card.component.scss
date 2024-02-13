@@ -21,3 +21,28 @@
 .redBg {
   background-color: #fdd1d4;
 }
+.errorCorlor {
+  color: var(---f00014);
+  text-align: left;
+  font: normal normal medium 16px/16px Gotham;
+  letter-spacing: 0.64px;
+  color: #f00014;
+  opacity: 1;
+}
+.errorButtonCorlor {
+  border: 1px solid var(---f00014);
+  background: #ffe3e6 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+.buttonItemColor {
+  color: var(---f00014);
+  text-align: left;
+  font: normal normal medium 14px/27px Gotham;
+  letter-spacing: 0px;
+  color: #f00014;
+  opacity: 1;
+}
+
+ion-button {
+  text-transform: none;
+}

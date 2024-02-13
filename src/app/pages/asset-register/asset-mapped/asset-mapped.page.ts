@@ -17,8 +17,7 @@ import {
   IonCardTitle,
   IonAccordion,
   IonCardHeader,
-  IonAccordionGroup,
-} from "@ionic/angular/standalone";
+  IonAccordionGroup, IonIcon } from "@ionic/angular/standalone";
 import {
   AssetsModel,
   PlantsModel,
@@ -34,7 +33,7 @@ import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/lo
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
 
 @Component({
-  imports: [
+  imports: [IonIcon, 
     IonCol,
     IonRow,
     IonItem,

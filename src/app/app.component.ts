@@ -1,5 +1,6 @@
 import {
   close,
+  navigate,
   business,
   mapOutline,
   homeOutline,
@@ -24,15 +25,17 @@ import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
 export class AppComponent {
   constructor() {
     addIcons({
+
       close,
       business,
+      navigate,
       mapOutline,
       homeOutline,
       locationOutline,
       clipboardOutline,
       listCircleOutline,
-      chevronDownOutline,
       helpCircleOutline,
+      chevronDownOutline,
       personCircleOutline,
       notificationsOutline,
     });

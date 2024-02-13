@@ -14,20 +14,26 @@
     </div>
     <div>
       <!-- Plant Name part -->
-
       <div class="flex justify-between px-2">
         <ion-grid>
           <ion-row>
-            <ion-col size="1">
-              <ion-icon class="h-10 w-8" name="business"></ion-icon>
+            <ion-col size="1" class="my-auto">
+              <ion-icon
+                name="business"
+                size="large"
+                color="secondary"
+              ></ion-icon>
             </ion-col>
             <ion-col size="10" class="ml-3 md:ml-2">
-              <p class="text-[12px]">Plant name</p>
-              <p
-                class="font-bold text-[14px] md:text-[14px] lg:text-[16px] text-wrap"
+              <ion-text color="dark" class="text-[12px] font-gotham_light">
+                <p>Plant name</p>
+              </ion-text>
+              <ion-text
+                color="black"
+                class="text-[14px] text-wrap font-gotham_medium"
               >
                 {{ plant.plantName }}
-              </p>
+              </ion-text>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -39,19 +45,24 @@
         <ion-grid class="dashborderColor border-t-[1.5px] border-dashed">
           <ion-row>
             <ion-col size="7" class="sideborder border-r">
-              <div>
-                <p class="text-[12px]">Created by</p>
-                <p class="font-bold text-[14px]">
-                  {{ plant.createdBy }}
-                </p>
-              </div>
+              <!-- <p class="font-gotham_medium">
+                  Zero asset mapped in this plant
+                </p> -->
+              <ion-text color="black">
+                <p class="text-[12px] font-gotham_light">Created by</p>
+              </ion-text>
+              <ion-text color="dark" class="text-[14px] font-gotham_medium">
+                {{ plant.createdBy }}
+              </ion-text>
             </ion-col>
             <ion-col size="5">
-              <div class="ml-2">
-                <p class="text-[12px]">Last modified date</p>
-                <p class="font-bold text-[14px]">
+              <div class="ml-4">
+                <ion-text class="text-[12px] font-gotham_light" color="black">
+                  <p>Last modified date</p>
+                </ion-text>
+                <ion-text class="text-[14px] font-gotham_medium" color="black">
                   {{ plant.createdAt }}
-                </p>
+                </ion-text>
               </div>
             </ion-col>
           </ion-row>
@@ -64,30 +75,25 @@
         <div class="customcolor flex justify-between px-2">
           <ion-grid>
             <ion-row>
-              <ion-col size="10">
-                <div>
-                  <p class="text-[16px]" style="color: #007382">
-                    Total Number of assets Mapped
-                  </p>
-                  <p class="font-bold text-[12px]">
-                    Asset rejected by approver({{ plant.totalRejectedAssets }})
-                  </p>
-                </div>
+              <ion-col size="10" class="my-auto">
+                <ion-text
+                  color="secondary"
+                  class="text-[16px] font-gotham_medium"
+                >
+                  Total Number of assets Mapped
+                </ion-text>
               </ion-col>
               <ion-col class="flex justify-center" size="2">
                 <ion-button
-                  style="color: #007382"
+                  size="small"
                   shape="round"
-                  fill="clear"
-                  class="md:w-16 w-12 h-10 border-2 dashborderColor bg-white rounded-full"
+                  fill="outline"
+                  color="secondary"
+                  class="bg-white rounded-full"
+                  [routerLink]="['/asset-register/asset-mapped', plant.id]"
                 >
-                  <div
-                    class="flex"
-                    [routerLink]="['/asset-register/asset-mapped', plant.id]"
-                  >
-                    <p>{{ plant.totalMappedAssets }}</p>
-                    <ion-icon name="chevron-down-outline"></ion-icon>
-                  </div>
+                  {{ plant.totalMappedAssets }}
+                  <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                 </ion-button>
               </ion-col>
             </ion-row>
@@ -98,24 +104,28 @@
         <div class="customcolor bgcolor flex justify-between px-2">
           <ion-grid>
             <ion-row>
-              <ion-col size="10">
-                <div>
-                  <p class="text-[16px]" style="color: #007382">
+              <ion-col size="10" class="my-auto">
+                <ion-text
+                  color="secondary"
+                  class="text-[16px] font-gotham_medium"
+                >
+                  <p class="font-gotham_medium">
                     Zero asset mapped in this plant
                   </p>
-                  <p class="font-bold text-[12px]">
-                    Click on the map to add asset
-                  </p>
-                </div>
+                </ion-text>
+                <ion-text color="black" class="text-[12px] font-gotham_book">
+                  Click on the map to add asset
+                </ion-text>
               </ion-col>
-              <ion-col class="flex justify-center" size="2">
+              <ion-col class="flex justify-center my-auto" size="2">
                 <ion-button
+                  size="small"
                   shape="round"
-                  fill="clear"
+                  fill="outline"
                   color="secondary"
-                  class="md:w-16 w-12 h-10 border-2 dashborderColor bg-white rounded-full text-[10px]"
+                  class="bg-white h-8 rounded-full"
                 >
-                  <p class="">map</p>
+                  Map
                 </ion-button>
               </ion-col>
             </ion-row>
@@ -124,28 +134,26 @@
       }
 
       <!-- Error Assets part -->
-      <div class="customcolor redBg flex justify-between px-2">
+
+      <div class="customcolor redBg flex justify-between px-2 rounded-b-md">
         <ion-grid>
           <ion-row>
-            <ion-col size="10">
-              <div>
-                <p class="mt-3 font-bold text-[16px] text-red-800">
-                  Fix all the errors for this plant
-                </p>
-              </div>
+            <ion-col size="10" class="my-auto">
+              <ion-text class="text-[16px] errorCorlor font-gotham_medium">
+                Fix all the errors for this plant
+              </ion-text>
             </ion-col>
             <ion-col class="flex justify-center" size="2">
               <ion-button
-                fill="clear"
+                size="small"
                 shape="round"
+                fill="outline"
                 color="danger"
                 (click)="handleMenuToggle()"
-                class="md:w-16 w-12 h-10 border-2 borderRed rounded-full"
+                class="errorButtonCorlor rounded-full"
               >
-                <div class="flex">
-                  <p>{{ plant.totalRejectedAssets }}</p>
-                  <ion-icon name="chevron-down-outline"></ion-icon>
-                </div>
+                {{ plant.totalRejectedAssets }}
+                <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>

@@ -80,12 +80,21 @@
   --ion-color-background-contrast: #000000;
   --ion-color-background-contrast-rgb: 0, 0, 0;
 
+  /** accordion **/
   --ion-color-accordion: #edf5f5;
   --ion-color-accordion-tint: #eff6f6;
   --ion-color-accordion-shade: #d1d8d8;
   --ion-color-accordion-rgb: 237, 245, 245;
   --ion-color-accordion-contrast: #000000;
   --ion-color-accordion-contrast-rgb: 0, 0, 0;
+
+  /** black **/
+  --ion-color-black: #000000;
+  --ion-color-black-rgb: 0, 0, 0;
+  --ion-color-black-contrast: #ffffff;
+  --ion-color-black-contrast-rgb: 255, 255, 255;
+  --ion-color-black-shade: #000000;
+  --ion-color-black-tint: #1a1a1a;
 }
 
 html {
