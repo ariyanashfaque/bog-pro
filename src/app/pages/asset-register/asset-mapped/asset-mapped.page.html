@@ -1,4 +1,4 @@
-<app-header headerTitle="Asset Register" [isDefaultHref]="true"></app-header>
+<app-header headerTitle="Asset Mapped" [isDefaultHref]="true"></app-header>
 
 <ion-content [fullscreen]="true" color="background">
   <ion-grid>
@@ -14,21 +14,25 @@
                 <ion-accordion-group #accordionGroup>
                   <ion-accordion value="first">
                     <ion-item color="accordion" slot="header">
-                      <ion-icon
+                      <!-- <ion-icon
                         size="large"
                         class="p-4 -ml-2"
-                        name="location-outline"
+                        src="../../../assets/icon/asset-icons/silo.png"
                       >
-                      </ion-icon>
-                      <!-- <ion-img
-                        class="w-6 mr-2"
-                        src="../../../../../assets/icon/edit.svg"
-                        alt=""
-                      ></ion-img> -->
-                      <ion-label class="font-bold">
+                      </ion-icon> -->
+
+                      <ion-text class="flex">
+                        <p class="text-[20px] font-gotham_medium">
+                          {{ groupedAsset?.assetParentType }}
+                        </p>
+                        <span class="text-[20px] font-gotham-book"
+                          >({{ groupedAsset?.assets?.length }}assets)</span
+                        >
+                      </ion-text>
+                      <!-- <ion-label class="font-bold">
                         {{ groupedAsset?.assetParentType }}
                         ({{ groupedAsset?.assets?.length }} assets)
-                      </ion-label>
+                      </ion-label> -->
                     </ion-item>
                     <div
                       slot="content"
