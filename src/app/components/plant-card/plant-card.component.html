@@ -61,7 +61,7 @@
                   <p>Last modified date</p>
                 </ion-text>
                 <ion-text class="text-[14px] font-gotham_medium" color="black">
-                  {{ plant.createdAt }}
+                  {{ plant.createdAt}}
                 </ion-text>
               </div>
             </ion-col>
@@ -80,7 +80,7 @@
                   color="secondary"
                   class="text-[16px] font-gotham_medium"
                 >
-                  Total Number of assets Mapped
+                  Total number of assets mapped
                 </ion-text>
               </ion-col>
               <ion-col class="flex justify-center" size="2">
@@ -92,7 +92,10 @@
                   class="bg-white rounded-full"
                   [routerLink]="['/asset-register/asset-mapped', plant.id]"
                 >
-                  {{ plant.totalMappedAssets }}
+                  <p class="text-[14px] font-gotham_medium">
+                    {{ plant.totalMappedAssets }}
+                  </p>
+
                   <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                 </ion-button>
               </ion-col>
@@ -125,7 +128,7 @@
                   color="secondary"
                   class="bg-white h-8 rounded-full"
                 >
-                  Map
+                  <p class="text-[14px] font-gotham_medium">Map</p>
                 </ion-button>
               </ion-col>
             </ion-row>
@@ -150,9 +153,9 @@
                 fill="outline"
                 color="danger"
                 (click)="handleMenuToggle()"
-                class="errorButtonCorlor rounded-full"
+                class="errorButtonCorlor rounded-full text-[14px] font-gotham_medium"
               >
-                {{ plant.totalRejectedAssets }}
+                  {{ plant.totalRejectedAssets }}
                 <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
               </ion-button>
             </ion-col>

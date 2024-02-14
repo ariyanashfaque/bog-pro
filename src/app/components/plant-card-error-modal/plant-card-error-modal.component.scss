@@ -44,6 +44,25 @@
   color: #f00014;
   opacity: 1;
 }
+
+.errorCardBtn {
+  border-color: #f00014;
+  box-shadow: 0px 0px 9px #0000002e;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  color: var(---f00014);
+  text-align: left;
+  font: normal normal normal 15px/20px Gotham;
+  letter-spacing: 0.48px;
+  color: #f00014;
+  opacity: 1;
+}
 .assetName {
   text-align: left;
+}
+.cardTitle {
+  color: var(---f00014);
+  text-align: left;
+  letter-spacing: 0.19px;
+  color: #f00014;
+  opacity: 1;
 }

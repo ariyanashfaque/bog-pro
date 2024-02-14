@@ -11,7 +11,7 @@
           @defer (when !isLoading()) {
             @for (groupedAsset of groupedAssets; track $index) {
               <ion-col size="12" sizeMd="6" sizeLg="6">
-                <ion-accordion-group>
+                <ion-accordion-group #accordionGroup>
                   <ion-accordion value="first">
                     <ion-item color="accordion" slot="header">
                       <ion-icon

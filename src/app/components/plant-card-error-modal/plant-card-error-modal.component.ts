@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { IonIcon, IonGrid, IonButton, IonCol, IonRow } from "@ionic/angular/standalone";
+import { IonIcon, IonGrid, IonButton, IonCol, IonRow, IonText } from "@ionic/angular/standalone";
 
 @Component({
   standalone: true,
-  imports: [IonCol, IonRow, IonButton, IonGrid, IonIcon],
+  imports: [IonText, IonCol, IonRow, IonButton, IonGrid, IonIcon],
   selector: "app-plant-card-error-modal",
   templateUrl: "./plant-card-error-modal.component.html",
   styleUrls: ["./plant-card-error-modal.component.scss"],
