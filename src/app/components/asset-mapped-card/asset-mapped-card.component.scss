@@ -1,39 +1,15 @@
-.Color {
+.CardBgColor {
   background-color: #edf5f5;
 }
 
-.bgcolor {
-  background-color: #ffd200;
-}
 
-.editBtn {
+.bgEditBtn {
   background-color: #007382;
 }
-.deleteBtn {
+.bgDeleteBtn {
   background-color: #0073824d;
 }
 
-.bgEdit {
-  background-color: #007382;
+ion-badge {
+  text-transform: none;
 }
-.bgDelete {
-  background-color: #0073824d;
-}
-
-// ion-grid {
-//   --ion-grid-padding: 10px;
-
-//   --ion-grid-padding-xs: 10px;
-//   --ion-grid-padding-sm: 10px;
-//   --ion-grid-padding-md: 10px;
-//   --ion-grid-padding-lg: 10px;
-//   --ion-grid-padding-xl: 10px;
-
-//   --ion-grid-column-padding: 10px;
-
-//   --ion-grid-column-padding-xs: 10px;
-//   --ion-grid-column-padding-sm: 10px;
-//   --ion-grid-column-padding-md: 10px;
-//   --ion-grid-column-padding-lg: 10px;
-//   --ion-grid-column-padding-xl: 10px;
-// }

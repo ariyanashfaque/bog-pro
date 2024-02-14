@@ -80,9 +80,44 @@
 
 .ion-color-black {
   --ion-color-base: var(--ion-color-black);
+  --ion-color-tint: var(--ion-color-black-tint);
+  --ion-color-shade: var(--ion-color-black-shade);
   --ion-color-base-rgb: var(--ion-color-black-rgb);
   --ion-color-contrast: var(--ion-color-black-contrast);
   --ion-color-contrast-rgb: var(--ion-color-black-contrast-rgb);
-  --ion-color-shade: var(--ion-color-black-shade);
-  --ion-color-tint: var(--ion-color-black-tint);
+}
+
+.ion-color-approvalpending {
+  --ion-color-base: var(--ion-color-approvalpending);
+  --ion-color-tint: var(--ion-color-approvalpending-tint);
+  --ion-color-shade: var(--ion-color-approvalpending-shade);
+  --ion-color-base-rgb: var(--ion-color-approvalpending-rgb);
+  --ion-color-contrast: var(--ion-color-approvalpending-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-approvalpending-contrast-rgb);
+}
+
+.ion-color-registerationpending {
+  --ion-color-base: var(--ion-color-registerationpending);
+  --ion-color-tint: var(--ion-color-registerationpending-tint);
+  --ion-color-shade: var(--ion-color-registerationpending-shade);
+  --ion-color-base-rgb: var(--ion-color-registerationpending-rgb);
+  --ion-color-contrast: var(--ion-color-registerationpending-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-registerationpending-contrast-rgb);
+}
+
+.ion-color-rejected {
+  --ion-color-base: var(--ion-color-rejected);
+  --ion-color-tint: var(--ion-color-rejected-tint);
+  --ion-color-shade: var(--ion-color-rejected-shade);
+  --ion-color-base-rgb: var(--ion-color-rejected-rgb);
+  --ion-color-contrast: var(--ion-color-rejected-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-rejected-contrast-rgb);
+}
+.ion-color-decommissionrequested {
+  --ion-color-base: var(--ion-color-decommissionrequested);
+  --ion-color-tint: var(--ion-color-decommissionrequested-tint);
+  --ion-color-shade: var(--ion-color-decommissionrequested-shade);
+  --ion-color-base-rgb: var(--ion-color-decommissionrequested-rgb);
+  --ion-color-contrast: var(--ion-color-decommissionrequested-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-decommissionrequested-contrast-rgb);
 }

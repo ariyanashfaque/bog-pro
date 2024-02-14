@@ -1,16 +1,27 @@
 import { Component, Input, OnInit } from "@angular/core";
 import {
   IonCol,
-  IonGrid,
   IonRow,
+  IonGrid,
+  IonText,
+  IonIcon,
   IonLabel,
   IonBadge,
-  IonText,
+  IonButton,
 } from "@ionic/angular/standalone";
 import { AssetsModel } from "src/app/store/models/plant.model";
 
 @Component({
-  imports: [IonText, IonBadge, IonLabel, IonRow, IonGrid, IonCol],
+  imports: [
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonText,
+    IonGrid,
+    IonBadge,
+    IonLabel,
+    IonButton,
+  ],
   standalone: true,
   selector: "app-asset-mapped-card",
   templateUrl: "./asset-mapped-card.component.html",
