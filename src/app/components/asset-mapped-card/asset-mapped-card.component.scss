@@ -9,12 +9,21 @@
   background-color: #0073824d;
 }
 .customBorder {
-  border: 1px solid var(---f00014);
   border: 1px solid #f00014;
+  border-radius: 2px;
+  background: #f00014 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+.customBorderY {
+  background: #ffd200 0% 0% no-repeat padding-box;
   border-radius: 2px;
   opacity: 1;
 }
-
+.customBorderO {
+  background: #ff6e00 0% 0% no-repeat padding-box;
+  border-radius: 2px;
+  opacity: 1;
+}
 
 ion-badge {
   text-transform: none;

@@ -21,7 +21,7 @@
             }
             @case (asset.assetRegisteredStatus?.assetDeletionApprovalPending) {
               <ion-badge
-                color="decommissionrequested"
+                color="textwhite"
                 class="p-1 border-2 border-red-500"
               >
                 <ion-text color="danger" class="text-[12px] font-gotham_medium">
@@ -39,7 +39,7 @@
             }
 
             @case (asset.assetRegisteredStatus?.assetPendingForApproval) {
-              <ion-badge color="approvalpending" class="p-1">
+              <ion-badge color="approvalpending" class="p-[5px] customBorderY">
                 <ion-text color="black" class="text-[12px] font-gotham_medium">
                   <p>Asset Approval Pending</p>
                 </ion-text>
@@ -47,9 +47,9 @@
             }
 
             @case (asset.assetRegisteredStatus?.assetApproved) {
-              <ion-badge color="registerationpending" class="p-1">
+              <ion-badge color="registerationpending" class="p-[5px] customBorderO">
                 <ion-text
-                  color="decommissionrequested"
+                  color="textwhite"
                   class="text-[12px] font-gotham_medium"
                 >
                   <p>Asset Registeration Pending</p>
@@ -58,11 +58,12 @@
             }
 
             @case (asset.assetRegisteredStatus?.assetRejectedByApprover) {
-              <ion-badge color="decommissionrequested" class="p-1 customBorder">
-                <ion-text color="rejected">
-                  <p class="text-[12px] font-gotham_medium">
-                    Asset Rejected by the Approval
-                  </p>
+              <ion-badge color="rejected" class="p-[5px] customBorder">
+                <ion-text
+                  color="textwhite"
+                  class="text-[12px] font-gotham_medium"
+                >
+                  <p>Asset Rejected by the Approval</p>
                 </ion-text>
               </ion-badge>
             }
