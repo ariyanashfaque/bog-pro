@@ -4,16 +4,21 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title class="rounded-b-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]">Assets</ion-title>
+          </ion-toolbar>
+        </ion-header>
         <div
           class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
         >
-          <ion-label>Assets</ion-label>
+          <ion-label></ion-label>
           @defer (when !isLoading()) {
             @for (groupedAsset of groupedAssets; track $index) {
               <ion-col size="12" sizeMd="6" sizeLg="6">
-                <ion-accordion-group #accordionGroup>
-                  <ion-accordion value="first">
-                    <ion-item color="accordion" slot="header">
+                <ion-accordion-group [value]="[groupedAsset.assetParentType]">
+                  <ion-accordion value="Silo">
+                    <ion-item color="accordion" class="p-3" slot="header">
                       <!-- <ion-icon
                         size="large"
                         class="p-4 -ml-2"
@@ -21,18 +26,15 @@
                       >
                       </ion-icon> -->
 
-                      <ion-text class="flex">
+                      <ion-text class="flex gap-1">
                         <p class="text-[20px] font-gotham_medium">
                           {{ groupedAsset?.assetParentType }}
                         </p>
                         <span class="text-[20px] font-gotham-book"
-                          >({{ groupedAsset?.assets?.length }}assets)</span
+                          >({{ groupedAsset?.assets?.length }} assets)</span
                         >
                       </ion-text>
-                      <!-- <ion-label class="font-bold">
-                        {{ groupedAsset?.assetParentType }}
-                        ({{ groupedAsset?.assets?.length }} assets)
-                      </ion-label> -->
+                      
                     </ion-item>
                     <div
                       slot="content"

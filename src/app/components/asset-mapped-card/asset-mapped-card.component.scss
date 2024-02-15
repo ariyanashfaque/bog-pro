@@ -2,13 +2,19 @@
   background-color: #edf5f5;
 }
 
-
 .bgEditBtn {
   background-color: #007382;
 }
 .bgDeleteBtn {
   background-color: #0073824d;
 }
+.customBorder {
+  border: 1px solid var(---f00014);
+  border: 1px solid #f00014;
+  border-radius: 2px;
+  opacity: 1;
+}
+
 
 ion-badge {
   text-transform: none;

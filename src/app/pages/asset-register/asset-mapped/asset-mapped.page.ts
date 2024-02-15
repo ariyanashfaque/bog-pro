@@ -18,7 +18,12 @@ import {
   IonAccordion,
   IonCardHeader,
   IonAccordionGroup,
-  IonIcon, IonText } from "@ionic/angular/standalone";
+  IonIcon,
+  IonText,
+  IonTitle,
+  IonHeader,
+  IonToolbar,
+} from "@ionic/angular/standalone";
 import {
   AssetsModel,
   PlantsModel,
@@ -34,7 +39,11 @@ import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/lo
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
 
 @Component({
-  imports: [IonText, 
+  imports: [
+    IonToolbar,
+    IonHeader,
+    IonTitle,
+    IonText,
     IonIcon,
     IonCol,
     IonRow,
@@ -112,5 +121,7 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
+
+    console.log(this.assets);
   }
 }

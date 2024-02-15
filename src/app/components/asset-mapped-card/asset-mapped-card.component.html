@@ -1,12 +1,10 @@
 <ion-grid class="">
   <ion-row class="CardBgColor p-1 border rounded">
     <ion-col size="3" class="my-auto">
-        <div class="md:text-[12px] text-[10px]">Asset Name</div>
-        <div
-          class="md:text-[12px] text-[10px] font-bold text-[10px]"
-        >
-          {{ asset.assetInfo?.assetName }}
-        </div>
+      <div class="md:text-[12px] text-[10px]">Asset Name</div>
+      <div class="md:text-[12px] font-bold text-[10px]">
+        {{ asset.assetInfo?.assetName }}
+      </div>
     </ion-col>
 
     <ion-col size="6" class="my-auto">
@@ -60,9 +58,11 @@
             }
 
             @case (asset.assetRegisteredStatus?.assetRejectedByApprover) {
-              <ion-badge color="decommissionrequested" class="p-1">
-                <ion-text color="black" class="text-[12px] font-gotham_medium">
-                  <p>Asset Rejected by the Approval</p>
+              <ion-badge color="decommissionrequested" class="p-1 customBorder">
+                <ion-text color="rejected">
+                  <p class="text-[12px] font-gotham_medium">
+                    Asset Rejected by the Approval
+                  </p>
                 </ion-text>
               </ion-badge>
             }

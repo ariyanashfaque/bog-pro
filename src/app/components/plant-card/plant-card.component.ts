@@ -3,7 +3,9 @@ import {
   IonRow,
   IonGrid,
   IonIcon,
-  IonButton, IonText } from "@ionic/angular/standalone";
+  IonButton,
+  IonText,
+} from "@ionic/angular/standalone";
 import { RouterModule } from "@angular/router";
 import { PlantsModel } from "src/app/store/models/plant.model";
 import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
