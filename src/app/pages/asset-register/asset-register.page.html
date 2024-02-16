@@ -32,18 +32,18 @@
                   <ion-select
                     fill="outline"
                     [multiple]="true"
-                    label="Select Unit"
+                    label="Select GRU"
                     label-placement="floating"
                   >
-                    <ion-select-option value="apple"
-                      >5701 Mt Keith Debottlenecking</ion-select-option
-                    >
-                    <ion-select-option value="banana"
-                      >5701 Mt Keith Debottlenecking</ion-select-option
-                    >
-                    <ion-select-option value="orange"
-                      >5701 Mt Keith Debottlenecking</ion-select-option
-                    >
+                    <ion-select-option value="apple">
+                      5701 Mt Keith Debottlenecking
+                    </ion-select-option>
+                    <ion-select-option value="banana">
+                      5701 Mt Keith Debottlenecking
+                    </ion-select-option>
+                    <ion-select-option value="orange">
+                      5701 Mt Keith Debottlenecking
+                    </ion-select-option>
                   </ion-select>
                 </ion-col>
               </ion-row>
@@ -88,5 +88,6 @@
   <app-plant-card-error-modal
     [isMenuOpen]="isMenuOpen"
     (isMenuToggleOpen)="handleErrorModal($event)"
-  ></app-plant-card-error-modal>
+  >
+  </app-plant-card-error-modal>
 </ion-content>
