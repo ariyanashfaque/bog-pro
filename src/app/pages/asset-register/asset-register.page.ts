@@ -18,7 +18,11 @@ import {
   IonContent,
   IonLoading,
   IonSelectOption,
-  IonSkeletonText, IonTitle, IonToolbar, IonHeader } from "@ionic/angular/standalone";
+  IonSkeletonText,
+  IonTitle,
+  IonToolbar,
+  IonHeader,
+} from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
 import { RouterModule } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -32,7 +36,10 @@ import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/lo
 import { PlantCardErrorModalComponent } from "src/app/components/plant-card-error-modal/plant-card-error-modal.component";
 
 @Component({
-  imports: [IonHeader, IonToolbar, IonTitle, 
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
     IonLabel,
     IonCol,
     IonRow,
@@ -61,9 +68,9 @@ export class AssetRegisterPage implements OnInit {
   store = inject(Store);
   httpService = inject(HttpService);
   toastService = inject(ToastService);
-
   plants: PlantsModel[];
   isLoading: WritableSignal<boolean> = signal(false);
+  isMenuOpen: boolean = false;
 
   constructor() {
     this.plants = [];
@@ -79,13 +86,10 @@ export class AssetRegisterPage implements OnInit {
     this.GetAllPlants();
   }
 
-  isMenuOpen: boolean = false;
-
   handleErrorModal(event: any) {
     this.isMenuOpen = event;
-    console.log(this.isMenuOpen);
+    // console.log(this.isMenuOpen);
   }
-  // handleErrorModal = (event: any) => {};
 
   GetAllPlants = async () => {
     this.isLoading.set(true);
