@@ -7,12 +7,11 @@ import {
   IonIcon,
   IonLabel,
   IonBadge,
-  IonButton,
-} from "@ionic/angular/standalone";
+  IonButton, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from "@ionic/angular/standalone";
 import { AssetsModel } from "src/app/store/models/plant.model";
 
 @Component({
-  imports: [
+  imports: [IonCardContent, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCard, 
     IonRow,
     IonCol,
     IonIcon,
