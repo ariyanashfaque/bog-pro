@@ -1,5 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { IonIcon, IonGrid, IonButton, IonCol, IonRow, IonText } from "@ionic/angular/standalone";
+import {
+  IonIcon,
+  IonGrid,
+  IonButton,
+  IonCol,
+  IonRow,
+  IonText,
+} from "@ionic/angular/standalone";
 
 @Component({
   standalone: true,
@@ -9,11 +16,9 @@ import { IonIcon, IonGrid, IonButton, IonCol, IonRow, IonText } from "@ionic/ang
   styleUrls: ["./plant-card-error-modal.component.scss"],
 })
 export class PlantCardErrorModalComponent implements OnInit {
-
   @Input() isMenuOpen: boolean = false;
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
-  
   constructor() {}
 
   ngOnInit() {}
