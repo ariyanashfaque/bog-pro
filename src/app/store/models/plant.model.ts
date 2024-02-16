@@ -93,7 +93,7 @@ interface AssetInfoModel {
   assetType?: string;
   costCenter?: string;
   assetStatus?: string;
-  assetParentType?: string;
+  assetParentType: string;
   assetImages?: ImageModel[];
   assetLocation?: LocationModel;
 }
@@ -147,7 +147,7 @@ export interface PlantsStoreModel {
 }
 export interface PlantsResponse {
   message: string;
-  data: PlantsStoreModel;
+  data: PlantsModel[];
 }
 export interface AssetsResponse {
   message: string;
