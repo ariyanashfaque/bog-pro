@@ -1,10 +1,10 @@
-<div class="w-full mt-1 CardBgColor">
-  <div class="p-1 border rounded">
+<div class="w-full">
+  <div class="border rounded">
     <ion-grid>
       <ion-row
         class="ion-no-padding ion-align-items-center ion-justify-content-center"
       >
-        <ion-col size="12" sizeMd="3" sizeLg="4" sizeSm="12">
+        <ion-col size="12" sizeMd="3" sizeLg="3" sizeSm="12" class="my-auto">
           <ion-text
             class="text-[12px] sm:text-[12px] md:text-[10px] lg:text-[12px] font-gotham_light block"
           >
@@ -19,7 +19,7 @@
         <ion-col
           size="12"
           sizeMd="9"
-          sizeLg="8"
+          sizeLg="9"
           sizeSm="12"
           class="ion-no-padding"
         >
@@ -27,14 +27,14 @@
             <ion-row
               class="ion-no-padding ion-align-items-center ion-justify-content-center"
             >
-              <ion-col size="8" class="ion-no-padding">
+              <ion-col size="8" class="ion-no-padding -mt-[3px]">
                 <div>
                   <ion-text
                     class="text-[12px] sm:text-[12px] md:text-[10px] lg:text-[11px] font-gotham_light"
                   >
                     Status
                   </ion-text>
-                  <div class="">
+                  <div>
                     @switch (true) {
                       @case (asset.assetRegisteredStatus?.assetDeleted) {
                         <ion-badge color="" class="p-1">
