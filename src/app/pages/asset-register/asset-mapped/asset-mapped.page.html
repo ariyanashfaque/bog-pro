@@ -6,13 +6,12 @@
       <ion-col size="12">
         <ion-header class="rounded-t-md">
           <ion-toolbar>
-            <p class="font-[24px] font-gotham_medium p-4">Assets (6)</p>
+            <div class="font-[24px] font-gotham_medium p-4">Assets (6)</div>
           </ion-toolbar>
         </ion-header>
         <div
           class="max-w-full mx-auto rounded-b-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
         >
-          <ion-label></ion-label>
           @defer (when !isLoading()) {
             @for (groupedAsset of groupedAssets; track $index) {
               <ion-col size="12" sizeMd="6" sizeLg="6">
@@ -33,9 +32,9 @@
                         <p class="text-[20px] font-gotham_medium">
                           {{ groupedAsset?.assetParentType }}
                         </p>
-                        <span class="text-[20px] font-gotham-book"
-                          >({{ groupedAsset?.assets?.length }} assets)</span
-                        >
+                        <span class="text-[20px] font-gotham-book">
+                          ({{ groupedAsset?.assets?.length }} assets)
+                        </span>
                       </ion-text>
                     </ion-item>
                     <div
@@ -51,15 +50,13 @@
                 </ion-accordion-group>
               </ion-col>
             } @empty {
-              @if (!isLoading()) {
-                <ion-col size="12">
-                  <div
-                    class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
-                  >
-                    <h3 class="text-center">No assets found</h3>
-                  </div>
-                </ion-col>
-              }
+              <ion-col size="12">
+                <div
+                  class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+                >
+                  <h3 class="text-center">No assets found</h3>
+                </div>
+              </ion-col>
             }
           } @placeholder {
             <ion-col size="12" sizeMd="6" sizeLg="6">

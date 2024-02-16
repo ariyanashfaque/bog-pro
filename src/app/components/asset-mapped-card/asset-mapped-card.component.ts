@@ -33,7 +33,5 @@ export class AssetMappedCardComponent implements OnInit {
     this.asset = {};
   }
 
-  ngOnInit() {
-    console.log(this.asset);
-  }
+  ngOnInit() {}
 }

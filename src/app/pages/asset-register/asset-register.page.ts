@@ -13,12 +13,16 @@ import {
   IonList,
   IonAlert,
   IonLabel,
+  IonTitle,
   IonSelect,
   IonAvatar,
+  IonHeader,
   IonContent,
   IonLoading,
+  IonToolbar,
   IonSelectOption,
-  IonSkeletonText, IonTitle, IonToolbar, IonHeader } from "@ionic/angular/standalone";
+  IonSkeletonText,
+} from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
 import { RouterModule } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -32,16 +36,19 @@ import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/lo
 import { PlantCardErrorModalComponent } from "src/app/components/plant-card-error-modal/plant-card-error-modal.component";
 
 @Component({
-  imports: [IonHeader, IonToolbar, IonTitle, 
-    IonLabel,
+  imports: [
     IonCol,
     IonRow,
     IonList,
     IonItem,
     IonGrid,
+    IonTitle,
+    IonLabel,
     IonAlert,
+    IonHeader,
     IonAvatar,
     IonSelect,
+    IonToolbar,
     IonLoading,
     IonContent,
     RouterModule,
@@ -63,6 +70,7 @@ export class AssetRegisterPage implements OnInit {
   toastService = inject(ToastService);
 
   plants: PlantsModel[];
+  isMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
 
   constructor() {
@@ -79,19 +87,15 @@ export class AssetRegisterPage implements OnInit {
     this.GetAllPlants();
   }
 
-  isMenuOpen: boolean = false;
-
-  handleErrorModal(event: any) {
+  handleErrorModal = (event: any) => {
     this.isMenuOpen = event;
-    console.log(this.isMenuOpen);
-  }
-  // handleErrorModal = (event: any) => {};
+  };
 
   GetAllPlants = async () => {
     this.isLoading.set(true);
     this.httpService.GetAllPlants().subscribe({
       next: (response: PlantsResponse) => {
-        this.store.dispatch(ADD_PLANTS(response?.data?.plants));
+        this.store.dispatch(ADD_PLANTS(response?.data));
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);
