@@ -1,16 +1,19 @@
-<ion-grid class="">
-  <ion-row class="CardBgColor p-1 border rounded">
-    <ion-col size="3" class="my-auto">
-      <div class="md:text-[12px] text-[10px]">Asset Name</div>
-      <div class="md:text-[12px] font-bold text-[10px]">
+<ion-grid class="w-full">
+  <ion-row class="flex items-center CardBgColor p-1 border rounded">
+    <ion-col size="3">
+      <ion-text class="md:text-[12px] text-[10px] font-gotham_light">
+        <p class="font-gotham_light">Asset Name</p>
+      </ion-text>
+      <ion-text class="md:text-[14px] text-[10px] font-gotham_medium">
         {{ asset.assetInfo?.assetName }}
-      </div>
+      </ion-text>
     </ion-col>
-
-    <ion-col size="6" class="my-auto">
-      <div>
-        <div class="md:text-[12px] text-[10px]">Status</div>
-        <div class="inline-flex">
+    <ion-col size="6">
+      <div class="mt-[5px]">
+        <ion-text class="text-[12px]">
+          <p class="font-gotham_light">Status</p>
+        </ion-text>
+        <div class="">
           @switch (true) {
             @case (asset.assetRegisteredStatus?.assetDeleted) {
               <ion-badge color="" class="p-1">
@@ -20,10 +23,7 @@
               </ion-badge>
             }
             @case (asset.assetRegisteredStatus?.assetDeletionApprovalPending) {
-              <ion-badge
-                color="textwhite"
-                class="p-1 border-2 border-red-500"
-              >
+              <ion-badge color="textwhite" class="p-1 border-2 border-red-500">
                 <ion-text color="danger" class="text-[12px] font-gotham_medium">
                   <p>Asset Deletion Approval Pending</p>
                 </ion-text>
@@ -47,10 +47,13 @@
             }
 
             @case (asset.assetRegisteredStatus?.assetApproved) {
-              <ion-badge color="registerationpending" class="p-[5px] customBorderO">
+              <ion-badge
+                color="registerationpending"
+                class="p-[5px] customBorderO"
+              >
                 <ion-text
                   color="textwhite"
-                  class="text-[12px] font-gotham_medium"
+                  class="text-[10px] lg:text-[12px] font-gotham_medium"
                 >
                   <p>Asset Registeration Pending</p>
                 </ion-text>
@@ -61,7 +64,7 @@
               <ion-badge color="rejected" class="p-[5px] customBorder">
                 <ion-text
                   color="textwhite"
-                  class="text-[12px] font-gotham_medium"
+                  class="text-[10px] lg:text-[12px] font-gotham_medium"
                 >
                   <p>Asset Rejected by the Approval</p>
                 </ion-text>
@@ -72,8 +75,8 @@
       </div>
     </ion-col>
 
-    <ion-col size="3" class="my-auto">
-      <div class="flex my-auto gap-1 justify-evenly">
+    <ion-col size="3">
+      <div class="flex my-auto sm:ml-[5px] lg:justify-evenly">
         <div class="flex items-center">
           <button
             class="p-[5px] inline-flex items-center bgEditBtn justify-center sm:w-8 sm:h-8 md:w-8 md:h-8 w-6 h-6 mr-2 rounded-full"
