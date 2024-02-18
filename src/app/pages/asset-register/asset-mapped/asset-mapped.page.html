@@ -16,7 +16,7 @@
                   [value]="[groupedAsset.assetParentType]"
                 >
                   <ion-accordion value="Silo">
-                    <ion-item color="accordion" class="p-3" slot="header">
+                    <ion-item color="accordion" slot="header">
                       <!-- <ion-icon
                         size="large"
                         class="p-4 -ml-2"
@@ -33,9 +33,10 @@
                         </span>
                       </ion-text>
                     </ion-item>
+
                     <ion-grid class="ion-no-padding" slot="content">
                       <ion-row
-                        class="ion-no-padding border-x-2 p-2 border-b-2 rounded-b-lg borderColor"
+                        class="border-x-2 border-b-2 rounded-b-lg borderColor p-[5px]"
                       >
                         @for (asset of groupedAsset.assets; track $index) {
                           <ion-col
