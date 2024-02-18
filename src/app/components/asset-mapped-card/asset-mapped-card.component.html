@@ -1,20 +1,20 @@
 <div class="w-full">
-  <div class="border rounded">
+  <div class="border rounded CardBgColor">
     <ion-grid>
-      <ion-row
-        class="ion-no-padding ion-align-items-center ion-justify-content-center"
-      >
+      <ion-row class="ion-align-items-center ion-justify-content-center">
         <ion-col size="12" sizeMd="3" sizeLg="3" sizeSm="12" class="my-auto">
-          <ion-text
-            class="text-[12px] sm:text-[12px] md:text-[10px] lg:text-[12px] font-gotham_light block"
-          >
-            Asset Name
-          </ion-text>
-          <ion-text
-            class="text-[14px] sm:text-[14px] md:text-[10px] lg:text-[14px] font-gotham_medium"
-          >
-            {{ asset.assetInfo?.assetName }}
-          </ion-text>
+          <div class="p-[5px]">
+            <ion-text
+              class="text-[12px] sm:text-[12px] md:text-[10px] lg:text-[12px] font-gotham_light block"
+            >
+              Asset Name
+            </ion-text>
+            <ion-text
+              class="text-[14px] sm:text-[14px] md:text-[10px] lg:text-[14px] font-gotham_medium"
+            >
+              {{ asset.assetInfo?.assetName }}
+            </ion-text>
+          </div>
         </ion-col>
         <ion-col
           size="12"
@@ -124,15 +124,15 @@
                 </div>
               </ion-col>
               <ion-col size="4" class="ion-no-padding">
-                <div class="flex">
+                <div class="flex ion-justify-content-around">
                   <button
-                    class="p-[5px] inline-flex items-center bgEditBtn justify-center w-8 h-8 mr-2 rounded-full"
+                    class="p-[5px] inline-flex items-center bgEditBtn justify-center w-8 h-8 rounded-full"
                   >
                     <ion-icon src="../../../assets/icon/asset-icons/edit.svg">
                     </ion-icon>
                   </button>
                   <button
-                    class="p-[5px] inline-flex items-center bgDeleteBtn justify-center w-8 h-8 mr-2 rounded-full"
+                    class="p-[5px] inline-flex items-center bgDeleteBtn justify-center w-8 h-8 rounded-full"
                   >
                     <ion-icon src="../../../assets/icon/asset-icons/delete.svg">
                     </ion-icon>

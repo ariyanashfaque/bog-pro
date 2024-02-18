@@ -4,14 +4,10 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12">
-        <ion-header class="rounded-t-md">
-          <ion-toolbar>
-            <div class="font-[24px] font-gotham_medium p-4">Assets (6)</div>
-          </ion-toolbar>
-        </ion-header>
-        <div
-          class="max-w-full mx-auto rounded-b-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
-        >
+        <div class="max-w-full mx-auto bg-white border-b-[2px] shadowpart1">
+          <div class="font-[24px] font-gotham_medium p-4">Assets (6)</div>
+        </div>
+        <div class="max-w-full mx-auto bg-white p-4 shadowpart2">
           @defer (when !isLoading()) {
             @for (groupedAsset of groupedAssets; track $index) {
               <ion-col size="12" sizeMd="6" sizeLg="6">
@@ -37,15 +33,32 @@
                         </span>
                       </ion-text>
                     </ion-item>
-                    <div
+                    <ion-grid class="ion-no-padding" slot="content">
+                      <ion-row
+                        class="ion-no-padding border-x-2 p-2 border-b-2 rounded-b-lg borderColor"
+                      >
+                        @for (asset of groupedAsset.assets; track $index) {
+                          <ion-col
+                            class="p-[5px]"
+                            sizeMd="6"
+                            sizeSm="6"
+                            sizeLg="6"
+                          >
+                            <app-asset-mapped-card [asset]="asset">
+                            </app-asset-mapped-card>
+                          </ion-col>
+                        }
+                      </ion-row>
+                    </ion-grid>
+                    <!-- <div
                       slot="content"
-                      class="border-x-2 p-2 border-b-2 rounded-b-lg borderColor sm:grid md:grid md:grid-cols-2 md:gap-2 sm:gap-2"
+                      class="border-x-2 p-2 border-b-2 rounded-b-lg borderColor sm:grid md:grid md:grid-cols-2 gap-4 md:gap-2 sm:gap-2"
                     >
                       @for (asset of groupedAsset.assets; track $index) {
                         <app-asset-mapped-card [asset]="asset">
                         </app-asset-mapped-card>
                       }
-                    </div>
+                    </div> -->
                   </ion-accordion>
                 </ion-accordion-group>
               </ion-col>
