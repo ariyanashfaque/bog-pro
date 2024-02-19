@@ -1,38 +1,40 @@
-import { Component, Input, OnInit } from "@angular/core";
 import {
   IonCol,
   IonRow,
   IonGrid,
   IonText,
   IonIcon,
+  IonCard,
   IonLabel,
   IonBadge,
   IonButton,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardContent,
   IonButtons,
+  IonCardTitle,
+  IonCardHeader,
+  IonCardContent,
+  IonCardSubtitle,
 } from "@ionic/angular/standalone";
+import { RouterModule } from "@angular/router";
+import { Component, Input, OnInit } from "@angular/core";
 import { AssetsModel } from "src/app/store/models/plant.model";
 
 @Component({
   imports: [
-    IonButtons,
-    IonCardContent,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCardHeader,
-    IonCard,
     IonRow,
     IonCol,
+    IonCard,
     IonIcon,
     IonText,
     IonGrid,
     IonBadge,
     IonLabel,
     IonButton,
+    IonButtons,
+    RouterModule,
+    IonCardTitle,
+    IonCardHeader,
+    IonCardContent,
+    IonCardSubtitle,
   ],
   standalone: true,
   selector: "app-asset-mapped-card",

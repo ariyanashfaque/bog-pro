@@ -49,10 +49,10 @@ export const routes: Routes = [
     children: [
       {
         path: "asset-mapped/:id",
-        loadComponent: () =>
-          import("../pages/asset-register/asset-mapped/asset-mapped.page").then(
-            (page) => page.AssetMappedPage,
-          ),
+        loadChildren: () =>
+          import(
+            "../pages/asset-register/asset-mapped/asset-mapped.routes"
+          ).then((routes) => routes.routes),
       },
     ],
   },
