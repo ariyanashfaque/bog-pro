@@ -42,10 +42,15 @@ import { AssetsModel } from "src/app/store/models/plant.model";
   styleUrls: ["./asset-mapped-card.component.scss"],
 })
 export class AssetMappedCardComponent implements OnInit {
+  @Input() plantId: string;
   @Input() asset: AssetsModel;
+
   constructor() {
     this.asset = {};
+    this.plantId = "";
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.plantId);
+  }
 }

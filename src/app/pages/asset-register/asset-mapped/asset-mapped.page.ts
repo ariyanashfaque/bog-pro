@@ -12,17 +12,17 @@ import {
   IonGrid,
   IonCard,
   IonItem,
+  IonIcon,
+  IonText,
   IonLabel,
+  IonTitle,
+  IonHeader,
   IonContent,
+  IonToolbar,
   IonCardTitle,
   IonAccordion,
   IonCardHeader,
   IonAccordionGroup,
-  IonIcon,
-  IonText,
-  IonTitle,
-  IonHeader,
-  IonToolbar,
 } from "@ionic/angular/standalone";
 import {
   AssetsModel,
@@ -40,17 +40,17 @@ import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/a
 
 @Component({
   imports: [
-    IonToolbar,
-    IonHeader,
-    IonTitle,
-    IonText,
-    IonIcon,
     IonCol,
     IonRow,
+    IonText,
+    IonIcon,
     IonItem,
     IonCard,
     IonGrid,
+    IonTitle,
     IonLabel,
+    IonHeader,
+    IonToolbar,
     IonContent,
     IonAccordion,
     IonCardTitle,
@@ -66,6 +66,7 @@ import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/a
   styleUrls: ["./asset-mapped.page.scss"],
 })
 export class AssetMappedPage implements OnInit {
+  plantId: string;
   store = inject(Store);
   httpService = inject(HttpService);
   toastService = inject(ToastService);
@@ -76,6 +77,7 @@ export class AssetMappedPage implements OnInit {
 
   @Input()
   set id(plantId: string) {
+    this.plantId = plantId;
     this.isLoading.set(true);
     this.httpService.GetAllAssets({ plantId }).subscribe({
       next: (response: AssetsResponse) => {
@@ -97,6 +99,7 @@ export class AssetMappedPage implements OnInit {
 
   constructor() {
     this.assets = [];
+    this.plantId = "";
     this.groupedAssets = [];
   }
 
