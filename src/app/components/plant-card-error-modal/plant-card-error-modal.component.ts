@@ -28,3 +28,4 @@ export class PlantCardErrorModalComponent implements OnInit {
     this.isMenuToggleOpen.emit(this.isMenuOpen);
   }
 }
+6
