@@ -3,8 +3,10 @@ import {
   IonRow,
   IonGrid,
   IonIcon,
+  IonText,
+  IonBadge,
   IonButton,
-  IonText, IonBadge } from "@ionic/angular/standalone";
+} from "@ionic/angular/standalone";
 import { RouterModule } from "@angular/router";
 import { PlantsModel } from "src/app/store/models/plant.model";
 import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
@@ -14,7 +16,16 @@ import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
   selector: "app-plant-card",
   templateUrl: "./plant-card.component.html",
   styleUrls: ["./plant-card.component.scss"],
-  imports: [IonBadge, IonText, IonCol, IonRow, IonButton, IonGrid, IonIcon, RouterModule],
+  imports: [
+    IonCol,
+    IonRow,
+    IonText,
+    IonGrid,
+    IonIcon,
+    IonBadge,
+    IonButton,
+    RouterModule,
+  ],
 })
 export class PlantCardComponent implements OnInit {
   @Input() plant: PlantsModel;
