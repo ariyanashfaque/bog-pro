@@ -10,7 +10,7 @@
           <div class="max-w-full mx-auto p-6 border-b-[2px]">
             <!-- Segment tabs -->
             <ion-segment
-            class="p-2"
+              class="p-2"
               [value]="segment"
               [scrollable]="true"
               (ionChange)="handleChange($event)"
@@ -125,34 +125,6 @@
                       </ion-col>
                     </ion-row>
 
-                    <ion-row class="my-4 ion-justify-content-evenly">
-                      <ion-col size="12" sizeMd="6" class="">
-                        <ion-input
-                          required
-                          type="text"
-                          fill="outline"
-                          label="Enter name"
-                          label-placement="floating"
-                          formControlName="assetname"
-                          placeholder="Roof-ACC-Cement House"
-                        >
-                        </ion-input>
-                      </ion-col>
-
-                      <ion-col size="12" sizeMd="6" class="">
-                        <ion-input
-                          required
-                          type="text"
-                          fill="outline"
-                          label="Status"
-                          label-placement="floating"
-                          formControlName="assetStatus"
-                          placeholder="Roof-ACC-Cement House"
-                        >
-                        </ion-input>
-                      </ion-col>
-                    </ion-row>
-
                     <ion-row class="my-4">
                       <ion-col size="12" sizeMd="6" class="">
                         <ion-input
@@ -217,11 +189,28 @@
                       </ion-col>
                     </ion-row>
 
-                    <ion-col size="12">
+                    <ion-row>
+                      <ion-col size="6">
+                        <ion-text color="primary"> Add Picture </ion-text>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="ion-float-right">
+                          <ion-text color="primary"> Location </ion-text>
+                          <div class="bg-slate-500 h-20 w-20">
+                            <ion-icon
+                              slot="start"
+                              name="location-outline"
+                            ></ion-icon>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+
+                    <!-- <ion-col size="12">
                       <ion-button type="submit" fill="clear" shape="round">
                         Click me
                       </ion-button>
-                    </ion-col>
+                    </ion-col> -->
                   </form>
                 </ion-grid>
               }
