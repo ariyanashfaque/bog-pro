@@ -10,6 +10,7 @@ import {
   listCircleOutline,
   chevronDownOutline,
   personCircleOutline,
+  documentTextOutline,
   notificationsOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
@@ -25,7 +26,6 @@ import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
 export class AppComponent {
   constructor() {
     addIcons({
-
       close,
       business,
       navigate,
@@ -37,6 +37,7 @@ export class AppComponent {
       helpCircleOutline,
       chevronDownOutline,
       personCircleOutline,
+      documentTextOutline,
       notificationsOutline,
     });
   }
