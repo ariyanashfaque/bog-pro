@@ -114,10 +114,10 @@
   --ion-color-contrast-rgb: var(--ion-color-rejected-contrast-rgb);
 }
 .ion-color-textwhite {
-	--ion-color-base: var(--ion-color-textwhite);
-	--ion-color-base-rgb: var(--ion-color-textwhite-rgb);
-	--ion-color-contrast: var(--ion-color-textwhite-contrast);
-	--ion-color-contrast-rgb: var(--ion-color-textwhite-contrast-rgb);
-	--ion-color-shade: var(--ion-color-textwhite-shade);
-	--ion-color-tint: var(--ion-color-textwhite-tint);
+  --ion-color-base: var(--ion-color-textwhite);
+  --ion-color-tint: var(--ion-color-textwhite-tint);
+  --ion-color-shade: var(--ion-color-textwhite-shade);
+  --ion-color-base-rgb: var(--ion-color-textwhite-rgb);
+  --ion-color-contrast: var(--ion-color-textwhite-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-textwhite-contrast-rgb);
 }

@@ -26,6 +26,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: "assessment",
+        loadComponent: () =>
+          import("../pages/assessment/assessment.page").then(
+            (page) => page.AssessmentPage,
+          ),
+      },
+      {
         path: "asset-register",
         children: [
           {
@@ -36,6 +43,13 @@ export const routes: Routes = [
               ),
           },
         ],
+      },
+      {
+        path: "action-management",
+        loadComponent: () =>
+          import("../pages/action-management/action-management.page").then(
+            (page) => page.ActionManagementPage,
+          ),
       },
     ],
   },

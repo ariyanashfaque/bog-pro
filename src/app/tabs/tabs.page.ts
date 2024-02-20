@@ -1,11 +1,16 @@
 import {
+  inject,
+  Component,
+  ViewChild,
+  EnvironmentInjector,
+} from "@angular/core";
+import {
   IonTabs,
   IonIcon,
   IonLabel,
   IonTabBar,
   IonTabButton,
 } from "@ionic/angular/standalone";
-import { Component, EnvironmentInjector, inject } from "@angular/core";
 
 @Component({
   standalone: true,
@@ -16,6 +21,14 @@ import { Component, EnvironmentInjector, inject } from "@angular/core";
 })
 export class TabsPage {
   public environmentInjector = inject(EnvironmentInjector);
+  @ViewChild("tabs", { static: false }) tabs: IonTabs;
+  selectedTab: string;
 
-  constructor() {}
+  constructor() {
+    this.selectedTab = "";
+  }
+
+  setCurrentTab = () => {
+    this.selectedTab = this.tabs.getSelected()!;
+  };
 }
