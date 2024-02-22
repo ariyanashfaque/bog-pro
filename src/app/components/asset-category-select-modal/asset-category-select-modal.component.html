@@ -1,0 +1,205 @@
+<div
+  class="custom fixed left-0 w-full bottom-[-60px] h-1/3 md:h-1/3 rounded-lg shadow bg-white-800 transform transition-transform duration-800 z-50"
+  [class]="!isMenuOpen ? 'translate-y-full' : ''"
+>
+  <div class="h-full w-full flex">
+    <div class="h-full w-[calc(100%-80px)] bg-white rounded-tl-[32px]"></div>
+    <div class="">
+      <svg
+        height="25"
+        viewBox="0 0 100 50"
+        width="50"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M100 0v50H0V0c.543 27.153 22.72 49 50 49S99.457 27.153 99.99 0h.01z"
+          fill="white"
+          fill-rule="evenodd"
+        ></path>
+      </svg>
+      <div class="w-auto h-full bg-white relative">
+        <div
+          class="absolute ml-[5px] -top-12 cursor-pointer w-10 h-10 bg-black rounded-full flex justify-center items-center"
+          (click)="menuToggle()"
+        >
+          <ion-icon class="text-3xl fill-white" name="close"> </ion-icon>
+        </div>
+      </div>
+    </div>
+    <div class="h-full bg-white flex-grow rounded-tr-[32px]"></div>
+  </div>
+  <div class="fixed left-0 top-8 w-full h-full">
+    <div class="ml-10">
+      <div class="font-bold text-[20px] md:text-[24px] mb-2">
+        Select Category
+      </div>
+    </div>
+
+    <ion-grid class="w-full ion-padding">
+      <ion-row
+        class="ion-padding w-full ion-align-items-center ion-justify-content-center ion-justify-content-between"
+      >
+        <ion-col
+          class="ion-align-items-center ion-justify-content-center w-full flex"
+          size="3"
+          sizeMd="1.3"
+          sizeLg="1.3"
+        >
+          <div>
+            <ion-button fill="clear">
+              <ion-icon
+                size="large"
+                style="text-align: center"
+                class="border-2 rounded p-3 bgColor h-12 w-12"
+                src="../../../assets/segment-icons/sim.svg"
+              ></ion-icon>
+            </ion-button>
+            <ion-text style="text-align: center" color="dark">
+              <h1>Sim</h1>
+            </ion-text>
+          </div>
+        </ion-col>
+        <ion-col
+          class="ion-align-items-center ion-justify-content-center w-full flex"
+          size="3"
+          sizeMd="1.3"
+          sizeLg="1.3"
+        >
+          <div>
+            <ion-button fill="clear">
+              <ion-icon
+                size="large"
+                style="text-align: center"
+                class="border-2 rounded p-3 bgColor h-12 w-12"
+                src="../../../assets/segment-icons/electrical.svg"
+              ></ion-icon>
+            </ion-button>
+            <ion-text style="text-align: center" color="dark">
+              <h1>Sim</h1>
+            </ion-text>
+          </div>
+        </ion-col>
+        <ion-col
+          class="ion-align-items-center ion-justify-content-center w-full flex"
+          size="3"
+          sizeMd="1.3"
+          sizeLg="1.3"
+        >
+          <div>
+            <ion-button fill="clear">
+              <ion-icon
+                size="large"
+                style="text-align: center"
+                class="border-2 rounded p-3 bgColor h-12 w-12"
+                src="../../../assets/segment-icons/materialManagement.svg"
+              ></ion-icon>
+            </ion-button>
+            <ion-text style="text-align: center" color="dark">
+              <h1>Sim</h1>
+            </ion-text>
+          </div>
+        </ion-col>
+        <ion-col
+          class="ion-align-items-center ion-justify-content-center w-full flex"
+          size="3"
+          sizeMd="1.3"
+          sizeLg="1.3"
+        >
+          <div>
+            <ion-button fill="clear">
+              <ion-icon
+                size="large"
+                style="text-align: center"
+                class="border-2 rounded p-3 bgColor h-12 w-12"
+                src="../../../assets/segment-icons/sim.svg"
+              ></ion-icon>
+            </ion-button>
+            <ion-text style="text-align: center" color="dark">
+              <h1>Sim</h1>
+            </ion-text>
+          </div>
+        </ion-col>
+        <ion-col
+          class="ion-align-items-center ion-justify-content-center w-full flex"
+          size="3"
+          sizeMd="1.3"
+          sizeLg="1.3"
+        >
+          <div>
+            <ion-button fill="clear">
+              <ion-icon
+                size="large"
+                style="text-align: center"
+                class="border-2 rounded p-3 bgColor h-12 w-12"
+                src="../../../assets/segment-icons/materialManagement.svg"
+              ></ion-icon>
+            </ion-button>
+            <ion-text style="text-align: center" color="dark">
+              <h1>Sim</h1>
+            </ion-text>
+          </div>
+        </ion-col>
+        <ion-col
+          class="ion-align-items-center ion-justify-content-center w-full flex"
+          size="3"
+          sizeMd="1.3"
+          sizeLg="1.3"
+        >
+          <div>
+            <ion-button fill="clear">
+              <ion-icon
+                size="large"
+                style="text-align: center"
+                class="border-2 rounded p-3 bgColor h-12 w-12"
+                src="../../../assets/segment-icons/sim.svg"
+              ></ion-icon>
+            </ion-button>
+            <ion-text style="text-align: center" color="dark">
+              <h1>Sim</h1>
+            </ion-text>
+          </div>
+        </ion-col>
+        <ion-col
+          class="ion-align-items-center ion-justify-content-center w-full flex"
+          size="3"
+          sizeMd="1.3"
+          sizeLg="1.3"
+        >
+          <div>
+            <ion-button fill="clear">
+              <ion-icon
+                size="large"
+                style="text-align: center"
+                class="border-2 rounded p-3 bgColor h-12 w-12"
+                src="../../../assets/segment-icons/materialManagement.svg"
+              ></ion-icon>
+            </ion-button>
+            <ion-text style="text-align: center" color="dark">
+              <h1>Sim</h1>
+            </ion-text>
+          </div>
+        </ion-col>
+        <ion-col
+          class="ion-align-items-center ion-justify-content-center w-full flex"
+          size="3"
+          sizeMd="1.3"
+          sizeLg="1.3"
+        >
+          <div>
+            <ion-button fill="clear">
+              <ion-icon
+                size="large"
+                style="text-align: center"
+                class="border-2 rounded p-3 bgColor h-12 w-12"
+                src="../../../assets/segment-icons/electrical.svg"
+              ></ion-icon>
+            </ion-button>
+            <ion-text style="text-align: center" color="dark">
+              <h1>Sim</h1>
+            </ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>

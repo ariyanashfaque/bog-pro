@@ -155,7 +155,61 @@
 
                     <ion-row class="my-4">
                       <ion-col size="12" sizeMd="6" class="">
-                        <ion-select
+                        <!-- <ion-select label="Category"> </ion-select> -->
+
+                        <!-- <ion-input
+                        class="cust"
+                          required
+                          type="text"
+                          fill="outline"
+                          label="SAP ID"
+                          placeholder="12512"
+                          formControlName="sapId"
+                          label-placement="floating"
+                          >
+                        </ion-input> -->
+                        <div class="border-2 flex justify-between rounded-md">
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col size="10" class="my-auto">
+                                <ion-text color="dark" class="">
+                                  Category
+                                </ion-text>
+                              </ion-col>
+                              <ion-col class="flex justify-center" size="2">
+                                <ion-button
+                                  size="small"
+                                  shape="round"
+                                  fill="clear"
+                                  color="white"
+                                  (click)="menuToggle()"
+                                >
+                                  <ion-icon
+                                    color="primary"
+                                    slot="end"
+                                    name="chevron-down-outline"
+                                  >
+                                  </ion-icon>
+                                </ion-button>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </div>
+
+                        <!-- <ion-select
+                          label="Category"
+                          [interfaceOptions]="actionSheetButtons"
+                          interface="action-sheet"
+                        >
+                          <ion-select-option value="green"
+                            >Green</ion-select-option
+                          >
+                          <ion-select-option value="blue"
+                            >Blue</ion-select-option
+                          >
+                        </ion-select> -->
+
+                        <!-- <ion-select
                           type="text"
                           fill="outline"
                           label="Category"
@@ -172,7 +226,7 @@
                           <ion-select-option value="orange"
                             >Orange</ion-select-option
                           >
-                        </ion-select>
+                        </ion-select> -->
                       </ion-col>
 
                       <ion-col size="12" sizeMd="6" class="">
@@ -210,7 +264,7 @@
                                 <div>
                                   <ion-img
                                     class="h-[48px] w-[48px]"
-                                    src="https://picsum.photos/200"
+                                    src="../../../../../assets/segment-icons/electrical.svg"
                                   >
                                   </ion-img>
                                 </div>
@@ -218,7 +272,7 @@
                                 <div>
                                   <ion-img
                                     class="h-[48px] w-[48px]"
-                                    src="https://picsum.photos/200"
+                                    src="../../../../../assets/segment-icons/sim.svg"
                                   >
                                   </ion-img>
                                 </div>
@@ -231,13 +285,15 @@
                         <ion-grid class="ion-float-right">
                           <ion-row>
                             <ion-col size="12" class="ion-text-end">
-                              <ion-text color="black"> Add Location <span class="">*</span> </ion-text>
+                              <ion-text color="black">
+                                Add Location <span class="">*</span>
+                              </ion-text>
                             </ion-col>
                           </ion-row>
                           <ion-row>
                             <ion-col>
                               <div
-                                class="flex h-[56px] w-[130px] rounded-sm iconBg p-[10px] ion-align-items-center"
+                                class="flex fixed h-[56px] w-[130px] rounded-sm iconBg p-[10px] ion-align-items-center"
                               >
                                 <div>
                                   <ion-icon
@@ -248,6 +304,14 @@
                                 </div>
                                 <div>
                                   <ion-text>location</ion-text>
+                                </div>
+                                <div
+                                  class="absolute cardIcon -mt-12 right-[-5px] bg-red-500 w-[20px] h-[20px] rounded-full flex items-center ion-justify-content-center"
+                                >
+                                  <ion-icon
+                                    color="white"
+                                    name="checkmark-sharp"
+                                  ></ion-icon>
                                 </div>
                               </div>
                             </ion-col>
@@ -349,4 +413,12 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <app-asset-category-select-modal
+    [isMenuOpen]="isMenuOpen"
+  ></app-asset-category-select-modal>
 </ion-content>
+
+<!-- class="action-sheet-wrapper ion-overlay-wrapper sc-ion-action-sheet-md" -->
+
+<!-- id="ion-overlay-1" -->

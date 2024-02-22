@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   IonImg,
   IonRow,
@@ -14,6 +14,7 @@ import {
   IonContent,
   IonToolbar,
   IonSegment,
+  IonActionSheet,
   IonSelectOption,
   IonSegmentButton,
 } from "@ionic/angular/standalone";
@@ -24,6 +25,7 @@ import {
   ReactiveFormsModule,
 } from "@angular/forms";
 import { HeaderComponent } from "src/app/components/header/header.component";
+import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
 
 @Component({
   standalone: true,
@@ -46,14 +48,17 @@ import { HeaderComponent } from "src/app/components/header/header.component";
     IonToolbar,
     IonContent,
     FormsModule,
+    IonActionSheet,
     HeaderComponent,
     IonSelectOption,
     IonSegmentButton,
     ReactiveFormsModule,
+    AssetCategorySelectModalComponent,
   ],
 })
 export class AssetPage implements OnInit {
   segment: string = "custom1";
+  isMenuOpen: boolean = false;
 
   constructor() {}
 
@@ -63,6 +68,10 @@ export class AssetPage implements OnInit {
   }
   onShow(): void {
     console.log(this.assetForm.value);
+  }
+
+  menuToggle() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
   assetForm: FormGroup = new FormGroup({
     assetId: new FormControl(),
