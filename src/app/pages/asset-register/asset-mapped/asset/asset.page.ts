@@ -24,6 +24,7 @@ import {
   ReactiveFormsModule,
 } from "@angular/forms";
 import { HeaderComponent } from "src/app/components/header/header.component";
+import { AssetRegistrationFooterComponent } from "src/app/components/asset-registration-footer/asset-registration-footer.component";
 
 @Component({
   standalone: true,
@@ -50,6 +51,7 @@ import { HeaderComponent } from "src/app/components/header/header.component";
     IonSelectOption,
     IonSegmentButton,
     ReactiveFormsModule,
+    AssetRegistrationFooterComponent,
   ],
 })
 export class AssetPage implements OnInit {
