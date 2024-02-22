@@ -1,7 +1,8 @@
 import {
   close,
-  navigate,
+  camera,
   business,
+  navigate,
   mapOutline,
   homeOutline,
   locationOutline,
@@ -9,8 +10,8 @@ import {
   helpCircleOutline,
   listCircleOutline,
   chevronDownOutline,
-  personCircleOutline,
   documentTextOutline,
+  personCircleOutline,
   notificationsOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
@@ -27,17 +28,18 @@ export class AppComponent {
   constructor() {
     addIcons({
       close,
+      camera,
       business,
       navigate,
       mapOutline,
       homeOutline,
       locationOutline,
       clipboardOutline,
-      listCircleOutline,
       helpCircleOutline,
+      listCircleOutline,
       chevronDownOutline,
-      personCircleOutline,
       documentTextOutline,
+      personCircleOutline,
       notificationsOutline,
     });
   }
