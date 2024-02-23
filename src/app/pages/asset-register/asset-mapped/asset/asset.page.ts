@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import {
   IonImg,
   IonRow,
@@ -25,6 +25,9 @@ import {
 } from "@angular/forms";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { AssetRegistrationFooterComponent } from "src/app/components/asset-registration-footer/asset-registration-footer.component";
+import { Store } from "@ngrx/store";
+import { ADD_ASSET, UPDATE_ASSET } from "src/app/store/actions/plant.action";
+import { AssetsModel, PlantsModel } from "src/app/store/models/plant.model";
 
 @Component({
   standalone: true,
@@ -55,11 +58,28 @@ import { AssetRegistrationFooterComponent } from "src/app/components/asset-regis
   ],
 })
 export class AssetPage implements OnInit {
-  segment: string = "custom1";
+  store = inject(Store);
 
-  constructor() {}
+  segment: string;
+  asset?: AssetsModel;
+
+  @Input()
+  set assetId(assetId: string) {
+    this.store.select("plant").subscribe({
+      next: (plant: PlantsModel) => {
+        if (plant.assets)
+          this.asset = plant.assets.find((asset) => asset.id === assetId);
+      },
+    });
+  }
+
+  constructor() {
+    this.asset = {};
+    this.segment = "custom1";
+  }
 
   ngOnInit() {}
+
   handleChange(event: any) {
     this.segment = event?.detail?.value;
   }

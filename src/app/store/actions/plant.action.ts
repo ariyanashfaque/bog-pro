@@ -30,3 +30,7 @@ export const UPDATE_ASSET = createAction(
   "UPDATE_ASSET",
   (asset: AssetsModel) => ({ asset }),
 );
+
+export const ADD_ASSET = createAction("ADD_ASSET", (asset: AssetsModel) => ({
+  asset,
+}));

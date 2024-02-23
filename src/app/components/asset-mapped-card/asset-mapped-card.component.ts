@@ -14,8 +14,8 @@ import {
   IonCardContent,
   IonCardSubtitle,
 } from "@ionic/angular/standalone";
-import { RouterModule } from "@angular/router";
-import { Component, Input, OnInit } from "@angular/core";
+import { Router, RouterModule } from "@angular/router";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import { AssetsModel } from "src/app/store/models/plant.model";
 
 @Component({
@@ -42,6 +42,8 @@ import { AssetsModel } from "src/app/store/models/plant.model";
   styleUrls: ["./asset-mapped-card.component.scss"],
 })
 export class AssetMappedCardComponent implements OnInit {
+  router = inject(Router);
+
   @Input() plantId: string;
   @Input() asset: AssetsModel;
 
@@ -50,7 +52,11 @@ export class AssetMappedCardComponent implements OnInit {
     this.plantId = "";
   }
 
-  ngOnInit() {
-    console.log(this.plantId);
-  }
+  ngOnInit() {}
+
+  handleNavigate = (assetId?: string) => {
+    this.router.navigate([
+      `/asset-register/asset-mapped/${this.plantId}/asset/${assetId}`,
+    ]);
+  };
 }
