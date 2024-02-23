@@ -8,6 +8,7 @@ import {
   IonIcon,
   IonTitle,
   IonInput,
+  IonLabel,
   IonHeader,
   IonButton,
   IonSelect,
@@ -39,6 +40,7 @@ import { AssetCategorySelectModalComponent } from "src/app/components/asset-cate
     IonIcon,
     IonGrid,
     IonText,
+    IonLabel,
     IonInput,
     IonTitle,
     IonButton,
@@ -59,6 +61,7 @@ import { AssetCategorySelectModalComponent } from "src/app/components/asset-cate
 export class AssetPage implements OnInit {
   segment: string = "custom1";
   isMenuOpen: boolean = false;
+  // @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
   constructor() {}
 
@@ -70,9 +73,10 @@ export class AssetPage implements OnInit {
     console.log(this.assetForm.value);
   }
 
-  menuToggle() {
+  handleMenuToggle = () => {
     this.isMenuOpen = !this.isMenuOpen;
-  }
+  };
+
   assetForm: FormGroup = new FormGroup({
     assetId: new FormControl(),
     sapId: new FormControl(""),

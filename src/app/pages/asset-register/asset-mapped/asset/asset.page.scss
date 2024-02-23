@@ -41,28 +41,3 @@ span {
 .cardIcon {
   background-color: #007382;
 }
-
-ion-select::part(icon) {
-  background-image: url("../../../../../assets/segment-icons/sim.svg");
-  opacity: 1;
-  margin-left: 1em;
-  color: #007382;
-}
-
-// ion-select {
-//   background-color: #007382;
-//   --placeholder-opacity: 1;
-//   width: 100%;
-//   justify-content: center;
-// }
-/* Note: These styles should be located in your global stylesheet */
-// ion-action-sheet.my-custom-class {
-//   --width: 100%;
-//   --background: #f58840;
-//   --backdrop-opacity: 0.6;
-//   --button-background-selected: #e97223;
-//   --button-color: #000000;
-//   --color: #fff;
-//   /* role: "destructive" button iOS styling override */
-//   --ion-color-danger: #000000;
-// }

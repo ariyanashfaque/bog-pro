@@ -1,25 +1,30 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import {
-  IonIcon,
   IonImg,
   IonCol,
-  IonText,
   IonRow,
+  IonIcon,
+  IonText,
   IonGrid,
+  IonTitle,
   IonButton,
-  IonSelect,
+  IonFooter,
+  IonToolbar,
   IonSelectOption,
 } from "@ionic/angular/standalone";
 
 @Component({
   imports: [
-    IonButton,
-    IonGrid,
     IonRow,
-    IonText,
     IonCol,
     IonImg,
+    IonGrid,
+    IonText,
     IonIcon,
+    IonTitle,
+    IonFooter,
+    IonButton,
+    IonToolbar,
     IonSelectOption,
   ],
   standalone: true,
@@ -34,7 +39,9 @@ export class AssetCategorySelectModalComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
   menuToggle() {
     this.isMenuOpen = !this.isMenuOpen;
+    console.log(this.isMenuOpen);
   }
 }

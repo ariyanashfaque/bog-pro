@@ -101,12 +101,13 @@
                       <ion-col size="12" sizeMd="6" class="">
                         <ion-input
                           required
+                          class="custom-input"
                           type="text"
                           fill="outline"
-                          label="Enter name"
+                          label="Enter name "
                           label-placement="floating"
                           formControlName="assetname"
-                          placeholder="Roof-ACC-Cement House"
+                          placeholder="Enter name"
                         >
                         </ion-input>
                       </ion-col>
@@ -155,19 +156,6 @@
 
                     <ion-row class="my-4">
                       <ion-col size="12" sizeMd="6" class="">
-                        <!-- <ion-select label="Category"> </ion-select> -->
-
-                        <!-- <ion-input
-                        class="cust"
-                          required
-                          type="text"
-                          fill="outline"
-                          label="SAP ID"
-                          placeholder="12512"
-                          formControlName="sapId"
-                          label-placement="floating"
-                          >
-                        </ion-input> -->
                         <div class="border-2 flex justify-between rounded-md">
                           <ion-grid>
                             <ion-row>
@@ -182,7 +170,7 @@
                                   shape="round"
                                   fill="clear"
                                   color="white"
-                                  (click)="menuToggle()"
+                                  (click)="handleMenuToggle()"
                                 >
                                   <ion-icon
                                     color="primary"
@@ -195,38 +183,6 @@
                             </ion-row>
                           </ion-grid>
                         </div>
-
-                        <!-- <ion-select
-                          label="Category"
-                          [interfaceOptions]="actionSheetButtons"
-                          interface="action-sheet"
-                        >
-                          <ion-select-option value="green"
-                            >Green</ion-select-option
-                          >
-                          <ion-select-option value="blue"
-                            >Blue</ion-select-option
-                          >
-                        </ion-select> -->
-
-                        <!-- <ion-select
-                          type="text"
-                          fill="outline"
-                          label="Category"
-                          [multiple]="true"
-                          label-placement="floating"
-                          formControlName="assetCategory"
-                        >
-                          <ion-select-option value="apple"
-                            >Apple</ion-select-option
-                          >
-                          <ion-select-option value="banana"
-                            >Banana</ion-select-option
-                          >
-                          <ion-select-option value="orange"
-                            >Orange</ion-select-option
-                          >
-                        </ion-select> -->
                       </ion-col>
 
                       <ion-col size="12" sizeMd="6" class="">
@@ -319,12 +275,6 @@
                         </ion-grid>
                       </ion-col>
                     </ion-row>
-
-                    <!-- <ion-col size="12">
-                      <ion-button type="submit" fill="clear" shape="round">
-                        Click me
-                      </ion-button>
-                    </ion-col> -->
                   </form>
                 </ion-grid>
               }
@@ -418,7 +368,3 @@
     [isMenuOpen]="isMenuOpen"
   ></app-asset-category-select-modal>
 </ion-content>
-
-<!-- class="action-sheet-wrapper ion-overlay-wrapper sc-ion-action-sheet-md" -->
-
-<!-- id="ion-overlay-1" -->
