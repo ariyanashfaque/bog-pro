@@ -1,4 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import {
+  FormGroup,
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+} from "@angular/forms";
 import {
   IonImg,
   IonRow,
@@ -19,13 +24,11 @@ import {
   IonSelectOption,
   IonSegmentButton,
 } from "@ionic/angular/standalone";
-import {
-  FormGroup,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-} from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { Component, Input, OnInit, inject } from "@angular/core";
+import { AssetsModel, PlantsModel } from "src/app/store/models/plant.model";
 import { HeaderComponent } from "src/app/components/header/header.component";
+import { AssetRegistrationFooterComponent } from "src/app/components/asset-registration-footer/asset-registration-footer.component";
 import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
 
 @Component({
@@ -55,17 +58,35 @@ import { AssetCategorySelectModalComponent } from "src/app/components/asset-cate
     IonSelectOption,
     IonSegmentButton,
     ReactiveFormsModule,
+    AssetRegistrationFooterComponent,
     AssetCategorySelectModalComponent,
   ],
 })
 export class AssetPage implements OnInit {
-  segment: string = "custom1";
-  isMenuOpen: boolean = false;
-  // @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
+  store = inject(Store);
 
-  constructor() {}
+  segment: string;
+  asset?: AssetsModel;
+  isMenuOpen: boolean;
+
+  @Input()
+  set assetId(assetId: string) {
+    this.store.select("plant").subscribe({
+      next: (plant: PlantsModel) => {
+        if (plant.assets)
+          this.asset = plant.assets.find((asset) => asset.id === assetId);
+      },
+    });
+  }
+
+  constructor() {
+    this.asset = {};
+    this.isMenuOpen = false;
+    this.segment = "custom1";
+  }
 
   ngOnInit() {}
+
   handleChange(event: any) {
     this.segment = event?.detail?.value;
   }

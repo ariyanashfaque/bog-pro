@@ -11,4 +11,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import("./asset/asset.page").then((page) => page.AssetPage),
   },
+  {
+    path: "asset/:assetId",
+    loadComponent: () =>
+      import("./asset/asset.page").then((page) => page.AssetPage),
+  },
 ];

@@ -91,7 +91,6 @@
           </div>
 
           <!-- segment container -->
-
           <div class="max-w-full mx-auto p-4">
             @switch (segment) {
               @case ("custom1") {
@@ -121,6 +120,7 @@
                           label-placement="floating"
                           formControlName="assetStatus"
                           placeholder="Roof-ACC-Cement House"
+                          errorText="Required"
                         >
                         </ion-input>
                       </ion-col>
@@ -368,3 +368,5 @@
     [isMenuOpen]="isMenuOpen"
   ></app-asset-category-select-modal>
 </ion-content>
+
+<app-asset-registration-footer></app-asset-registration-footer>

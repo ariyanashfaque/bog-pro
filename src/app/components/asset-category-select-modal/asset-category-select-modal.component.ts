@@ -1,4 +1,3 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import {
   IonImg,
   IonCol,
@@ -12,6 +11,7 @@ import {
   IonToolbar,
   IonSelectOption,
 } from "@ionic/angular/standalone";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 @Component({
   imports: [
@@ -42,6 +42,5 @@ export class AssetCategorySelectModalComponent implements OnInit {
 
   menuToggle() {
     this.isMenuOpen = !this.isMenuOpen;
-    console.log(this.isMenuOpen);
   }
 }
