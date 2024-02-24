@@ -3,6 +3,7 @@ import {
   FormControl,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from "@angular/forms";
 import {
   IonImg,
@@ -68,13 +69,19 @@ export class AssetPage implements OnInit {
   segment: string;
   asset?: AssetsModel;
   isMenuOpen: boolean;
+  assetRegistrationForm: FormGroup;
 
   @Input()
   set assetId(assetId: string) {
     this.store.select("plant").subscribe({
       next: (plant: PlantsModel) => {
-        if (plant.assets)
+        if (plant.assets) {
           this.asset = plant.assets.find((asset) => asset.id === assetId);
+          this.assetRegistrationForm.patchValue({
+            ...this.asset?.assetInfo,
+            assetId: this.asset?.id,
+          });
+        }
       },
     });
   }
@@ -83,6 +90,17 @@ export class AssetPage implements OnInit {
     this.asset = {};
     this.isMenuOpen = false;
     this.segment = "custom1";
+    this.assetRegistrationForm = new FormGroup({
+      sapId: new FormControl(""),
+      assetName: new FormControl("", Validators.required),
+      assetType: new FormControl("", Validators.required),
+      costCenter: new FormControl("", Validators.required),
+      assetStatus: new FormControl("", Validators.required),
+      assetImages: new FormControl("", Validators.required),
+      assetId: new FormControl({ value: "", disabled: true }),
+      assetLocation: new FormControl("", Validators.required),
+      assetParentType: new FormControl("", Validators.required),
+    });
   }
 
   ngOnInit() {}
@@ -90,20 +108,10 @@ export class AssetPage implements OnInit {
   handleChange(event: any) {
     this.segment = event?.detail?.value;
   }
-  onShow(): void {
-    console.log(this.assetForm.value);
-  }
 
   handleMenuToggle = () => {
     this.isMenuOpen = !this.isMenuOpen;
   };
 
-  assetForm: FormGroup = new FormGroup({
-    assetId: new FormControl(),
-    sapId: new FormControl(""),
-    assetname: new FormControl(""),
-    costCenter: new FormControl(""),
-    assetStatus: new FormControl(""),
-    assetCategory: new FormControl([]),
-  });
+  handleSubmit(): void {}
 }
