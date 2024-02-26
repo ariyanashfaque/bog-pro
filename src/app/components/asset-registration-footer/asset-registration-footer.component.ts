@@ -6,7 +6,7 @@ import {
   IonToolbar,
   IonButtons,
 } from "@ionic/angular/standalone";
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
   standalone: true,
@@ -16,6 +16,7 @@ import { Component, OnInit } from "@angular/core";
   imports: [IonIcon, IonButton, IonButtons, IonToolbar, IonFooter, IonTitle],
 })
 export class AssetRegistrationFooterComponent implements OnInit {
+  @Input() isFormValid: boolean = true;
   constructor() {}
 
   ngOnInit() {}

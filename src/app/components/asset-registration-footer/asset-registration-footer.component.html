@@ -4,9 +4,21 @@
       <ion-button class="w-full" color="light" expand="full">
         Cancel
       </ion-button>
-      <ion-button class="w-full" color="light" expand="full" [disabled]="true">
-        Send for approval
-      </ion-button>
+
+      @if (isFormValid) {
+        <ion-button class="w-full" color="light" expand="full">
+          Send for approval
+        </ion-button>
+      } @else {
+        <ion-button
+          class="w-full"
+          color="light"
+          expand="full"
+          [disabled]="true"
+        >
+          Send for approval
+        </ion-button>
+      }
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

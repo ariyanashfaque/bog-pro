@@ -42,5 +42,6 @@ export class AssetCategorySelectModalComponent implements OnInit {
 
   menuToggle() {
     this.isMenuOpen = !this.isMenuOpen;
+    this.isMenuToggleOpen.emit(this.isMenuOpen);
   }
 }

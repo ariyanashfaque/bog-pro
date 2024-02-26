@@ -1,3 +1,6 @@
+@if (isMenuOpen) {
+  <ion-backdrop [visible]="true"></ion-backdrop>
+}
 <app-header headerTitle="Asset Register" [isDefaultHref]="true"></app-header>
 
 <ion-content [fullscreen]="true" color="background">
@@ -209,7 +212,12 @@
                         <ion-grid>
                           <ion-row>
                             <ion-col size="12">
-                              <ion-text color="black"> Add Picture </ion-text>
+                              <ion-text
+                                class="text-[16px] font-gotham_book"
+                                color="black"
+                              >
+                                Add Picture
+                              </ion-text>
                             </ion-col>
                           </ion-row>
                           <ion-row>
@@ -246,7 +254,7 @@
                         <ion-grid class="ion-float-right">
                           <ion-row>
                             <ion-col size="12" class="ion-text-end">
-                              <ion-text color="black">
+                              <ion-text class="text-[16px] font-gotham_book">
                                 Add Location <span>*</span>
                               </ion-text>
                             </ion-col>
@@ -254,17 +262,22 @@
                           <ion-row>
                             <ion-col>
                               <div
-                                class="flex fixed h-[56px] w-[130px] rounded-sm iconBg p-[10px] ion-align-items-center"
+                                class="flex fixed h-[56px] w-[130px] rounded-md iconBg p-[15px] -ml-[5px] ion-align-items-center"
                               >
                                 <div>
                                   <ion-icon
+                                    color="primary"
                                     size="large"
                                     name="location-outline"
                                   >
                                   </ion-icon>
                                 </div>
                                 <div>
-                                  <ion-text>location</ion-text>
+                                  <ion-text
+                                    color="primary"
+                                    class="text-[16px] font-gotham_medium"
+                                    >location</ion-text
+                                  >
                                 </div>
                                 <div
                                   class="absolute cardIcon -mt-12 right-[-5px] bg-red-500 w-[20px] h-[20px] rounded-full flex items-center ion-justify-content-center"
@@ -368,10 +381,15 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <app-asset-category-select-modal
-    [isMenuOpen]="isMenuOpen"
-  ></app-asset-category-select-modal>
 </ion-content>
+<app-asset-category-select-modal
+  [isMenuOpen]="isMenuOpen"
+  (isMenuToggleOpen)="handleErrorModal($event)"
+>
+</app-asset-category-select-modal>
 
-<app-asset-registration-footer></app-asset-registration-footer>
+@if (!isMenuOpen) {
+  <app-asset-registration-footer
+    [isFormValid]="isFormValid"
+  ></app-asset-registration-footer>
+}
