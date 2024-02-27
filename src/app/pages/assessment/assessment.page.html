@@ -1,13 +1,18 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>assessment</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header headerTitle="Assessment"></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">assessment</ion-title>
-    </ion-toolbar>
-  </ion-header>
+@if (isAssessmentModalOpen == true) {
+  <ion-backdrop [visible]="true"> </ion-backdrop>
+}
+
+<ion-content [fullscreen]="true" color="background">
+  <button
+    class="bg-cyan-900 text-xl text-white p-4 rounded-full m-2"
+    (click)="assessmentModalToggle()"
+  >
+    modal
+  </button>
 </ion-content>
+
+<app-assessment-modal
+  [(isMenuOpen)]="isAssessmentModalOpen"
+></app-assessment-modal>
