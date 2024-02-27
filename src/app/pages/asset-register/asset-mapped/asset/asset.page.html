@@ -99,10 +99,7 @@
             @switch (segment) {
               @case ("custom1") {
                 <ion-grid>
-                  <form
-                    (submit)="handleSubmit()"
-                    [formGroup]="assetRegistrationForm"
-                  >
+                  <form [formGroup]="assetRegistrationForm">
                     <ion-row class="my-4">
                       <ion-col size="12" sizeMd="6">
                         <ion-input
@@ -389,5 +386,6 @@
 @if (!isMenuOpen) {
   <app-asset-registration-footer
     [isFormValid]="isFormValid"
+    [assetInDraft]="this.assetInDraft"
   ></app-asset-registration-footer>
 }

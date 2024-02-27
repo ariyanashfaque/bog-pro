@@ -5,20 +5,15 @@
         Cancel
       </ion-button>
 
-      @if (isFormValid) {
-        <ion-button class="w-full" color="light" expand="full">
-          Send for approval
-        </ion-button>
-      } @else {
-        <ion-button
-          class="w-full"
-          color="black"
-          expand="full"
-          [disabled]="true"
-        >
-          Send for approval
-        </ion-button>
-      }
+      <ion-button
+        class="w-full"
+        color="black"
+        expand="full"
+        [disabled]="!isFormValid()"
+        (click)="handleSendForApproval()"
+      >
+        Send for approval
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

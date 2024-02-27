@@ -153,3 +153,7 @@ export interface AssetsResponse {
   message: string;
   data: AssetsModel[];
 }
+export interface AssetsResponse {
+  message: string;
+  data: AssetsModel[];
+}

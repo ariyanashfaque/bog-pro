@@ -34,16 +34,24 @@ import {
   Input,
   OnInit,
   Output,
+  WritableSignal,
   inject,
+  signal,
 } from "@angular/core";
 import {
   AssetCategoryModel,
   AssetsModel,
+  AssetsResponse,
   PlantsModel,
+  PlantsResponse,
 } from "src/app/store/models/plant.model";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { AssetRegistrationFooterComponent } from "src/app/components/asset-registration-footer/asset-registration-footer.component";
 import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
+import { HttpService } from "src/app/services/http-service/http-client.service";
+import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ToastService } from "src/app/services/toast-service/toast.service";
 
 @Component({
   standalone: true,
@@ -84,10 +92,19 @@ export class AssetPage implements OnInit {
   segment: string;
   asset?: AssetsModel;
   isMenuOpen: boolean;
-  isFormValid: boolean;
   assetRegistrationForm: FormGroup;
   assetCategory?: AssetCategoryModel;
   isMenuToggleOpen = new EventEmitter<boolean>(false);
+  isFormValid: WritableSignal<boolean> = signal(false);
+  assetInDraft: { id?: string; asset?: AssetsModel };
+  httpService = inject(HttpService);
+  isLoading: WritableSignal<boolean> = signal(false);
+  toastService = inject(ToastService);
+
+  @Input()
+  set id(plantId: string) {
+    this.assetInDraft.id = plantId;
+  }
 
   @Input()
   set assetId(assetId: string) {
@@ -106,9 +123,9 @@ export class AssetPage implements OnInit {
 
   constructor() {
     this.asset = {};
+    this.assetInDraft = {};
     this.assetCategory = {};
     this.isMenuOpen = false;
-    this.isFormValid = false;
     this.segment = "custom1";
 
     this.assetRegistrationForm = new FormGroup({
@@ -126,11 +143,16 @@ export class AssetPage implements OnInit {
 
   ngOnInit() {
     this.assetRegistrationForm.valueChanges.subscribe({
-      next: (value) => {
+      next: () => {
         if (this.assetRegistrationForm.valid) {
-          this.isFormValid = true;
+          this.isFormValid.set(true);
+          this.asset = {
+            id: this.asset?.id,
+            assetInfo: this.assetRegistrationForm.value,
+          };
+          this.assetInDraft.asset = this.asset;
         } else {
-          this.isFormValid = false;
+          this.isFormValid.set(false);
         }
       },
     });
@@ -152,6 +174,9 @@ export class AssetPage implements OnInit {
     if (this.asset) {
       this.asset.assetCategories = event;
     }
+
+    // this.plantToBeUpdate?.push(this.asset);
+
     console.log(this.asset);
   }
   handleSubmit(): void {}

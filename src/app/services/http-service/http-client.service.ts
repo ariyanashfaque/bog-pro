@@ -33,6 +33,10 @@ export class HttpService {
     return this.http.post<AssetsResponse>(ApiEndPoint.getAllAssets, data);
   };
 
+  UpdateAsset = (data?: any): Observable<AssetsResponse> => {
+    return this.http.post<AssetsResponse>(ApiEndPoint.updatePlant, data);
+  };
+
   AddGuidedInspection = (data?: any): Observable<any> => {
     return this.http.post<any>(ApiEndPoint.addGuidedInspection, data);
   };

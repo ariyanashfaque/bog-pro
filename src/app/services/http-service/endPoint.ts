@@ -5,6 +5,7 @@ export const ApiEndPoint = {
   addPlant: `${config.serverURL}addPlant`,
   verifyOtp: `${config.serverURL}verifyOtp`,
   updatePlant: `${config.serverURL}updatePlant`,
+  updateAsset: `${config.serverURL}updateAsset`,
   getAllPlants: `${config.serverURL}getAllPlants`,
   getAllAssets: `${config.serverURL}getAllAssets`,
   addGuidedInspection: `${config.serverURL}addGuidedInspection`,
