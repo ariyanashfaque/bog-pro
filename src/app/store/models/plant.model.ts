@@ -74,7 +74,7 @@ interface AssetSimCategoryModel {
 }
 
 // * Asset Category Model * //
-interface AssetCategoryModel {
+export interface AssetCategoryModel {
   sim?: boolean;
   quarry?: boolean;
   insurance?: boolean;

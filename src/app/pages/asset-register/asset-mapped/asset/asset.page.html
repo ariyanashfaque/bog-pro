@@ -1,6 +1,7 @@
 @if (isMenuOpen) {
-  <ion-backdrop [visible]="true"></ion-backdrop>
+  <ion-backdrop [visible]="true"> </ion-backdrop>
 }
+
 <app-header headerTitle="Asset Register" [isDefaultHref]="true"></app-header>
 
 <ion-content [fullscreen]="true" color="background">
@@ -222,28 +223,16 @@
                           </ion-row>
                           <ion-row>
                             <ion-col>
-                              <div class="flex gap-4 ion-align-items-end">
+                              <div class="flex">
                                 <div
-                                  class="h-[56px] w-[56px] rounded-sm iconBg p-[10px]"
+                                  class="h-[66px] w-[66px] rounded-md iconBg justify-center items-center flex"
                                 >
-                                  <ion-icon size="large" name="camera">
+                                  <ion-icon
+                                    color="primary"
+                                    class="h-[44px] w-[44px]"
+                                    name="camera"
+                                  >
                                   </ion-icon>
-                                </div>
-
-                                <div>
-                                  <ion-img
-                                    class="h-[48px] w-[48px]"
-                                    src="../../../../../assets/segment-icons/electrical.svg"
-                                  >
-                                  </ion-img>
-                                </div>
-
-                                <div>
-                                  <ion-img
-                                    class="h-[48px] w-[48px]"
-                                    src="../../../../../assets/segment-icons/sim.svg"
-                                  >
-                                  </ion-img>
                                 </div>
                               </div>
                             </ion-col>
@@ -262,7 +251,7 @@
                           <ion-row>
                             <ion-col>
                               <div
-                                class="flex fixed h-[56px] w-[130px] rounded-md iconBg p-[15px] -ml-[5px] ion-align-items-center"
+                                class="flex h-[66px] w-[130px] rounded-md iconBg -ml-[5px] items-center justify-center"
                               >
                                 <div>
                                   <ion-icon
@@ -280,7 +269,7 @@
                                   >
                                 </div>
                                 <div
-                                  class="absolute cardIcon -mt-12 right-[-5px] bg-red-500 w-[20px] h-[20px] rounded-full flex items-center ion-justify-content-center"
+                                  class="absolute cardIcon -mt-14 right-[-2px] w-[20px] h-[20px] rounded-full flex items-center ion-justify-content-center"
                                 >
                                   <ion-icon
                                     color="white"
@@ -372,6 +361,14 @@
                         >
                       </ion-select>
                     </ion-col>
+                    <ion-col size="12">
+                      <ion-textarea
+                        label="Outline textarea"
+                        labelPlacement="floating"
+                        fill="outline"
+                        placeholder="Enter text"
+                      ></ion-textarea>
+                    </ion-col>
                   </ion-row>
                 </ion-grid>
               }
@@ -384,6 +381,7 @@
 </ion-content>
 <app-asset-category-select-modal
   [isMenuOpen]="isMenuOpen"
+  (CategoryChanged)="CategoryChanged($event)"
   (isMenuToggleOpen)="handleErrorModal($event)"
 >
 </app-asset-category-select-modal>

@@ -25,10 +25,22 @@ import {
   IonSelectOption,
   IonSegmentButton,
   IonBackdrop,
+  IonTextarea,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
-import { Component, EventEmitter, Input, OnInit, inject } from "@angular/core";
-import { AssetsModel, PlantsModel } from "src/app/store/models/plant.model";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from "@angular/core";
+import {
+  AssetCategoryModel,
+  AssetsModel,
+  PlantsModel,
+} from "src/app/store/models/plant.model";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { AssetRegistrationFooterComponent } from "src/app/components/asset-registration-footer/asset-registration-footer.component";
 import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
@@ -39,7 +51,6 @@ import { AssetCategorySelectModalComponent } from "src/app/components/asset-cate
   templateUrl: "./asset.page.html",
   styleUrls: ["./asset.page.scss"],
   imports: [
-    IonBackdrop,
     IonCol,
     IonRow,
     IonImg,
@@ -55,6 +66,8 @@ import { AssetCategorySelectModalComponent } from "src/app/components/asset-cate
     IonSegment,
     IonToolbar,
     IonContent,
+    IonTextarea,
+    IonBackdrop,
     FormsModule,
     IonActionSheet,
     HeaderComponent,
@@ -73,6 +86,7 @@ export class AssetPage implements OnInit {
   isMenuOpen: boolean;
   isFormValid: boolean;
   assetRegistrationForm: FormGroup;
+  assetCategory?: AssetCategoryModel;
   isMenuToggleOpen = new EventEmitter<boolean>(false);
 
   @Input()
@@ -92,32 +106,32 @@ export class AssetPage implements OnInit {
 
   constructor() {
     this.asset = {};
+    this.assetCategory = {};
     this.isMenuOpen = false;
     this.isFormValid = false;
     this.segment = "custom1";
 
     this.assetRegistrationForm = new FormGroup({
       sapId: new FormControl(""),
+      assetType: new FormControl(""),
+      assetImages: new FormControl(""),
+      assetLocation: new FormControl(""),
+      assetParentType: new FormControl(""),
       assetName: new FormControl("", Validators.required),
-      // assetType: new FormControl("", Validators.required),
       costCenter: new FormControl("", Validators.required),
       assetStatus: new FormControl("", Validators.required),
-      // assetImages: new FormControl("", Validators.required),
       assetId: new FormControl({ value: "", disabled: true }),
-      // assetLocation: new FormControl("", Validators.required),
-      // assetParentType: new FormControl("", Validators.required),
     });
   }
 
   ngOnInit() {
-    console.log(this.asset?.assetInfo);
-
     this.assetRegistrationForm.valueChanges.subscribe({
       next: (value) => {
         if (this.assetRegistrationForm.valid) {
           this.isFormValid = true;
+        } else {
+          this.isFormValid = false;
         }
-        console.log(this.isFormValid);
       },
     });
   }
@@ -134,5 +148,11 @@ export class AssetPage implements OnInit {
     this.isMenuOpen = event;
   };
 
+  CategoryChanged(event: AssetCategoryModel) {
+    if (this.asset) {
+      this.asset.assetCategories = event;
+    }
+    console.log(this.asset);
+  }
   handleSubmit(): void {}
 }

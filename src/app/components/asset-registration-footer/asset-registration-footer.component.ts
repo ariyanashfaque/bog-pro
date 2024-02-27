@@ -16,8 +16,12 @@ import { Component, Input, OnInit } from "@angular/core";
   imports: [IonIcon, IonButton, IonButtons, IonToolbar, IonFooter, IonTitle],
 })
 export class AssetRegistrationFooterComponent implements OnInit {
-  @Input() isFormValid: boolean = true;
-  constructor() {}
+  @Input() isFormValid: boolean;
+  constructor() {
+    this.isFormValid = false;
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.isFormValid);
+  }
 }
