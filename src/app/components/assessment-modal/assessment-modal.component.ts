@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { IonicModule } from "@ionic/angular";
 
 @Component({
-  selector: 'app-assessment-modal',
+  selector: "app-assessment-modal",
   standalone: true,
-  templateUrl: './assessment-modal.component.html',
-  styleUrls: ['./assessment-modal.component.scss'],
+  templateUrl: "./assessment-modal.component.html",
+  styleUrls: ["./assessment-modal.component.scss"],
   imports: [IonicModule],
 })
 export class AssessmentModalComponent implements OnInit {
