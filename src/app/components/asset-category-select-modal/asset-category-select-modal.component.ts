@@ -40,6 +40,7 @@ import { AssetCategoryModel } from "src/app/store/models/plant.model";
 export class AssetCategorySelectModalComponent implements OnInit {
   assetCategory: AssetCategoryModel;
   @Input() isMenuOpen: boolean = false;
+  buttonActive: boolean = false;
   @Output() CategoryChanged = new EventEmitter<any>();
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
@@ -65,6 +66,11 @@ export class AssetCategorySelectModalComponent implements OnInit {
 
   handleCategory = (categoryType: string) => {
     this.assetCategory[categoryType as keyof AssetCategoryModel] = true;
+    console.log();
+    
+    if (categoryType) {
+      this.buttonActive = !this.buttonActive;
+    }
   };
 
   categorySubmit = () => {

@@ -384,8 +384,25 @@
 </app-asset-category-select-modal>
 
 @if (!isMenuOpen) {
-  <app-asset-registration-footer
-    [isFormValid]="isFormValid"
-    [assetInDraft]="this.assetInDraft"
-  ></app-asset-registration-footer>
+
+  <ion-footer>
+    <ion-toolbar color="primary">
+      <ion-buttons class="w-full" slot="start">
+        <ion-button class="w-full" color="light" expand="full">
+          Cancel
+        </ion-button>
+  
+        <ion-button
+          class="w-full"
+          color="black"
+          expand="full"
+          [disabled]="!isFormValid()"
+          (click)="handleSendForApproval()"
+        >
+          Send for approval
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+  
 }

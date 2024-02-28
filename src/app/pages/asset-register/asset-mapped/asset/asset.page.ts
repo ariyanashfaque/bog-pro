@@ -1,9 +1,9 @@
 import {
   FormGroup,
+  Validators,
   FormControl,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from "@angular/forms";
 import {
   IonImg,
@@ -18,40 +18,39 @@ import {
   IonHeader,
   IonButton,
   IonSelect,
+  IonFooter,
   IonContent,
   IonToolbar,
   IonSegment,
+  IonButtons,
+  IonBackdrop,
+  IonTextarea,
   IonActionSheet,
   IonSelectOption,
   IonSegmentButton,
-  IonBackdrop,
-  IonTextarea,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
 import {
-  Component,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
-  WritableSignal,
   inject,
   signal,
+  Component,
+  EventEmitter,
+  WritableSignal,
 } from "@angular/core";
 import {
-  AssetCategoryModel,
   AssetsModel,
-  AssetsResponse,
   PlantsModel,
-  PlantsResponse,
+  AssetsResponse,
+  AssetCategoryModel,
 } from "src/app/store/models/plant.model";
-import { HeaderComponent } from "src/app/components/header/header.component";
-import { AssetRegistrationFooterComponent } from "src/app/components/asset-registration-footer/asset-registration-footer.component";
-import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
-import { HttpService } from "src/app/services/http-service/http-client.service";
-import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
 import { HttpErrorResponse } from "@angular/common/http";
+import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
+import { HeaderComponent } from "src/app/components/header/header.component";
+import { HttpService } from "src/app/services/http-service/http-client.service";
+import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
 
 @Component({
   standalone: true,
@@ -68,9 +67,11 @@ import { ToastService } from "src/app/services/toast-service/toast.service";
     IonLabel,
     IonInput,
     IonTitle,
+    IonFooter,
     IonButton,
     IonHeader,
     IonSelect,
+    IonButtons,
     IonSegment,
     IonToolbar,
     IonContent,
@@ -82,7 +83,6 @@ import { ToastService } from "src/app/services/toast-service/toast.service";
     IonSelectOption,
     IonSegmentButton,
     ReactiveFormsModule,
-    AssetRegistrationFooterComponent,
     AssetCategorySelectModalComponent,
   ],
 })
@@ -93,13 +93,13 @@ export class AssetPage implements OnInit {
   asset?: AssetsModel;
   isMenuOpen: boolean;
   assetRegistrationForm: FormGroup;
+  httpService = inject(HttpService);
   assetCategory?: AssetCategoryModel;
+  toastService = inject(ToastService);
+  assetInDraft: { id?: string; asset?: AssetsModel };
+  isLoading: WritableSignal<boolean> = signal(false);
   isMenuToggleOpen = new EventEmitter<boolean>(false);
   isFormValid: WritableSignal<boolean> = signal(false);
-  assetInDraft: { id?: string; asset?: AssetsModel };
-  httpService = inject(HttpService);
-  isLoading: WritableSignal<boolean> = signal(false);
-  toastService = inject(ToastService);
 
   @Input()
   set id(plantId: string) {
@@ -175,9 +175,24 @@ export class AssetPage implements OnInit {
       this.asset.assetCategories = event;
     }
 
-    // this.plantToBeUpdate?.push(this.asset);
-
     console.log(this.asset);
   }
   handleSubmit(): void {}
+
+  handleSendForApproval() {
+    this.httpService.UpdateAsset({ plant: this.assetInDraft }).subscribe({
+      next: (response: AssetsResponse) => {
+        // plant: response?.data,
+
+        console.log(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.isLoading.set(false);
+        this.toastService.toastFailed(error.error.message);
+      },
+      complete: () => {
+        this.isLoading.set(false);
+      },
+    });
+  }
 }

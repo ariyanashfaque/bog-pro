@@ -9,22 +9,16 @@
   opacity: 1;
 }
 
-// .bgColor {
-//   align-items: center;
-//   background-color: #edf5f5;
-//   border-color: #007382;
-// }
+.changeColor {
+  align-items: center;
+  background-color: #edf5f5;
+  border-color: #007382;
+}
 
 .footerBg {
   background-color: #007382;
 }
 
-ion-button {
-  --background-hover: #3dca1a;
-  --background-activated: #f10505;
-}
-
-ion-icon.active {
-  filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%)
-    hue-rotate(298deg) brightness(102%) contrast(102%);
+ion-button::after {
+  background-color: #000708;
 }
