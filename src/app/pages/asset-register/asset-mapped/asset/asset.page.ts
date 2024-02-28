@@ -114,8 +114,8 @@ export class AssetPage implements OnInit {
     this.store.select("plant").subscribe({
       next: (plant: PlantsModel) => {
         if (plant.assets) {
-          this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
           this.asset = plant.assets.find((asset) => asset.id === assetId) ?? {};
+          this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
         }
       },
     });
@@ -148,6 +148,11 @@ export class AssetPage implements OnInit {
           this.isFormValid.set(true);
           this.asset = {
             id: this.asset?.id,
+            assetSource: {
+              sapSync: false,
+              bulkUpload: false,
+              manualCreation: true,
+            },
             assetInfo: this.assetRegistrationForm.value,
           };
         } else {
@@ -177,7 +182,10 @@ export class AssetPage implements OnInit {
   }
 
   handleSendForApproval = async () => {
-    const loading = await this.loadingCtrl.create({ duration: 3000 });
+    const loading = await this.loadingCtrl.create({
+      duration: 3000,
+      spinner: "bubbles",
+    });
     loading.present();
 
     this.httpService
