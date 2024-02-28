@@ -8,17 +8,16 @@ import {
   IonTitle,
   IonButton,
   IonFooter,
-  IonToolbar,
-  IonSelectOption,
-  IonTextarea,
   IonSelect,
+  IonToolbar,
+  IonTextarea,
+  IonSelectOption,
 } from "@ionic/angular/standalone";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { AssetCategoryModel } from "src/app/store/models/plant.model";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 @Component({
   imports: [
-    IonTextarea,
     IonRow,
     IonCol,
     IonImg,
@@ -28,9 +27,10 @@ import { AssetCategoryModel } from "src/app/store/models/plant.model";
     IonTitle,
     IonFooter,
     IonButton,
-    IonToolbar,
-    IonSelectOption,
     IonSelect,
+    IonToolbar,
+    IonTextarea,
+    IonSelectOption,
   ],
   standalone: true,
   selector: "app-asset-category-select-modal",
@@ -38,13 +38,15 @@ import { AssetCategoryModel } from "src/app/store/models/plant.model";
   styleUrls: ["./asset-category-select-modal.component.scss"],
 })
 export class AssetCategorySelectModalComponent implements OnInit {
+  selectedButton: string = "";
   assetCategory: AssetCategoryModel;
   @Input() isMenuOpen: boolean = false;
-  buttonActive: boolean = false;
   @Output() CategoryChanged = new EventEmitter<any>();
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
+  category: any[];
 
   constructor() {
+    this.category = [];
     this.assetCategory = {
       sim: false,
       quarry: false,
@@ -57,7 +59,11 @@ export class AssetCategorySelectModalComponent implements OnInit {
     };
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // console.log(this.category);
+
+    console.log(this.assetCategory);
+  }
 
   menuToggle() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -66,11 +72,10 @@ export class AssetCategorySelectModalComponent implements OnInit {
 
   handleCategory = (categoryType: string) => {
     this.assetCategory[categoryType as keyof AssetCategoryModel] = true;
-    console.log();
-    
-    if (categoryType) {
-      this.buttonActive = !this.buttonActive;
-    }
+    this.category.push(
+      this.assetCategory[categoryType as keyof AssetCategoryModel],
+    );
+    this.selectedButton = categoryType;
   };
 
   categorySubmit = () => {

@@ -1,24 +1,22 @@
-.buttonBg {
-  background-color: #f6fafb;
-}
+
 .custom {
+  opacity: 1;
   border: 5px;
   border-radius: 32px 32px 0 0;
-  background: transparent 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 8px #00000029;
-  opacity: 1;
+  background: transparent 0% 0% no-repeat padding-box;
 }
 
-.changeColor {
+ion-icon.active {
   align-items: center;
-  background-color: #edf5f5;
   border-color: #007382;
+  background-color: #edf5f5;
 }
 
 .footerBg {
   background-color: #007382;
 }
 
-ion-button::after {
-  background-color: #000708;
+ion-button {
+  color: transparent;
 }

@@ -142,6 +142,8 @@ export class AssetPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.asset?.assetCategories);
+
     this.assetRegistrationForm.valueChanges.subscribe({
       next: () => {
         if (this.assetRegistrationForm.valid) {
@@ -173,11 +175,11 @@ export class AssetPage implements OnInit {
   CategoryChanged(event: AssetCategoryModel) {
     if (this.asset) {
       this.asset.assetCategories = event;
+      this.isMenuOpen = false;
     }
 
     console.log(this.asset);
   }
-  handleSubmit(): void {}
 
   handleSendForApproval() {
     this.httpService.UpdateAsset({ plant: this.assetInDraft }).subscribe({
