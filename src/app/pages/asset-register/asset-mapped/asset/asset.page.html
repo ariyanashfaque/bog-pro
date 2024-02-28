@@ -11,7 +11,7 @@
         <div
           class="max-w-full mt-8 rounded-[8px] bg-white shadow-[0px_0px_6px_0px_#0000002E]"
         >
-          @if (this.asset?.assetCategories) {
+          @if (asset?.assetCategories) {
             <div class="max-w-full mx-auto p-6 border-b-[2px]">
               <!-- Segment tabs -->
               <ion-segment
@@ -38,7 +38,7 @@
                   </div>
                 </ion-segment-button>
 
-                @if (this.asset?.assetCategories?.sim) {
+                @if (asset?.assetCategories?.sim) {
                   <ion-segment-button value="custom2">
                     <div class="backg">
                       <div
@@ -60,7 +60,7 @@
                   </ion-segment-button>
                 }
 
-                @if (this.asset?.assetCategories?.electrical) {
+                @if (asset?.assetCategories?.electrical) {
                   <ion-segment-button value="custom3">
                     <div
                       class="segment-change ion-justify-content-center rounded-full"
@@ -80,7 +80,7 @@
                     </div>
                   </ion-segment-button>
                 }
-                @if (this.asset?.assetCategories?.materialManagement) {
+                @if (asset?.assetCategories?.materialManagement) {
                   <ion-segment-button value="custom4">
                     <div
                       class="segment-change ion-justify-content-center rounded-full"

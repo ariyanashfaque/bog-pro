@@ -10,6 +10,7 @@ export const ApiEndPoint = {
   getAllAssets: `${config.serverURL}getAllAssets`,
   addGuidedInspection: `${config.serverURL}addGuidedInspection`,
   getGuidedInspection: `${config.serverURL}getGuidedInspection`,
+  assetSendForApproval: `${config.serverURL}assetSendForApproval`,
   syncExcelToExpertApp: `${config.serverURL}syncExcelToExpertApp`,
   removeGuidedInspection: `${config.serverURL}removeGuidedInspection`,
   updateGuidedInspection: `${config.serverURL}updateGuidedInspection`,

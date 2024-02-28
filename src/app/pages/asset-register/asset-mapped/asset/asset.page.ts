@@ -28,6 +28,7 @@ import {
   IonActionSheet,
   IonSelectOption,
   IonSegmentButton,
+  LoadingController,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
 import {
@@ -42,7 +43,7 @@ import {
 import {
   AssetsModel,
   PlantsModel,
-  AssetsResponse,
+  AssetResponse,
   AssetCategoryModel,
 } from "src/app/store/models/plant.model";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -51,6 +52,7 @@ import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
+import { Router } from "@angular/router";
 
 @Component({
   standalone: true,
@@ -88,22 +90,23 @@ import { AssetCategorySelectModalComponent } from "src/app/components/asset-cate
 })
 export class AssetPage implements OnInit {
   store = inject(Store);
+  router = inject(Router);
+  httpService = inject(HttpService);
+  toastService = inject(ToastService);
+  loadingCtrl = inject(LoadingController);
 
+  plantId: string;
   segment: string;
-  asset?: AssetsModel;
+  asset: AssetsModel;
   isMenuOpen: boolean;
   assetRegistrationForm: FormGroup;
-  httpService = inject(HttpService);
-  assetCategory?: AssetCategoryModel;
-  toastService = inject(ToastService);
-  assetInDraft: { id?: string; asset?: AssetsModel };
-  isLoading: WritableSignal<boolean> = signal(false);
+  assetCategory: AssetCategoryModel;
   isMenuToggleOpen = new EventEmitter<boolean>(false);
   isFormValid: WritableSignal<boolean> = signal(false);
 
   @Input()
   set id(plantId: string) {
-    this.assetInDraft.id = plantId;
+    this.plantId = plantId;
   }
 
   @Input()
@@ -111,11 +114,8 @@ export class AssetPage implements OnInit {
     this.store.select("plant").subscribe({
       next: (plant: PlantsModel) => {
         if (plant.assets) {
-          this.asset = plant.assets.find((asset) => asset.id === assetId);
-          this.assetRegistrationForm.patchValue({
-            ...this.asset?.assetInfo,
-            assetId: this.asset?.id,
-          });
+          this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
+          this.asset = plant.assets.find((asset) => asset.id === assetId) ?? {};
         }
       },
     });
@@ -123,7 +123,7 @@ export class AssetPage implements OnInit {
 
   constructor() {
     this.asset = {};
-    this.assetInDraft = {};
+    this.plantId = "";
     this.assetCategory = {};
     this.isMenuOpen = false;
     this.segment = "custom1";
@@ -142,8 +142,6 @@ export class AssetPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.asset?.assetCategories);
-
     this.assetRegistrationForm.valueChanges.subscribe({
       next: () => {
         if (this.assetRegistrationForm.valid) {
@@ -152,7 +150,6 @@ export class AssetPage implements OnInit {
             id: this.asset?.id,
             assetInfo: this.assetRegistrationForm.value,
           };
-          this.assetInDraft.asset = this.asset;
         } else {
           this.isFormValid.set(false);
         }
@@ -177,24 +174,31 @@ export class AssetPage implements OnInit {
       this.asset.assetCategories = event;
       this.isMenuOpen = false;
     }
-
-    console.log(this.asset);
   }
 
-  handleSendForApproval() {
-    this.httpService.UpdateAsset({ plant: this.assetInDraft }).subscribe({
-      next: (response: AssetsResponse) => {
-        // plant: response?.data,
+  handleSendForApproval = async () => {
+    const loading = await this.loadingCtrl.create({ duration: 3000 });
+    loading.present();
 
-        console.log(response);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.isLoading.set(false);
-        this.toastService.toastFailed(error.error.message);
-      },
-      complete: () => {
-        this.isLoading.set(false);
-      },
-    });
-  }
+    this.httpService
+      .AssetSendForApproval({ plantId: this.plantId, asset: this.asset })
+      .subscribe({
+        next: (response: AssetResponse) => {
+          this.store.dispatch(UPDATE_ASSET(response.data));
+        },
+        error: (error: HttpErrorResponse) => {
+          loading.dismiss();
+          this.toastService.toastFailed(error.error.message);
+          this.router.navigate([
+            `/asset-register/asset-mapped/${this.plantId}`,
+          ]);
+        },
+        complete: () => {
+          loading.dismiss();
+          this.router.navigate([
+            `/asset-register/asset-mapped/${this.plantId}`,
+          ]);
+        },
+      });
+  };
 }

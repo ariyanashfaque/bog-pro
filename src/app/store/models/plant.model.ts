@@ -151,9 +151,11 @@ export interface PlantsResponse {
 }
 export interface AssetsResponse {
   message: string;
+  status: boolean;
   data: AssetsModel[];
 }
-export interface AssetsResponse {
+export interface AssetResponse {
   message: string;
-  data: AssetsModel[];
+  status: boolean;
+  data: AssetsModel;
 }
