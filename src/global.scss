@@ -156,6 +156,11 @@
   --ion-color-contrast-rgb: var(--ion-color-input-contrast-rgb);
 }
 
+.input-fill-outline.sc-ion-input-md-h {
+  --border-width: 2px;
+  --border-color: var(--ion-color-input);
+}
+
 .input-fill-outline {
   --border-color: var(--ion-color-input);
 }
