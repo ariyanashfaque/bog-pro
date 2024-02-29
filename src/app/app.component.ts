@@ -20,6 +20,7 @@ import {
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { Component } from "@angular/core";
+import { ScreenOrientation } from "@capacitor/screen-orientation";
 import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
 
 @Component({
@@ -50,5 +51,11 @@ export class AppComponent {
       personCircleOutline,
       notificationsOutline,
     });
+
+    this.ScreenLockOrientation();
   }
+
+  ScreenLockOrientation = async () => {
+    await ScreenOrientation.lock({ orientation: "landscape" });
+  };
 }
