@@ -156,20 +156,23 @@
   --ion-color-contrast-rgb: var(--ion-color-input-contrast-rgb);
 }
 
-.input-fill-outline.sc-ion-input-md-h {
-  --border-width: 2px;
+.input-fill-outline {
+  --border-width: 1.5px;
   --border-color: var(--ion-color-input);
 }
-
-.input-fill-outline {
+.input-fill-outline.sc-ion-input-md-h {
+  --border-width: 1.5px;
   --border-color: var(--ion-color-input);
 }
 .ion-valid.sc-ion-input-md-h {
-  --highlight-color: var(--ion-color-input);
+  --border-width: 1.5px;
+  --highlight-color: var(--ion-color-dark);
 }
 .has-focus.input-fill-outline.ion-valid.sc-ion-input-md-h {
+  --border-width: 1.5px;
   --border-color: var(--ion-color-input);
 }
 .input-fill-outline.ion-touched.ion-invalid.sc-ion-input-md-h {
+  --border-width: 1.5px;
   --border-color: var(--ion-color-danger);
 }
