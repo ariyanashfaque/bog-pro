@@ -13,7 +13,7 @@ ion-segment ion-segment-button.segment-button-checked {
     display: inline;
   }
   .segment-change {
-    width: 450px;
+    width: 550px;
     display: flex;
     align-items: center;
     background-color: #007382;
@@ -40,12 +40,6 @@ span {
 
 .cardIcon {
   background-color: #007382;
-}
-
-ion-backdrop {
-  background: var(--ion-color-dark);
-  opacity: 0.6;
-  z-index: 40;
 }
 
 ion-button[disabled] {
