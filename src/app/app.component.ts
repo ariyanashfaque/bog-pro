@@ -5,6 +5,10 @@ import {
   navigate,
   mapOutline,
   homeOutline,
+  cashOutline,
+  pencilOutline,
+  createOutline,
+  checkmarkSharp,
   locationOutline,
   clipboardOutline,
   helpCircleOutline,
@@ -13,7 +17,6 @@ import {
   documentTextOutline,
   personCircleOutline,
   notificationsOutline,
-  checkmarkSharp,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { Component } from "@angular/core";
@@ -29,12 +32,15 @@ export class AppComponent {
   constructor() {
     addIcons({
       close,
-      checkmarkSharp,
       camera,
       business,
       navigate,
       mapOutline,
       homeOutline,
+      cashOutline,
+      pencilOutline,
+      createOutline,
+      checkmarkSharp,
       locationOutline,
       clipboardOutline,
       helpCircleOutline,
