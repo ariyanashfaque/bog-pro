@@ -1,4 +1,6 @@
 import {
+  AssetsModel,
+  AssetResponse,
   AssetsResponse,
   PlantsResponse,
 } from "src/app/store/models/plant.model";
@@ -24,6 +26,16 @@ export class HttpService {
   // VerifyOtp = (data?: UserResponseModel): Observable<UserResponseModel> => {
   //   return this.http.post<UserResponseModel>(ApiEndPoint.verifyOtp, data);
   // };
+
+  AssetSendForApproval = (data: {
+    plantId: string;
+    asset: AssetsModel;
+  }): Observable<AssetResponse> => {
+    return this.http.post<AssetResponse>(
+      ApiEndPoint.assetSendForApproval,
+      data,
+    );
+  };
 
   GetAllPlants = (data?: any): Observable<PlantsResponse> => {
     return this.http.post<PlantsResponse>(ApiEndPoint.getAllPlants, data);

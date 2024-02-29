@@ -31,6 +31,7 @@ export class PlantCardComponent implements OnInit {
   @Input() plant: PlantsModel;
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
   isMenuOpen: boolean = false;
+  totalAssetMapped: number = 5;
 
   constructor() {
     this.plant = {};
