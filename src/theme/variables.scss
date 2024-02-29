@@ -41,12 +41,12 @@
   --ion-color-warning-contrast-rgb: 0, 0, 0;
 
   /** danger **/
-  --ion-color-danger: #eb445a;
-  --ion-color-danger-tint: #ed576b;
-  --ion-color-danger-shade: #cf3c4f;
-  --ion-color-danger-rgb: 235, 68, 90;
-  --ion-color-danger-contrast: #ffffff;
-  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger: #f00014;
+  --ion-color-danger-rgb: 240, 0, 20;
+  --ion-color-danger-tint: #f21a2c;
+  --ion-color-danger-shade: #d30012;
+  --ion-color-danger-contrast: #000000;
+  --ion-color-danger-contrast-rgb: 0, 0, 0;
 
   /** dark **/
   --ion-color-dark: #222428;
@@ -127,6 +127,14 @@
   --ion-color-textwhite-contrast: #000000;
   --ion-color-textwhite-rgb: 255, 255, 255;
   --ion-color-textwhite-contrast-rgb: 0, 0, 0;
+
+  /** Ionic Input Outline **/
+  --ion-color-input: #3cb4aa;
+  --ion-color-input-tint: #50bcb3;
+  --ion-color-input-shade: #359e96;
+  --ion-color-input-rgb: 60, 180, 170;
+  --ion-color-input-contrast: #000000;
+  --ion-color-input-contrast-rgb: 0, 0, 0;
 }
 
 html {

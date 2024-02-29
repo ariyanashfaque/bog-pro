@@ -60,6 +60,30 @@
   --ion-font-family: "Gotham Book";
 }
 
+// Change the design of scrollbar
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 3px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4ca1b1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1a818f;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px #edf5f5;
+}
+
 .ion-color-background {
   --ion-color-base: var(--ion-color-background);
   --ion-color-tint: var(--ion-color-background-tint);
@@ -123,26 +147,24 @@
   --ion-color-contrast-rgb: var(--ion-color-textwhite-contrast-rgb);
 }
 
-// Change the design of scrollbar
-/* width */
-::-webkit-scrollbar {
-  width: 0px;
-  height: 3px;
+.ion-color-input {
+  --ion-color-base: var(--ion-color-input);
+  --ion-color-tint: var(--ion-color-input-tint);
+  --ion-color-shade: var(--ion-color-input-shade);
+  --ion-color-base-rgb: var(--ion-color-input-rgb);
+  --ion-color-contrast: var(--ion-color-input-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-input-contrast-rgb);
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  box-shadow: inset 0 0 5px #edf5f5;
+.input-fill-outline {
+  --border-color: var(--ion-color-input);
 }
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #4ca1b1;
-  border-radius: 10px;
+.ion-valid.sc-ion-input-md-h {
+  --highlight-color: var(--ion-color-input);
 }
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #1a818f;
+.has-focus.input-fill-outline.ion-valid.sc-ion-input-md-h {
+  --border-color: var(--ion-color-input);
+}
+.input-fill-outline.ion-touched.ion-invalid.sc-ion-input-md-h {
+  --border-color: var(--ion-color-danger);
 }
