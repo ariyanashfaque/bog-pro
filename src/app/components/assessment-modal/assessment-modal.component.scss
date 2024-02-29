@@ -1,3 +1,7 @@
-// ion-input {
-//   height: 300px;
-// }
+.input-fill-outline.sc-ion-input-md-h {
+  --border-color: #3cb4aa;
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  min-height: 56px;
+}

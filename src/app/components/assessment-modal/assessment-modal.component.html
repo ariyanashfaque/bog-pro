@@ -28,38 +28,101 @@
     </div>
     <div class="h-full bg-white flex-grow rounded-tr-[32px]"></div>
   </div>
-  <div class="absolute top-8 w-full h-full bg-transparent overflow-y-scroll">
+  <div
+    class="absolute text-black top-8 w-full h-full bg-transparent overflow-y-scroll"
+  >
     <div></div>
     <!-- Your Content -->
     <div class="px-5 py-5">
       <h5 class="text-[28px] text-[#363636] font-bold mb-2">
         2. Add Header Information
         <span
-          class="text-[16px] text-white bg-[#009146] font-thin px-2 py-1 rounded-sm"
+          class="text-[10px] text-white bg-[#009146] font-thin px-2 py-1 rounded-sm"
           >OPEN</span
         >
       </h5>
       <ion-grid>
         <ion-row>
-          <ion-col size="6">
-            <ion-input
-              type="date"
-              class="text-black bg-red-400"
-              label="Outline input"
-              label-placement="floating"
-              fill="outline"
-              placeholder="Enter text"
-            ></ion-input>
+          <ion-col size="6"
+            ><div class="relative">
+              <input
+                type="text"
+                id="date"
+                class="block h-[56px] px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-[4px] border border-[#3CB4AA] peer focus:outline-none focus:border-[#3CB4AA]"
+                placeholder="date "
+              />
+              <label
+                for="date"
+                class="absolute text-sm text-black duration-200 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                >Date</label
+              >
+            </div>
           </ion-col>
           <ion-col size="6">
             <ion-input
-              class="text-black"
-              label="Outline input"
-              label-placement="floating"
+              required
               fill="outline"
-              placeholder="Enter text"
-            ></ion-input>
+              color="primary"
+              inputmode="text"
+              placeholder="Enter name"
+              labelPlacement="floating"
+              errorText="Asset name required"
+            >
+              <ion-label slot="label">
+                Enter name
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+            </ion-input>
           </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <div class="relative overflow-hidden">
+              <textarea
+                type="text"
+                rows="3"
+                id="audit-scope"
+                class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-[4px] border border-[#3CB4AA] peer focus:outline-none focus:border-[#3CB4AA]"
+                placeholder="Type here max 250 words"
+              >
+              </textarea>
+              <label
+                for="audit-scope"
+                class="absolute text-sm text-black duration-200 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                >Scope of audit</label
+              >
+              <div
+                class="absolute -top-2 -right-2 w-10 h-10 bg-white border border-[#3CB4AA] rounded-full flex justify-center items-center"
+              >
+                <div class="w-6 h-6 bg-[#3CB4AA] rounded-full"></div>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <div class="relative">
+              <select
+                id="floating_outlined_select"
+                class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-[#3CB4AA] peer focus:outline-none focus:border-[#3CB4AA]"
+                placeholder="kdfjdpojkf"
+              >
+                <!-- Add your select options here -->
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <!-- Add more options as needed -->
+              </select>
+              <label
+                for="floating_outlined_select"
+                class="absolute text-sm text-black duration-200 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              >
+                Floating outlined
+              </label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12"></ion-col>
         </ion-row>
       </ion-grid>
     </div>
