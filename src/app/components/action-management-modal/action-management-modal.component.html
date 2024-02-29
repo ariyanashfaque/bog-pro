@@ -1,0 +1,42 @@
+<div
+  class="custom fixed left-0 w-full bottom-[-60px] h-[390px] md:h-[310px] lg:h-[310px] rounded-lg shadow bg-white-800 transform transition-transform duration-800 z-50"
+  [class]="!isMenuOpen ? 'translate-y-full' : ''"
+>
+  <div class="h-full w-full flex">
+    <div class="h-full w-[calc(100%-105px)] bg-white rounded-tl-[32px]"></div>
+    <div class="">
+      <svg
+        width="68"
+        height="34"
+        viewBox="0 0 100 50"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M100 0v50H0V0c.543 27.153 22.72 49 50 49S99.457 27.153 99.99 0h.01z"
+          fill="white"
+          fill-rule="evenodd"
+        ></path>
+      </svg>
+      <div class="w-auto h-full bg-white relative">
+        <div
+          class="absolute ml-[7px] -top-[62px] cursor-pointer w-[54px] h-[54px] bg-black rounded-full flex justify-center items-center"
+          (click)="menuToggle()"
+        >
+          <ion-icon class="text-4xl fill-white" name="close"> </ion-icon>
+        </div>
+      </div>
+    </div>
+    <div class="h-full bg-white flex-grow rounded-tr-[32px]"></div>
+  </div>
+
+  <div class="fixed left-0 top-2 md:top-8 w-full h-full">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="6">
+          <div>content part</div>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>

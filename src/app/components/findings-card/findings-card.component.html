@@ -1,0 +1,65 @@
+<div class="max-w-[480px] mx-auto pb-10">
+  <div class="rounded-md">
+    <div class="">
+      <div class="bg-[#EDF5F5] rounded-md p-2.5 text-sm">
+        <div>
+          <!-- top part -->
+          <div class="flex gap-3">
+            <div>
+              <p class="text-xs">Finding title</p>
+              <p class="font-bold text-[14px]">Roof -AAC - Cement House</p>
+            </div>
+            <div>
+              <p class="text-xs">Status</p>
+              <button
+                class="bg-blue-900 text-white text-xs px-2 py-1 rounded-sm"
+              >
+                OPEN
+              </button>
+            </div>
+          </div>
+          <div
+            class="my-2 border-t-[1.5px]"
+            [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+          ></div>
+          <!-- middle part -->
+          <div class="flex justify-between mt-2">
+            <div clsss="">
+              <p class="text-xs">Risk level</p>
+              <button
+                class="bg-yellow-400 font-bold text-xs px-2 py-1 rounded-sm"
+              >
+                LEVEL 2
+              </button>
+            </div>
+            <div
+              class="border-l-[1.5px]"
+              [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+            ></div>
+            <div class="">
+              <p class="text-xs">Due date</p>
+              <p class="font-bold text-xs">1<sup>st</sup> Jan 2023</p>
+            </div>
+            <div
+              class="border-l-[1.5px]"
+              [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+            ></div>
+            <div class="">
+              <p class="text-xs">Created by</p>
+              <p class="font-bold text-xs">joyce.smith&#64;holcim.com</p>
+            </div>
+          </div>
+          <div
+            class="my-2 border-t-[1.5px]"
+            [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+          ></div>
+          <!-- bottom part -->
+          <div clsss="">
+            <p class="text-xs">Actions (2)</p>
+            <a class="text-[#2674D1] font-bold"> <u>100% closure</u> </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
