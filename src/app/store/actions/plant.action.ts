@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { AssetsModel, PlantsModel } from "../models/plant.model";
+import { AssetsModel, CategoriesModel, PlantsModel } from "../models/plant.model";
 
 export const ADD_PLANT = createAction(
   "ADD_PLANT",
@@ -29,6 +29,11 @@ export const ADD_ASSETS = createAction(
 export const UPDATE_ASSET = createAction(
   "UPDATE_ASSET",
   (asset: AssetsModel) => ({ asset }),
+);
+
+export const ADD_CATEGORIES = createAction(
+  "ADD_CATEGORIES",
+  (categories: CategoriesModel[]) => ({ categories }),
 );
 
 export const ADD_ASSET = createAction("ADD_ASSET", (asset: AssetsModel) => ({

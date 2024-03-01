@@ -4,7 +4,7 @@
 >
   <div class="h-full w-full flex">
     <div class="h-full w-[calc(100%-105px)] bg-white rounded-tl-[32px]"></div>
-    <div class="">
+    <div>
       <svg
         width="68"
         height="34"
@@ -36,163 +36,30 @@
 
     <ion-grid class="w-full">
       <ion-row class="md:mx-4 my-2 ion-justify-content-between">
-        <ion-col class="" size="3" sizeMd="1.3" sizeLg="1.3">
-          <ion-button
-            fill="clear"
-            class="ion-no-padding w-full"
-            (click)="handleCategory('sim')"
-          >
-            <ion-icon
-              [class.active]="selectedButton === 'sim'"
-              src="../../../assets/segment-icons/sim.svg"
-              class="border-[3px] rounded-[6px] p-2 w-12 h-12"
-            ></ion-icon>
-          </ion-button>
-          <ion-text
-            color="dark"
-            style="text-align: center"
-            class="lg:text-[14px] text-[10px]"
-          >
-            <p>Sim</p>
-          </ion-text>
-        </ion-col>
-        <ion-col class="" size="3" sizeMd="1.3" sizeLg="1.3">
-          <ion-button
-            fill="clear"
-            class="ion-no-padding w-full"
-            (click)="handleCategory('electrical')"
-          >
-            <ion-icon
-              [class.active]="selectedButton === 'electrical'"
-              class="border-[3px] rounded-[6px] p-2 bgColor w-12 h-12"
-              src="../../../assets/segment-icons/electrical.svg"
-            ></ion-icon>
-          </ion-button>
-          <ion-text
-            color="dark"
-            style="text-align: center"
-            class="lg:text-[14px] text-[10px]"
-          >
-            <h1>Electrical</h1>
-          </ion-text>
-        </ion-col>
-
-        <ion-col class="" size="3" sizeMd="1.3" sizeLg="1.3">
-          <ion-button
-            fill="clear"
-            class="ion-no-padding w-full"
-            (click)="handleCategory('materialManagement')"
-          >
-            <ion-icon
-              class="border-[3px] rounded-[6px] p-2 bgColor w-12 h-12"
-              src="../../../assets/segment-icons/materialManagement.svg"
-              [class.active]="selectedButton === 'materialManagement'"
-            ></ion-icon>
-          </ion-button>
-          <ion-text
-            color="dark"
-            style="text-align: center"
-            class="lg:text-[14px] text-[10px]"
-          >
-            <h1>Material management</h1>
-          </ion-text>
-        </ion-col>
-        <ion-col class="" size="3" sizeMd="1.3" sizeLg="1.3">
-          <ion-button
-            fill="clear"
-            class="ion-no-padding w-full"
-            (click)="handleCategory('hotMaterial')"
-          >
-            <ion-icon
-              class="border-[3px] rounded-[6px] p-2 bgColor w-12 h-12"
-              src="../../../assets/segment-icons/electrical.svg"
-              [class.active]="selectedButton === 'hotMaterial'"
-            ></ion-icon>
-          </ion-button>
-          <ion-text
-            color="dark"
-            style="text-align: center"
-            class="lg:text-[14px] text-[10px]"
-          >
-            <h1>Electrical</h1>
-          </ion-text>
-        </ion-col>
-
-        <ion-col class="" size="3" sizeMd="1.3" sizeLg="1.3">
-          <ion-button
-            fill="clear"
-            class="ion-no-padding w-full"
-            (click)="handleCategory('environment')"
-          >
-            <ion-icon
-              [class.active]="selectedButton === 'environment'"
-              src="../../../assets/segment-icons/sim.svg"
-              class="border-[3px] rounded-[6px] p-2 bgColor w-12 h-12"
-            ></ion-icon>
-          </ion-button>
-          <ion-text
-            color="dark"
-            style="text-align: center"
-            class="lg:text-[14px] text-[10px]"
-          >
-            <h1>Sim</h1>
-          </ion-text>
-        </ion-col>
-        <ion-col class="" size="3" sizeMd="1.3" sizeLg="1.3">
-          <ion-button
-            fill="clear"
-            class="ion-no-padding w-full"
-            (click)="handleCategory('quarry')"
-          >
-            <ion-icon
-              [class.active]="selectedButton === 'quarry'"
-              src="../../../assets/segment-icons/sim.svg"
-              class="border-[3px] rounded-[6px] p-2 bgColor w-12 h-12"
-            ></ion-icon>
-          </ion-button>
-          <ion-text
-            color="dark"
-            style="text-align: center"
-            class="lg:text-[14px] text-[10px]"
-          >
-            <h1>Sim</h1>
-          </ion-text>
-        </ion-col>
-        <ion-col class="" size="3" sizeMd="1.3" sizeLg="1.3">
-          <ion-button
-            fill="clear"
-            class="ion-no-padding w-full"
-            (click)="handleCategory('insurance')"
-          >
-            <ion-icon
-              [class.active]="selectedButton === 'insurance'"
-              class="border-[3px] rounded-[6px] p-2 bgColor w-12 h-12"
-              src="../../../assets/segment-icons/materialManagement.svg"
-            ></ion-icon>
-          </ion-button>
-          <ion-text
-            color="dark"
-            style="text-align: center"
-            class="lg:text-[14px] text-[10px]"
-          >
-            <h1>Metrial management</h1>
-          </ion-text>
-        </ion-col>
-        <ion-col class="" size="3" sizeMd="1.3" sizeLg="1.3">
-          <ion-button fill="clear" class="ion-no-padding w-full">
-            <ion-icon
-              class="border-[3px] rounded-[6px] p-2 bgColor w-12 h-12"
-              src="../../../assets/segment-icons/electrical.svg"
-            ></ion-icon>
-          </ion-button>
-          <ion-text
-            color="dark"
-            style="text-align: center"
-            class="lg:text-[14px] text-[10px]"
-          >
-            <h1>Insurance</h1>
-          </ion-text>
-        </ion-col>
+        @for (category of categories; track $index) {
+          <ion-col size="3" sizeMd="1.3" sizeLg="1.3">
+            <ion-button
+              fill="clear"
+              class="ion-no-padding w-full"
+              (click)="handleCategory(category.categoryType)"
+            >
+              <ion-icon
+                src="../../../assets/segment-icons/sim.svg"
+                class="border-[3px] rounded-[6px] p-2 w-12 h-12"
+                [class.active]="selectedButton === category.categoryType"
+              ></ion-icon>
+            </ion-button>
+            <ion-text
+              color="dark"
+              style="text-align: center"
+              class="lg:text-[14px] text-[10px]"
+            >
+              <p>
+                {{ category.categoryTitlle }}
+              </p>
+            </ion-text>
+          </ion-col>
+        }
       </ion-row>
     </ion-grid>
 
@@ -200,8 +67,8 @@
       <ion-grid color="primary">
         <ion-row>
           <ion-col
-            class="flex ion-justify-content-center ion-align-items-center"
             size="6"
+            class="flex ion-justify-content-center ion-align-items-center"
           >
             <ion-text class="text-[16px] font-gotham_book" color="textwhite">
               Refresh
@@ -212,9 +79,9 @@
             size="6"
           >
             <ion-text
-              class="text-[16px] font-gotham_book"
               color="textwhite"
               (click)="categorySubmit()"
+              class="text-[16px] font-gotham_book"
             >
               Select(3)
             </ion-text>

@@ -135,20 +135,11 @@ export interface PlantsModel {
 
 export interface CategoriesModel {
   id: string;
-  type: string;
   order: number;
-  title: string;
   categoryType: string;
+  categoryTitlle: string;
 }
 
-export interface PlantsStoreModel {
-  plants: PlantsModel[];
-  categories: CategoriesModel[];
-}
-export interface PlantsResponse {
-  message: string;
-  data: PlantsModel[];
-}
 export interface AssetsResponse {
   message: string;
   status: boolean;
@@ -158,4 +149,10 @@ export interface AssetResponse {
   message: string;
   status: boolean;
   data: AssetsModel;
+}
+
+export interface PlantsResponse {
+  message: string;
+  status: boolean;
+  data: { plants: PlantsModel[]; categories: CategoriesModel[] };
 }

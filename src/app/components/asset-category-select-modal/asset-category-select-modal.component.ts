@@ -13,8 +13,19 @@ import {
   IonTextarea,
   IonSelectOption,
 } from "@ionic/angular/standalone";
-import { AssetCategoryModel } from "src/app/store/models/plant.model";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  AssetCategoryModel,
+  CategoriesModel,
+} from "src/app/store/models/plant.model";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from "@angular/core";
+import { Store } from "@ngrx/store";
 
 @Component({
   imports: [
@@ -38,15 +49,19 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
   styleUrls: ["./asset-category-select-modal.component.scss"],
 })
 export class AssetCategorySelectModalComponent implements OnInit {
-  selectedButton: string = "";
-  assetCategory: AssetCategoryModel;
+  store = inject(Store);
   @Input() isMenuOpen: boolean = false;
   @Output() CategoryChanged = new EventEmitter<any>();
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
-  category: any[];
+
+  categories: CategoriesModel[];
+  selectedButton: string = "";
+  category: CategoriesModel[];
+  assetCategory: AssetCategoryModel;
 
   constructor() {
     this.category = [];
+    this.categories = [];
     this.assetCategory = {
       sim: false,
       quarry: false,
@@ -60,9 +75,16 @@ export class AssetCategorySelectModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.category);
-
-    console.log(this.assetCategory);
+    this.store.select("categories").subscribe({
+      next: (categories: CategoriesModel[]) => {
+        this.categories = [...categories];
+        this.categories.sort((a, b) => {
+          if (a.order > b.order) return 1;
+          if (a.order < b.order) return -1;
+          return 0;
+        });
+      },
+    });
   }
 
   menuToggle() {
@@ -72,9 +94,10 @@ export class AssetCategorySelectModalComponent implements OnInit {
 
   handleCategory = (categoryType: string) => {
     this.assetCategory[categoryType as keyof AssetCategoryModel] = true;
-    this.category.push(
-      this.assetCategory[categoryType as keyof AssetCategoryModel],
-    );
+    // this.category.push(
+    //   this.assetCategory[categoryType as keyof AssetCategoryModel],
+    // );
+    console.log(this.assetCategory);
     this.selectedButton = categoryType;
   };
 
