@@ -106,8 +106,8 @@ export interface AssetsModel {
   assetSim?: AssetSimCategoryModel;
   assetApproval?: AssetApprovalModel;
   assetQuarry?: AssetSimCategoryModel;
+  assetCategories?: CategoriesModel[];
   assetRejection?: AssetRejectionModel;
-  assetCategories?: AssetCategoryModel;
   assetInsurance?: AssetSimCategoryModel;
   assetElectrical?: AssetSimCategoryModel;
   assetEnvironment?: AssetSimCategoryModel;
@@ -137,7 +137,8 @@ export interface CategoriesModel {
   id: string;
   order: number;
   categoryType: string;
-  categoryTitlle: string;
+  categoryTitle: string;
+  categorySelected: boolean;
 }
 
 export interface AssetsResponse {

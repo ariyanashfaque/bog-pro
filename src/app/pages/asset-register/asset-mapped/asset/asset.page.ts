@@ -45,6 +45,7 @@ import {
   PlantsModel,
   AssetResponse,
   AssetCategoryModel,
+  CategoriesModel,
 } from "src/app/store/models/plant.model";
 import { HttpErrorResponse } from "@angular/common/http";
 import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
@@ -127,6 +128,7 @@ export class AssetPage implements OnInit {
     this.assetCategory = {};
     this.isMenuOpen = false;
     this.segment = "custom1";
+    this.asset.assetCategories = [];
 
     this.assetRegistrationForm = new FormGroup({
       sapId: new FormControl(""),
@@ -147,6 +149,7 @@ export class AssetPage implements OnInit {
         if (this.assetRegistrationForm.valid) {
           this.isFormValid.set(true);
           this.asset = {
+            ...this.asset,
             id: this.asset?.id,
             assetSource: {
               sapSync: false,
@@ -174,11 +177,10 @@ export class AssetPage implements OnInit {
     this.isMenuOpen = event;
   };
 
-  CategoryChanged(event: AssetCategoryModel) {
-    if (this.asset) {
-      this.asset.assetCategories = event;
-      this.isMenuOpen = false;
-    }
+  handleSelectedCategory(event: CategoriesModel[]) {
+    this.isMenuOpen = false;
+    this.asset = { ...this.asset, assetCategories: event };
+    console.log(this.asset);
   }
 
   handleSendForApproval = async () => {

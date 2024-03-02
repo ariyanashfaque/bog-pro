@@ -25,7 +25,7 @@ export const PlantReducer = createReducer(
   on(UPDATE_ASSET, (state, { asset }) => {
     const assets = state?.assets?.map((prevAsset) => {
       if (prevAsset?.id === asset?.id) {
-        prevAsset = asset;
+        prevAsset = { ...prevAsset, ...asset };
       }
       return prevAsset;
     });

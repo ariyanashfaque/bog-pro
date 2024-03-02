@@ -19,8 +19,8 @@
       </svg>
       <div class="w-auto h-full bg-white relative">
         <div
-          class="absolute ml-[7px] -top-[62px] cursor-pointer w-[54px] h-[54px] bg-black rounded-full flex justify-center items-center"
           (click)="menuToggle()"
+          class="absolute ml-[7px] -top-[62px] cursor-pointer w-[54px] h-[54px] bg-black rounded-full flex justify-center items-center"
         >
           <ion-icon class="text-4xl fill-white" name="close"> </ion-icon>
         </div>
@@ -41,12 +41,12 @@
             <ion-button
               fill="clear"
               class="ion-no-padding w-full"
-              (click)="handleCategory(category.categoryType)"
+              (click)="handleCategory(category)"
             >
               <ion-icon
+                [class.active]="category?.categorySelected"
                 src="../../../assets/segment-icons/sim.svg"
                 class="border-[3px] rounded-[6px] p-2 w-12 h-12"
-                [class.active]="selectedButton === category.categoryType"
               ></ion-icon>
             </ion-button>
             <ion-text
@@ -55,7 +55,7 @@
               class="lg:text-[14px] text-[10px]"
             >
               <p>
-                {{ category.categoryTitlle }}
+                {{ category.categoryTitle }}
               </p>
             </ion-text>
           </ion-col>
@@ -63,31 +63,26 @@
       </ion-row>
     </ion-grid>
 
-    <div class="w-full footerBg p-[1px]">
-      <ion-grid color="primary">
-        <ion-row>
-          <ion-col
-            size="6"
-            class="flex ion-justify-content-center ion-align-items-center"
+    <ion-footer>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start" class="w-full">
+          <ion-button
+            expand="full"
+            color="textwhite"
+            class="w-full text-[16px] font-gotham_book"
           >
-            <ion-text class="text-[16px] font-gotham_book" color="textwhite">
-              Refresh
-            </ion-text>
-          </ion-col>
-          <ion-col
-            class="flex ion-justify-content-center ion-align-items-center"
-            size="6"
+            Refresh
+          </ion-button>
+          <ion-button
+            expand="full"
+            color="textwhite"
+            (click)="handleCategorySelect()"
+            class="w-full text-[16px] font-gotham_book"
           >
-            <ion-text
-              color="textwhite"
-              (click)="categorySubmit()"
-              class="text-[16px] font-gotham_book"
-            >
-              Select(3)
-            </ion-text>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
+            Select ({{ selectedCategoryCount }})
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
   </div>
 </div>
