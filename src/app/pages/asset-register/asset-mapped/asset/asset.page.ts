@@ -125,9 +125,9 @@ export class AssetPage implements OnInit {
   constructor() {
     this.asset = {};
     this.plantId = "";
+    this.segment = "info";
     this.assetCategory = {};
     this.isMenuOpen = false;
-    this.segment = "custom1";
     this.asset.assetCategories = [];
 
     this.assetRegistrationForm = new FormGroup({
@@ -180,7 +180,6 @@ export class AssetPage implements OnInit {
   handleSelectedCategory(event: CategoriesModel[]) {
     this.isMenuOpen = false;
     this.asset = { ...this.asset, assetCategories: event };
-    console.log(this.asset);
   }
 
   handleSendForApproval = async () => {
