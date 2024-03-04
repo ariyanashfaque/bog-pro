@@ -168,3 +168,14 @@
 .input-fill-outline.ion-touched.ion-invalid.sc-ion-input-md-h {
   --border-color: var(--ion-color-danger);
 }
+.input-fill-outline.sc-ion-input-md-h {
+  --border-color: var(--ion-color-input);
+}
+
+.textarea-fill-outline.sc-ion-textarea-md-h {
+  --border-color: var(--ion-color-input);
+  min-height: 120px;
+}
+.select-fill-outline {
+  --border-color: var(--ion-color-input);
+}
