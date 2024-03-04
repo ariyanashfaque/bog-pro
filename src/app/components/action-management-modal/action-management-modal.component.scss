@@ -1,8 +1,54 @@
 .custom {
+  opacity: 1;
   border: 5px;
   border-radius: 32px 32px 0 0;
-
-  background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 8px #00000029;
-  opacity: 1;
+  //   background: transparent 0% 0% no-repeat padding-box;
+}
+
+// .cust {
+//   border-color: #00000029 opacify($color: #000000, $amount: 0);
+// }
+
+// ion-segment-button::part(indicator-background) {
+//   display: none;
+// }
+
+// ion-segment-button::part(native) {
+//   color: transparent;
+// }
+
+// ion-segment-button {
+//   background-color: #edf5f5;
+// }
+
+ion-segment-button {
+  --width: 100%;
+}
+
+ion-segment ion-segment-button.segment-button-checked {
+  ion-segment-button {
+    background-color: red;
+  }
+  .customcolor {
+    background-color: red;
+    color: blue;
+  }
+}
+
+.selected {
+  background-color: rgb(255, 255, 255);
+  font-weight: bold;
+  border-right: none;
+  border-bottom: none;
+}
+
+ion-checkbox {
+  --size: 25px;
+  --checkbox-background-checked: #007382;
+}
+
+ion-checkbox::part(container) {
+  border-radius: 3px;
+  border-color: #007382;
 }

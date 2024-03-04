@@ -1,3 +1,6 @@
+@if (isMenuOpen) {
+  <ion-backdrop [visible]="true"> </ion-backdrop>
+}
 <app-header headerTitle="Action management" [isDefaultHref]="true"></app-header>
 
 <ion-content [fullscreen]="true" color="background">
@@ -5,7 +8,7 @@
     <ion-row>
       <ion-col size="12">
         <div
-          class="max-w-full mt-8 rounded-[8px] bg-white shadow-[0px_0px_6px_0px_#0000002E]"
+          class="max-w-full m-5 mt-8 rounded-[8px] bg-white shadow-[0px_0px_6px_0px_#0000002E]"
         >
           <div class="topSegment max-w-full mx-auto p-6 border-b-[2px]">
             <!-- Segment tabs -->
@@ -118,11 +121,11 @@
                         </ion-row>
                       </div>
                       <ion-row size="12">
-                        <ion-col size="6">
+                        <ion-col size="6" class="max-w-full">
                           <app-findings-card></app-findings-card>
                           <app-findings-card></app-findings-card>
                         </ion-col>
-                        <ion-col size="6">
+                        <ion-col size="6" class="max-w-full">
                           <app-findings-card></app-findings-card>
                           <app-findings-card></app-findings-card>
                         </ion-col>
@@ -215,9 +218,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <app-action-management-modal
-    [isMenuOpen]="isMenuOpen"
-    (isMenuToggleOpen)="filterFindings($event)"
-  >
-  </app-action-management-modal>
 </ion-content>
+<app-action-management-modal
+  [isMenuOpen]="isMenuOpen"
+  (isMenuToggleOpen)="filterFindings($event)"
+>
+</app-action-management-modal>
