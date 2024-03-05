@@ -1,5 +1,5 @@
 <div
-  class="custom fixed left-0 w-full bottom-[-60px] h-[390px] md:h-[310px] lg:h-[310px] rounded-lg shadow bg-white-800 transform transition-transform duration-800 z-50"
+  class="custom fixed left-0 w-full bottom-[-60px] h-[600px] md:h-[600px] lg:h-[600px] rounded-lg shadow bg-white-800 transform transition-transform duration-800 z-50"
   [class]="!isMenuOpen ? 'translate-y-full' : ''"
 >
   <div class="h-full w-full flex">
@@ -30,12 +30,69 @@
   </div>
 
   <div class="fixed left-0 top-2 md:top-8 w-full h-full">
-    <ion-grid fixed>
+    <ion-grid class="ion-no-padding">
       <ion-row>
-        <ion-col size="6">
-          <div>content part</div>
+        <ion-col size="12">
+          <div
+            class="font-bold text-[28px] border-b-[2px] border-[#00738233] max-w-full mx-auto -mt-7 p-4"
+          >
+            <ion-label class="font-extrabold ml-4 align-middle"
+              >Filter</ion-label
+            >
+          </div>
         </ion-col>
         <ion-col size="6"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" style="height: 100vh" class="ion-no-padding">
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              @for (filter of filterCategory; track $index) {
+                <ion-col
+                  (click)="handleFilterCategory(filter)"
+                  size="12"
+                  [class.selected]="filter === filterName"
+                  class="bg-[#edf5f5] border-b-2 border-r-2 border-[#00738233] h-14 p-3"
+                >
+                  <ion-label class="text-xl ml-5"> {{ filter }}</ion-label>
+                </ion-col>
+              }
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col size="8">
+          @switch (filterName) {
+            @case ("Source (1)") {
+              <div>
+                <ion-grid>
+                  <ion-row class="mt-5">
+                    @for (source of filterBySource; track $index) {
+                      <ion-col size="12" class="left-32 text-xl mb-5"
+                        ><ion-checkbox
+                          (ionChange)="handleFilerBySource($event, source)"
+                          labelPlacement="end"
+                          >{{ source }}
+                        </ion-checkbox>
+                      </ion-col>
+                    }
+                  </ion-row>
+                </ion-grid>
+              </div>
+            }
+            @case ("Status") {
+              <div>is</div>
+            }
+            @case ("Risk level") {
+              <div>a</div>
+            }
+            @case ("System") {
+              <div>good</div>
+            }
+            @case ("Due date") {
+              <div>movie</div>
+            }
+          }
+        </ion-col>
       </ion-row>
     </ion-grid>
   </div>
