@@ -19,9 +19,9 @@ import {
   notificationsOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { ScreenOrientation } from "@capacitor/screen-orientation";
-import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
+import { IonApp, IonRouterOutlet, Platform } from "@ionic/angular/standalone";
 
 @Component({
   standalone: true,
@@ -30,6 +30,8 @@ import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent {
+  private platform = inject(Platform);
+
   constructor() {
     addIcons({
       close,
@@ -52,7 +54,9 @@ export class AppComponent {
       notificationsOutline,
     });
 
-    this.ScreenLockOrientation();
+    if (this.platform.is("ios") || this.platform.is("android")) {
+      this.ScreenLockOrientation();
+    }
   }
 
   ScreenLockOrientation = async () => {
