@@ -1,0 +1,108 @@
+<div class="max-w-full mx-auto pb-10">
+  <div class="rounded-md">
+    <div class="">
+      <div
+        class="bg-[#EDF5F5] rounded-md p-2.5 text-sm"
+        [class]="isOverdue ? 'border-red-600' : 'border-blue-900'"
+      >
+        <div>
+          <!-- top part -->
+          <div class="flex gap-3">
+            <div>
+              <p class="{{ showLess ? 'line-clamp-2' : '' }}">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Officia dolores iste pariatur quibusdam, nisi suscipit,
+                architecto eum dignissimos illo minus soluta ex dolor doloremque
+                iure numquam inventore accusamus doloribus minima.
+              </p>
+              <div
+                (click)="showLess = !showLess"
+                class="flex justify-end text-blue-500 underline cursor-pointer"
+              >
+                {{ showLess ? "more" : "less" }}
+              </div>
+            </div>
+            <div class="mt-1">
+              <ion-icon
+                class="p-1 text-xl rounded-full"
+                [class]="
+                  isOverdue
+                    ? 'bg-red-100 text-red-600'
+                    : 'bg-[#C2DDDD] text-[#007382]'
+                "
+                name="chevron-forward-outline"
+              ></ion-icon>
+            </div>
+          </div>
+          <div
+            class="my-2 border-t-[1.5px]"
+            [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+          ></div>
+          <!-- middle part -->
+          <div class="flex justify-between m-2 py-1">
+            <div clsss="">
+              <p class="text-xs">Priority</p>
+              <button
+                class="bg-orange-200 text-orange-500 font-bold text-[10px] px-2 rounded-sm"
+              >
+                MEDIUM
+              </button>
+            </div>
+            <div
+              class="border-l-[1.5px]"
+              [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+            ></div>
+            <div class="">
+              <p class="text-xs">Category</p>
+              <p class="font-bold text-xs">Material mgmt</p>
+            </div>
+            <div
+              class="border-l-[1.5px]"
+              [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+            ></div>
+            <div class="">
+              <p class="text-xs">Asset name</p>
+              <p class="font-bold text-xs">Silo 1</p>
+            </div>
+            <div
+              class="border-l-[1.5px]"
+              [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+            ></div>
+            <div>
+              <p class="text-xs">Status</p>
+              <button class="bg-red-600 text-white text-[10px] px-3 rounded-sm">
+                OPEN
+              </button>
+            </div>
+          </div>
+          <div
+            class="my-2 border-t-[1.5px]"
+            [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+          ></div>
+          <!-- bottom part -->
+          <div class="flex justify-between mt-2">
+            <div clsss="">
+              <p class="text-xs">To</p>
+              <p class="font-bold text-xs">joyce.smith&#64;holcim.com</p>
+            </div>
+            <div
+              class="border-l-[1.5px]"
+              [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+            ></div>
+            <div class="">
+              <p class="text-xs">Due date</p>
+              <p class="font-bold text-xs">1<sup>st</sup> Jan 2023</p>
+            </div>
+            <button (click)="toggleIcon()">
+              <ion-icon
+                class="text-3xl"
+                [name]="isStarOutline ? 'star-outline' : 'star'"
+                [class]="isOverdue ? 'text-red-600' : 'text-[#007382]'"
+              ></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

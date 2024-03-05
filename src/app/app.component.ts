@@ -1,4 +1,5 @@
 import {
+  star,
   close,
   camera,
   business,
@@ -6,6 +7,7 @@ import {
   mapOutline,
   homeOutline,
   cashOutline,
+  starOutline,
   pencilOutline,
   createOutline,
   checkmarkSharp,
@@ -17,6 +19,7 @@ import {
   documentTextOutline,
   personCircleOutline,
   notificationsOutline,
+  chevronForwardOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { Component } from "@angular/core";
@@ -31,6 +34,7 @@ import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
 export class AppComponent {
   constructor() {
     addIcons({
+      star,
       close,
       camera,
       business,
@@ -38,6 +42,7 @@ export class AppComponent {
       mapOutline,
       homeOutline,
       cashOutline,
+      starOutline,
       pencilOutline,
       createOutline,
       checkmarkSharp,
@@ -49,6 +54,7 @@ export class AppComponent {
       documentTextOutline,
       personCircleOutline,
       notificationsOutline,
+      chevronForwardOutline,
     });
   }
 }

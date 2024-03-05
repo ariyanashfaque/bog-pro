@@ -33,7 +33,7 @@ export class ActionManagementModalComponent implements OnInit {
   @Input() isMenuOpen: boolean = false;
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
   filterCategory: any[] = [
-    "Source (1)",
+    "Source",
     "Status",
     "Risk level",
     "System",
