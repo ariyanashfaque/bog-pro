@@ -33,7 +33,7 @@
   >
     <div></div>
     <!-- Your Content -->
-    <div class="px-5 py-5">
+    <div class="px-5 py-10">
       <h5 class="text-[28px] text-[#363636] font-bold mb-2">
         2. Add Header Information
         <ion-text color="danger">*</ion-text>
@@ -151,61 +151,156 @@
         <ion-row>
           <ion-col size="6">
             <div
-              class="w-full h-[80px] px-[17px] bg-[#EDF5F5] rounded-[4px] flex items-center justify-between relative"
+              class="w-full min-h-[80px] px-[17px] bg-[#EDF5F5] rounded-[4px] flex flex-col justify-center py-5"
             >
-              <ion-label class="text-[24px]" slot="label">
-                Lead author
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <div class="wrap" [class]="authorSearch == true ? 'active' : ''">
-                <form>
-                  <input
-                    type="text"
-                    class="input"
-                    [class]="authorSearch == true ? 'active' : ''"
-                    placeholder="search . . ."
-                  />
-                </form>
-                <ion-icon
-                  class="fa text-4xl"
-                  color="secondary"
-                  (click)="toggleAuthorSearch()"
-                  name="search-outline"
-                ></ion-icon>
+              <div class="flex items-center justify-between">
+                <ion-label class="text-[24px]" slot="label">
+                  Lead author
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <!-- Search Bar -->
+                <div
+                  class="wrap"
+                  [class]="authorSearch == true ? 'active' : ''"
+                >
+                  <form>
+                    <input
+                      type="text"
+                      class="input"
+                      [class]="authorSearch == true ? 'active' : ''"
+                      placeholder="search . . ."
+                    />
+                  </form>
+                  <ion-icon
+                    class="fa text-4xl"
+                    color="secondary"
+                    (click)="toggleAuthorSearch()"
+                    name="search-outline"
+                  ></ion-icon>
+                </div>
               </div>
+              <!-- search result -->
+              <!-- <div class="mt-5">Search Content here</div> -->
             </div>
           </ion-col>
           <ion-col size="6">
             <div
-              class="w-full min-h-[80px] px-[17px] bg-[#EDF5F5] rounded-[4px] flex items-center justify-between"
+              class="w-full min-h-[80px] px-[17px] bg-[#EDF5F5] rounded-[4px] flex flex-col justify-center py-5"
             >
-              <ion-label class="text-[24px]" slot="label">
-                Other team members
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <div
-                class="wrap"
-                [class]="teamMemberSearch == true ? 'active' : ''"
-              >
-                <form>
-                  <input
-                    type="text"
-                    class="input"
-                    [class]="teamMemberSearch == true ? 'active' : ''"
-                    placeholder="search . . ."
-                  />
-                </form>
-                <ion-icon
-                  class="fa text-4xl"
-                  color="secondary"
-                  (click)="toggleTeamMemberSearch()"
-                  name="search-outline"
-                ></ion-icon>
+              <div class="flex items-center justify-between">
+                <ion-label class="text-[24px]" slot="label">
+                  Other team members
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <!-- Search bar -->
+                <div
+                  class="wrap"
+                  [class]="teamMemberSearch == true ? 'active' : ''"
+                >
+                  <form>
+                    <input
+                      type="text"
+                      class="input"
+                      [class]="teamMemberSearch == true ? 'active' : ''"
+                      placeholder="search . . ."
+                    />
+                  </form>
+                  @if (teamMemberSearch) {
+                    <ion-icon
+                      class="fa text-4xl"
+                      color="secondary"
+                      (click)="toggleTeamMemberSearch()"
+                      name="close"
+                    ></ion-icon>
+                  } @else {
+                    <ion-icon
+                      class="fa text-4xl"
+                      color="secondary"
+                      (click)="toggleTeamMemberSearch()"
+                      name="search-outline"
+                    ></ion-icon>
+                  }
+                </div>
               </div>
+
+              <!-- search result -->
+              @if (teamMemberSearch) {
+                <div
+                  class="mt-5 max-h-[136px] overflow-y-auto flex flex-col gap-4"
+                >
+                  @for (user of users; track user.id) {
+                    <div class="flex justify-between items-center">
+                      <div class="flex items-center gap-2">
+                        <ion-avatar class="w-14 h-14">
+                          <img
+                            alt="Silhouette of a person's head"
+                            src="https://media.licdn.com/dms/image/C5603AQHydE66A3BtmQ/profile-displayphoto-shrink_800_800/0/1625333662747?e=1715212800&v=beta&t=vMkDbbPzaOnC4OfmCCzK8FgdjuxJ1CiXdsm641-71Bs"
+                          />
+                        </ion-avatar>
+                        <ion-label>
+                          <span class="text-[16px] font-bold">{{
+                            user.name
+                          }}</span>
+                          <p class="text-[14px]">{{ user.email }}</p>
+                        </ion-label>
+                      </div>
+                      @if (user.selected) {
+                        <button
+                          class="w-[29.25px] h-[29.25px] mr-[4px] bg-[#B1D3D3] rounded-full flex justify-center items-center"
+                        >
+                          <ion-icon
+                            (click)="removeUser(user)"
+                            name="trash-outline"
+                            size="small"
+                            color="secondary"
+                          ></ion-icon>
+                        </button>
+                      } @else {
+                        <ion-icon
+                          (click)="addUser(user)"
+                          class="cursor-pointer text-4xl"
+                          name="add-circle"
+                          color="secondary"
+                        ></ion-icon>
+                      }
+                    </div>
+                  }
+                </div>
+              } @else if (selectedUsers.length > 0) {
+                <div
+                  class="mt-5 max-h-[136px] overflow-y-auto flex flex-col gap-4"
+                >
+                  @for (selectedUser of selectedUsers; track selectedUser.id) {
+                    <div class="flex justify-between items-center">
+                      <div class="flex items-center gap-2">
+                        <ion-avatar class="w-14 h-14">
+                          <img
+                            alt="Silhouette of a person's head"
+                            src="https://media.licdn.com/dms/image/C5603AQHydE66A3BtmQ/profile-displayphoto-shrink_800_800/0/1625333662747?e=1715212800&v=beta&t=vMkDbbPzaOnC4OfmCCzK8FgdjuxJ1CiXdsm641-71Bs"
+                          />
+                        </ion-avatar>
+                        <ion-label>
+                          <span class="font-bold">John Doe</span>
+                          <p>johndoe&#64;holcim.com</p>
+                        </ion-label>
+                      </div>
+                      <button
+                        class="w-[29.25px] h-[29.25px] mr-[4px] bg-[#B1D3D3] rounded-full flex justify-center items-center"
+                        (click)="removeUser(selectedUser)"
+                      >
+                        <ion-icon
+                          name="trash-outline"
+                          size="small"
+                          color="secondary"
+                        ></ion-icon>
+                      </button>
+                    </div>
+                  }
+                </div>
+              }
             </div>
           </ion-col>
         </ion-row>
-        <ion-row> </ion-row>
       </ion-grid>
     </div>
   </div>
