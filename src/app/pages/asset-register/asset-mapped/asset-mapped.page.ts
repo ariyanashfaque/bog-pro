@@ -17,11 +17,14 @@ import {
   IonLabel,
   IonTitle,
   IonHeader,
+  IonToggle,
   IonContent,
   IonToolbar,
+  IonSegment,
   IonCardTitle,
   IonAccordion,
   IonCardHeader,
+  IonSegmentButton,
   IonAccordionGroup,
 } from "@ionic/angular/standalone";
 import {
@@ -49,13 +52,16 @@ import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/a
     IonGrid,
     IonTitle,
     IonLabel,
+    IonToggle,
     IonHeader,
+    IonSegment,
     IonToolbar,
     IonContent,
     IonAccordion,
     IonCardTitle,
     IonCardHeader,
     HeaderComponent,
+    IonSegmentButton,
     IonAccordionGroup,
     LoadingSkeletonComponent,
     AssetMappedCardComponent,
@@ -68,10 +74,10 @@ import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/a
 export class AssetMappedPage implements OnInit {
   plantId: string;
   store = inject(Store);
+  assets: AssetsModel[];
+  toggleChecked: boolean;
   httpService = inject(HttpService);
   toastService = inject(ToastService);
-
-  assets: AssetsModel[];
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
 
@@ -101,6 +107,10 @@ export class AssetMappedPage implements OnInit {
     this.assets = [];
     this.plantId = "";
     this.groupedAssets = [];
+  }
+
+  handleToggle(event: any) {
+    this.toggleChecked = event.detail.checked;
   }
 
   ngOnInit() {

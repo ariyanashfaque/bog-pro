@@ -45,14 +45,18 @@ export class AssetMappedCardComponent implements OnInit {
   router = inject(Router);
 
   @Input() plantId: string;
+  @Input() toggleChecked: boolean;
   @Input() asset: AssetsModel;
 
   constructor() {
     this.asset = {};
     this.plantId = "";
+    this.toggleChecked = false;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.asset);
+  }
 
   handleNavigate = (assetId?: string) => {
     this.router.navigate([

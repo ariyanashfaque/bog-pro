@@ -1,5 +1,5 @@
 @if (isMenuOpen) {
-  <ion-backdrop [visible]="true"> </ion-backdrop>
+  <ion-backdrop [visible]="isMenuOpen"> </ion-backdrop>
 }
 
 <app-header headerTitle="Asset Register" [isDefaultHref]="true"></app-header>
@@ -25,8 +25,9 @@
                     class="segment-change ion-justify-content-center rounded-full"
                   >
                     <ion-icon
+                      color="primary"
                       class="p-4 h-[32px] w-[32px] image"
-                      src="../../../../../assets/segment-icons/info.svg"
+                      src="../../../../../assets/segment-icons/info1.svg"
                     >
                     </ion-icon>
                     <ion-text
