@@ -5,6 +5,83 @@
 }
 
 <ion-content [fullscreen]="true" color="background">
+  <ion-card class="m-8 rounded-md">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <ion-select
+              interface="popover"
+              class="relative"
+              required
+              fill="outline"
+              color="primary"
+              toggleIcon="chevron-down-outline"
+              expandedIcon="chevron-up-outline"
+              inputmode="text"
+              placeholder="Select..."
+              labelPlacement="floating"
+              errorText="Asset name required"
+            >
+              <div slot="label" class="text-[#007382] font-bold">
+                Select GRU
+                <ion-text color="danger">*</ion-text>
+              </div>
+              <ion-select-option value="apple">item 1</ion-select-option>
+              <ion-select-option value="banana">item 2</ion-select-option>
+              <ion-select-option value="orange">item 3</ion-select-option>
+            </ion-select></ion-col
+          >
+          <ion-col size="4">
+            <ion-select
+              interface="popover"
+              class="relative"
+              required
+              fill="outline"
+              color="primary"
+              toggleIcon="chevron-down-outline"
+              expandedIcon="chevron-up-outline"
+              inputmode="text"
+              placeholder="Select..."
+              labelPlacement="floating"
+              errorText="Asset name required"
+            >
+              <div slot="label" class="text-[#007382] font-bold">
+                Select Unit
+                <ion-text color="danger">*</ion-text>
+              </div>
+              <ion-select-option value="apple">unit 1</ion-select-option>
+              <ion-select-option value="banana">unit 2</ion-select-option>
+              <ion-select-option value="orange">unit 3</ion-select-option>
+            </ion-select></ion-col
+          >
+          <ion-col size="4">
+            <ion-select
+              interface="popover"
+              class="relative"
+              required
+              fill="outline"
+              color="primary"
+              toggleIcon="chevron-down-outline"
+              expandedIcon="chevron-up-outline"
+              inputmode="text"
+              placeholder="Select..."
+              labelPlacement="floating"
+              errorText="Asset name required"
+            >
+              <div slot="label" class="text-[#007382] font-bold">
+                Select Plant
+                <ion-text color="danger">*</ion-text>
+              </div>
+              <ion-select-option value="apple">plant 1</ion-select-option>
+              <ion-select-option value="banana">plant 2</ion-select-option>
+              <ion-select-option value="orange">plant 3</ion-select-option>
+            </ion-select></ion-col
+          >
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
   <button
     class="bg-cyan-900 text-xl text-white p-4 rounded-full m-2"
     (click)="assessmentModalToggle()"

@@ -1,5 +1,5 @@
 <div
-  class="fixed w-full bottom-0 h-2/3 rounded-[32px] shadow-lg bg-transparent transform transition-transform duration-800 z-50"
+  class="fixed w-full bottom-0 h-3/4 rounded-[32px] shadow-lg bg-transparent transform transition-transform duration-800 z-50"
   [class]="!isMenuOpen ? 'translate-y-[calc(100%+40px)]' : ''"
 >
   <div class="h-full w-full flex">
@@ -29,9 +29,8 @@
     <div class="h-full bg-white flex-grow rounded-tr-[32px]"></div>
   </div>
   <div
-    class="absolute text-black top-8 w-full h-full bg-transparent overflow-y-scroll"
+    class="absolute text-black top-9 w-full h-full bg-white overflow-y-scroll"
   >
-    <div></div>
     <!-- Your Content -->
     <div class="px-5 py-10">
       <h5 class="text-[28px] text-[#363636] font-bold mb-2">
@@ -42,7 +41,7 @@
           >OPEN</span
         >
       </h5>
-      <ion-grid>
+      <ion-grid class="mb-4">
         <ion-row>
           <ion-col size="6">
             <!-- <ion-input
@@ -148,6 +147,13 @@
             </ion-textarea>
           </ion-col>
         </ion-row>
+      </ion-grid>
+
+      <h5 class="text-[28px] text-[#363636] font-bold mb-2">
+        3. Assign Members
+        <ion-text color="danger">*</ion-text>
+      </h5>
+      <ion-grid>
         <ion-row>
           <ion-col size="6">
             <div
@@ -234,7 +240,7 @@
                         <ion-avatar class="w-14 h-14">
                           <img
                             alt="Silhouette of a person's head"
-                            src="https://media.licdn.com/dms/image/C5603AQHydE66A3BtmQ/profile-displayphoto-shrink_800_800/0/1625333662747?e=1715212800&v=beta&t=vMkDbbPzaOnC4OfmCCzK8FgdjuxJ1CiXdsm641-71Bs"
+                            src="https://ionicframework.com/docs/img/demos/avatar.svg"
                           />
                         </ion-avatar>
                         <ion-label>
@@ -276,12 +282,12 @@
                         <ion-avatar class="w-14 h-14">
                           <img
                             alt="Silhouette of a person's head"
-                            src="https://media.licdn.com/dms/image/C5603AQHydE66A3BtmQ/profile-displayphoto-shrink_800_800/0/1625333662747?e=1715212800&v=beta&t=vMkDbbPzaOnC4OfmCCzK8FgdjuxJ1CiXdsm641-71Bs"
+                            src="https://ionicframework.com/docs/img/demos/avatar.svg"
                           />
                         </ion-avatar>
                         <ion-label>
-                          <span class="font-bold">John Doe</span>
-                          <p>johndoe&#64;holcim.com</p>
+                          <span class="font-bold">{{ selectedUser.name }}</span>
+                          <p>{{ selectedUser.email }}</p>
                         </ion-label>
                       </div>
                       <button

@@ -70,45 +70,46 @@ export class AssessmentModalComponent implements OnInit {
   users = [
     {
       id: 1,
-      name: "Ariyan Ashfaq",
-      email: "ariyan@holcim.com",
-      selected: false,
-    },
-    {
-      id: 2,
-      name: "Mustafa Iram",
-      email: "mustafa@gmail.com",
-      selected: false,
-    },
-    {
-      id: 3,
-      name: "M.H. Nahib",
-      email: "nahib@holcim.com",
-      selected: false,
-    },
-    {
-      id: 4,
-      name: "Sadia Tasnim",
-      email: "sadia@holcim.com",
-      selected: false,
-    },
-    {
-      id: 5,
-      name: "Uttam Roy",
-      email: "uttam@yahoo.c0m",
-      selected: false,
-    },
-    {
-      id: 6,
       name: "Nazmul Kabir",
       email: "kabir@holcim.com",
       selected: false,
     },
     {
-      id: 7,
+      id: 2,
       name: "Ashikul Shafol",
       email: "shofol@holcim.com",
     },
+    {
+      id: 3,
+      name: "Ariyan Ashfaq",
+      email: "ariyan@holcim.com",
+      selected: false,
+    },
+    {
+      id: 4,
+      name: "Mustafa Iram",
+      email: "mustafa@gmail.com",
+      selected: false,
+    },
+    {
+      id: 5,
+      name: "M.H. Nahib",
+      email: "nahib@holcim.com",
+      selected: false,
+    },
+    {
+      id: 6,
+      name: "Sadia Tasnim",
+      email: "sadia@holcim.com",
+      selected: false,
+    },
+    {
+      id: 7,
+      name: "Uttam Roy",
+      email: "uttam@yahoo.c0m",
+      selected: false,
+    },
+
     {
       id: 8,
       name: "Musaddi Rafi",
