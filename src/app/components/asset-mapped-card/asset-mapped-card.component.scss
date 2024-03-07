@@ -1,28 +1,30 @@
 .CardBgColor {
   background-color: #edf5f5;
 }
-
 .bgEditBtn {
   background-color: #007382;
 }
 .bgDeleteBtn {
   background-color: #0073824d;
 }
+.deletePending {
+  background-color: #c6c6c6;
+}
 .customBorder {
-  border: 1px solid #f00014;
-  border-radius: 2px;
-  background: #f00014 0% 0% no-repeat padding-box;
   opacity: 1;
+  border-radius: 2px;
+  border: 1px solid #f00014;
+  background: #f00014 0% 0% no-repeat padding-box;
 }
 .customBorderY {
-  background: #ffd200 0% 0% no-repeat padding-box;
-  border-radius: 2px;
   opacity: 1;
+  border-radius: 2px;
+  background: #ffd200 0% 0% no-repeat padding-box;
 }
 .customBorderO {
-  background: #ff6e00 0% 0% no-repeat padding-box;
-  border-radius: 2px;
   opacity: 1;
+  border-radius: 2px;
+  background: #ff6e00 0% 0% no-repeat padding-box;
 }
 
 ion-badge {

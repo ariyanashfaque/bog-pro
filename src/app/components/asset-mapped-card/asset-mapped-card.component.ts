@@ -54,9 +54,7 @@ export class AssetMappedCardComponent implements OnInit {
     this.toggleChecked = false;
   }
 
-  ngOnInit() {
-    console.log(this.asset);
-  }
+  ngOnInit() {}
 
   handleNavigate = (assetId?: string) => {
     this.router.navigate([

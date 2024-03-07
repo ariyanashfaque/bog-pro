@@ -151,8 +151,14 @@
                     <ion-icon src="../../../assets/icon/asset-icons/edit.svg">
                     </ion-icon>
                   </button>
+
                   <button
-                    class="p-[5px] inline-flex items-center bgDeleteBtn justify-center w-8 h-8 rounded-full"
+                    class="p-[5px] inline-flex items-center justify-center w-8 h-8 rounded-full"
+                    [class]="
+                      asset.assetRegisteredStatus?.assetDeletionApprovalPending
+                        ? 'deletePending'
+                        : 'bgDeleteBtn'
+                    "
                   >
                     <ion-icon src="../../../assets/icon/asset-icons/delete.svg">
                     </ion-icon>
