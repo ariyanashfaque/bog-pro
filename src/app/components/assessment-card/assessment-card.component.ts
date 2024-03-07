@@ -25,8 +25,12 @@ import {
   ],
 })
 export class AssessmentCardComponent implements OnInit {
-  @Input() isOverdue: boolean = false;
+  @Input() isOpen: boolean = false;
+  @Input() data: any = {};
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.data);
+  }
 }

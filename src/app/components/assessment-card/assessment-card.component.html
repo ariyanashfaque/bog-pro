@@ -1,15 +1,15 @@
 <div class="">
-  <div class="max-w-[550px] mx-auto relative rounded-md">
+  <div class="max-w-full mx-auto relative rounded-md">
     <div
-      class="bg-[#EDF5F5] rounded-md px-5 pt-5 pb-3 text-sm relative"
-      [class]="isOverdue ? 'bg-[#F4F4F4]' : 'bg-[#EDF5F5]'"
+      class="bg-[#EDF5F5] rounded-md px-3 pt-3 pb-1 text-sm relative"
+      [class]="isOpen ? 'bg-[#EDF5F5]' : 'bg-[#F4F4F4]'"
     >
       <div
-        class="absolute -top-2 right-1 w-[58px] h-[58px] rounded-full bg-white flex transform translate-x-2.5 -translate-y-2.5"
+        class="absolute -top-2 right-1 w-[55px] h-[55px] rounded-full bg-white flex transform translate-x-2.5 -translate-y-2.5"
       >
         <div
-          class="mx-auto my-auto w-12 h-12 rounded-full shadow-md flex"
-          [class]="isOverdue ? 'bg-[#3CB4AA]' : 'bg-[#007382]'"
+          class="mx-auto my-auto w-10 h-10 rounded-full shadow-md flex"
+          [class]="isOpen ? ' bg-[#007382]' : 'bg-[#3CB4AA]'"
         >
           <ion-icon
             class="text-2xl mx-auto my-auto text-white"
@@ -21,9 +21,9 @@
         <!-- top part -->
 
         <div>
-          <ion-title class="text-[16px] text-black font-bold pl-0 pb-2"
-            >2023-SIM-Black lane quarry</ion-title
-          >
+          <ion-title class="text-[16px] text-black font-bold pl-0 pb-2">
+            {{ data.title }}
+          </ion-title>
         </div>
         <div class="my-2 border-t-[1.5px] border-dashed border-[#007382]"></div>
         <!-- middle part -->
@@ -59,18 +59,22 @@
               1<sup>st</sup> Oct - 31<sup>st</sup> Dec
             </span>
             <ion-badge
-              class="text-white rounded-sm text-xs font-normal my-2"
+              class="text-white rounded-sm text-xs font-normal my-2 pt-1"
               color="danger"
               >PENDING</ion-badge
             >
           </div>
           <div class="">
-            <p class="text-xs mb-1">Closed</p>
+            @if (data.status[3].status == "Open") {
+              <p class="text-xs mb-1">Open</p>
+            } @else {
+              <p class="text-xs mb-1">Closed</p>
+            }
             <ion-icon
               class="text-xl rounded-full p-[6px]"
               name="checkmark-outline"
               [class]="
-                isOverdue
+                data.status[3].status == 'Open'
                   ? 'text-white bg-[#009146]'
                   : 'text-gray-500 bg-gray-300'
               "
