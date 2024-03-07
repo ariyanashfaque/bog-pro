@@ -1,9 +1,23 @@
 import { Component, OnInit } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
-import { IonicModule } from "@ionic/angular";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { AssessmentModalComponent } from "src/app/components/assessment-modal/assessment-modal.component";
+import {
+  IonRow,
+  IonCol,
+  IonCard,
+  IonGrid,
+  IonText,
+  IonList,
+  IonSelect,
+  IonButton,
+  IonContent,
+  IonBackdrop,
+  IonCardTitle,
+  IonCardHeader,
+  IonCardContent,
+  IonSelectOption,
+} from "@ionic/angular/standalone";
+import { AssessmentCardComponent } from "src/app/components/assessment-card/assessment-card.component";
 
 @Component({
   selector: "app-assessment",
@@ -11,10 +25,22 @@ import { AssessmentModalComponent } from "src/app/components/assessment-modal/as
   styleUrls: ["./assessment.page.scss"],
   standalone: true,
   imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
+    IonCol,
+    IonRow,
+    IonList,
+    IonText,
+    IonGrid,
+    IonCard,
+    IonButton,
+    IonSelect,
+    IonContent,
+    IonBackdrop,
+    IonCardTitle,
+    IonCardHeader,
+    IonCardContent,
     HeaderComponent,
+    IonSelectOption,
+    AssessmentCardComponent,
     AssessmentModalComponent,
   ],
 })

@@ -21,6 +21,7 @@ import {
   documentTextOutline,
   personCircleOutline,
   notificationsOutline,
+  checkmarkOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { Component } from "@angular/core";
@@ -48,6 +49,7 @@ export class AppComponent {
       createOutline,
       searchOutline,
       checkmarkSharp,
+      checkmarkOutline,
       locationOutline,
       clipboardOutline,
       helpCircleOutline,

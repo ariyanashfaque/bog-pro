@@ -5,89 +5,152 @@
 }
 
 <ion-content [fullscreen]="true" color="background">
-  <ion-card class="m-8 rounded-md">
-    <ion-card-content>
+  <ion-card
+    class="mx-8 mt-8 max-h-[calc(100%-65px)] rounded-md shadow-[0px_1px_6px_1px_#00000024]"
+  >
+    <!-- innter top card -->
+    <ion-card
+      class="m-0 rounded-t-md rounded-b-none shadow-[0px_1px_6px_0px_#00000024]"
+    >
+      <ion-card-content class="p-[14px]">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">
+              <ion-select
+                interface="popover"
+                class="relative"
+                required
+                fill="outline"
+                color="primary"
+                toggleIcon="chevron-down-outline"
+                expandedIcon="chevron-up-outline"
+                inputmode="text"
+                placeholder="Select..."
+                labelPlacement="floating"
+                errorText="Asset name required"
+              >
+                <div slot="label" class="text-[#007382] font-bold pt-[2px]">
+                  Select GRU
+                  <ion-text color="danger">*</ion-text>
+                </div>
+                <ion-select-option value="apple">item 1</ion-select-option>
+                <ion-select-option value="banana">item 2</ion-select-option>
+                <ion-select-option value="orange">item 3</ion-select-option>
+              </ion-select>
+            </ion-col>
+            <ion-col size="4">
+              <ion-select
+                interface="popover"
+                class="relative"
+                required
+                fill="outline"
+                color="primary"
+                toggleIcon="chevron-down-outline"
+                expandedIcon="chevron-up-outline"
+                inputmode="text"
+                placeholder="Select..."
+                labelPlacement="floating"
+                errorText="Asset name required"
+              >
+                <div slot="label" class="text-[#007382] font-bold pt-[2px]">
+                  Select Unit
+                  <ion-text color="danger">*</ion-text>
+                </div>
+                <ion-select-option value="apple">unit 1</ion-select-option>
+                <ion-select-option value="banana">unit 2</ion-select-option>
+                <ion-select-option value="orange">unit 3</ion-select-option>
+              </ion-select></ion-col
+            >
+            <ion-col size="4">
+              <ion-select
+                interface="popover"
+                class="relative"
+                required
+                fill="outline"
+                color="primary"
+                toggleIcon="chevron-down-outline"
+                expandedIcon="chevron-up-outline"
+                inputmode="text"
+                placeholder="Select..."
+                labelPlacement="floating"
+                errorText="Asset name required"
+              >
+                <div slot="label" class="text-[#007382] font-bold pt-[2px]">
+                  Select Plant
+                  <ion-text color="danger">*</ion-text>
+                </div>
+                <ion-select-option value="apple">plant 1</ion-select-option>
+                <ion-select-option value="banana">plant 2</ion-select-option>
+                <ion-select-option value="orange">plant 3</ion-select-option>
+              </ion-select></ion-col
+            >
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Assessment count part -->
+    <!-- --------------------- -->
+    <!-- <div class="p-6 flex items-center justify-between">
+      <ion-card-header class="p-0">
+        <ion-card-title class="font-bold">Assessment</ion-card-title>
+        <ion-card-subtitle>** Zero assessment created</ion-card-subtitle>
+      </ion-card-header>
+      <ion-button
+        class="h-[56px] w-[200px] font-bold"
+        shape="round"
+        color="secondary"
+        (click)="assessmentModalToggle()"
+      >
+        Create new
+      </ion-button>
+    </div> -->
+    <div class="p-6 flex items-center justify-between">
+      <ion-card-header class="p-0">
+        <ion-card-title class="font-bold"
+          >Current year assessments <span>(4)</span></ion-card-title
+        >
+      </ion-card-header>
+      <div class="flex gap-4">
+        <ion-list class="p-1">
+          <ion-select
+            class="text-[#007382] font-bold text-[16px]"
+            fill="outline"
+            shape="round"
+            interface="popover"
+            toggleIcon="chevron-down-outline"
+            expandedIcon="chevron-up-outline"
+            aria-label="Filter"
+            value="open"
+          >
+            <ion-select-option value="open">Open</ion-select-option>
+            <ion-select-option value="close">Closed</ion-select-option>
+          </ion-select>
+        </ion-list>
+        <ion-button
+          class="h-[56px] w-[200px] font-bold"
+          shape="round"
+          color="secondary"
+          (click)="assessmentModalToggle()"
+        >
+          Create new
+        </ion-button>
+      </div>
+    </div>
+
+    <ion-card-content class="px-6 pb-6">
       <ion-grid>
         <ion-row>
-          <ion-col size="4">
-            <ion-select
-              interface="popover"
-              class="relative"
-              required
-              fill="outline"
-              color="primary"
-              toggleIcon="chevron-down-outline"
-              expandedIcon="chevron-up-outline"
-              inputmode="text"
-              placeholder="Select..."
-              labelPlacement="floating"
-              errorText="Asset name required"
-            >
-              <div slot="label" class="text-[#007382] font-bold">
-                Select GRU
-                <ion-text color="danger">*</ion-text>
-              </div>
-              <ion-select-option value="apple">item 1</ion-select-option>
-              <ion-select-option value="banana">item 2</ion-select-option>
-              <ion-select-option value="orange">item 3</ion-select-option>
-            </ion-select></ion-col
-          >
-          <ion-col size="4">
-            <ion-select
-              interface="popover"
-              class="relative"
-              required
-              fill="outline"
-              color="primary"
-              toggleIcon="chevron-down-outline"
-              expandedIcon="chevron-up-outline"
-              inputmode="text"
-              placeholder="Select..."
-              labelPlacement="floating"
-              errorText="Asset name required"
-            >
-              <div slot="label" class="text-[#007382] font-bold">
-                Select Unit
-                <ion-text color="danger">*</ion-text>
-              </div>
-              <ion-select-option value="apple">unit 1</ion-select-option>
-              <ion-select-option value="banana">unit 2</ion-select-option>
-              <ion-select-option value="orange">unit 3</ion-select-option>
-            </ion-select></ion-col
-          >
-          <ion-col size="4">
-            <ion-select
-              interface="popover"
-              class="relative"
-              required
-              fill="outline"
-              color="primary"
-              toggleIcon="chevron-down-outline"
-              expandedIcon="chevron-up-outline"
-              inputmode="text"
-              placeholder="Select..."
-              labelPlacement="floating"
-              errorText="Asset name required"
-            >
-              <div slot="label" class="text-[#007382] font-bold">
-                Select Plant
-                <ion-text color="danger">*</ion-text>
-              </div>
-              <ion-select-option value="apple">plant 1</ion-select-option>
-              <ion-select-option value="banana">plant 2</ion-select-option>
-              <ion-select-option value="orange">plant 3</ion-select-option>
-            </ion-select></ion-col
-          >
+          <ion-col size="6"
+            ><app-assessment-card [isOverdue]="false"></app-assessment-card
+          ></ion-col>
+          <ion-col size="6"
+            ><app-assessment-card [isOverdue]="true"></app-assessment-card
+          ></ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
-  <button
-    class="bg-cyan-900 text-xl text-white p-4 rounded-full m-2"
-    (click)="assessmentModalToggle()"
-  >
-    modal
-  </button>
 </ion-content>
 
 <app-assessment-modal
