@@ -7,6 +7,9 @@ import {
   IonCard,
   IonText,
   IonBadge,
+  IonGrid,
+  IonRow,
+  IonCol,
 } from "@ionic/angular/standalone";
 
 @Component({
@@ -15,6 +18,9 @@ import {
   templateUrl: "./assessment-card.component.html",
   styleUrls: ["./assessment-card.component.scss"],
   imports: [
+    IonCol,
+    IonRow,
+    IonGrid,
     IonBadge,
     IonText,
     IonCard,

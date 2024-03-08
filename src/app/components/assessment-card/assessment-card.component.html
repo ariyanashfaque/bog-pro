@@ -2,14 +2,14 @@
   <div class="max-w-full mx-auto relative rounded-md">
     <div
       class="bg-[#EDF5F5] rounded-md px-3 pt-3 pb-1 text-sm relative"
-      [class]="isOpen ? 'bg-[#EDF5F5]' : 'bg-[#F4F4F4]'"
+      [class]="isOpen ? 'bg-[#F4F4F4]' : 'bg-[#EDF5F5] '"
     >
       <div
         class="absolute -top-2 right-1 w-[55px] h-[55px] rounded-full bg-white flex transform translate-x-2.5 -translate-y-2.5"
       >
         <div
           class="mx-auto my-auto w-10 h-10 rounded-full shadow-md flex"
-          [class]="isOpen ? ' bg-[#007382]' : 'bg-[#3CB4AA]'"
+          [class]="isOpen ? '  bg-[#3CB4AA]' : 'bg-[#007382]'"
         >
           <ion-icon
             class="text-2xl mx-auto my-auto text-white"
@@ -27,13 +27,34 @@
         </div>
         <div class="my-2 border-t-[1.5px] border-dashed border-[#007382]"></div>
         <!-- middle part -->
+        <!-- <ion-grid fixed>
+          <ion-row>
+            <ion-col size="4">
+              <div>
+                <p class="text-xs">Created by</p>
+                <span class="font-bold text-xs">john.doe&#64;holcim.com</span>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="h-full border-l-[2px] border-[#CDE2E2]"></div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="">
+                <p class="text-xs">Assign to</p>
+                <span class="font-bold text-xs"
+                  >joyce.smith&#64;holcim.com</span
+                >
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid> -->
         <div class="flex justify-between text-black">
           <div>
             <p class="text-xs">Created by</p>
             <span class="font-bold text-xs">john.doe&#64;holcim.com</span>
           </div>
           <div class="border-l-[2px] border-[#CDE2E2]"></div>
-          <div class="">
+          <div class="self-stretch">
             <p class="text-xs">Assign to</p>
             <span class="font-bold text-xs">joyce.smith&#64;holcim.com</span>
           </div>
@@ -60,23 +81,27 @@
             </span>
             <ion-badge
               class="text-white rounded-sm text-xs font-normal my-2 pt-1"
-              color="danger"
-              >PENDING</ion-badge
+              [class]="
+                data.assessmentStatus == 'PENDING'
+                  ? 'bg-[#F00014]'
+                  : data.assessmentStatus == 'ESCALATED'
+                    ? 'bg-[#FF6E00]'
+                    : data.assessmentStatus == 'APPROVED ON 20th OCT'
+                      ? 'bg-[#94C12E]'
+                      : 'bg-[#FFD000]'
+              "
+              >{{ data.assessmentStatus }}</ion-badge
             >
           </div>
           <div class="">
-            @if (data.status[3].status == "Open") {
-              <p class="text-xs mb-1">Open</p>
-            } @else {
-              <p class="text-xs mb-1">Closed</p>
-            }
+            <p class="text-xs mb-1">Closed</p>
             <ion-icon
               class="text-xl rounded-full p-[6px]"
               name="checkmark-outline"
               [class]="
                 data.status[3].status == 'Open'
-                  ? 'text-white bg-[#009146]'
-                  : 'text-gray-500 bg-gray-300'
+                  ? ' text-gray-500 bg-gray-300'
+                  : 'text-white bg-[#009146]'
               "
             ></ion-icon>
           </div>

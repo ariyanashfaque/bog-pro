@@ -50,7 +50,14 @@ export class AssessmentPage implements OnInit {
   isAssessmentModalOpen: boolean = false;
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("all assessments: ", this.allAssessments);
+    console.log("open assessments: ", this.openAssessments);
+    console.log("closed assessments: ", this.closedAssessments);
+    console.log("current year assessments: ", this.currentYearAssessments);
+    console.log("previous year assessments: ", this.previousYearAssessments);
+    console.log("selectedYearAssessments: ", this.selectedYearAssessments);
+  }
 
   // Open or Closed option for filter
   selectedOption: string = "open";
@@ -70,6 +77,52 @@ export class AssessmentPage implements OnInit {
       title: "iCare sync test",
       scopeOfAudit: "scope of audit",
       template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "PENDING",
+      status: [
+        {
+          id: "1",
+          status: "Assessment",
+          isCompleted: false,
+          isProgress: true,
+        },
+        {
+          id: "2",
+          status: "1st Approval",
+          isCompleted: false,
+          isProgress: false,
+        },
+        {
+          id: "3",
+          status: "2nd Approval",
+          isCompleted: false,
+          isProgress: false,
+        },
+        {
+          id: "4",
+          status: "Open",
+          isCompleted: false,
+          isProgress: false,
+        },
+      ],
+      leadAuditor: {
+        id: "ariyan.ashfaque.ext@holcim.com",
+        name: "Ariyan Ashfaque",
+      },
+      otherTeamMembers: [
+        {
+          id: "ariyan.ashfaque.ext@holcim.com",
+          name: "Ariyan Ashfaque",
+        },
+      ],
+      filesArray: [],
+    },
+    {
+      type: "Cross",
+      date: "2024-08-20",
+      title: "2023-SIM-Black lane quarry",
+      scopeOfAudit: "scope of audit",
+      template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "APPROVED ON 20th OCT",
       status: [
         {
           id: "1",
@@ -114,6 +167,7 @@ export class AssessmentPage implements OnInit {
       title: "iCare sync test",
       scopeOfAudit: "scope of audit",
       template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "ESCALATED",
       status: [
         {
           id: "1",
@@ -158,6 +212,7 @@ export class AssessmentPage implements OnInit {
       title: "iCare sync test",
       scopeOfAudit: "scope of audit",
       template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "APPROVED ON 20th OCT",
       status: [
         {
           id: "1",
@@ -202,50 +257,7 @@ export class AssessmentPage implements OnInit {
       title: "iCare sync test",
       scopeOfAudit: "scope of audit",
       template: "0AhIDh5LfadsLQItujgK",
-      status: [
-        {
-          id: "1",
-          status: "Assessment",
-          isCompleted: false,
-          isProgress: true,
-        },
-        {
-          id: "2",
-          status: "1st Approval",
-          isCompleted: false,
-          isProgress: false,
-        },
-        {
-          id: "3",
-          status: "2nd Approval",
-          isCompleted: false,
-          isProgress: false,
-        },
-        {
-          id: "4",
-          status: "Open",
-          isCompleted: false,
-          isProgress: false,
-        },
-      ],
-      leadAuditor: {
-        id: "ariyan.ashfaque.ext@holcim.com",
-        name: "Ariyan Ashfaque",
-      },
-      otherTeamMembers: [
-        {
-          id: "ariyan.ashfaque.ext@holcim.com",
-          name: "Ariyan Ashfaque",
-        },
-      ],
-      filesArray: [],
-    },
-    {
-      type: "Cross",
-      date: "2024-08-20",
-      title: "iCare sync test",
-      scopeOfAudit: "scope of audit",
-      template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "ESCALATED",
       status: [
         {
           id: "1",
@@ -290,6 +302,7 @@ export class AssessmentPage implements OnInit {
       title: "iCare sync test",
       scopeOfAudit: "scope of audit",
       template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "PENDING",
       status: [
         {
           id: "1",
@@ -334,6 +347,142 @@ export class AssessmentPage implements OnInit {
       title: "iCare sync test",
       scopeOfAudit: "scope of audit",
       template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "PENDING",
+      status: [
+        {
+          id: "1",
+          status: "Assessment",
+          isCompleted: false,
+          isProgress: true,
+        },
+        {
+          id: "2",
+          status: "1st Approval",
+          isCompleted: false,
+          isProgress: false,
+        },
+        {
+          id: "3",
+          status: "2nd Approval",
+          isCompleted: false,
+          isProgress: false,
+        },
+        {
+          id: "4",
+          status: "Closed",
+          isCompleted: false,
+          isProgress: false,
+        },
+      ],
+      leadAuditor: {
+        id: "ariyan.ashfaque.ext@holcim.com",
+        name: "Ariyan Ashfaque",
+      },
+      otherTeamMembers: [
+        {
+          id: "ariyan.ashfaque.ext@holcim.com",
+          name: "Ariyan Ashfaque",
+        },
+      ],
+      filesArray: [],
+    },
+    {
+      type: "Cross",
+      date: "2022-08-20",
+      title: "iCare sync test",
+      scopeOfAudit: "scope of audit",
+      template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "APPROVED ON 20th OCT",
+      status: [
+        {
+          id: "1",
+          status: "Assessment",
+          isCompleted: false,
+          isProgress: true,
+        },
+        {
+          id: "2",
+          status: "1st Approval",
+          isCompleted: false,
+          isProgress: false,
+        },
+        {
+          id: "3",
+          status: "2nd Approval",
+          isCompleted: false,
+          isProgress: false,
+        },
+        {
+          id: "4",
+          status: "Closed",
+          isCompleted: false,
+          isProgress: false,
+        },
+      ],
+      leadAuditor: {
+        id: "ariyan.ashfaque.ext@holcim.com",
+        name: "Ariyan Ashfaque",
+      },
+      otherTeamMembers: [
+        {
+          id: "ariyan.ashfaque.ext@holcim.com",
+          name: "Ariyan Ashfaque",
+        },
+      ],
+      filesArray: [],
+    },
+    {
+      type: "Cross",
+      date: "2023-08-20",
+      title: "iCare sync test",
+      scopeOfAudit: "scope of audit",
+      template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "ESCALATED",
+      status: [
+        {
+          id: "1",
+          status: "Assessment",
+          isCompleted: false,
+          isProgress: true,
+        },
+        {
+          id: "2",
+          status: "1st Approval",
+          isCompleted: false,
+          isProgress: false,
+        },
+        {
+          id: "3",
+          status: "2nd Approval",
+          isCompleted: false,
+          isProgress: false,
+        },
+        {
+          id: "4",
+          status: "Closed",
+          isCompleted: false,
+          isProgress: false,
+        },
+      ],
+      leadAuditor: {
+        id: "ariyan.ashfaque.ext@holcim.com",
+        name: "Ariyan Ashfaque",
+      },
+      otherTeamMembers: [
+        {
+          id: "ariyan.ashfaque.ext@holcim.com",
+          name: "Ariyan Ashfaque",
+        },
+      ],
+      filesArray: [],
+    },
+    {
+      type: "Cross",
+      date: "2023-08-20",
+      title: "iCare sync test",
+      scopeOfAudit: "scope of audit",
+      template: "0AhIDh5LfadsLQItujgK",
+      assessmentStatus: "PENDING",
       status: [
         {
           id: "1",
@@ -396,18 +545,34 @@ export class AssessmentPage implements OnInit {
       new Date(assessment.date).getFullYear() < new Date().getFullYear(),
   );
 
-  printAssessments() {
-    console.log("all assessments: ", this.allAssessments);
-    console.log("open assessments: ", this.openAssessments);
-    console.log("closed assessments: ", this.closedAssessments);
-    console.log("current year assessments: ", this.currentYearAssessments);
-    console.log("previous year assessments: ", this.previousYearAssessments);
+  // and the years should be sorted in descending order
+  previousYearsList = Array.from(
+    new Set(
+      this.previousYearAssessments.map((assessment) =>
+        new Date(assessment.date).getFullYear(),
+      ),
+    ),
+  ).sort((a, b) => b - a);
+
+  // selectedYearAssessments: any[];
+
+  selectedYear: number = this.previousYearsList[0];
+  onSelectYearChange(event: any) {
+    console.log("Selected Year:", event.detail.value);
+    this.selectedYear = event.detail.value;
   }
 
   // a function for year based filter for previousYearAssessments array
-  yearBasedFilter = (year: number) => {
-    return this.previousYearAssessments.filter(
-      (assessment) => new Date(assessment.date).getFullYear() === year,
-    );
-  };
+  // yearBasedFilter = (year: number) => {
+  //   return this.previousYearAssessments.filter(
+  //     (assessment) => new Date(assessment.date).getFullYear() === year,
+  //   );
+
+  //   console.log("Previous Year Assessments: ", this.previousYearAssessments);
+  // };
+
+  selectedYearAssessments = this.previousYearAssessments.filter(
+    (assessment) =>
+      new Date(assessment.date).getFullYear() === this.selectedYear,
+  );
 }

@@ -114,7 +114,8 @@
         <div class="p-4 flex items-center justify-between">
           <ion-card-header class="p-0">
             <ion-card-title class="font-bold"
-              >Current year assessments <span>(4)</span></ion-card-title
+              >Current year assessments
+              <span>({{ currentYearAssessments.length }})</span></ion-card-title
             >
           </ion-card-header>
           <div class="flex gap-4">
@@ -178,7 +179,10 @@
         <div class="p-4 flex items-center justify-between">
           <ion-card-header class="p-0">
             <ion-card-title class="font-bold"
-              >Previous year assessments <span>(4)</span></ion-card-title
+              >Previous year assessments
+              <span
+                >({{ previousYearAssessments.length }})</span
+              ></ion-card-title
             >
           </ion-card-header>
           <div class="flex gap-4">
@@ -191,14 +195,36 @@
                 toggleIcon="chevron-down-outline"
                 expandedIcon="chevron-up-outline"
                 aria-label="Filter"
-                value="2023"
+                value="{{ selectedYear }}"
+                (ionChange)="onSelectYearChange($event)"
               >
-                <ion-select-option value="2023">2023</ion-select-option>
-                <ion-select-option value="2022">2022</ion-select-option>
+                @for (previousYear of previousYearsList; track previousYear) {
+                  <ion-select-option value="{{ previousYear }}">
+                    {{ previousYear }}
+                  </ion-select-option>
+                }
               </ion-select>
             </ion-list>
           </div>
         </div>
+
+        <ion-card-content class="px-1 pb-6">
+          <ion-grid>
+            <ion-row>
+              @for (
+                selectedYearAssessment of selectedYearAssessments;
+                track selectedYearAssessment
+              ) {
+                <ion-col class="px-2 py-3" size="6"
+                  ><app-assessment-card
+                    [isOpen]="true"
+                    [data]="selectedYearAssessment"
+                  ></app-assessment-card
+                ></ion-col>
+              }
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
       }
     }
   </ion-card>
