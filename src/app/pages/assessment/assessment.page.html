@@ -5,9 +5,7 @@
 }
 
 <ion-content [fullscreen]="true" color="background">
-  <ion-card
-    class="mx-4 mt-4 h-auto rounded-md shadow-[0px_1px_6px_1px_#00000024]"
-  >
+  <ion-card class="m-6 h-auto rounded-md shadow-[0px_1px_6px_1px_#00000024]">
     <!-- innter top card -->
     <ion-card
       class="m-0 rounded-t-md rounded-b-none shadow-[0px_1px_6px_0px_#00000024]"
@@ -95,7 +93,7 @@
     @if (
       currentYearAssessments.length == 0 && previousYearAssessments.length == 0
     ) {
-      <div class="p-4 flex items-center justify-between">
+      <div class="p-[18px] flex items-center justify-between">
         <ion-card-header class="p-0">
           <ion-card-title class="font-bold">Assessment</ion-card-title>
           <ion-card-subtitle>** Zero assessment created</ion-card-subtitle>
@@ -111,7 +109,7 @@
       </div>
     } @else {
       @if (currentYearAssessments.length > 0) {
-        <div class="p-4 flex items-center justify-between">
+        <div class="p-[18px] flex items-center justify-between">
           <ion-card-header class="p-0">
             <ion-card-title class="font-bold"
               >Current year assessments
@@ -146,7 +144,7 @@
           </div>
         </div>
 
-        <ion-card-content class="px-1 pb-6">
+        <ion-card-content class="px-[5px] pb-6">
           <ion-grid>
             <ion-row>
               @if (selectedOption == "open") {
@@ -176,7 +174,7 @@
         </ion-card-content>
       }
       @if (previousYearAssessments.length > 0) {
-        <div class="p-4 flex items-center justify-between">
+        <div class="p-[18px] flex items-center justify-between">
           <ion-card-header class="p-0">
             <ion-card-title class="font-bold"
               >Previous year assessments
@@ -208,7 +206,7 @@
           </div>
         </div>
 
-        <ion-card-content class="px-1 pb-6">
+        <ion-card-content class="px-[5px] pb-6">
           <ion-grid>
             <ion-row>
               @for (

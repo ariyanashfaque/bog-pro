@@ -557,22 +557,22 @@ export class AssessmentPage implements OnInit {
   // selectedYearAssessments: any[];
 
   selectedYear: number = this.previousYearsList[0];
-  onSelectYearChange(event: any) {
-    console.log("Selected Year:", event.detail.value);
-    this.selectedYear = event.detail.value;
-  }
-
-  // a function for year based filter for previousYearAssessments array
-  // yearBasedFilter = (year: number) => {
-  //   return this.previousYearAssessments.filter(
-  //     (assessment) => new Date(assessment.date).getFullYear() === year,
-  //   );
-
-  //   console.log("Previous Year Assessments: ", this.previousYearAssessments);
-  // };
 
   selectedYearAssessments = this.previousYearAssessments.filter(
     (assessment) =>
-      new Date(assessment.date).getFullYear() === this.selectedYear,
+      new Date(assessment.date).getFullYear() == this.selectedYear,
   );
+
+  onSelectYearChange(event: any) {
+    console.log("Selected Year:", event.detail.value);
+    this.selectedYear = event.detail.value;
+    console.log("Selected Year Variable:", this.selectedYear);
+
+    // filtering the previousYearAssessments array based on the selected year
+    this.selectedYearAssessments = this.previousYearAssessments.filter(
+      (assessment) =>
+        new Date(assessment.date).getFullYear() == this.selectedYear,
+    );
+    console.log("Selected Year Assessments: ", this.selectedYearAssessments);
+  }
 }
