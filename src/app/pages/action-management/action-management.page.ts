@@ -5,6 +5,7 @@ import { Component, EventEmitter, OnInit } from "@angular/core";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { FindingsCardComponent } from "src/app/components/findings-card/findings-card.component";
 import { ActionManagementModalComponent } from "src/app/components/action-management-modal/action-management-modal.component";
+import { ActionCardComponent } from "src/app/components/action-card/action-card.component";
 
 @Component({
   selector: "app-action-management",
@@ -18,6 +19,7 @@ import { ActionManagementModalComponent } from "src/app/components/action-manage
     HeaderComponent,
     FindingsCardComponent,
     ActionManagementModalComponent,
+    ActionCardComponent,
   ],
 })
 export class ActionManagementPage implements OnInit {

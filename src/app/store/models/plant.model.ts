@@ -106,8 +106,8 @@ export interface AssetsModel {
   assetSim?: AssetSimCategoryModel;
   assetApproval?: AssetApprovalModel;
   assetQuarry?: AssetSimCategoryModel;
+  assetCategories?: CategoriesModel[];
   assetRejection?: AssetRejectionModel;
-  assetCategories?: AssetCategoryModel;
   assetInsurance?: AssetSimCategoryModel;
   assetElectrical?: AssetSimCategoryModel;
   assetEnvironment?: AssetSimCategoryModel;
@@ -135,20 +135,12 @@ export interface PlantsModel {
 
 export interface CategoriesModel {
   id: string;
-  type: string;
   order: number;
-  title: string;
   categoryType: string;
+  categoryTitle: string;
+  categorySelected: boolean;
 }
 
-export interface PlantsStoreModel {
-  plants: PlantsModel[];
-  categories: CategoriesModel[];
-}
-export interface PlantsResponse {
-  message: string;
-  data: PlantsModel[];
-}
 export interface AssetsResponse {
   message: string;
   status: boolean;
@@ -158,4 +150,10 @@ export interface AssetResponse {
   message: string;
   status: boolean;
   data: AssetsModel;
+}
+
+export interface PlantsResponse {
+  message: string;
+  status: boolean;
+  data: { plants: PlantsModel[]; categories: CategoriesModel[] };
 }

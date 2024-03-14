@@ -1,4 +1,5 @@
 import {
+  star,
   close,
   camera,
   business,
@@ -8,6 +9,7 @@ import {
   homeOutline,
   cashOutline,
   trashOutline,
+  starOutline,
   pencilOutline,
   createOutline,
   searchOutline,
@@ -22,10 +24,12 @@ import {
   personCircleOutline,
   notificationsOutline,
   checkmarkOutline,
+  chevronForwardOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
-import { Component } from "@angular/core";
-import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
+import { Component, inject } from "@angular/core";
+import { ScreenOrientation } from "@capacitor/screen-orientation";
+import { IonApp, IonRouterOutlet, Platform } from "@ionic/angular/standalone";
 
 @Component({
   standalone: true,
@@ -34,8 +38,11 @@ import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent {
+  private platform = inject(Platform);
+
   constructor() {
     addIcons({
+      star,
       close,
       camera,
       business,
@@ -45,6 +52,7 @@ export class AppComponent {
       homeOutline,
       cashOutline,
       trashOutline,
+      starOutline,
       pencilOutline,
       createOutline,
       searchOutline,
@@ -59,6 +67,15 @@ export class AppComponent {
       documentTextOutline,
       personCircleOutline,
       notificationsOutline,
+      chevronForwardOutline,
     });
+
+    if (this.platform.is("ios") || this.platform.is("android")) {
+      this.ScreenLockOrientation();
+    }
   }
+
+  ScreenLockOrientation = async () => {
+    await ScreenOrientation.lock({ orientation: "landscape" });
+  };
 }

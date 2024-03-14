@@ -1,5 +1,6 @@
 import {
   ADD_ASSET,
+  ADD_CATEGORIES,
   ADD_PLANT,
   ADD_PLANTS,
   UPDATE_ASSET,
@@ -7,10 +8,11 @@ import {
   UPDATE_PLANTS,
 } from "../actions/plant.action";
 import { createReducer, on } from "@ngrx/store";
-import { PlantsModel } from "../models/plant.model";
+import { CategoriesModel, PlantsModel } from "../models/plant.model";
 
 const INITIAL_STATE: PlantsModel[] = [];
 const INITIAL_STATE_PLANT: PlantsModel = {};
+const INITIAL_STATE_CATEGORIES: CategoriesModel[] = [];
 
 export const PlantReducer = createReducer(
   INITIAL_STATE_PLANT,
@@ -23,12 +25,17 @@ export const PlantReducer = createReducer(
   on(UPDATE_ASSET, (state, { asset }) => {
     const assets = state?.assets?.map((prevAsset) => {
       if (prevAsset?.id === asset?.id) {
-        prevAsset = asset;
+        prevAsset = { ...prevAsset, ...asset };
       }
       return prevAsset;
     });
     return { ...state, assets: assets };
   }),
+);
+
+export const CategoriesReducer = createReducer(
+  INITIAL_STATE_CATEGORIES,
+  on(ADD_CATEGORIES, (_, { categories }) => categories),
 );
 
 export const PlantsReducer = createReducer(

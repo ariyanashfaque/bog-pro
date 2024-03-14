@@ -1,4 +1,12 @@
 import {
+  Input,
+  OnInit,
+  Output,
+  inject,
+  Component,
+  EventEmitter,
+} from "@angular/core";
+import {
   IonImg,
   IonCol,
   IonRow,
@@ -10,11 +18,15 @@ import {
   IonFooter,
   IonSelect,
   IonToolbar,
+  IonButtons,
   IonTextarea,
   IonSelectOption,
 } from "@ionic/angular/standalone";
-import { AssetCategoryModel } from "src/app/store/models/plant.model";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  CategoriesModel,
+  AssetCategoryModel,
+} from "src/app/store/models/plant.model";
+import { Store } from "@ngrx/store";
 
 @Component({
   imports: [
@@ -28,6 +40,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
     IonFooter,
     IonButton,
     IonSelect,
+    IonButtons,
     IonToolbar,
     IonTextarea,
     IonSelectOption,
@@ -38,15 +51,19 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
   styleUrls: ["./asset-category-select-modal.component.scss"],
 })
 export class AssetCategorySelectModalComponent implements OnInit {
-  selectedButton: string = "";
-  assetCategory: AssetCategoryModel;
+  store = inject(Store);
   @Input() isMenuOpen: boolean = false;
-  @Output() CategoryChanged = new EventEmitter<any>();
+  @Input() selectedCategories: CategoriesModel[];
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
-  category: any[];
+  @Output() selectedCategoriesEmit = new EventEmitter<CategoriesModel[]>();
+
+  categories: CategoriesModel[];
+  selectedCategoryCount: number;
+  assetCategory: AssetCategoryModel;
 
   constructor() {
-    this.category = [];
+    this.categories = [];
+    this.selectedCategories = [];
     this.assetCategory = {
       sim: false,
       quarry: false,
@@ -57,12 +74,42 @@ export class AssetCategorySelectModalComponent implements OnInit {
       fireProtection: false,
       materialManagement: false,
     };
+    this.selectedCategoryCount = 0;
   }
 
   ngOnInit() {
-    // console.log(this.category);
+    this.store.select("categories").subscribe({
+      next: (categories: CategoriesModel[]) => {
+        this.categories = categories
+          .map((category) => {
+            if (
+              this.selectedCategories &&
+              this.selectedCategories.find(
+                (selectedCategory) =>
+                  selectedCategory.id === category.id &&
+                  selectedCategory.categorySelected,
+              )
+            ) {
+              return {
+                ...category,
+                categorySelected: true,
+              };
+            } else {
+              return {
+                ...category,
+                categorySelected: false,
+              };
+            }
+          })
+          .sort((a, b) => {
+            if (a?.order > b.order) return 1;
+            if (a.order < b.order) return -1;
+            return 0;
+          });
 
-    console.log(this.assetCategory);
+        console.log(this.categories);
+      },
+    });
   }
 
   menuToggle() {
@@ -70,15 +117,14 @@ export class AssetCategorySelectModalComponent implements OnInit {
     this.isMenuToggleOpen.emit(this.isMenuOpen);
   }
 
-  handleCategory = (categoryType: string) => {
-    this.assetCategory[categoryType as keyof AssetCategoryModel] = true;
-    this.category.push(
-      this.assetCategory[categoryType as keyof AssetCategoryModel],
-    );
-    this.selectedButton = categoryType;
+  handleCategory = (category: CategoriesModel) => {
+    category.categorySelected = !category.categorySelected;
+    this.selectedCategoryCount = this.categories?.filter(
+      (category) => category.categorySelected,
+    ).length;
   };
 
-  categorySubmit = () => {
-    this.CategoryChanged.emit(this.assetCategory);
+  handleCategorySelect = () => {
+    this.selectedCategoriesEmit.emit(this.categories);
   };
 }

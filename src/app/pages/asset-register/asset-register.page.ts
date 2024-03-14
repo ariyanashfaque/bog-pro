@@ -6,6 +6,11 @@ import {
   WritableSignal,
 } from "@angular/core";
 import {
+  ADD_PLANT,
+  ADD_PLANTS,
+  ADD_CATEGORIES,
+} from "src/app/store/actions/plant.action";
+import {
   IonRow,
   IonCol,
   IonGrid,
@@ -26,7 +31,6 @@ import {
 import { Store } from "@ngrx/store";
 import { RouterModule } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
-import { ADD_PLANT, ADD_PLANTS } from "src/app/store/actions/plant.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { PlantsModel, PlantsResponse } from "src/app/store/models/plant.model";
@@ -95,7 +99,8 @@ export class AssetRegisterPage implements OnInit {
     this.isLoading.set(true);
     this.httpService.GetAllPlants().subscribe({
       next: (response: PlantsResponse) => {
-        this.store.dispatch(ADD_PLANTS(response?.data));
+        this.store.dispatch(ADD_PLANTS(response?.data?.plants));
+        this.store.dispatch(ADD_CATEGORIES(response?.data?.categories));
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);

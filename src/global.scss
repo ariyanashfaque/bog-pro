@@ -157,15 +157,23 @@
 }
 
 .input-fill-outline {
+  --border-width: 1.5px;
+  --border-color: var(--ion-color-input);
+}
+.input-fill-outline.sc-ion-input-md-h {
+  --border-width: 1.5px;
   --border-color: var(--ion-color-input);
 }
 .ion-valid.sc-ion-input-md-h {
-  --highlight-color: var(--ion-color-input);
+  --border-width: 1.5px;
+  --highlight-color: var(--ion-color-dark);
 }
 .has-focus.input-fill-outline.ion-valid.sc-ion-input-md-h {
+  --border-width: 1.5px;
   --border-color: var(--ion-color-input);
 }
 .input-fill-outline.ion-touched.ion-invalid.sc-ion-input-md-h {
+  --border-width: 1.5px;
   --border-color: var(--ion-color-danger);
 }
 .input-fill-outline.sc-ion-input-md-h {
@@ -184,4 +192,11 @@
 ion-select::part(icon) {
   color: #007382;
   width: 17px;
+}
+
+// backdrop
+ion-backdrop {
+  background: var(--ion-color-dark);
+  opacity: 0.6;
+  z-index: 40;
 }
