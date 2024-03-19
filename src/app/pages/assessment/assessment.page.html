@@ -87,8 +87,7 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Assessment count part -->
-    <!-- --------------------- -->
+    <!-- Assessment card part -->
 
     @if (
       currentYearAssessments.length == 0 && previousYearAssessments.length == 0
@@ -148,11 +147,16 @@
           <ion-grid>
             <ion-row>
               @if (selectedOption == "open") {
-                @for (openAssessment of openAssessments; track openAssessment) {
+                @for (
+                  openAssessment of openAssessments;
+                  track openAssessment.id
+                ) {
                   <ion-col class="px-2 py-3" size="6"
                     ><app-assessment-card
                       [isOpen]="true"
                       [data]="openAssessment"
+                      [routerLink]="['/assessment', openAssessment.id]"
+                      class="cursor-pointer"
                     ></app-assessment-card
                   ></ion-col>
                 }

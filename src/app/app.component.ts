@@ -25,6 +25,9 @@ import {
   notificationsOutline,
   checkmarkOutline,
   chevronForwardOutline,
+  closeOutline,
+  saveOutline,
+  brushOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { Component, inject } from "@angular/core";
@@ -68,6 +71,9 @@ export class AppComponent {
       personCircleOutline,
       notificationsOutline,
       chevronForwardOutline,
+      closeOutline,
+      saveOutline,
+      brushOutline,
     });
 
     if (this.platform.is("ios") || this.platform.is("android")) {

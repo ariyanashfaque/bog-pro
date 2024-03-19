@@ -1,0 +1,42 @@
+.curve1 {
+  background: radial-gradient(
+    66% 72px at left calc(100% - 68px),
+    transparent 50%,
+    rgb(255, 255, 255) 0%
+  );
+}
+
+.curve2 {
+  background: radial-gradient(
+    42px 42px at left calc(100% - 47px),
+    transparent 50%,
+    rgb(255, 255, 255) 0%
+  );
+}
+
+ion-modal#example-modal {
+  --width: fit-content;
+  --max-width: 462px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#example-modal h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal#example-modal ion-icon {
+  margin-right: 6px;
+
+  width: 48px;
+  height: 48px;
+
+  padding: 4px 0;
+
+  color: #aaaaaa;
+}
+
+ion-modal#example-modal .wrapper {
+  margin-bottom: 10px;
+}

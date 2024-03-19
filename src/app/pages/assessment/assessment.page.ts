@@ -18,6 +18,7 @@ import {
   IonSelectOption,
   IonCardSubtitle,
 } from "@ionic/angular/standalone";
+import { RouterModule } from "@angular/router";
 import { AssessmentCardComponent } from "src/app/components/assessment-card/assessment-card.component";
 
 @Component({
@@ -44,6 +45,7 @@ import { AssessmentCardComponent } from "src/app/components/assessment-card/asse
     IonSelectOption,
     AssessmentCardComponent,
     AssessmentModalComponent,
+    RouterModule,
   ],
 })
 export class AssessmentPage implements OnInit {
@@ -72,6 +74,7 @@ export class AssessmentPage implements OnInit {
 
   allAssessments = [
     {
+      id: "1",
       type: "Cross",
       date: "2024-08-20",
       title: "iCare sync test",
@@ -117,6 +120,7 @@ export class AssessmentPage implements OnInit {
       filesArray: [],
     },
     {
+      id: "2",
       type: "Cross",
       date: "2024-08-20",
       title: "2023-SIM-Black lane quarry",
@@ -162,6 +166,7 @@ export class AssessmentPage implements OnInit {
       filesArray: [],
     },
     {
+      id: "3",
       type: "Cross",
       date: "2024-08-20",
       title: "iCare sync test",
@@ -207,6 +212,7 @@ export class AssessmentPage implements OnInit {
       filesArray: [],
     },
     {
+      id: "4",
       type: "Cross",
       date: "2024-08-20",
       title: "iCare sync test",
@@ -252,6 +258,7 @@ export class AssessmentPage implements OnInit {
       filesArray: [],
     },
     {
+      id: "5",
       type: "Cross",
       date: "2024-08-20",
       title: "iCare sync test",
@@ -297,6 +304,7 @@ export class AssessmentPage implements OnInit {
       filesArray: [],
     },
     {
+      id: "6",
       type: "Cross",
       date: "2024-08-20",
       title: "iCare sync test",
@@ -342,6 +350,7 @@ export class AssessmentPage implements OnInit {
       filesArray: [],
     },
     {
+      id: "7",
       type: "Cross",
       date: "2024-08-20",
       title: "iCare sync test",
@@ -387,6 +396,7 @@ export class AssessmentPage implements OnInit {
       filesArray: [],
     },
     {
+      id: "8",
       type: "Cross",
       date: "2022-08-20",
       title: "iCare sync test",
@@ -432,6 +442,7 @@ export class AssessmentPage implements OnInit {
       filesArray: [],
     },
     {
+      id: "9",
       type: "Cross",
       date: "2023-08-20",
       title: "iCare sync test",
@@ -477,6 +488,7 @@ export class AssessmentPage implements OnInit {
       filesArray: [],
     },
     {
+      id: "10",
       type: "Cross",
       date: "2023-08-20",
       title: "iCare sync test",

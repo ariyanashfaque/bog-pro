@@ -1,13 +1,227 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>map-view</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header class="z-10 fixed w-full" headerTitle="Bird eye view"></app-header>
 
+@if (isChildOpen == true) {
+  <ion-backdrop class="z-10" [visible]="true"> </ion-backdrop>
+}
+
+<!-- Content -->
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">map-view</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="h-full w-full overflow-scroll bg-gray-300">
+    <!-- Content Body -->
+    <div class="pt-20 px-4">
+      <div class="mx-auto">
+        <div
+          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden cursor-pointer"
+          (click)="toggleChildMenu()"
+          id="open-custom-dialog"
+        >
+          <img
+            class="object-cover w-full h-full"
+            src="../../../assets/silo.png"
+            alt="silo"
+          />
+        </div>
+        <div class="w-full text-xs text-center mt-1">
+          <span class="text-[#000000DE]">Silo</span>
+        </div>
+      </div>
+    </div>
+    <div class="pt-20 px-4">
+      <div class="mx-auto">
+        <div
+          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden cursor-pointer"
+          (click)="toggleChildMenu()"
+          id="open-custom-dialog"
+        >
+          <img
+            class="object-cover w-full h-full"
+            src="../../../assets/silo.png"
+            alt="silo"
+          />
+        </div>
+        <div class="w-full text-xs text-center mt-1">
+          <span class="text-[#000000DE]">Silo</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
+
+<!-- Side menu Toggle Button -->
+<button class="fixed bottom-[35px] right-[84px] z-50" (click)="menuToggle()">
+  <ion-icon
+    class="bg-[#007382] text-white text-3xl p-3 rounded-full"
+    [name]="isMenuOpen ? 'save-outline' : 'brush-outline'"
+  ></ion-icon>
+</button>
+<!-- ----- -->
+
+<!-- CHILD MODAL -->
+@if (isChildOpen) {
+  <div
+    class="w-[400px] h-64 bg-white shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md z-50"
+  >
+    <div
+      class="w-24 h-24 mx-auto bg-gray-300 rounded-full -translate-y-12"
+    ></div>
+    <div class="w-full h-auto px-2 flex gap-2 flex-wrap -translate-y-5">
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+    </div>
+  </div>
+}
+<!-- ----------- -->
+
+<!-- Sidebar -->
+<div
+  class="curve1 absolute flex flex-col items-end right-0 w-28 h-[calc(100vh-56px)] duration-300 rounded-l-3xl shadow-3xl z-20 shadow-[0px_0px_15px_0px_#00000024]"
+  [class]="!isMenuOpen ? 'translate-x-full' : ''"
+>
+  <!-- Close button -->
+  <div class="cursor-pointer my-2 text-right" (click)="menuToggle()">
+    <ion-icon
+      class="text-3xl font-bold mx-2 text-black"
+      name="close-outline"
+    ></ion-icon>
+  </div>
+
+  <!-- Parent Assets -->
+  @if (!isChildOpen) {
+    <div
+      class="w-full max-h-[calc(100vh-220px)] bg-transparent flex flex-col items-center overflow-y-scroll"
+    >
+      @for (structure of structures; track $index) {
+        <div class="">
+          <div class="cursor-pointer mx-auto">
+            <div
+              class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+            >
+              <img
+                class="object-cover w-full h-full"
+                src="../../../assets/silo.png"
+                alt="silo"
+              />
+            </div>
+            <div class="w-full text-xs text-center mt-1">
+              <span class="text-[#000000DE]">Silo</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <!-- Child Assets -->
+
+    <!-- Recommended Head -->
+    <div
+      (click)="toggleVisibility('recommended')"
+      class="flex cursor-pointer w-full items-center justify-center px-2 pt-2 pb-1 duration-300"
+      [class]="
+        activeAccordion == 'recommended'
+          ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
+          : 'bg-[#edf5f5] text-[#007382] border-b-2 border-[#00738233]'
+      "
+    >
+      <div class="flex flex-col items-center justify-center">
+        <ion-text class="text-xs font-bold">Recommended</ion-text>
+        <ion-icon
+          class="text-xl transition-all duration-200"
+          name="chevron-down-outline"
+          [class]="activeAccordion == 'recommended' ? 'rotate-180' : ''"
+        ></ion-icon>
+      </div>
+    </div>
+
+    <!-- Recommended Body -->
+    <div
+      class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
+      [class]="
+        activeAccordion == 'recommended'
+          ? ' max-h-[calc(100vh-320px)]  '
+          : 'max-h-0'
+      "
+    >
+      @for (structure of structures; track $index) {
+        <div class="">
+          <div class="cursor-pointer mx-auto">
+            <div
+              class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+            >
+              <img
+                class="object-cover w-full h-full"
+                src="../../../assets/silo.png"
+                alt="silo"
+              />
+            </div>
+            <div class="w-full text-xs text-center mt-1">
+              <span class="text-[#000000DE]">Silo</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Others Head  -->
+    <div
+      (click)="toggleVisibility('others')"
+      class="flex cursor-pointer w-full items-center justify-center px-3 pt-2 pb-1 duration-300"
+      [class]="
+        activeAccordion == 'others'
+          ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
+          : 'bg-[#EDF5F5] text-[#007382] border-b-2 border-[#00738233]'
+      "
+    >
+      <div class="flex flex-col items-center justify-center">
+        <ion-text class="text-xs font-bold"> Others</ion-text>
+        <ion-icon
+          class="text-xl transition-all duration-200"
+          name="chevron-down-outline"
+          [class]="activeAccordion == 'others' ? 'rotate-180' : ''"
+        ></ion-icon>
+      </div>
+    </div>
+
+    <!-- Others Body -->
+    <div
+      class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
+      [class]="
+        activeAccordion == 'others' ? ' max-h-[calc(100vh-320px)]  ' : 'max-h-0'
+      "
+    >
+      @for (structure of structures; track $index) {
+        <div class="">
+          <div class="cursor-pointer mx-auto">
+            <div
+              class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+            >
+              <img
+                class="object-cover w-full h-full"
+                src="../../../assets/silo.png"
+                alt="silo"
+              />
+            </div>
+            <div class="w-full text-xs text-center mt-1">
+              <span class="text-[#000000DE]">Silo</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
