@@ -13,26 +13,27 @@ import {
   IonBackdrop,
   IonProgressBar,
 } from "@ionic/angular/standalone";
+
 @Component({
-  selector: "app-map-view",
-  templateUrl: "./map-view.page.html",
-  styleUrls: ["./map-view.page.scss"],
+  selector: "app-asset-map-view",
+  templateUrl: "./asset-map-view.page.html",
+  styleUrls: ["./asset-map-view.page.scss"],
   standalone: true,
   imports: [
-    IonProgressBar,
-    IonBackdrop,
-    IonModal,
     IonText,
     IonIcon,
-    IonToolbar,
-    IonHeader,
-    IonContent,
+    IonModal,
     IonTitle,
+    IonHeader,
+    IonToolbar,
+    IonContent,
+    IonBackdrop,
+    IonProgressBar,
     HeaderComponent,
     RoundProgressComponent,
   ],
 })
-export class MapViewPage implements OnInit {
+export class AssetMapViewPage implements OnInit {
   constructor() {}
   ngOnInit() {}
 

@@ -9,5 +9,9 @@ export const routes: Routes = [
     path: 'findings',
     loadComponent: () => import('./pages/assessment/findings/findings.page').then( m => m.FindingsPage)
   },
+  {
+    path: 'asset-map-view',
+    loadComponent: () => import('./pages/asset-register/asset-map-view/asset-map-view.page').then( m => m.AssetMapViewPage)
+  },
 
 ];
