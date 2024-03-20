@@ -73,6 +73,13 @@ export const routes: Routes = [
             "../pages/asset-register/asset-mapped/asset-mapped.routes"
           ).then((routes) => routes.routes),
       },
+      {
+        path: "asset-map-view/:id",
+        loadChildren: () =>
+          import(
+            "../pages/asset-register/asset-map-view/asset-map-view.routes"
+          ).then((routes) => routes.routes),
+      },
     ],
   },
   {
