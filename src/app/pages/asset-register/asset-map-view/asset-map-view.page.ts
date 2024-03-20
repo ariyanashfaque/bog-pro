@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
+import { ChildAssetModalComponent } from "src/app/components/child-asset-modal/child-asset-modal.component";
 
 import {
   IonTitle,
@@ -12,6 +13,7 @@ import {
   IonModal,
   IonBackdrop,
   IonProgressBar,
+  IonButton,
 } from "@ionic/angular/standalone";
 
 @Component({
@@ -20,6 +22,7 @@ import {
   styleUrls: ["./asset-map-view.page.scss"],
   standalone: true,
   imports: [
+    IonButton,
     IonText,
     IonIcon,
     IonModal,
@@ -31,6 +34,7 @@ import {
     IonProgressBar,
     HeaderComponent,
     RoundProgressComponent,
+    ChildAssetModalComponent,
   ],
 })
 export class AssetMapViewPage implements OnInit {
