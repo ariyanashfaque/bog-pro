@@ -70,4 +70,21 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: "sap-configuration",
+    // loadComponent: () =>
+    //   import("../pages/sap-configuration/sap-configuration.page").then(
+    //     (m) => m.SapConfigurationPage,
+    //   ),
+
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("../pages/sap-configuration/sap-configuration.routes").then(
+            (routes) => routes.routes,
+          ),
+      },
+    ],
+  },
 ];

@@ -16,4 +16,6 @@ export const ApiEndPoint = {
   updateGuidedInspection: `${config.serverURL}updateGuidedInspection`,
   getAllGuidedInspection: `${config.serverURL}getAllGuidedInspection`,
   getGuidedInspectionDetails: `${config.serverURL}getGuidedInspectionDetails`,
+  sapConfiguration: `${config.serverURL}sapConfiguration`,
+  getAllSapConfiguration: `${config.serverURL}getAllSapConfiguration`,
 };
