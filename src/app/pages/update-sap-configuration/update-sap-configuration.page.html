@@ -353,6 +353,7 @@
         class="w-full"
         color="textwhite"
         (click)="saveSapConfig()"
+        [disabled]="isGRUActive()"
       >
         Save
       </ion-button>
