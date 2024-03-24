@@ -69,6 +69,22 @@
         </ion-grid>
       </div>
 
+      <div class="flex justify-between px-2">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10" class="my-auto">
+              <ion-text
+                color="secondary"
+                class="text-[16px] font-gotham_medium"
+              >
+                asset approval pending
+              </ion-text>
+            </ion-col>
+            <ion-col class="flex justify-center" size="2"> </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
       <!-- Mapped Assets part -->
 
       @if (totalAssetMapped) {
@@ -95,8 +111,10 @@
                   <p class="text-[14px] font-gotham_medium">
                     {{ totalAssetMapped }}
                   </p>
-
-                  <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
+                  <ion-icon
+                    slot="end"
+                    name="chevron-forward-outline"
+                  ></ion-icon>
                 </ion-button>
               </ion-col>
             </ion-row>
@@ -138,7 +156,7 @@
 
       <!-- Error Assets part -->
 
-      <div class="customcolor redBg flex justify-between px-2 rounded-b-md">
+      <!-- <div class="customcolor redBg flex justify-between px-2 rounded-b-md">
         <ion-grid>
           <ion-row>
             <ion-col size="10" class="my-auto">
@@ -161,7 +179,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
