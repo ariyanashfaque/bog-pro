@@ -174,19 +174,23 @@
     <ion-grid>
       <ion-row>
         <!-- image & title -->
-        <ion-col size="2.8" class="p-2">
-          <div>
-            <div class="h-20 w-20 border-2 p-2 imagebox rounded-md">
-              <ion-img src="../../../assets/element-image/silo.png"></ion-img>
-              <!-- <ion-icon src="../../../assets/element-image/silo.png"> </ion-icon> -->
-            </div>
-            <div class="">
-              <ion-text
-                color="primary"
-                class="font-gotham_medium text-[14px] text-wrap"
-              >
-                transfer
-              </ion-text>
+        <ion-col size="2.8">
+          <div
+            class="p-2 mt-2 flex ion-align-items-center ion-justify-content-center"
+          >
+            <div>
+              <div class="h-20 w-20 border-2 p-2 imagebox rounded-md">
+                <ion-img src="../../../assets/element-image/silo.png"></ion-img>
+              </div>
+
+              <div class="mt-1 flex items-center justify-center">
+                <ion-text
+                  color="primary"
+                  class="text-[16px] text-wrap font-gotham_medium"
+                >
+                  Transfer
+                </ion-text>
+              </div>
             </div>
           </div>
         </ion-col>
@@ -196,12 +200,12 @@
           <ion-row>
             <ion-col size="9" class="border-r-2">
               <div>
-                <ion-text class="text-[12px] font-gotham_light">
+                <ion-text class="text-[14px] font-gotham_light">
                   Asset Name
                 </ion-text>
               </div>
               <div>
-                <ion-text color="black" class="text-[12px] font-gotham_medium">
+                <ion-text color="black" class="text-[14px] font-gotham_medium">
                   Hopper us situated near the walkway
                 </ion-text>
               </div>
@@ -211,14 +215,14 @@
             <ion-col size="3" class="flex justify-center">
               <div class="">
                 <div>
-                  <ion-text class="text-[12px] font-gotham_light">
-                    area
+                  <ion-text class="text-[14px] font-gotham_light">
+                    Area
                   </ion-text>
                 </div>
                 <div>
                   <ion-text
                     color="black"
-                    class="font-gotham_medium text-[12px]"
+                    class="font-gotham_medium text-[15px]"
                   >
                     Zone 1</ion-text
                   >
@@ -227,15 +231,15 @@
             </ion-col>
           </ion-row>
 
-          <div class="mt-2 border-2 border-dashed"></div>
+          <div class="mt-2 border-[1.5px] border-dashed"></div>
 
           <!-- second row  -->
-          <ion-row class="">
-            <ion-col size="9" class="flex gap-6">
+          <ion-row class="mt-1">
+            <ion-col size="10" class="flex gap-6">
               @if (toggleChecked) {
                 <div class="">
                   <div class="">
-                    <ion-text class="text-[12px] font-gotham_light">
+                    <ion-text class="text-[14px] font-gotham_light">
                       Status
                     </ion-text>
                   </div>
@@ -243,7 +247,7 @@
                     <ion-badge color="approvalpending" class="p-2">
                       <ion-text
                         color="black"
-                        class="text-[12px] font-gotham_medium"
+                        class="text-[14px] font-gotham_medium"
                       >
                         <p>Asset Approval Pending</p>
                       </ion-text>
@@ -253,14 +257,14 @@
               } @else {
                 <div class="">
                   <div class="">
-                    <ion-text class="text-[12px] font-gotham_light">
+                    <ion-text class="text-[14px] font-gotham_light">
                       Asset Id
                     </ion-text>
                   </div>
                   <div class="">
                     <ion-text
                       color="black"
-                      class="text-[12px] font-gotham_medium"
+                      class="text-[16px] font-gotham_medium"
                     >
                       {{ asset.id }}
                     </ion-text>
@@ -270,7 +274,7 @@
 
               <div>
                 <div class="">
-                  <ion-text class="text-[12px] font-gotham_light">
+                  <ion-text class="text-[14px] font-gotham_light">
                     source
                   </ion-text>
                 </div>
@@ -278,7 +282,7 @@
                   <ion-badge class="p-2 sourceBadge">
                     <ion-text
                       color="black"
-                      class="text-[12px] font-gotham_medium"
+                      class="text-[14px] font-gotham_medium"
                     >
                       <p>SAP</p>
                     </ion-text>
@@ -286,7 +290,7 @@
                 </div>
               </div>
             </ion-col>
-            <ion-col size="3" class="flex items-center justify-end p-4 mt-3">
+            <ion-col size="2" class="flex items-center justify-center mt-2">
               <div>
                 <button
                   class="inline-flex items-center bgEditBtn justify-center w-8 h-8 rounded-full"
