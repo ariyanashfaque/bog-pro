@@ -1,0 +1,56 @@
+.borderColor {
+  border-color: #edf5f5;
+}
+.CardBgColor {
+  background-color: #edf5f5;
+}
+.shadowpart1 {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 8px 8px 0px 0px;
+  box-shadow: 0px 4px 6px 0px #0000002e;
+  opacity: 1;
+}
+.shadowpart2 {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 0px 0px 8px 8px;
+  box-shadow: 0px 4px 6px 0px #0000002e;
+  opacity: 1;
+}
+.imagebox {
+  background-color: #fff;
+  border-color: #007382;
+}
+
+ion-radio::part(container) {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+
+ion-radio::part(mark) {
+  background: none;
+  transition: none;
+  transform: none;
+  border-radius: 0;
+}
+
+ion-radio.radio-checked::part(container) {
+  background: #007382;
+  border-color: transparent;
+}
+
+ion-radio.radio-checked::part(mark) {
+  width: 10px;
+  height: 15px;
+  margin-bottom: 5px;
+  border-width: 0px 2px 2px 0px;
+  border-style: solid;
+  border-color: #fff;
+
+  transform: rotate(45deg);
+}
+.bgEditBtn {
+  background-color: #007382;
+}
