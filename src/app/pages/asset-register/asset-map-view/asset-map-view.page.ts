@@ -45,11 +45,12 @@ export class AssetMapViewPage implements OnInit {
 
   isMenuOpen = true;
   isChildOpen = false;
-  isAssetInfoMenuOpen = false;
+  isAssetInfoMenuOpen: boolean = false;
   activeAccordion: string = "recommended";
 
   toggleInfoMenu() {
     this.isAssetInfoMenuOpen = !this.isAssetInfoMenuOpen;
+    this.menuToggle();
   }
 
   toggleVisibility(buttonId: string) {

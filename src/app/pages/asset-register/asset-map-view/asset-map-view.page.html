@@ -1,8 +1,8 @@
 <app-header class="z-20 fixed w-full" headerTitle="Bird eye view"></app-header>
 
-@if (isChildOpen == true) {
+<!-- @if (isChildOpen == true) {
   <ion-backdrop class="z-10" [visible]="true"> </ion-backdrop>
-}
+} -->
 
 <!-- Content -->
 <ion-content [fullscreen]="true">
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-end mt-5 mr-48">
+    <div class="flex justify-end mt-32 mr-48">
       <button class="bg-green-500 p-2 rounded-xl" (click)="toggleInfoMenu()">
         asset info menu
       </button>
@@ -62,7 +62,9 @@
 
 <!-- CHILD MODAL -->
 @if (isChildOpen) {
-  <app-child-asset-modal></app-child-asset-modal>
+  <app-child-asset-modal
+    [isAssetInfoOpen]="isAssetInfoMenuOpen"
+  ></app-child-asset-modal>
 }
 
 <!-- Asset info menu -->
