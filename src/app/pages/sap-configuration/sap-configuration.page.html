@@ -1,7 +1,7 @@
 <app-header headerTitle="Sap configuration" [isDefaultHref]="true"></app-header>
 
 @if (isModalLogOpen === true) {
-  <ion-backdrop [visible]="true"> </ion-backdrop>
+  <ion-backdrop [visible]="isModalLogOpen"> </ion-backdrop>
 }
 
 <ion-content [fullscreen]="true" color="background">
@@ -549,5 +549,5 @@
   </ion-grid>
 </ion-content>
 
-<app-sap-configaration-log [isMenuOpen]="isModalLogOpen">
+<app-sap-configaration-log [(isMenuOpen)]="isModalLogOpen">
 </app-sap-configaration-log>

@@ -1,5 +1,6 @@
 import {
   Component,
+  Input,
   OnInit,
   WritableSignal,
   inject,
@@ -37,6 +38,7 @@ import { SapService } from "src/app/services/sap-service/sap-service.service";
   ],
 })
 export class SapConfigurationPage implements OnInit {
+  @Input() 
   isModalLogOpen: boolean = false;
   httpService = inject(HttpService);
   toastService = inject(ToastService);
