@@ -1,4 +1,4 @@
-<app-header class="z-10 fixed w-full" headerTitle="Bird eye view"></app-header>
+<app-header class="z-20 fixed w-full" headerTitle="Bird eye view"></app-header>
 
 @if (isChildOpen == true) {
   <ion-backdrop class="z-10" [visible]="true"> </ion-backdrop>
@@ -44,10 +44,15 @@
         </div>
       </div>
     </div>
+    <div class="flex justify-end mt-5 mr-48">
+      <button class="bg-green-500 p-2 rounded-xl" (click)="toggleInfoMenu()">
+        asset info menu
+      </button>
+    </div>
   </div>
 </ion-content>
 
-<!-- Side menu Toggle Button -->
+<!-- Side bar Toggle Button -->
 <button class="fixed bottom-[35px] right-[84px] z-50" (click)="menuToggle()">
   <ion-icon
     class="bg-[#007382] text-white text-3xl p-3 rounded-full"
@@ -59,6 +64,9 @@
 @if (isChildOpen) {
   <app-child-asset-modal></app-child-asset-modal>
 }
+
+<!-- Asset info menu -->
+<app-asset-info-menu [(isMenuOpen)]="isAssetInfoMenuOpen"></app-asset-info-menu>
 
 <!-- Sidebar -->
 <div

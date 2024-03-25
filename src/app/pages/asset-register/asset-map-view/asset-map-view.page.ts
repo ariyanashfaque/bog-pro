@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ChildAssetModalComponent } from "src/app/components/child-asset-modal/child-asset-modal.component";
+import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 
 import {
   IonTitle,
@@ -34,6 +35,7 @@ import {
     IonProgressBar,
     HeaderComponent,
     RoundProgressComponent,
+    AssetInfoMenuComponent,
     ChildAssetModalComponent,
   ],
 })
@@ -42,14 +44,18 @@ export class AssetMapViewPage implements OnInit {
   ngOnInit() {}
 
   isMenuOpen = true;
+  isChildOpen = false;
+  isAssetInfoMenuOpen = false;
   activeAccordion: string = "recommended";
+
+  toggleInfoMenu() {
+    this.isAssetInfoMenuOpen = !this.isAssetInfoMenuOpen;
+  }
 
   toggleVisibility(buttonId: string) {
     if (this.activeAccordion === buttonId) {
-      // If the same button is clicked again, hide the div
       this.activeAccordion = "";
     } else {
-      // If a different button is clicked, show its corresponding div
       this.activeAccordion = buttonId;
     }
     this.structures.forEach((structure) => {
@@ -65,6 +71,10 @@ export class AssetMapViewPage implements OnInit {
     });
     this.activeAccordion = "";
   }
+
+  toggleChildMenu = () => {
+    this.isChildOpen = !this.isChildOpen;
+  };
 
   structures = [
     {
@@ -104,9 +114,4 @@ export class AssetMapViewPage implements OnInit {
       child: false,
     },
   ];
-
-  isChildOpen = false;
-  toggleChildMenu = () => {
-    this.isChildOpen = !this.isChildOpen;
-  };
 }
