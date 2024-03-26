@@ -145,6 +145,8 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
+
+    console.log(this.assets);
   }
 
   handleToggle(event: any) {

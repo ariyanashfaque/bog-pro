@@ -12,13 +12,16 @@ import {
   IonCardTitle,
   IonCardHeader,
   IonCardContent,
-  IonCardSubtitle, IonImg } from "@ionic/angular/standalone";
+  IonCardSubtitle,
+  IonImg,
+} from "@ionic/angular/standalone";
 import { Router, RouterModule } from "@angular/router";
 import { Component, Input, OnInit, inject } from "@angular/core";
 import { AssetsModel } from "src/app/store/models/plant.model";
 
 @Component({
-  imports: [IonImg, 
+  imports: [
+    IonImg,
     IonRow,
     IonCol,
     IonCard,

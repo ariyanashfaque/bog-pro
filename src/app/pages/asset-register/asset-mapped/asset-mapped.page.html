@@ -35,6 +35,48 @@
 
         <div class="max-w-full mx-auto bg-white p-4 shadowpart2">
           @defer (when !isLoading()) {
+
+            <ion-grid >
+              <ion-row>
+                <ion-col size="6">11</ion-col>
+                <ion-col size="6">22</ion-col>
+              </ion-row>
+            </ion-grid>
+            @for (asset of assets; track $index) {
+
+              <ion-grid >
+                <ion-row>
+                  <ion-col size="12">
+                    <app-asset-mapped-card
+                    [asset]="asset"
+                    [plantId]="plantId"
+                    [toggleChecked]="toggleChecked"
+                  >
+                  </app-asset-mapped-card>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            } @empty {
+              <ion-col size="12">
+                <div
+                  class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+                >
+                  <h3 class="text-center">No assets found</h3>
+                </div>
+              </ion-col>
+            }
+          } @placeholder {
+            <ion-col size="12" sizeMd="6" sizeLg="6">
+              <app-loading-skeleton></app-loading-skeleton>
+            </ion-col>
+            <ion-col size="12" sizeMd="6" sizeLg="6">
+              <app-loading-skeleton></app-loading-skeleton>
+            </ion-col>
+          }
+        </div>
+
+        <!-- <div class="max-w-full mx-auto bg-white p-4 shadowpart2">
+          @defer (when !isLoading()) {
             @for (groupedAsset of groupedAssets; track $index) {
               @if (groupedAsset?.assets) {
                 <ion-col size="12" sizeMd="6" sizeLg="6">
@@ -45,13 +87,7 @@
                     <ion-accordion value="Silo">
                       @if (groupedAsset?.assets?.length != 0) {
                         <ion-item color="accordion" slot="header">
-                          <!-- <ion-icon
-                            size="large"
-                            class="p-4 -ml-2"
-                            src="../../../assets/icon/asset-icons/silo.png"
-                          >
-                          </ion-icon> -->
-
+          
                           <ion-text class="flex gap-1">
                             <p class="text-[20px] font-gotham_medium">
                               {{ groupedAsset?.assetParentType }}
@@ -105,7 +141,7 @@
               <app-loading-skeleton></app-loading-skeleton>
             </ion-col>
           }
-        </div>
+        </div> -->
       </ion-col>
     </ion-row>
   </ion-grid>
