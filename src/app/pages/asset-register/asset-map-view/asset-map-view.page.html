@@ -62,9 +62,9 @@
 
 <!-- CHILD MODAL -->
 @if (isChildOpen) {
-  <app-child-asset-modal
-    [isAssetInfoOpen]="isAssetInfoMenuOpen"
-  ></app-child-asset-modal>
+<app-child-asset-modal
+  [isAssetInfoMenuOpen]="isAssetInfoMenuOpen"
+></app-child-asset-modal>
 }
 
 <!-- Asset info menu -->
@@ -85,125 +85,125 @@
 
   <!-- Parent Assets -->
   @if (!isChildOpen) {
-    <div
-      class="w-full max-h-[calc(100vh-170px)] bg-transparent flex flex-col items-center overflow-y-scroll"
-    >
-      @for (structure of structures; track $index) {
-        <div class="">
-          <div class="cursor-pointer mx-auto">
-            <div
-              class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-            >
-              <img
-                class="object-cover w-full h-full"
-                src="../../../assets/silo.png"
-                alt="silo"
-              />
-            </div>
-            <div class="w-full text-xs text-center mt-1">
-              <span class="text-[#000000DE]">Silo</span>
-            </div>
-          </div>
+  <div
+    class="w-full max-h-[calc(100vh-170px)] bg-transparent flex flex-col items-center overflow-y-scroll"
+  >
+    @for (structure of structures; track $index) {
+    <div class="">
+      <div class="cursor-pointer mx-auto">
+        <div
+          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+        >
+          <img
+            class="object-cover w-full h-full"
+            src="../../../assets/silo.png"
+            alt="silo"
+          />
         </div>
-      }
+        <div class="w-full text-xs text-center mt-1">
+          <span class="text-[#000000DE]">Silo</span>
+        </div>
+      </div>
     </div>
+    }
+  </div>
   } @else {
-    <!-- Child Assets -->
+  <!-- Child Assets -->
 
-    <!-- Recommended Head -->
-    <div
-      (click)="toggleVisibility('recommended')"
-      class="flex cursor-pointer w-full items-center justify-center px-2 pt-2 pb-1 duration-300"
-      [class]="
-        activeAccordion == 'recommended'
-          ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
-          : 'bg-[#edf5f5] text-[#007382] border-b-2 border-[#00738233]'
-      "
-    >
-      <div class="flex flex-col items-center justify-center">
-        <ion-text class="text-xs font-bold">Recommended</ion-text>
-        <ion-icon
-          class="text-xl transition-all duration-200"
-          name="chevron-down-outline"
-          [class]="activeAccordion == 'recommended' ? 'rotate-180' : ''"
-        ></ion-icon>
+  <!-- Recommended Head -->
+  <div
+    (click)="toggleVisibility('recommended')"
+    class="flex cursor-pointer w-full items-center justify-center px-2 pt-2 pb-1 duration-300"
+    [class]="
+      activeAccordion == 'recommended'
+        ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
+        : 'bg-[#edf5f5] text-[#007382] border-b-2 border-[#00738233]'
+    "
+  >
+    <div class="flex flex-col items-center justify-center">
+      <ion-text class="text-xs font-bold">Recommended</ion-text>
+      <ion-icon
+        class="text-xl transition-all duration-200"
+        name="chevron-down-outline"
+        [class]="activeAccordion == 'recommended' ? 'rotate-180' : ''"
+      ></ion-icon>
+    </div>
+  </div>
+
+  <!-- Recommended Body -->
+  <div
+    class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
+    [class]="
+      activeAccordion == 'recommended'
+        ? ' max-h-[calc(100vh-270px)]  '
+        : 'max-h-0'
+    "
+  >
+    @for (structure of structures; track $index) {
+    <div class="">
+      <div class="cursor-pointer mx-auto">
+        <div
+          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+        >
+          <img
+            class="object-cover w-full h-full"
+            src="../../../assets/silo.png"
+            alt="silo"
+          />
+        </div>
+        <div class="w-full text-xs text-center mt-1">
+          <span class="text-[#000000DE]">Silo</span>
+        </div>
       </div>
     </div>
+    }
+  </div>
 
-    <!-- Recommended Body -->
-    <div
-      class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
-      [class]="
-        activeAccordion == 'recommended'
-          ? ' max-h-[calc(100vh-270px)]  '
-          : 'max-h-0'
-      "
-    >
-      @for (structure of structures; track $index) {
-        <div class="">
-          <div class="cursor-pointer mx-auto">
-            <div
-              class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-            >
-              <img
-                class="object-cover w-full h-full"
-                src="../../../assets/silo.png"
-                alt="silo"
-              />
-            </div>
-            <div class="w-full text-xs text-center mt-1">
-              <span class="text-[#000000DE]">Silo</span>
-            </div>
-          </div>
-        </div>
-      }
+  <!-- Others Head  -->
+  <div
+    (click)="toggleVisibility('others')"
+    class="flex cursor-pointer w-full items-center justify-center px-3 pt-2 pb-1 duration-300"
+    [class]="
+      activeAccordion == 'others'
+        ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
+        : 'bg-[#EDF5F5] text-[#007382] border-b-2 border-[#00738233]'
+    "
+  >
+    <div class="flex flex-col items-center justify-center">
+      <ion-text class="text-xs font-bold"> Others</ion-text>
+      <ion-icon
+        class="text-xl transition-all duration-200"
+        name="chevron-down-outline"
+        [class]="activeAccordion == 'others' ? 'rotate-180' : ''"
+      ></ion-icon>
     </div>
+  </div>
 
-    <!-- Others Head  -->
-    <div
-      (click)="toggleVisibility('others')"
-      class="flex cursor-pointer w-full items-center justify-center px-3 pt-2 pb-1 duration-300"
-      [class]="
-        activeAccordion == 'others'
-          ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
-          : 'bg-[#EDF5F5] text-[#007382] border-b-2 border-[#00738233]'
-      "
-    >
-      <div class="flex flex-col items-center justify-center">
-        <ion-text class="text-xs font-bold"> Others</ion-text>
-        <ion-icon
-          class="text-xl transition-all duration-200"
-          name="chevron-down-outline"
-          [class]="activeAccordion == 'others' ? 'rotate-180' : ''"
-        ></ion-icon>
+  <!-- Others Body -->
+  <div
+    class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
+    [class]="
+      activeAccordion == 'others' ? ' max-h-[calc(100vh-270px)]  ' : 'max-h-0'
+    "
+  >
+    @for (structure of structures; track $index) {
+    <div class="">
+      <div class="cursor-pointer mx-auto">
+        <div
+          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+        >
+          <img
+            class="object-cover w-full h-full"
+            src="../../../assets/silo.png"
+            alt="silo"
+          />
+        </div>
+        <div class="w-full text-xs text-center mt-1">
+          <span class="text-[#000000DE]">Silo</span>
+        </div>
       </div>
     </div>
-
-    <!-- Others Body -->
-    <div
-      class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
-      [class]="
-        activeAccordion == 'others' ? ' max-h-[calc(100vh-270px)]  ' : 'max-h-0'
-      "
-    >
-      @for (structure of structures; track $index) {
-        <div class="">
-          <div class="cursor-pointer mx-auto">
-            <div
-              class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-            >
-              <img
-                class="object-cover w-full h-full"
-                src="../../../assets/silo.png"
-                alt="silo"
-              />
-            </div>
-            <div class="w-full text-xs text-center mt-1">
-              <span class="text-[#000000DE]">Silo</span>
-            </div>
-          </div>
-        </div>
-      }
-    </div>
+    }
+  </div>
   }
 </div>
