@@ -58,43 +58,43 @@
       </div>
 
       @for (item of sapLogs; track $index) {
-        <div class="mx-w-auto py-4 flex items-center gap-3">
-          <ion-icon
-            name="chevron-down-circle-outline"
-            class="text-2xl text-[#007382]"
-          ></ion-icon>
-          <span class="text-[20px] text-[#007382] font-bold">{{
-            item?.date
-          }}</span>
-        </div>
-        <div class="max-w-full mr-6 ml-10">
-          <div class="flex max-h-auto min-h-[20px]">
-            <div class="flex">
-              <div class="w-full flex flex-col justify-center">
-                <div class="flex items-center gap-2 w-[200px]">
-                  <div
-                    class="w-6 h-6 bg-[#0073820D] rounded-full mt-1 flex items-center justify-center"
-                  >
-                    <div class="w-2 h-2 bg-[#007382] rounded-full"></div>
-                  </div>
-                  <div class="text-[16px] text-[#8BAEB2] mx-5">
-                    {{ item.time }}
-                  </div>
+      <div class="mx-w-auto py-4 flex items-center gap-3">
+        <ion-icon
+          name="chevron-down-circle-outline"
+          class="text-2xl text-[#007382]"
+        ></ion-icon>
+        <span class="text-[20px] text-[#007382] font-bold">{{
+          item?.date
+        }}</span>
+      </div>
+      <div class="max-w-full mr-6 ml-10">
+        <div class="flex max-h-auto min-h-[20px]">
+          <div class="flex">
+            <div class="w-full flex flex-col justify-center">
+              <div class="flex items-center gap-2 w-[200px]">
+                <div
+                  class="w-6 h-6 bg-[#0073820D] rounded-full mt-1 flex items-center justify-center"
+                >
+                  <div class="w-2 h-2 bg-[#007382] rounded-full"></div>
                 </div>
-                <div class="flex items-center gap-3">
-                  <div class="h-[80%] border-l-2 border-[#007382] mx-3"></div>
-                  <div class="ml-4">
-                    <p
-                      class="text-black flex-1 bg-[#EDF5F5] border border-[#007382] rounded-sm shadow-md px-4 py-2 text-[20px]"
-                    >
-                      Total number of asset size was {{ item.size }}
-                    </p>
-                  </div>
+                <div class="text-[16px] text-[#8BAEB2] mx-5">
+                  {{ item.time }}
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="h-[80%] border-l-2 border-[#007382] mx-3"></div>
+                <div class="ml-4 w-full">
+                  <p
+                    class="text-black flex-1 bg-[#EDF5F5] border border-[#007382] rounded-sm shadow-md px-4 py-2 text-[20px]"
+                  >
+                    Total Sync Assets: {{ item.size }}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
       }
     </div>
   </div>
