@@ -21,7 +21,10 @@ import { Store } from "@ngrx/store";
 import { Router } from "@angular/router";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { LoadingController } from "@ionic/angular/standalone";
+import {
+  LoadingController,
+  SelectChangeEventDetail,
+} from "@ionic/angular/standalone";
 import { HttpErrorResponse } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 // import { SapService } from "src/app/services/sap-service.service";
@@ -124,8 +127,8 @@ export class AddSapConfigurationPage implements OnInit {
             // console.log("values: ", values);
             this.sapRegistrationForm.patchValue(data);
             this.sapRegistrationForm.get("gruName")?.disable();
-            this.sapRegistrationForm.get("protocol")?.disable();
-            this.sapRegistrationForm.get("syncType")?.disable();
+            // this.sapRegistrationForm.get("protocol")?.disable();
+            // this.sapRegistrationForm.get("syncType")?.disable();
           }
           // else {
           //   console.log("No data found with ID:", this.sapId);
@@ -138,8 +141,8 @@ export class AddSapConfigurationPage implements OnInit {
     }
   }
 
-  onGRUSelectionChange(event: any) {
-    const selectedGRU = event.target.value?.toLowerCase();
+  onGRUSelectionChange(event: CustomEvent<SelectChangeEventDetail>) {
+    const selectedGRU = event?.detail?.value?.toLowerCase();
     this.sapService.get.subscribe((data: SAPconfigurationModel[]) => {
       const isAvailable = data?.filter(
         (item) => item.gruName?.toLocaleLowerCase() === selectedGRU
