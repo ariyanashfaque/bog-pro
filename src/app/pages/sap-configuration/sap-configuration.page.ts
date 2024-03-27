@@ -84,7 +84,7 @@ export class SapConfigurationPage implements OnInit {
       this.configurations = data;
     });
     this.GetAllSapConfiguration();
-    console.log("this.configurations: ", this.configurations);
+    // console.log("this.configurations: ", this.configurations);
   }
 
   GetAllSapConfiguration = async () => {
@@ -92,7 +92,7 @@ export class SapConfigurationPage implements OnInit {
     this.httpService.GetAllSapConfiguration().subscribe({
       next: (response: any) => {
         // this.store.dispatch(ADD_PLANTS(response?.data));
-        console.log("response: ", response);
+        // console.log("response: ", response);
         if (response?.data) {
           this.sapService.set(response?.data);
           this.configurations = response?.data;
@@ -124,7 +124,7 @@ export class SapConfigurationPage implements OnInit {
 
   logModalToggle = (index: number) => {
     this.isModalLogOpen = !this.isModalLogOpen;
-    console.log("isModalLogOpen: ", this.isModalLogOpen, index);
+    // console.log("isModalLogOpen: ", this.isModalLogOpen, index);
 
     this.sapService.get.subscribe((data: SAPconfigurationModel[]) => {
       let _logs: SAPActivityLogModel[] = data[index]?.log ?? [];
@@ -142,7 +142,7 @@ export class SapConfigurationPage implements OnInit {
           }
         });
       }
-      console.log(_logs);
+      // console.log(_logs);
       this.configLogs.set(_logs);
     });
   };
@@ -173,7 +173,9 @@ export class SapConfigurationPage implements OnInit {
         time: `${dateString.split(" ")[1]} ${dateString.split(" ")[2]}`,
       };
     else {
-      const formattedDate = `${day.toString().padStart(2, "0")}-${(month + 1).toString().padStart(2, "0")}-${year}`;
+      const formattedDate = `${day.toString().padStart(2, "0")}-${(month + 1)
+        .toString()
+        .padStart(2, "0")}-${year}`;
       return {
         date: formattedDate,
         time: `${dateString.split(" ")[1]} ${dateString.split(" ")[2]}`,

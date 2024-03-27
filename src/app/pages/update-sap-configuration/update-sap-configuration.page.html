@@ -1,4 +1,7 @@
-<app-header headerTitle="Add New" [isDefaultHref]="true"></app-header>
+<app-header
+  [headerTitle]="sapId ? 'Update' : 'Add New'"
+  [isDefaultHref]="true"
+></app-header>
 
 <ion-content [fullscreen]="true" color="background">
   <ion-grid class="ion-padding">
@@ -26,9 +29,9 @@
                     >
                   </ion-select>
                   @if (isGRUActive()) {
-                    <p class="text-red-700 text-sm font-bold">
-                      GRU is already active.
-                    </p>
+                  <p class="text-red-700 text-sm font-bold">
+                    GRU is already active.
+                  </p>
                   }
                 </ion-col>
                 <ion-col size="4" sizeMd="4" class="my-2">
