@@ -75,6 +75,8 @@ export class AssetMappedPage implements OnInit {
   plantId: string;
   store = inject(Store);
   assets: AssetsModel[];
+  assetss: AssetsModel[];
+
   toggleChecked: boolean;
   draftAssets: AssetsModel[];
   registeredAssets: AssetsModel[];
@@ -109,6 +111,8 @@ export class AssetMappedPage implements OnInit {
 
   constructor() {
     this.assets = [];
+    this.assetss = [];
+
     this.plantId = "";
     this.draftAssets = [];
     this.groupedAssets = [];
@@ -122,12 +126,14 @@ export class AssetMappedPage implements OnInit {
       next: (plant: PlantsModel) => {
         if (plant?.assets) {
           this.assets = plant.assets;
+
           this.registeredAssets = plant.assets.filter(
             (asset) => asset?.assetRegisteredStatus?.assetRegistered,
           );
           this.draftAssets = plant.assets.filter(
             (asset) => !asset?.assetRegisteredStatus?.assetRegistered,
           );
+          this.assetss = this.registeredAssets;
 
           const parentTypes = new Set(
             this.assets.map((asset) => asset?.assetInfo?.assetParentType),
@@ -152,31 +158,37 @@ export class AssetMappedPage implements OnInit {
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
 
-    const parentTypes = new Set(
-      this.assets.map((asset) => asset?.assetInfo?.assetParentType),
-    );
-    this.groupedAssets = [];
+    // const parentTypes = new Set(
+    //   this.assets.map((asset) => asset?.assetInfo?.assetParentType),
+    // );
+    // this.groupedAssets = [];
 
     if (this.toggleChecked) {
-      parentTypes.forEach((parentType) => {
-        this.groupedAssets.push({
-          assetParentType: parentType,
-          assets: this.draftAssets.filter(
-            (asset) => asset?.assetInfo?.assetParentType === parentType,
-          ),
-        });
-      });
+      this.assetss = this.draftAssets;
     } else {
-      parentTypes.forEach((parentType) => {
-        this.groupedAssets.push({
-          assetParentType: parentType,
-          assets: this.registeredAssets.filter(
-            (asset) => asset?.assetInfo?.assetParentType === parentType,
-          ),
-        });
-      });
+      this.assetss = this.registeredAssets;
     }
 
-    // console.log(this.groupedAssets);
+    // if (this.toggleChecked) {
+    //   parentTypes.forEach((parentType) => {
+    //     this.groupedAssets.push({
+    //       assetParentType: parentType,
+    //       assets: this.draftAssets.filter(
+    //         (asset) => asset?.assetInfo?.assetParentType === parentType,
+    //       ),
+    //     });
+    //   });
+    // } else {
+    //   parentTypes.forEach((parentType) => {
+    //     this.groupedAssets.push({
+    //       assetParentType: parentType,
+    //       assets: this.registeredAssets.filter(
+    //         (asset) => asset?.assetInfo?.assetParentType === parentType,
+    //       ),
+    //     });
+    //   });
+    // }
+
+    console.log(this.assets);
   }
 }
