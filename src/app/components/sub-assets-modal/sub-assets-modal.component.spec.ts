@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { IonicModule } from "@ionic/angular";
 
-import { SubAssetsModalComponent } from './sub-assets-modal.component';
+import { SubAssetsModalComponent } from "./sub-asset-modal.component";
 
-describe('SubAssetsModalComponent', () => {
+describe("SubAssetsModalComponent", () => {
   let component: SubAssetsModalComponent;
   let fixture: ComponentFixture<SubAssetsModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubAssetsModalComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [SubAssetsModalComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SubAssetsModalComponent);
@@ -18,7 +18,7 @@ describe('SubAssetsModalComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

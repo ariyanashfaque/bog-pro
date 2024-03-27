@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  model,
+} from "@angular/core";
 import {
   IonRow,
   IonCol,
@@ -19,7 +26,7 @@ import {
 } from "@ionic/angular/standalone";
 
 @Component({
-  selector: "app-sub-assets-modal",
+  selector: "app-sub-asset-modal",
   templateUrl: "./sub-assets-modal.component.html",
   styleUrls: ["./sub-assets-modal.component.scss"],
   standalone: true,
@@ -42,17 +49,14 @@ import {
     IonSelectOption,
   ],
 })
-export class SubAssetsModalComponent implements OnInit {
-  @Input() isMenuOpen: boolean = false;
-  @Output() isMenuOpenChange: EventEmitter<boolean> =
-    new EventEmitter<boolean>();
+export class SubAssetModalComponent implements OnInit {
+  isMenuOpen = model(false);
 
   constructor() {}
 
   ngOnInit() {}
 
   menuToggle() {
-    this.isMenuOpen = !this.isMenuOpen;
-    this.isMenuOpenChange.emit(this.isMenuOpen);
+    this.isMenuOpen.update((isMenuOpen) => !isMenuOpen);
   }
 }

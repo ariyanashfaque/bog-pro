@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, effect, OnInit, signal } from "@angular/core";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ChildAssetModalComponent } from "src/app/components/child-asset-modal/child-asset-modal.component";
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
-import { SubAssetsModalComponent } from "src/app/components/sub-assets-modal/sub-assets-modal.component";
+import { SubAssetModalComponent } from "src/app/components/sub-assets-modal/sub-asset-modal.component";
+import { AssetModalComponent } from "src/app/components/asset-modal/asset-modal.component";
 
 import {
   IonTitle,
@@ -38,46 +39,32 @@ import {
     RoundProgressComponent,
     AssetInfoMenuComponent,
     ChildAssetModalComponent,
-    SubAssetsModalComponent,
+    SubAssetModalComponent,
+    AssetModalComponent,
   ],
 })
 export class AssetMapViewPage implements OnInit {
-  constructor() {}
   ngOnInit() {}
 
-  isMenuOpen = true;
-  isChildOpen = false;
-  isAssetInfoMenuOpen: boolean = false;
-  isSubAssetModalOpen: boolean = true;
-  activeAccordion: string = "recommended";
+  isMenuOpen = signal<boolean>(true);
+  isChildOpen = signal<boolean>(false);
+  isAssetInfoMenuOpen = signal<boolean>(false);
+  isSubAssetModalOpen = signal<boolean>(true);
+
+  constructor() {
+    effect(() => {
+      console.log("isMenuOpen changed to: ", this.isSubAssetModalOpen());
+    });
+  }
 
   toggleInfoMenu() {
-    this.isAssetInfoMenuOpen = !this.isAssetInfoMenuOpen;
-    this.menuToggle();
-  }
-
-  toggleVisibility(buttonId: string) {
-    if (this.activeAccordion === buttonId) {
-      this.activeAccordion = "";
-    } else {
-      this.activeAccordion = buttonId;
-    }
-    this.structures.forEach((structure) => {
-      structure.child = false;
-    });
-  }
-
-  menuToggle() {
-    this.isMenuOpen = !this.isMenuOpen;
-
-    this.structures.forEach((structure) => {
-      structure.child = false;
-    });
-    this.activeAccordion = "";
+    this.isAssetInfoMenuOpen.update(
+      (isAssetInfoMenuOpen) => !isAssetInfoMenuOpen
+    );
   }
 
   toggleChildMenu = () => {
-    this.isChildOpen = !this.isChildOpen;
+    this.isChildOpen.update((isChildOpen) => !isChildOpen);
   };
 
   mappedAssets = [
@@ -263,45 +250,6 @@ export class AssetMapViewPage implements OnInit {
           },
         },
       ],
-    },
-  ];
-
-  structures = [
-    {
-      assetId: "1",
-      child: false,
-    },
-    {
-      assetId: "2",
-      child: false,
-    },
-    {
-      assetId: "3",
-      child: false,
-    },
-    {
-      assetId: "4",
-      child: false,
-    },
-    {
-      assetId: "5",
-      child: false,
-    },
-    {
-      assetId: "6",
-      child: false,
-    },
-    {
-      assetId: "7",
-      child: false,
-    },
-    {
-      assetId: "8",
-      child: false,
-    },
-    {
-      assetId: "9",
-      child: false,
     },
   ];
 }
