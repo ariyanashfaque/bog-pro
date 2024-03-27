@@ -3,3 +3,7 @@ ion-backdrop {
   opacity: 0.6;
   z-index: 40;
 }
+.select-fill-outline {
+  --border-color: var(--ion-color-input);
+  --border-width: 2px;
+}

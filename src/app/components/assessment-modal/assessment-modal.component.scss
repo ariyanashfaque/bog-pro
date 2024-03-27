@@ -1,7 +1,44 @@
-.input-fill-outline.sc-ion-input-md-h {
-  --border-color: #3cb4aa;
-  --border-radius: 4px;
-  --padding-start: 16px;
-  --padding-end: 16px;
-  min-height: 56px;
+.wrap {
+  position: absolute;
+  right: 15px;
+  width: 0px;
+  height: 55px;
+  background: #ffffff;
+  line-height: 55px;
+  padding-right: 55px;
+  border-radius: 27.5px;
+  transition: all 0.5s ease;
+}
+
+.input {
+  border: 0;
+  background: transparent;
+  width: 0%;
+  outline: none;
+  font-family: sans-serif;
+  font-size: 18px;
+  color: #000000;
+  font-style: italic;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.wrap .fa {
+  color: #462222;
+  position: absolute;
+  right: 9px;
+  top: 9px;
+  cursor: pointer;
+}
+
+.wrap.active {
+  width: calc(100% - 30px);
+  padding-left: 25px;
+  transition: all 0.5s ease;
+}
+
+.input.active {
+  width: 100%;
+  padding-left: 5px;
+  transition: all 0.5s 0.5s ease;
 }

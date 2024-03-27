@@ -1,0 +1,77 @@
+<div
+  class="w-[400px] h-auto bg-transparent shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-xl z-50"
+  [class]="!isAssetInfoOpen ? '' : 'translate-x-1/4'"
+>
+  <div class="flex">
+    <div class="w-[140px] h-[60px] bg-white rounded-tl-xl"></div>
+    <svg
+      height="60"
+      viewBox="0 0 100 50"
+      width="120"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M100 0v50H0V0c.543 27.153 22.72 49 50 49S99.457 27.153 99.99 0h.01z"
+        fill="white"
+        fill-rule="evenodd"
+      ></path>
+    </svg>
+    <div class="w-[140px] h-[60px] bg-white rounded-tr-xl"></div>
+  </div>
+  <div
+    class="w-24 h-24 mx-auto bg-gray-300 rounded-full absolute -top-12 left-1/2 -translate-x-1/2"
+  >
+    <round-progress
+      [current]="3"
+      [max]="9"
+      [color]="'#1d4370'"
+      [background]="'#c2ccd8'"
+      [radius]="100"
+      [stroke]="12"
+      [semicircle]="false"
+      [rounded]="true"
+      [clockwise]="true"
+      [responsive]="true"
+      [duration]="800"
+      [animation]="'easeInOutQuart'"
+      [animationDelay]="0"
+    />
+    <div
+      class="absolute top-[7px] left-[7px] w-[calc(100%-14px)] h-[calc(100%-14px)] bg-white rounded-full"
+    >
+      <img
+        class="w-auto h-1/2 mx-auto rounded-full"
+        src="../../../assets/silo.png"
+        alt="silo"
+      />
+      <div class="w-full text-xs text-center">
+        <span class="text-[#000000DE]">Silo</span>
+      </div>
+      <div class="w-full text-xs text-center">
+        <span class="text-[#000000DE] font-bold">09/09</span>
+      </div>
+    </div>
+  </div>
+  <div class="w-full h-auto py-3 bg-white rounded-b-xl">
+    <div class="w-full h-auto px-2 py-2 flex gap-2 flex-wrap">
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+      <div
+        class="w-[70px] h-[70px] bg-white border-2 border-gray-200 rounded-sm"
+      ></div>
+    </div>
+  </div>
+</div>

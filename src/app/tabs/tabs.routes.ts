@@ -27,10 +27,15 @@ export const routes: Routes = [
       },
       {
         path: "assessment",
-        loadComponent: () =>
-          import("../pages/assessment/assessment.page").then(
-            (page) => page.AssessmentPage,
-          ),
+        children: [
+          {
+            path: "",
+            loadComponent: () =>
+              import("../pages/assessment/assessment.page").then(
+                (page) => page.AssessmentPage,
+              ),
+          },
+        ],
       },
       {
         path: "asset-register",
@@ -67,6 +72,42 @@ export const routes: Routes = [
           import(
             "../pages/asset-register/asset-mapped/asset-mapped.routes"
           ).then((routes) => routes.routes),
+      },
+      {
+        path: "asset-map-view/:id",
+        loadChildren: () =>
+          import(
+            "../pages/asset-register/asset-map-view/asset-map-view.routes"
+          ).then((routes) => routes.routes),
+      },
+    ],
+  },
+  {
+    path: "assessment",
+    children: [
+      {
+        path: ":id",
+        loadChildren: () =>
+          import("../pages/assessment/findings/findings.routes").then(
+            (routes) => routes.routes,
+          ),
+      },
+    ],
+  },
+  {
+    path: "sap-configuration",
+    // loadComponent: () =>
+    //   import("../pages/sap-configuration/sap-configuration.page").then(
+    //     (m) => m.SapConfigurationPage,
+    //   ),
+
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("../pages/sap-configuration/sap-configuration.routes").then(
+            (routes) => routes.routes,
+          ),
       },
     ],
   },

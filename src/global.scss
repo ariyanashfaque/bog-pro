@@ -23,8 +23,7 @@
   font-weight: 300;
   font-style: normal;
   font-family: "Gotham Light";
-  src:
-    url("./assets/fonts/woff2/Gotham-Light_Web.woff2") format("woff2"),
+  src: url("./assets/fonts/woff2/Gotham-Light_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Light_Web.woff") format("woff");
 }
 
@@ -32,8 +31,7 @@
   font-weight: 400;
   font-style: normal;
   font-family: "Gotham Book";
-  src:
-    url("./assets/fonts/woff2/Gotham-Book_Web.woff2") format("woff2"),
+  src: url("./assets/fonts/woff2/Gotham-Book_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Book_Web.woff") format("woff");
 }
 
@@ -41,8 +39,7 @@
   font-weight: 500;
   font-style: normal;
   font-family: "Gotham Medium";
-  src:
-    url("./assets/fonts/woff2/Gotham-Medium_Web.woff2") format("woff2"),
+  src: url("./assets/fonts/woff2/Gotham-Medium_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Medium_Web.woff") format("woff");
 }
 
@@ -50,8 +47,7 @@
   font-weight: 700;
   font-style: normal;
   font-family: "Gotham Bold";
-  src:
-    url("./assets/fonts/woff2/Gotham-Bold_Web.woff2") format("woff2"),
+  src: url("./assets/fonts/woff2/Gotham-Bold_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Bold_Web.woff") format("woff");
 }
 
@@ -175,4 +171,18 @@
 .input-fill-outline.ion-touched.ion-invalid.sc-ion-input-md-h {
   --border-width: 1.5px;
   --border-color: var(--ion-color-danger);
+}
+
+.textarea-fill-outline.sc-ion-textarea-md-h {
+  --border-color: var(--ion-color-input);
+  min-height: 120px;
+}
+.select-fill-outline {
+  --border-color: var(--ion-color-input);
+  //label alignment vertically
+}
+
+ion-select::part(icon) {
+  color: #007382;
+  width: 17px;
 }

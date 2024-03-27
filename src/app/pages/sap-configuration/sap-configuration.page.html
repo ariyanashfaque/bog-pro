@@ -1,0 +1,553 @@
+<app-header headerTitle="Sap configuration" [isDefaultHref]="true"></app-header>
+
+@if (isModalLogOpen === true) {
+  <ion-backdrop [visible]="isModalLogOpen"> </ion-backdrop>
+}
+
+<ion-content [fullscreen]="true" color="background">
+  <ion-grid class="ion-padding">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" sizeLg="12" sizeMd="12" sizeSm="12">
+        <div
+          class="max-w-full mx-auto p-4 bg-white border-b-[2px] shadow-[0px_0px_6px_0px_#0000002E]"
+        >
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="8">
+                <p class="text-[26px] font-bold">Connection setting</p>
+              </ion-col>
+              <ion-col size="4">
+                <div class="flex items-center gap-2 justify-end">
+                  <ion-label>Search</ion-label>
+                  <input
+                    type="text"
+                    class="bg-white border border-[#0073825C] p-[1px] max-w-32"
+                  />
+                </div>
+                <!-- <ion-row>
+                  <ion-col size="12" sizeMd="6" sizeLg="6"></ion-col>
+                  <ion-col
+                    size="12"
+                    sizeMd="6"
+                    sizeLg="6"
+                    class="flex items-center justify-center gap-2"
+                  >
+                    </ion-col>
+                </ion-row> -->
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <!-- table  -->
+        <div
+          class="max-w-full mx-auto bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+        >
+          <ion-grid>
+            <ion-row>
+              @defer (when !isLoading()) {
+                <ion-col size="12" class="px-5">
+                  <ion-row class="ion-align-items-center">
+                    <ion-col size="3" class="px-4"
+                      ><span class="font-bold text-[#007382]"
+                        >GRU</span
+                      ></ion-col
+                    >
+                    <ion-col size="3"
+                      ><span class="font-bold text-[#007382]"
+                        >Last feed</span
+                      ></ion-col
+                    >
+                    <ion-col size="3"
+                      ><span class="font-bold text-[#007382]"
+                        >Status</span
+                      ></ion-col
+                    >
+                    <ion-col size="3" class="text-right"
+                      ><span class="font-bold text-[#007382]"
+                        >More</span
+                      ></ion-col
+                    >
+                  </ion-row>
+                </ion-col>
+
+                @for (config of configurations; track $index) {
+                  <ion-col size="12">
+                    <ion-accordion-group>
+                      <ion-accordion value="first">
+                        <ion-item slot="header" color="accordion">
+                          <ion-label
+                            ><ion-grid>
+                              <ion-row class="ion-no-padding">
+                                <ion-col size="12">
+                                  <ion-row class="ion-align-items-center">
+                                    <ion-col size="3" class="px-[-20px]"
+                                      ><span
+                                        class="font-bold text-[#007382] text-sm capitalize"
+                                        >{{ config?.gruName }}</span
+                                      ></ion-col
+                                    >
+                                    <ion-col size="3">
+                                      <!-- <span
+                                        class="font-bold text-[#007382] text-sm"
+                                        >{{
+                                          config?.createdAt
+                                            | date: "dd MMM yyyy, h.mm a"
+                                        }}</span
+                                      > -->
+                                      <span
+                                        class="font-bold text-[#007382] text-sm"
+                                        >{{ config?.createdAt }}</span
+                                      >
+                                    </ion-col>
+                                    <ion-col size="3"
+                                      ><div class="pl-5">
+                                        <span
+                                          class="font-bold text-white bg-[#009146] p-2 text-sm capitalize"
+                                          [ngClass]="{
+                                            'bg-[#009146]':
+                                              config?.gruStatus?.toLowerCase() ===
+                                              'active',
+                                            'bg-red-500':
+                                              config?.gruStatus?.toLowerCase() ===
+                                              'inactive'
+                                          }"
+                                          >{{ config?.gruStatus }}</span
+                                        >
+                                      </div></ion-col
+                                    >
+                                    <ion-col size="3"
+                                      ><span
+                                        class="font-bold text-[#007382]"
+                                      ></span
+                                    ></ion-col>
+                                  </ion-row>
+                                </ion-col>
+                              </ion-row> </ion-grid
+                          ></ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ion-col size="12">
+                            <ion-row class="ion-align-items-center">
+                              <ion-col size="3">
+                                <div class="flex gap-1">
+                                  <div
+                                    class="bg-[#DCEBED] w-9 h-9 flex items-center justify-center"
+                                  >
+                                    <ion-icon
+                                      name="sync-circle-outline"
+                                      class="text-2xl mx-auto my-auto text-[#007382]"
+                                    ></ion-icon>
+                                  </div>
+                                  <div class="flex flex-col">
+                                    <p class="text-[12px]">Sync Type</p>
+                                    <p class="font-bold text-[12px] capitalize">
+                                      {{ config?.syncType }}
+                                    </p>
+                                  </div>
+                                </div>
+                              </ion-col>
+                              <ion-col size="3"
+                                ><div class="flex gap-1">
+                                  <div
+                                    class="bg-[#DCEBED] w-9 h-9 flex items-center justify-center"
+                                  >
+                                    <ion-icon
+                                      name="code-working"
+                                      class="text-2xl mx-auto my-auto text-[#007382]"
+                                    ></ion-icon>
+                                  </div>
+                                  <div class="flex flex-col">
+                                    <p class="text-[12px]">API protocol</p>
+                                    <p class="font-bold text-[12px] capitalize">
+                                      {{ config?.protocol }}
+                                    </p>
+                                  </div>
+                                </div></ion-col
+                              >
+                              <!-- <ion-col size="3"
+                                ><div class="flex gap-1">
+                                  <div
+                                    class="bg-[#DCEBED] w-8 h-8 flex items-center justify-center"
+                                  >
+                                    <ion-icon
+                                      name="person"
+                                      class="text-2xl mx-auto my-auto text-[#007382]"
+                                    ></ion-icon>
+                                  </div>
+                                  <div class="flex flex-col">
+                                    <p class="text-[12px]">User ID</p>
+                                    <p class="font-bold text-[12px]">
+                                      Abcd1234
+                                    </p>
+                                  </div>
+                                </div></ion-col
+                              > -->
+                              <ion-col size="6"
+                                ><div class="flex gap-1">
+                                  <div
+                                    class="bg-[#DCEBED] w-9 h-9 flex items-center justify-center"
+                                  >
+                                    <ion-icon
+                                      name="lock-closed"
+                                      class="text-2xl mx-auto my-auto text-[#007382]"
+                                    ></ion-icon>
+                                  </div>
+                                  <div class="flex flex-row gap-1">
+                                    <!-- <p class="text-[12px]">Token</p> -->
+                                    <!-- <p class="font-bold text-[12px]">
+                                      **********
+                                    </p> -->
+                                    <input
+                                      type="text"
+                                      disabled
+                                      [value]="config?.token"
+                                      class="bg-white w-full py-1 px-2 focus:border-[#007382] border border-[#007382] focus:outline-none ring-1 focus:ring-[#007382] focus:ring-opacity-50"
+                                    />
+                                    <button
+                                      class="px-4 py-2 text-sm font-semibold text-white bg-[#147E8C] rounded hover:bg-[#147E8C] focus:outline-none focus:ring"
+                                    >
+                                      <ion-icon
+                                        name="copy-outline"
+                                        (click)="copyToClipboard(config?.token)"
+                                      ></ion-icon>
+                                    </button>
+                                  </div></div
+                              ></ion-col>
+                              <!-- <ion-col size="12"
+                                ><div class="flex gap-1">
+                                  <div
+                                    class="bg-[#DCEBED] w-8 h-8 flex items-center justify-center"
+                                  >
+                                    <ion-icon
+                                      name="link"
+                                      class="text-2xl mx-auto my-auto text-[#007382]"
+                                    ></ion-icon>
+                                  </div>
+                                  <div class="flex flex-col">
+                                    <p class="text-[12px]">Connection URL</p>
+                                    <a
+                                      class="font-bold text-[12px] text-[#2674D1] underline"
+                                      href="#"
+                                      >https://10.29.113.786/userid
+                                      abcd1234/pasword
+                                      ajdkjkfdkj/stp_jdkjdfjkjkdk</a
+                                    >
+                                  </div>
+                                </div></ion-col
+                              > -->
+                              <ion-col size="12" class="bg-[#EDF5F5]">
+                                <p class="text-[#007382] font-bold p-3">
+                                  Field mapping
+                                </p>
+                                <ion-grid class="px-3 py-2">
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="bg-[#007382] px-4 py-2 text-wrap text-white border border-l-0 border-[##D1EDF0]"
+                                      >BoG Pro</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="bg-[#007382] px-4 py-2 text-wrap text-white border border-[##D1EDF0]"
+                                      >Description</ion-col
+                                    >
+                                  </ion-row>
+                                  <!-- @for (field of config?.fields; track $index) { -->
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Sap Id</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{ config?.sapId }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Location Code</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{ config?.locationCode }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Location</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{ config?.location }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Functional Location Code</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{
+                                        config?.functionalLocationCode
+                                      }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Functional Location Description</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{
+                                        config?.functionalLocationDescription
+                                      }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Costcenter Code</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{ config?.costCenterCode }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Costcenter Description</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{
+                                        config?.costCenterDescription
+                                      }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Hierarchy Area Code</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{ config?.hierarchyAreaCode }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Hierarchy Area Description</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{
+                                        config?.hierarchyAreaDescription
+                                      }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Name</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{ config?.name }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Status</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{ config?.status }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col
+                                      size="4"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
+                                      >Asset Type</ion-col
+                                    >
+                                    <ion-col
+                                      size="8"
+                                      class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
+                                      >{{ config?.assetType }}</ion-col
+                                    >
+                                  </ion-row>
+                                  <!-- } -->
+                                </ion-grid>
+                              </ion-col>
+                              <div class="flex gap-4">
+                                <ion-button
+                                  shape="round"
+                                  color="secondary"
+                                  fill="outline"
+                                  class="capitalize"
+                                  (click)="logModalToggle()"
+                                  >Logs</ion-button
+                                >
+                                <ion-button
+                                  shape="round"
+                                  color="secondary"
+                                  class="capitalize"
+                                  [routerLink]="[
+                                    '/sap-configuration/configuration',
+                                    config?.id
+                                  ]"
+                                  >Edit</ion-button
+                                >
+                              </div>
+                            </ion-row>
+                          </ion-col>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </ion-col>
+                } @empty {
+                  <ion-col size="12">
+                    <div
+                      class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+                    >
+                      <h3 class="text-center">No data found</h3>
+                    </div>
+                  </ion-col>
+                }
+              } @placeholder {
+                <ion-col size="12" sizeMd="12" sizeLg="12">
+                  <app-loading-skeleton></app-loading-skeleton>
+                </ion-col>
+              }
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div
+          class="max-w-full mx-auto p-4 bg-white border-b-[2px] shadow-[0px_0px_6px_0px_#0000002E]"
+        >
+          <ion-grid>
+            <ion-row>
+              <ion-col
+                size="4"
+                sizeMd="4"
+                sizeLg="4"
+                class="flex items-center gap-2"
+              >
+                <!-- <div>Show</div> -->
+                <!-- <ion-select fill="outline" class="w-1/2">
+                  <ion-select-option value="apple">1</ion-select-option>
+                  <ion-select-option value="banana">2</ion-select-option>
+                  <ion-select-option value="orange">3</ion-select-option>
+                </ion-select> -->
+                <!-- <div class="relative">
+                  <div
+                    class="w-50.97 h-22 bg-white border border-gray-300 rounded-md flex items-center justify-between px-2"
+                  >
+                    <span class="text-gray-700">9</span>
+                    <svg
+                      class="w-4 h-4 text-gray-700 pointer-events-none"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      ></path>
+                    </svg>
+                  </div>
+                  <select
+                    class="absolute block w-full h-full opacity-0 cursor-pointer bg-white"
+                  >
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                  </select>
+                </div> -->
+
+                <label for="row-range">Show</label>
+                <select
+                  id="row-range"
+                  class="bg-white text-black border text-center border-gray-300 w-14 h-22"
+                >
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                </select>
+
+                <div>1 - 9 of 100</div>
+              </ion-col>
+              <ion-col
+                size="4"
+                sizeMd="4"
+                sizeLg="4"
+                class="flex items-center justify-center"
+              >
+                <ion-icon
+                  name="caret-back"
+                  class="text-2xl mx-auto my-auto text-[#007382]"
+                ></ion-icon>
+                <ion-icon
+                  name="chevron-back"
+                  class="text-2xl mx-auto my-auto text-[#007382]"
+                ></ion-icon>
+                <ion-icon
+                  name="chevron-forward"
+                  class="text-2xl mx-auto my-auto text-[#007382]"
+                ></ion-icon>
+                <ion-icon
+                  name="caret-forward"
+                  class="text-2xl mx-auto my-auto text-[#007382]"
+                ></ion-icon>
+              </ion-col>
+              <ion-col size="4" sizeMd="4" sizeLg="4" class="flex justify-end">
+                <ion-button
+                  shape="round"
+                  color="secondary"
+                  [routerLink]="['/sap-configuration/configuration']"
+                  >Add New</ion-button
+                >
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<app-sap-configaration-log [(isMenuOpen)]="isModalLogOpen">
+</app-sap-configaration-log>

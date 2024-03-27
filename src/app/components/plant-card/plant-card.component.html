@@ -4,7 +4,8 @@
       class="absolute right-0 -mt-4 -mr-1 w-16 h-16 rounded-full bg-white flex"
     >
       <div
-        class="bgcolor mx-auto my-auto w-12 h-12 rounded-full shadow-md flex"
+        class="bgcolor mx-auto my-auto w-12 h-12 rounded-full shadow-md cursor-pointer flex"
+        [routerLink]="['/asset-register/asset-map-view', plant.id]"
       >
         <ion-icon
           name="location-outline"

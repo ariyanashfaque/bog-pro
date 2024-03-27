@@ -1,5 +1,5 @@
 <div
-  class="fixed w-full bottom-0 h-2/3 rounded-[32px] shadow-lg bg-transparent transform transition-transform duration-800 z-50"
+  class="fixed w-full bottom-0 h-3/4 rounded-[32px] shadow-lg bg-transparent transform transition-transform duration-800 z-50"
   [class]="!isMenuOpen ? 'translate-y-[calc(100%+40px)]' : ''"
 >
   <div class="h-full w-full flex">
@@ -29,77 +29,76 @@
     <div class="h-full bg-white flex-grow rounded-tr-[32px]"></div>
   </div>
   <div
-    class="absolute text-black top-8 w-full h-full bg-transparent overflow-y-scroll"
+    class="absolute text-black top-9 w-full h-full bg-white overflow-y-scroll"
   >
-    <div></div>
     <!-- Your Content -->
-    <div class="px-5 py-5">
+    <div class="px-5 py-10">
       <h5 class="text-[28px] text-[#363636] font-bold mb-2">
         2. Add Header Information
+        <ion-text color="danger">*</ion-text>
         <span
-          class="text-[10px] text-white bg-[#009146] font-thin px-2 py-1 rounded-sm"
+          class="text-[14px] text-white bg-[#009146] font-thin mx-2 px-2 py-1 rounded-sm"
           >OPEN</span
         >
       </h5>
-      <ion-grid>
+      <ion-grid class="mb-4">
         <ion-row>
-          <ion-col size="6"
-            ><div class="relative">
-              <input
-                type="text"
-                id="date"
-                class="block h-[56px] px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-[4px] border border-[#3CB4AA] peer focus:outline-none focus:border-[#3CB4AA]"
-                placeholder="date "
-              />
-              <label
-                for="date"
-                class="absolute text-sm text-black duration-200 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-                >Date</label
-              >
-            </div>
-          </ion-col>
           <ion-col size="6">
-            <ion-input
+            <!-- <ion-input
               required
               fill="outline"
               color="primary"
               inputmode="text"
-              placeholder="Enter name"
+              placeholder="dd/mm/yyyy"
               labelPlacement="floating"
               errorText="Asset name required"
             >
               <ion-label slot="label">
-                Enter name
+                Date
                 <ion-text color="danger">*</ion-text>
               </ion-label>
-            </ion-input>
+            </ion-input> -->
+            <ion-input
+              class="relative"
+              required
+              fill="outline"
+              color="primary"
+              inputmode="date"
+              labelPlacement="floating"
+              errorText="Date required"
+              type="date"
+            >
+              <ion-label class="" slot="label">
+                Date
+                <ion-text color="danger">*</ion-text>
+              </ion-label></ion-input
+            >
           </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <div class="relative overflow-hidden">
-              <textarea
-                type="text"
-                rows="3"
-                id="audit-scope"
-                class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-[4px] border border-[#3CB4AA] peer focus:outline-none focus:border-[#3CB4AA]"
-                placeholder="Type here max 250 words"
-              >
-              </textarea>
-              <label
-                for="audit-scope"
-                class="absolute text-sm text-black duration-200 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-                >Scope of audit</label
-              >
-              <div
-                class="absolute -top-2 -right-2 w-10 h-10 bg-white border border-[#3CB4AA] rounded-full flex justify-center items-center"
-              >
-                <div class="w-6 h-6 bg-[#3CB4AA] rounded-full"></div>
+          <ion-col size="6">
+            <ion-select
+              interface="popover"
+              class="relative"
+              required
+              fill="outline"
+              color="primary"
+              toggleIcon="chevron-down-outline"
+              expandedIcon="chevron-up-outline"
+              inputmode="text"
+              placeholder="Select..."
+              labelPlacement="floating"
+              errorText="Asset name required"
+            >
+              <div slot="label">
+                Type of assessment
+                <ion-text color="danger">*</ion-text>
               </div>
-            </div>
+              <ion-select-option value="apple">Annual</ion-select-option>
+              <ion-select-option value="banana">Daily</ion-select-option>
+              <ion-select-option value="orange">Weekly</ion-select-option>
+            </ion-select>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
           <ion-col size="12">
             <div class="relative">
               <select
@@ -107,10 +106,8 @@
                 class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-[#3CB4AA] peer focus:outline-none focus:border-[#3CB4AA]"
                 placeholder="kdfjdpojkf"
               >
-                <!-- Add your select options here -->
                 <option value="option1">Option 1</option>
                 <option value="option2">Option 2</option>
-                <!-- Add more options as needed -->
               </select>
               <label
                 for="floating_outlined_select"
@@ -120,9 +117,197 @@
               </label>
             </div>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
         <ion-row>
-          <ion-col size="12"></ion-col>
+          <ion-col size="12">
+            <ion-textarea
+              class="relative caret-yellow-300"
+              required
+              fill="outline"
+              color="primary"
+              inputmode="text"
+              placeholder="Type here max 250 words"
+              labelPlacement="floating"
+              errorText="Asset name required"
+            >
+              <ion-label class="bg-white pr-1" slot="label">
+                Scope of audit
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+
+              <div
+                class="absolute top-0 right-0 w-8 h-8 bg-white flex justify-center items-center rounded-tl-xl rounded-br-xl z-20 overflow-hidden"
+              >
+                <div
+                  class="relative -top-[5px] -right-[5px] w-8 h-8 bg-white rounded-full border border-[#3CB4AA] flex justify-center items-center"
+                >
+                  <button
+                    class="w-[22px] h-[22px] bg-[#3CB4AA] rounded-full"
+                  ></button>
+                </div>
+              </div>
+            </ion-textarea>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <h5 class="text-[28px] text-[#363636] font-bold mb-2">
+        3. Assign Members
+        <ion-text color="danger">*</ion-text>
+      </h5>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div
+              class="w-full min-h-[80px] px-[17px] bg-[#EDF5F5] rounded-[4px] flex flex-col justify-center py-5"
+            >
+              <div class="flex items-center justify-between">
+                <ion-label class="text-[24px]" slot="label">
+                  Lead author
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <!-- Search Bar -->
+                <div
+                  class="wrap"
+                  [class]="authorSearch == true ? 'active' : ''"
+                >
+                  <form>
+                    <input
+                      type="text"
+                      class="input"
+                      [class]="authorSearch == true ? 'active' : ''"
+                      placeholder="search . . ."
+                    />
+                  </form>
+                  <ion-icon
+                    class="fa text-4xl"
+                    color="secondary"
+                    (click)="toggleAuthorSearch()"
+                    name="search-outline"
+                  ></ion-icon>
+                </div>
+              </div>
+              <!-- search result -->
+              <!-- <div class="mt-5">Search Content here</div> -->
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div
+              class="w-full min-h-[80px] px-[17px] bg-[#EDF5F5] rounded-[4px] flex flex-col justify-center py-5"
+            >
+              <div class="flex items-center justify-between">
+                <ion-label class="text-[24px]" slot="label">
+                  Other team members
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <!-- Search bar -->
+                <div
+                  class="wrap"
+                  [class]="teamMemberSearch == true ? 'active' : ''"
+                >
+                  <form>
+                    <input
+                      type="text"
+                      class="input"
+                      [class]="teamMemberSearch == true ? 'active' : ''"
+                      placeholder="search . . ."
+                    />
+                  </form>
+                  @if (teamMemberSearch) {
+                    <ion-icon
+                      class="fa text-4xl"
+                      color="secondary"
+                      (click)="toggleTeamMemberSearch()"
+                      name="close"
+                    ></ion-icon>
+                  } @else {
+                    <ion-icon
+                      class="fa text-4xl"
+                      color="secondary"
+                      (click)="toggleTeamMemberSearch()"
+                      name="search-outline"
+                    ></ion-icon>
+                  }
+                </div>
+              </div>
+
+              <!-- search result -->
+              @if (teamMemberSearch) {
+                <div
+                  class="mt-5 max-h-[136px] overflow-y-auto flex flex-col gap-4"
+                >
+                  @for (user of users; track user.id) {
+                    <div class="flex justify-between items-center">
+                      <div class="flex items-center gap-2">
+                        <ion-avatar class="w-14 h-14">
+                          <img
+                            alt="Silhouette of a person's head"
+                            src="https://ionicframework.com/docs/img/demos/avatar.svg"
+                          />
+                        </ion-avatar>
+                        <ion-label>
+                          <span class="text-[16px] font-bold">{{
+                            user.name
+                          }}</span>
+                          <p class="text-[14px]">{{ user.email }}</p>
+                        </ion-label>
+                      </div>
+                      @if (user.selected) {
+                        <button
+                          class="w-[29.25px] h-[29.25px] mr-[4px] bg-[#B1D3D3] rounded-full flex justify-center items-center"
+                        >
+                          <ion-icon
+                            (click)="removeUser(user)"
+                            name="trash-outline"
+                            size="small"
+                            color="secondary"
+                          ></ion-icon>
+                        </button>
+                      } @else {
+                        <ion-icon
+                          (click)="addUser(user)"
+                          class="cursor-pointer text-4xl"
+                          name="add-circle"
+                          color="secondary"
+                        ></ion-icon>
+                      }
+                    </div>
+                  }
+                </div>
+              } @else if (selectedUsers.length > 0) {
+                <div
+                  class="mt-5 max-h-[136px] overflow-y-auto flex flex-col gap-4"
+                >
+                  @for (selectedUser of selectedUsers; track selectedUser.id) {
+                    <div class="flex justify-between items-center">
+                      <div class="flex items-center gap-2">
+                        <ion-avatar class="w-14 h-14">
+                          <img
+                            alt="Silhouette of a person's head"
+                            src="https://ionicframework.com/docs/img/demos/avatar.svg"
+                          />
+                        </ion-avatar>
+                        <ion-label>
+                          <span class="font-bold">{{ selectedUser.name }}</span>
+                          <p>{{ selectedUser.email }}</p>
+                        </ion-label>
+                      </div>
+                      <button
+                        class="w-[29.25px] h-[29.25px] mr-[4px] bg-[#B1D3D3] rounded-full flex justify-center items-center"
+                        (click)="removeUser(selectedUser)"
+                      >
+                        <ion-icon
+                          name="trash-outline"
+                          size="small"
+                          color="secondary"
+                        ></ion-icon>
+                      </button>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </div>

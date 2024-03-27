@@ -1,0 +1,37 @@
+<div
+  class="fixed w-7/12 left-0 top-0 h-full shadow-lg bg-transparent transform transition-transform duration-800 z-10"
+  [class]="!isMenuOpen ? '-translate-x-full' : ''"
+>
+  <!-- <div class="h-full w-full flex">
+    <div class="h-full w-[calc(100%-125px)] bg-white"></div>
+    <div class="">
+      <svg
+        height="34"
+        viewBox="0 0 100 50"
+        width="68"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M100 0v50H0V0c.543 27.153 22.72 49 50 49S99.457 27.153 99.99 0h.01z"
+          fill="white"
+          fill-rule="evenodd"
+        ></path>
+      </svg>
+      <div class="w-auto h-full bg-white relative">
+        <div
+          class="absolute ml-[7px] -top-[62px] cursor-pointer w-[54px] h-[54px] bg-black rounded-full flex justify-center items-center"
+          (click)="menuToggle()"
+        >
+          <ion-icon class="text-4xl fill-white" name="close"> </ion-icon>
+        </div>
+      </div>
+    </div>
+    <div class="h-full bg-white flex-grow"></div>
+  </div> -->
+  <div
+    class="absolute text-black top-9 w-full h-full bg-white overflow-y-scroll"
+  >
+    <!-- Your Content -->
+    <div class="px-5 py-10"></div>
+  </div>
+</div>
