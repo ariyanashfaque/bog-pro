@@ -5,7 +5,6 @@
 
 .deleterequest {
   background-color: #fff0f2;
-
   border-color: red;
 }
 .bgEditBtn {
@@ -41,6 +40,11 @@ ion-badge {
 .imagebox {
   background-color: #fff;
   border-color: #007382;
+}
+
+.errorbox {
+  background-color: #fff;
+  border-color: red;
 }
 .sourceBadge {
   background-color: #bec4c4;

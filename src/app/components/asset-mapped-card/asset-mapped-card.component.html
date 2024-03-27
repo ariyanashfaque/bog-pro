@@ -190,7 +190,7 @@
                 class="h-20 w-20 border-2 p-2 rounded-md"
                 [class]="
                   asset.assetRegisteredStatus?.assetDeletionApprovalPending
-                    ? 'deleterequest'
+                    ? 'errorbox'
                     : 'imagebox'
                 "
               >
@@ -215,12 +215,17 @@
 
         <ion-col size="9.2" class="">
           <ion-row>
-            <ion-col size="12" class="flex items-center justify-center -ml-4">
-              <div class="border-2 -mt-4 w-3/5 inline-flex border-red-500">
-                <ion-text color="danger" class="text-[10px] font-gotham_book">
+            <ion-col
+              size="12"
+              class="-mt-4 -ml-14 flex items-center ml-5"
+            >
+              @if (asset.assetRegisteredStatus?.assetDeletionApprovalPending) {
+              <div class="border-2 w-3/5 inline-flex border-red-500 bg-white items-center justify-center">
+                <ion-text color="danger" class=" text-[11px] font-gotham_book">
                   Assset decomission requested
                 </ion-text>
               </div>
+              }
             </ion-col>
           </ion-row>
 
@@ -265,39 +270,39 @@
           <ion-row class="mt-1">
             <ion-col size="10" class="flex gap-6">
               @if (toggleChecked) {
+              <div class="">
                 <div class="">
-                  <div class="">
-                    <ion-text class="text-[14px] font-gotham_light">
-                      Status
-                    </ion-text>
-                  </div>
-                  <div class="">
-                    <ion-badge color="approvalpending" class="p-2">
-                      <ion-text
-                        color="black"
-                        class="text-[14px] font-gotham_medium"
-                      >
-                        <p>Asset Approval Pending</p>
-                      </ion-text>
-                    </ion-badge>
-                  </div>
+                  <ion-text class="text-[14px] font-gotham_light">
+                    Status
+                  </ion-text>
                 </div>
-              } @else {
                 <div class="">
-                  <div class="">
-                    <ion-text class="text-[14px] font-gotham_light">
-                      Asset Id
-                    </ion-text>
-                  </div>
-                  <div class="">
+                  <ion-badge color="approvalpending" class="p-2">
                     <ion-text
                       color="black"
-                      class="text-[16px] font-gotham_medium"
+                      class="text-[14px] font-gotham_medium"
                     >
-                      123456
+                      <p>Asset Approval Pending</p>
                     </ion-text>
-                  </div>
+                  </ion-badge>
                 </div>
+              </div>
+              } @else {
+              <div class="">
+                <div class="">
+                  <ion-text class="text-[14px] font-gotham_light">
+                    Asset Id
+                  </ion-text>
+                </div>
+                <div class="">
+                  <ion-text
+                    color="black"
+                    class="text-[16px] font-gotham_medium"
+                  >
+                    123456
+                  </ion-text>
+                </div>
+              </div>
               }
 
               <div>
