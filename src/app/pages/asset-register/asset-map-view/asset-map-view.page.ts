@@ -3,6 +3,7 @@ import { HeaderComponent } from "src/app/components/header/header.component";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ChildAssetModalComponent } from "src/app/components/child-asset-modal/child-asset-modal.component";
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
+import { SubAssetsModalComponent } from "src/app/components/sub-assets-modal/sub-assets-modal.component";
 
 import {
   IonTitle,
@@ -37,6 +38,7 @@ import {
     RoundProgressComponent,
     AssetInfoMenuComponent,
     ChildAssetModalComponent,
+    SubAssetsModalComponent,
   ],
 })
 export class AssetMapViewPage implements OnInit {
@@ -46,6 +48,7 @@ export class AssetMapViewPage implements OnInit {
   isMenuOpen = true;
   isChildOpen = false;
   isAssetInfoMenuOpen: boolean = false;
+  isSubAssetModalOpen: boolean = true;
   activeAccordion: string = "recommended";
 
   toggleInfoMenu() {

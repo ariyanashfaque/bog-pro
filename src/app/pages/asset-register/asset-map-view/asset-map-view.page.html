@@ -1,8 +1,8 @@
 <app-header class="z-20 fixed w-full" headerTitle="Bird eye view"></app-header>
 
-<!-- @if (isChildOpen == true) {
-  <ion-backdrop class="z-10" [visible]="true"> </ion-backdrop>
-} -->
+@if (isChildOpen == true) {
+<ion-backdrop class="z-10" [visible]="true"> </ion-backdrop>
+}
 
 <!-- Content -->
 <ion-content [fullscreen]="true">
@@ -44,20 +44,23 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-end mt-32 mr-48">
-      <button class="bg-green-500 p-2 rounded-xl" (click)="toggleInfoMenu()">
-        asset info menu
-      </button>
-    </div>
   </div>
 </ion-content>
 
 <!-- Side bar Toggle Button -->
-<button class="fixed bottom-[35px] right-[84px] z-50" (click)="menuToggle()">
+<button class="fixed bottom-[35px] right-[84px] z-50">
   <ion-icon
     class="bg-[#007382] text-white text-3xl p-3 rounded-full"
-    [name]="isMenuOpen ? 'save-outline' : 'brush-outline'"
+    [class]="isMenuOpen ? 'visible' : 'invisible'"
+    name="save-outline"
   ></ion-icon>
+</button>
+
+<button
+  class="fixed bottom-11 right-64 bg-green-500 p-2 rounded-xl z-50"
+  (click)="toggleInfoMenu()"
+>
+  asset info menu
 </button>
 
 <!-- CHILD MODAL -->
@@ -69,6 +72,11 @@
 
 <!-- Asset info menu -->
 <app-asset-info-menu [(isMenuOpen)]="isAssetInfoMenuOpen"></app-asset-info-menu>
+
+<!-- Sub-Assets Modal -->
+<app-sub-assets-modal
+  [(isMenuOpen)]="isSubAssetModalOpen"
+></app-sub-assets-modal>
 
 <!-- Sidebar -->
 <div
