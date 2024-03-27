@@ -5,6 +5,7 @@ import {
   signal,
   Component,
   WritableSignal,
+  EventEmitter,
 } from "@angular/core";
 import {
   IonRow,
@@ -21,6 +22,7 @@ import {
   IonContent,
   IonToolbar,
   IonSegment,
+  IonBackdrop,
   IonCardTitle,
   IonAccordion,
   IonCardHeader,
@@ -40,8 +42,13 @@ import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
+import { AssetUpdateModalComponent } from "../../../components/asset-mapped-card/asset-update-modal/asset-update-modal.component";
 
 @Component({
+  standalone: true,
+  selector: "app-asset-mapped",
+  templateUrl: "./asset-mapped.page.html",
+  styleUrls: ["./asset-mapped.page.scss"],
   imports: [
     IonCol,
     IonRow,
@@ -57,6 +64,7 @@ import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/a
     IonSegment,
     IonToolbar,
     IonContent,
+    IonBackdrop,
     IonAccordion,
     IonCardTitle,
     IonCardHeader,
@@ -65,20 +73,17 @@ import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/a
     IonAccordionGroup,
     LoadingSkeletonComponent,
     AssetMappedCardComponent,
+    AssetUpdateModalComponent,
   ],
-  standalone: true,
-  selector: "app-asset-mapped",
-  templateUrl: "./asset-mapped.page.html",
-  styleUrls: ["./asset-mapped.page.scss"],
 })
 export class AssetMappedPage implements OnInit {
   plantId: string;
   store = inject(Store);
   assets: AssetsModel[];
   assetss: AssetsModel[];
-
   toggleChecked: boolean;
   draftAssets: AssetsModel[];
+  isMenuOpen: boolean = false;
   registeredAssets: AssetsModel[];
   httpService = inject(HttpService);
   toastService = inject(ToastService);
@@ -96,7 +101,7 @@ export class AssetMappedPage implements OnInit {
         this.store.dispatch(
           UPDATE_PLANT({
             assets: response?.data,
-          }),
+          })
         );
       },
       error: (error: HttpErrorResponse) => {
@@ -112,9 +117,9 @@ export class AssetMappedPage implements OnInit {
   constructor() {
     this.assets = [];
     this.assetss = [];
-
     this.plantId = "";
     this.draftAssets = [];
+    this.isMenuOpen = false;
     this.groupedAssets = [];
     this.registeredAssets = [];
     this.dreaftGroupAssets = [];
@@ -128,15 +133,15 @@ export class AssetMappedPage implements OnInit {
           this.assets = plant.assets;
 
           this.registeredAssets = plant.assets.filter(
-            (asset) => asset?.assetRegisteredStatus?.assetRegistered,
+            (asset) => asset?.assetRegisteredStatus?.assetRegistered
           );
           this.draftAssets = plant.assets.filter(
-            (asset) => !asset?.assetRegisteredStatus?.assetRegistered,
+            (asset) => !asset?.assetRegisteredStatus?.assetRegistered
           );
           this.assetss = this.registeredAssets;
 
           const parentTypes = new Set(
-            this.assets.map((asset) => asset?.assetInfo?.assetParentType),
+            this.assets.map((asset) => asset?.assetInfo?.assetParentType)
           );
 
           this.groupedAssets = [];
@@ -144,7 +149,7 @@ export class AssetMappedPage implements OnInit {
             this.groupedAssets.push({
               assetParentType: parentType,
               assets: this.registeredAssets.filter(
-                (asset) => asset?.assetInfo?.assetParentType === parentType,
+                (asset) => asset?.assetInfo?.assetParentType === parentType
               ),
             });
           });
@@ -155,6 +160,9 @@ export class AssetMappedPage implements OnInit {
     console.log(this.assets);
   }
 
+  handleErrorModal = (event: any) => {
+    this.isMenuOpen = event;
+  };
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
 
