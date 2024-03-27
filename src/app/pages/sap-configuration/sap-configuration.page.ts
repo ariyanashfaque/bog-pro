@@ -18,9 +18,13 @@ import { HttpService } from "src/app/services/http-service/http-client.service";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HttpErrorResponse } from "@angular/common/http";
 // import { SapService } from "src/app/services/sap-service.service";
-import { SAPconfigurationModel } from "src/app/store/models/sap.model";
+import {
+  SAPActivityLogModel,
+  SAPconfigurationModel,
+} from "src/app/store/models/sap.model";
 import { Clipboard } from "@capacitor/clipboard";
 import { SapService } from "src/app/services/sap-service/sap-service.service";
+import { single } from "rxjs";
 
 @Component({
   selector: "app-sap-configuration",
@@ -38,11 +42,12 @@ import { SapService } from "src/app/services/sap-service/sap-service.service";
   ],
 })
 export class SapConfigurationPage implements OnInit {
-  @Input() 
+  @Input()
   isModalLogOpen: boolean = false;
   httpService = inject(HttpService);
   toastService = inject(ToastService);
   sapService = inject(SapService);
+  configLogs: WritableSignal<SAPActivityLogModel[]> = signal([]);
 
   configurations: SAPconfigurationModel[] = [];
 
@@ -54,20 +59,20 @@ export class SapConfigurationPage implements OnInit {
 
   currentDate = new Date();
 
-  filedMappingData = [
-    { name: "SapId", description: "Description" },
-    { name: "LocationCode", description: "Description" },
-    { name: "Location", description: "Description" },
-    { name: "FunctionalLocationCode", description: "Description" },
-    { name: "FunctionalLocationDescription", description: "Description" },
-    { name: "CostCenterCode", description: "Description" },
-    { name: "CostCenterDescription", description: "Description" },
-    { name: "HierarchyAreaCode", description: "Description" },
-    { name: "HierarchyAreaDescription", description: "Description" },
-    { name: "Name", description: "Description" },
-    { name: "Status", description: "Description" },
-    { name: "AssetType", description: "Description" },
-  ];
+  // filedMappingData = [
+  //   { name: "SapId", description: "Description" },
+  //   { name: "LocationCode", description: "Description" },
+  //   { name: "Location", description: "Description" },
+  //   { name: "FunctionalLocationCode", description: "Description" },
+  //   { name: "FunctionalLocationDescription", description: "Description" },
+  //   { name: "CostCenterCode", description: "Description" },
+  //   { name: "CostCenterDescription", description: "Description" },
+  //   { name: "HierarchyAreaCode", description: "Description" },
+  //   { name: "HierarchyAreaDescription", description: "Description" },
+  //   { name: "Name", description: "Description" },
+  //   { name: "Status", description: "Description" },
+  //   { name: "AssetType", description: "Description" },
+  // ];
 
   isMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
@@ -117,12 +122,62 @@ export class SapConfigurationPage implements OnInit {
     }
   }
 
-  logModalToggle = () => {
+  logModalToggle = (index: number) => {
     this.isModalLogOpen = !this.isModalLogOpen;
-    console.log("isModalLogOpen: ", this.isModalLogOpen);
+    console.log("isModalLogOpen: ", this.isModalLogOpen, index);
+
     this.sapService.get.subscribe((data: SAPconfigurationModel[]) => {
-      // Do something with the received data
-      console.log("Data updated:", data);
+      let _logs: SAPActivityLogModel[] = data[index]?.log ?? [];
+
+      if (_logs?.length > 0) {
+        _logs = _logs?.map((item: SAPActivityLogModel) => {
+          if (item?.updatedAt) {
+            return {
+              ...item,
+              ...this.dateTimeCalculation(item?.updatedAt),
+              size: item?.size,
+            };
+          } else {
+            return item;
+          }
+        });
+      }
+      console.log(_logs);
+      this.configLogs.set(_logs);
     });
   };
+
+  dateTimeCalculation(date: string) {
+    const dateString = date;
+    const dateParts = dateString.split(" ")[0].split("-");
+    const year = parseInt(dateParts[2]);
+    const month = parseInt(dateParts[1]) - 1;
+    const day = parseInt(dateParts[0]);
+
+    const inputDate = new Date(year, month, day);
+
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+
+    const yesterdayDate = new Date(currentDate);
+    yesterdayDate.setDate(currentDate.getDate() - 1);
+
+    if (inputDate.toDateString() === currentDate.toDateString())
+      return {
+        date: "Today",
+        time: `${dateString.split(" ")[1]} ${dateString.split(" ")[2]}`,
+      };
+    else if (inputDate.toDateString() === yesterdayDate.toDateString())
+      return {
+        date: "Yesterday",
+        time: `${dateString.split(" ")[1]} ${dateString.split(" ")[2]}`,
+      };
+    else {
+      const formattedDate = `${day.toString().padStart(2, "0")}-${(month + 1).toString().padStart(2, "0")}-${year}`;
+      return {
+        date: formattedDate,
+        time: `${dateString.split(" ")[1]} ${dateString.split(" ")[2]}`,
+      };
+    }
+  }
 }

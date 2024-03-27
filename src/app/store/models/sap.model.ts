@@ -32,6 +32,9 @@ export interface SAPActivityLogModel {
   action?: string; // CREATED | UPDATED | DELETED
   updatedAt?: string;
   updatedBy?: string;
+  date?: string;
+  time?: string;
+  size?: string;
 }
 
 export interface SAPconfigurationModel {
