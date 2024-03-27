@@ -30,30 +30,8 @@ ion-item {
   background: var(--unnamed-color-edf5f5) 0% 0% no-repeat padding-box;
 }
 
-.toggleBefore {
-  color: #97c0c3;
-}
-.toggleAfter {
-  color: #007382;
-}
-
-.customToggle {
-  border-radius: 20px;
-  border: 2px solid #007382;
-}
-ion-toggle {
-
-
-  --handle-width: 20px;
-  --handle-height: 20px;
-  --handle-spacing: 3px;
-  --track-background: #ffffff;
-  --handle-background: #007382;
-  --track-background-checked: #ffffff;
-  --handle-background-checked: #007382;
-}
-
-ion-toggle::part(track) {
-  width: 45px;
-  height: 25px;
+ion-backdrop {
+  background: var(--ion-color-dark);
+  opacity: 0.6;
+  z-index: 40;
 }

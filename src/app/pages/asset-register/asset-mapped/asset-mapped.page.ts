@@ -17,11 +17,14 @@ import {
   IonLabel,
   IonTitle,
   IonHeader,
+  IonToggle,
   IonContent,
   IonToolbar,
+  IonSegment,
   IonCardTitle,
   IonAccordion,
   IonCardHeader,
+  IonSegmentButton,
   IonAccordionGroup,
 } from "@ionic/angular/standalone";
 import {
@@ -49,13 +52,16 @@ import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/a
     IonGrid,
     IonTitle,
     IonLabel,
+    IonToggle,
     IonHeader,
+    IonSegment,
     IonToolbar,
     IonContent,
     IonAccordion,
     IonCardTitle,
     IonCardHeader,
     HeaderComponent,
+    IonSegmentButton,
     IonAccordionGroup,
     LoadingSkeletonComponent,
     AssetMappedCardComponent,
@@ -68,12 +74,16 @@ import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/a
 export class AssetMappedPage implements OnInit {
   plantId: string;
   store = inject(Store);
+  assets: AssetsModel[];
+  toggleChecked: boolean;
+  draftAssets: AssetsModel[];
+  registeredAssets: AssetsModel[];
   httpService = inject(HttpService);
   toastService = inject(ToastService);
-
-  assets: AssetsModel[];
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
+  dreaftGroupAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
+  registerGroupAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
 
   @Input()
   set id(plantId: string) {
@@ -100,29 +110,73 @@ export class AssetMappedPage implements OnInit {
   constructor() {
     this.assets = [];
     this.plantId = "";
+    this.draftAssets = [];
     this.groupedAssets = [];
+    this.registeredAssets = [];
+    this.dreaftGroupAssets = [];
+    this.registerGroupAssets = [];
   }
 
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: PlantsModel) => {
         if (plant?.assets) {
-          this.groupedAssets = [];
           this.assets = plant.assets;
+          this.registeredAssets = plant.assets.filter(
+            (asset) => asset?.assetRegisteredStatus?.assetRegistered,
+          );
+          this.draftAssets = plant.assets.filter(
+            (asset) => !asset?.assetRegisteredStatus?.assetRegistered,
+          );
+
           const parentTypes = new Set(
             this.assets.map((asset) => asset?.assetInfo?.assetParentType),
           );
 
-          parentTypes.forEach((parentType) =>
+          this.groupedAssets = [];
+          parentTypes.forEach((parentType) => {
             this.groupedAssets.push({
               assetParentType: parentType,
-              assets: this.assets.filter(
+              assets: this.registeredAssets.filter(
                 (asset) => asset?.assetInfo?.assetParentType === parentType,
               ),
-            }),
-          );
+            });
+          });
         }
       },
     });
+
+    console.log(this.assets);
+  }
+
+  handleToggle(event: any) {
+    this.toggleChecked = event.detail.checked;
+
+    const parentTypes = new Set(
+      this.assets.map((asset) => asset?.assetInfo?.assetParentType),
+    );
+    this.groupedAssets = [];
+
+    if (this.toggleChecked) {
+      parentTypes.forEach((parentType) => {
+        this.groupedAssets.push({
+          assetParentType: parentType,
+          assets: this.draftAssets.filter(
+            (asset) => asset?.assetInfo?.assetParentType === parentType,
+          ),
+        });
+      });
+    } else {
+      parentTypes.forEach((parentType) => {
+        this.groupedAssets.push({
+          assetParentType: parentType,
+          assets: this.registeredAssets.filter(
+            (asset) => asset?.assetInfo?.assetParentType === parentType,
+          ),
+        });
+      });
+    }
+
+    // console.log(this.groupedAssets);
   }
 }
