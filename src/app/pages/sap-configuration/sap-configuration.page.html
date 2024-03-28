@@ -1,7 +1,7 @@
 <app-header headerTitle="Sap configuration" [isDefaultHref]="true"></app-header>
 
 @if (isModalLogOpen === true) {
-<ion-backdrop [visible]="isModalLogOpen"> </ion-backdrop>
+<ion-backdrop [visible]="isModalLogOpen"></ion-backdrop>
 }
 
 <ion-content [fullscreen]="true" color="background">
@@ -27,8 +27,9 @@
                     shape="round"
                     color="secondary"
                     [routerLink]="['/sap-configuration/configuration']"
-                    >Add New</ion-button
                   >
+                    Add New
+                  </ion-button>
                 </div>
                 <!-- <ion-row>
                   <ion-col size="12" sizeMd="6" sizeLg="6"></ion-col>
@@ -54,22 +55,18 @@
               @defer (when !isLoading()) {
               <ion-col size="12" class="px-5">
                 <ion-row class="ion-align-items-center">
-                  <ion-col size="3" class="px-4"
-                    ><span class="font-bold text-[#007382]">GRU</span></ion-col
-                  >
-                  <ion-col size="3"
-                    ><span class="font-bold text-[#007382]"
-                      >Last feed</span
-                    ></ion-col
-                  >
-                  <ion-col size="3"
-                    ><span class="font-bold text-[#007382]"
-                      >Status</span
-                    ></ion-col
-                  >
-                  <ion-col size="3" class="text-right"
-                    ><span class="font-bold text-[#007382]">More</span></ion-col
-                  >
+                  <ion-col size="3" class="px-4">
+                    <span class="font-bold text-[#007382]">GRU</span>
+                  </ion-col>
+                  <ion-col size="3">
+                    <span class="font-bold text-[#007382]">Last feed</span>
+                  </ion-col>
+                  <ion-col size="3">
+                    <span class="font-bold text-[#007382]">Status</span>
+                  </ion-col>
+                  <ion-col size="3" class="text-right">
+                    <span class="font-bold text-[#007382]">More</span>
+                  </ion-col>
                 </ion-row>
               </ion-col>
 
@@ -82,19 +79,21 @@
                       color="accordion"
                       class="ion-no-padding"
                     >
-                      <ion-label
-                        ><ion-grid>
+                      <ion-label>
+                        <ion-grid>
                           <ion-row class="ion-no-padding">
                             <ion-col size="12">
                               <ion-row class="ion-align-items-center">
                                 <ion-col
                                   size="3"
                                   class="px-[-20px] ion-no-padding"
-                                  ><span
-                                    class="font-bold text-[#007382] text-sm capitalize"
-                                    >{{ config?.gruName }}</span
-                                  ></ion-col
                                 >
+                                  <span
+                                    class="font-bold text-[#007382] text-sm capitalize"
+                                  >
+                                    {{ config?.gruName }}
+                                  </span>
+                                </ion-col>
                                 <ion-col size="3">
                                   <!-- <span
                                         class="font-bold text-[#007382] text-sm"
@@ -105,13 +104,14 @@
                                       > -->
                                   <span
                                     class="font-bold text-[#007382] text-sm"
-                                    >{{ config?.createdAt }}</span
                                   >
+                                    {{ config?.createdAt }}
+                                  </span>
                                 </ion-col>
-                                <ion-col size="3"
-                                  ><div class="pl-5">
+                                <ion-col size="3">
+                                  <div class="pl-5">
                                     <span
-                                      class="font-bold text-white bg-[#009146] p-2 text-sm capitalize"
+                                      class="font-bold text-white bg-[#009146] p-2 text-sm uppercase"
                                       [ngClass]="{
                                         'bg-[#009146]':
                                           config?.gruStatus?.toLowerCase() ===
@@ -120,17 +120,19 @@
                                           config?.gruStatus?.toLowerCase() ===
                                           'inactive'
                                       }"
-                                      >{{ config?.gruStatus }}</span
                                     >
-                                  </div></ion-col
-                                >
-                                <ion-col size="3"
-                                  ><span class="font-bold text-[#007382]"></span
-                                ></ion-col>
+                                      {{ config?.gruStatus }}
+                                    </span>
+                                  </div>
+                                </ion-col>
+                                <ion-col size="3">
+                                  <span class="font-bold text-[#007382]"></span>
+                                </ion-col>
                               </ion-row>
                             </ion-col>
-                          </ion-row> </ion-grid
-                      ></ion-label>
+                          </ion-row>
+                        </ion-grid>
+                      </ion-label>
                     </ion-item>
                     <div class="ion-no-padding" slot="content">
                       <ion-col size="12" class="ion-no-padding">
@@ -153,8 +155,8 @@
                               </div>
                             </div>
                           </ion-col>
-                          <ion-col size="3"
-                            ><div class="flex gap-1">
+                          <ion-col size="3">
+                            <div class="flex gap-1">
                               <div
                                 class="bg-[#DCEBED] w-9 h-9 flex items-center justify-center"
                               >
@@ -169,8 +171,8 @@
                                   {{ config?.protocol }}
                                 </p>
                               </div>
-                            </div></ion-col
-                          >
+                            </div>
+                          </ion-col>
                           <!-- <ion-col size="3"
                                 ><div class="flex gap-1">
                                   <div
@@ -189,8 +191,8 @@
                                   </div>
                                 </div></ion-col
                               > -->
-                          <ion-col size="6"
-                            ><div class="flex gap-1">
+                          <ion-col size="6">
+                            <div class="flex gap-1">
                               <div
                                 class="bg-[#DCEBED] w-9 h-9 flex items-center justify-center"
                               >
@@ -218,8 +220,9 @@
                                     (click)="copyToClipboard(config?.token)"
                                   ></ion-icon>
                                 </button>
-                              </div></div
-                          ></ion-col>
+                              </div>
+                            </div>
+                          </ion-col>
                           <!-- <ion-col size="12"
                                 ><div class="flex gap-1">
                                   <div
@@ -251,162 +254,184 @@
                                 <ion-col
                                   size="4"
                                   class="bg-[#007382] px-4 py-2 text-wrap text-white border border-l-0 border-[##D1EDF0]"
-                                  >BoG Pro</ion-col
                                 >
+                                  BoG Pro
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="bg-[#007382] px-4 py-2 text-wrap text-white border border-[##D1EDF0]"
-                                  >Description</ion-col
                                 >
+                                  Description
+                                </ion-col>
                               </ion-row>
                               <!-- @for (field of config?.fields; track $index) { -->
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Sap Id</ion-col
                                 >
+                                  Sap Id
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.sapId }}</ion-col
                                 >
+                                  {{ config?.sapId }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Location Code</ion-col
                                 >
+                                  Location Code
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.locationCode }}</ion-col
                                 >
+                                  {{ config?.locationCode }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Location</ion-col
                                 >
+                                  Location
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.location }}</ion-col
                                 >
+                                  {{ config?.location }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Functional Location Code</ion-col
                                 >
+                                  Functional Location Code
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.functionalLocationCode }}</ion-col
                                 >
+                                  {{ config?.functionalLocationCode }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Functional Location Description</ion-col
                                 >
+                                  Functional Location Description
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{
-                                    config?.functionalLocationDescription
-                                  }}</ion-col
                                 >
+                                  {{ config?.functionalLocationDescription }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Costcenter Code</ion-col
                                 >
+                                  Costcenter Code
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.costCenterCode }}</ion-col
                                 >
+                                  {{ config?.costCenterCode }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Costcenter Description</ion-col
                                 >
+                                  Costcenter Description
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.costCenterDescription }}</ion-col
                                 >
+                                  {{ config?.costCenterDescription }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Hierarchy Area Code</ion-col
                                 >
+                                  Hierarchy Area Code
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.hierarchyAreaCode }}</ion-col
                                 >
+                                  {{ config?.hierarchyAreaCode }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Hierarchy Area Description</ion-col
                                 >
+                                  Hierarchy Area Description
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{
-                                    config?.hierarchyAreaDescription
-                                  }}</ion-col
                                 >
+                                  {{ config?.hierarchyAreaDescription }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Name</ion-col
                                 >
+                                  Name
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.name }}</ion-col
                                 >
+                                  {{ config?.name }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Status</ion-col
                                 >
+                                  Status
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.status }}</ion-col
                                 >
+                                  {{ config?.status }}
+                                </ion-col>
                               </ion-row>
                               <ion-row>
                                 <ion-col
                                   size="4"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C]"
-                                  >Asset Type</ion-col
                                 >
+                                  Asset Type
+                                </ion-col>
                                 <ion-col
                                   size="8"
                                   class="px-4 py-2 text-wrap border-2 border-[#0073825C] border-l-0"
-                                  >{{ config?.assetType }}</ion-col
                                 >
+                                  {{ config?.assetType }}
+                                </ion-col>
                               </ion-row>
                               <!-- } -->
                             </ion-grid>
@@ -418,8 +443,9 @@
                               fill="outline"
                               class="capitalize"
                               (click)="logModalToggle($index)"
-                              >Logs</ion-button
                             >
+                              Logs
+                            </ion-button>
                             <ion-button
                               shape="round"
                               color="secondary"
@@ -428,8 +454,9 @@
                                 '/sap-configuration/configuration',
                                 config?.id
                               ]"
-                              >Edit</ion-button
                             >
+                              Edit
+                            </ion-button>
                           </div>
                         </ion-row>
                       </ion-col>
@@ -518,5 +545,4 @@
 <app-sap-configaration-log
   [(isMenuOpen)]="isModalLogOpen"
   [sapLogs]="configLogs()"
->
-</app-sap-configaration-log>
+></app-sap-configaration-log>
