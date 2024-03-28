@@ -161,7 +161,9 @@
   </ion-grid>
 </ion-content>
 
-  <app-asset-update-modal
-    [isMenuOpen]="isMenuOpen"
-    (isMenuToggleOpen)="handleErrorModal($event)"
-  ></app-asset-update-modal>
+@if (isMenuOpen) {
+<app-asset-update-modal
+  [isMenuOpen]="isMenuOpen"
+  (isMenuToggleOpen)="handleErrorModal($event)"
+></app-asset-update-modal>
+}
