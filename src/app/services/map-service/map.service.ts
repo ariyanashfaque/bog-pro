@@ -9,6 +9,7 @@ export class MapService {
   private mapMptions: google.maps.MapOptions;
   private mapCenter: google.maps.LatLngLiteral;
   private mapMarker: google.maps.marker.AdvancedMarkerElement;
+  private rectangles: google.maps.Rectangle[] = [];
 
   private loader = new Loader({
     region: "US",
@@ -43,6 +44,9 @@ export class MapService {
       const position = event?.latLng?.toJSON()!;
       this.addMarker(position);
     });
+
+    this.addRectangleZone();
+
   }
 
   public async addMarker(position: google.maps.LatLngLiteral) {
@@ -57,6 +61,31 @@ export class MapService {
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
       console.log(event?.latLng?.toJSON());
     });
+  }
+
+  public addRectangleZone() {
+    const rectangleCoordinates = [
+      { north: 18.4088, south: 18.4084, east: 77.0995, west: 77.0993 }, // Adjusted east value to create a gap
+      { north: 18.4092, south: 18.4088, east: 77.1, west: 77.0996 },
+    ];
+
+    const rectangleOptions: google.maps.RectangleOptions = {
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+      clickable: false
+    };
+
+     rectangleCoordinates.forEach(coords => {
+      const rectangle = new google.maps.Rectangle({
+        bounds: coords,
+        map: this.map,
+        ...rectangleOptions,
+        });
+        this.rectangles.push(rectangle);
+     });
   }
 
   private async addMapStyles() {
