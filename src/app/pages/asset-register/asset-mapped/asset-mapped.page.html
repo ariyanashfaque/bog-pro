@@ -1,6 +1,3 @@
-@if (isMenuOpen) {
-<ion-backdrop [visible]="isMenuOpen"> </ion-backdrop>
-}
 <app-header headerTitle="Asset Mapped" [isDefaultHref]="true"></app-header>
 
 <ion-content [fullscreen]="true" color="background">
@@ -166,4 +163,6 @@
   [isMenuOpen]="isMenuOpen"
   (isMenuToggleOpen)="handleErrorModal($event)"
 ></app-asset-update-modal>
+} @if (isMenuOpen) {
+<ion-backdrop [visible]="isMenuOpen"> </ion-backdrop>
 }
