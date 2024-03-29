@@ -21,7 +21,10 @@ import { Store } from "@ngrx/store";
 import { Router } from "@angular/router";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { LoadingController } from "@ionic/angular/standalone";
+import {
+  LoadingController,
+  SelectChangeEventDetail,
+} from "@ionic/angular/standalone";
 import { HttpErrorResponse } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 // import { SapService } from "src/app/services/sap-service.service";
@@ -56,20 +59,20 @@ export class AddSapConfigurationPage implements OnInit {
   sapId: string;
   isGRUActive: WritableSignal<boolean> = signal(false);
 
-  fields = [
-    { name: "sapId", description: "" },
-    { name: "locationCode", description: "" },
-    { name: "location", description: "" },
-    { name: "functionalLocationCode", description: "" },
-    { name: "functionalLocationDescription", description: "" },
-    { name: "costCenterCode", description: "" },
-    { name: "costCenterDescription", description: "" },
-    { name: "hierarchyAreaCode", description: "" },
-    { name: "hierarchyAreaDescription", description: "" },
-    { name: "fiendName", description: "" },
-    { name: "fiendStatus", description: "" },
-    { name: "assetType", description: "" },
-  ];
+  // fields = [
+  //   { name: "sapId", description: "" },
+  //   { name: "locationCode", description: "" },
+  //   { name: "location", description: "" },
+  //   { name: "functionalLocationCode", description: "" },
+  //   { name: "functionalLocationDescription", description: "" },
+  //   { name: "costCenterCode", description: "" },
+  //   { name: "costCenterDescription", description: "" },
+  //   { name: "hierarchyAreaCode", description: "" },
+  //   { name: "hierarchyAreaDescription", description: "" },
+  //   { name: "fiendName", description: "" },
+  //   { name: "fiendStatus", description: "" },
+  //   { name: "assetType", description: "" },
+  // ];
 
   constructor() {
     this.sapRegistrationForm = new FormGroup({
@@ -98,7 +101,7 @@ export class AddSapConfigurationPage implements OnInit {
   @Input()
   set id(sapId: string) {
     this.sapId = sapId;
-    console.log("sapid: ", this.sapId);
+    // console.log("sapid: ", this.sapId);
   }
 
   ngOnInit() {
@@ -107,7 +110,7 @@ export class AddSapConfigurationPage implements OnInit {
         .getById(this.sapId)
         .subscribe((data: SAPconfigurationModel | undefined) => {
           if (data) {
-            console.log("Data found:", data);
+            // console.log("Data found:", data);
             // const fields: any = {};
             // data?.fields?.forEach((item) => {
             //   fields[item.name] = item.description;
@@ -123,6 +126,9 @@ export class AddSapConfigurationPage implements OnInit {
 
             // console.log("values: ", values);
             this.sapRegistrationForm.patchValue(data);
+            this.sapRegistrationForm.get("gruName")?.disable();
+            // this.sapRegistrationForm.get("protocol")?.disable();
+            // this.sapRegistrationForm.get("syncType")?.disable();
           }
           // else {
           //   console.log("No data found with ID:", this.sapId);
@@ -135,11 +141,11 @@ export class AddSapConfigurationPage implements OnInit {
     }
   }
 
-  onGRUSelectionChange(event: any) {
-    const selectedGRU = event.target.value?.toLowerCase();
+  onGRUSelectionChange(event: CustomEvent<SelectChangeEventDetail>) {
+    const selectedGRU = event?.detail?.value?.toLowerCase();
     this.sapService.get.subscribe((data: SAPconfigurationModel[]) => {
       const isAvailable = data?.filter(
-        (item) => item.gruName?.toLocaleLowerCase() === selectedGRU,
+        (item) => item.gruName?.toLocaleLowerCase() === selectedGRU
       );
       if (isAvailable?.length > 0) this.isGRUActive?.set(true);
       else this.isGRUActive?.set(false);
@@ -165,19 +171,19 @@ export class AddSapConfigurationPage implements OnInit {
       locationCode: this.sapRegistrationForm.get("locationCode")?.value,
       location: this.sapRegistrationForm.get("location")?.value,
       functionalLocationCode: this.sapRegistrationForm.get(
-        "functionalLocationCode",
+        "functionalLocationCode"
       )?.value,
       functionalLocationDescription: this.sapRegistrationForm.get(
-        "functionalLocationDescription",
+        "functionalLocationDescription"
       )?.value,
       costCenterCode: this.sapRegistrationForm.get("costCenterCode")?.value,
       costCenterDescription: this.sapRegistrationForm.get(
-        "costCenterDescription",
+        "costCenterDescription"
       )?.value,
       hierarchyAreaCode:
         this.sapRegistrationForm.get("hierarchyAreaCode")?.value,
       hierarchyAreaDescription: this.sapRegistrationForm.get(
-        "hierarchyAreaDescription",
+        "hierarchyAreaDescription"
       )?.value,
       name: this.sapRegistrationForm.get("name")?.value,
       status: this.sapRegistrationForm.get("status")?.value,
@@ -205,7 +211,7 @@ export class AddSapConfigurationPage implements OnInit {
       },
       complete: () => {
         this.toastService.toastSuccess(
-          this.sapId ? `Successfully updated!` : `Successfully created!`,
+          this.sapId ? `Successfully updated!` : `Successfully created!`
         );
         loading.dismiss();
         this.router.navigate([`sap-configuration`]);

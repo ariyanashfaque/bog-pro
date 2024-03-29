@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { SAPActivityLogModel } from "src/app/store/models/sap.model";
 
 @Component({
   standalone: true,
@@ -12,27 +13,9 @@ import { FormsModule } from "@angular/forms";
 })
 export class SapConfigarationLogComponent implements OnInit {
   @Input() isMenuOpen: boolean = false;
+  @Input() sapLogs: SAPActivityLogModel[] = [];
   @Output() isMenuOpenChange: EventEmitter<boolean> =
     new EventEmitter<boolean>();
-
-  timeline: { time: string; date: string; details: string }[] = [
-    ...Array(3)
-      .fill(0)
-      .map((_, i) => ({
-        time: `${i * 2 + 10}:00 AM`,
-        date: new Date().toISOString().split("T")[0],
-        details:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maece nas commodo nec dui ultrices consequat.",
-      })),
-    ...Array(3)
-      .fill(0)
-      .map((_, i) => ({
-        time: `${i * 2 + 11}:00 AM`,
-        date: new Date(Date.now() - 86400000).toISOString().split("T")[0],
-        details:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maece nas commodo nec dui ultrices consequat.",
-      })),
-  ];
 
   constructor() {}
 
