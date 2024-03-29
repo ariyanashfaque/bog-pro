@@ -7,16 +7,16 @@ import { SubAssetModalComponent } from "src/app/components/sub-assets-modal/sub-
 import { AssetModalComponent } from "src/app/components/asset-modal/asset-modal.component";
 
 import {
-  IonTitle,
-  IonContent,
-  IonHeader,
-  IonToolbar,
   IonIcon,
   IonText,
+  IonTitle,
   IonModal,
+  IonHeader,
+  IonButton,
+  IonContent,
+  IonToolbar,
   IonBackdrop,
   IonProgressBar,
-  IonButton,
 } from "@ionic/angular/standalone";
 
 @Component({
@@ -25,31 +25,30 @@ import {
   styleUrls: ["./asset-map-view.page.scss"],
   standalone: true,
   imports: [
-    IonButton,
     IonText,
     IonIcon,
     IonModal,
     IonTitle,
+    IonButton,
     IonHeader,
     IonToolbar,
     IonContent,
     IonBackdrop,
     IonProgressBar,
     HeaderComponent,
+    AssetModalComponent,
     RoundProgressComponent,
     AssetInfoMenuComponent,
-    ChildAssetModalComponent,
     SubAssetModalComponent,
-    AssetModalComponent,
+    ChildAssetModalComponent,
   ],
 })
 export class AssetMapViewPage implements OnInit {
   ngOnInit() {}
 
-  isMenuOpen = signal<boolean>(true);
   isChildOpen = signal<boolean>(false);
   isAssetInfoMenuOpen = signal<boolean>(false);
-  isSubAssetModalOpen = signal<boolean>(true);
+  isSubAssetModalOpen = signal<boolean>(false);
 
   constructor() {
     effect(() => {
@@ -61,10 +60,12 @@ export class AssetMapViewPage implements OnInit {
     this.isAssetInfoMenuOpen.update(
       (isAssetInfoMenuOpen) => !isAssetInfoMenuOpen
     );
+    this.isSubAssetModalOpen.update((isSubAssetModalOpen) => false);
   }
 
   toggleChildMenu = () => {
     this.isChildOpen.update((isChildOpen) => !isChildOpen);
+    this.isSubAssetModalOpen.update((isSubAssetModalOpen) => false);
   };
 
   mappedAssets = [

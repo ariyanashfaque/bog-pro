@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <div
   class="curve1 absolute flex flex-col items-end right-0 top-0 w-28 h-screen duration-300 rounded-l-3xl shadow-3xl z-20 shadow-[0px_0px_15px_0px_#00000024]"
-  [class]="!isMenuOpen() ? 'translate-x-full' : ''"
+  [class]="isMenuOpen() ? 'translate-x-full' : ''"
 >
   <!-- Close button -->
   <div class="cursor-pointer my-2 text-right" (click)="menuToggle()">
@@ -18,15 +18,20 @@
   >
     @for (structure of structures; track $index) {
     <div class="">
-      <div class="cursor-pointer mx-auto">
+      <div class="cursor-pointer mx-auto" (click)="onAssetClick()">
         <div
-          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+          class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#b9dee4] rounded-md flex justify-center items-center"
         >
           <img
-            class="object-cover w-full h-full"
+            class="object-cover w-full h-full rounded-md"
             src="../../../assets/silo.png"
             alt="silo"
           />
+          <div
+            class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 border-[#b9dee4] text-xs font-bold text-[#228693] flex items-center justify-center"
+          >
+            5
+          </div>
         </div>
         <div class="w-full text-xs text-center mt-1">
           <span class="text-[#000000DE]">Silo</span>
@@ -69,7 +74,7 @@
   >
     @for (structure of structures; track $index) {
     <div class="">
-      <div class="cursor-pointer mx-auto">
+      <div class="cursor-pointer mx-auto" (click)="onAssetClick()">
         <div
           class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
         >
@@ -116,7 +121,7 @@
   >
     @for (structure of structures; track $index) {
     <div class="">
-      <div class="cursor-pointer mx-auto">
+      <div class="cursor-pointer mx-auto" (click)="onAssetClick()">
         <div
           class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
         >

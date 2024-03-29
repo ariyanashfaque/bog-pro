@@ -2,13 +2,13 @@
   class="fixed w-[400px] left-1/2 -translate-x-1/2 bottom-0 h-auto rounded-xl shadow-lg bg-transparent transform transition-transform duration-800 z-50"
   [class]="!isMenuOpen() ? 'translate-y-[calc(100%+40px)]' : ''"
 >
-  <div class="h-[28px] w-full flex">
-    <div class="h-[28px] w-[calc(100%-90px)] bg-white rounded-tl-xl"></div>
+  <div class="h-[26px] w-full flex">
+    <div class="h-[28px] w-[calc(100%-80px)] bg-white rounded-tl-xl"></div>
     <div class="">
       <svg
-        height="28"
+        height="26"
         viewBox="0 0 100 50"
-        width="56"
+        width="52"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -19,14 +19,14 @@
       </svg>
       <div class="w-auto relative">
         <div
-          class="absolute ml-[7px] -top-[50px] cursor-pointer w-[42px] h-[42px] bg-black rounded-full flex justify-center items-center"
+          class="absolute ml-[7px] -top-[46px] cursor-pointer w-[38px] h-[38px] bg-black rounded-full flex justify-center items-center"
           (click)="menuToggle()"
         >
           <ion-icon class="text-3xl fill-white" name="close"> </ion-icon>
         </div>
       </div>
     </div>
-    <div class="h-[28px] bg-white flex-grow rounded-tr-xl"></div>
+    <div class="h-[26px] bg-white flex-grow rounded-tr-xl"></div>
   </div>
   <div class="max-h-32 max-w-full px-2 py-2 text-black bg-white rounded-b-xl">
     <!-- Your Content -->

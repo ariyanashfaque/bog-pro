@@ -28,6 +28,7 @@ import {
   closeOutline,
   saveOutline,
   brushOutline,
+  trashBinOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { Component, inject } from "@angular/core";
@@ -54,26 +55,27 @@ export class AppComponent {
       mapOutline,
       homeOutline,
       cashOutline,
-      trashOutline,
       starOutline,
+      saveOutline,
+      trashOutline,
+      closeOutline,
+      brushOutline,
       pencilOutline,
       createOutline,
       searchOutline,
       checkmarkSharp,
-      checkmarkOutline,
       locationOutline,
+      trashBinOutline,
+      checkmarkOutline,
       clipboardOutline,
+      chevronUpOutline,
       helpCircleOutline,
       listCircleOutline,
-      chevronUpOutline,
       chevronDownOutline,
       documentTextOutline,
       personCircleOutline,
       notificationsOutline,
       chevronForwardOutline,
-      closeOutline,
-      saveOutline,
-      brushOutline,
     });
 
     if (this.platform.is("ios") || this.platform.is("android")) {

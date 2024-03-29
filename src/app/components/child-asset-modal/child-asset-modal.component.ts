@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from "@angular/core";
+import { Component, input, model, OnInit } from "@angular/core";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 
 @Component({
@@ -9,7 +9,13 @@ import { RoundProgressComponent } from "angular-svg-round-progressbar";
   imports: [RoundProgressComponent],
 })
 export class ChildAssetModalComponent implements OnInit {
-  isAssetInfoMenuOpen = input(false);
+  isAssetInfoMenuOpen = model(false);
+
+  onAssetClick() {
+    this.isAssetInfoMenuOpen.update(
+      (isAssetInfoMenuOpen) => !isAssetInfoMenuOpen
+    );
+  }
 
   constructor() {}
 

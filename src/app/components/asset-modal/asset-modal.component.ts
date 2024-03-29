@@ -1,3 +1,4 @@
+import { on } from "@ngrx/store";
 import { Component, model, OnInit, output, signal } from "@angular/core";
 import { IonIcon, IonText } from "@ionic/angular/standalone";
 
@@ -9,8 +10,9 @@ import { IonIcon, IonText } from "@ionic/angular/standalone";
   imports: [IonText, IonIcon],
 })
 export class AssetModalComponent implements OnInit {
-  isMenuOpen = model<boolean>(true);
-  isChildOpen = model<boolean>(true);
+  isMenuOpen = model<boolean>();
+  isChildOpen = model<boolean>();
+  isSubAssetModalOpen = model<boolean>(false);
   activeAccordion: string = "recommended";
 
   toggleVisibility(buttonId: string) {
@@ -30,6 +32,12 @@ export class AssetModalComponent implements OnInit {
       structure.child = false;
     });
     this.activeAccordion = "";
+  }
+
+  onAssetClick() {
+    this.isSubAssetModalOpen.update(
+      (isSubAssetModalOpen) => !isSubAssetModalOpen
+    );
   }
 
   constructor() {}
