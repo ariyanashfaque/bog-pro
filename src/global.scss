@@ -23,8 +23,7 @@
   font-weight: 300;
   font-style: normal;
   font-family: "Gotham Light";
-  src:
-    url("./assets/fonts/woff2/Gotham-Light_Web.woff2") format("woff2"),
+  src: url("./assets/fonts/woff2/Gotham-Light_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Light_Web.woff") format("woff");
 }
 
@@ -32,8 +31,7 @@
   font-weight: 400;
   font-style: normal;
   font-family: "Gotham Book";
-  src:
-    url("./assets/fonts/woff2/Gotham-Book_Web.woff2") format("woff2"),
+  src: url("./assets/fonts/woff2/Gotham-Book_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Book_Web.woff") format("woff");
 }
 
@@ -41,8 +39,7 @@
   font-weight: 500;
   font-style: normal;
   font-family: "Gotham Medium";
-  src:
-    url("./assets/fonts/woff2/Gotham-Medium_Web.woff2") format("woff2"),
+  src: url("./assets/fonts/woff2/Gotham-Medium_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Medium_Web.woff") format("woff");
 }
 
@@ -50,8 +47,7 @@
   font-weight: 700;
   font-style: normal;
   font-family: "Gotham Bold";
-  src:
-    url("./assets/fonts/woff2/Gotham-Bold_Web.woff2") format("woff2"),
+  src: url("./assets/fonts/woff2/Gotham-Bold_Web.woff2") format("woff2"),
     url("./assets/fonts/woff/Gotham-Bold_Web.woff") format("woff");
 }
 
@@ -176,9 +172,6 @@
   --border-width: 1.5px;
   --border-color: var(--ion-color-danger);
 }
-.input-fill-outline.sc-ion-input-md-h {
-  --border-color: var(--ion-color-input);
-}
 
 .textarea-fill-outline.sc-ion-textarea-md-h {
   --border-color: var(--ion-color-input);
@@ -194,9 +187,7 @@ ion-select::part(icon) {
   width: 17px;
 }
 
-// backdrop
-ion-backdrop {
-  background: var(--ion-color-dark);
-  opacity: 0.6;
-  z-index: 40;
+// Google maps js api shows blue focus border | Removed
+.gm-style iframe + div {
+  border: none !important;
 }

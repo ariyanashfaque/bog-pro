@@ -66,4 +66,13 @@ export class HttpService {
   GetGuidedInspectionDetails = (data?: any): Observable<any> => {
     return this.http.post<any>(ApiEndPoint.getGuidedInspectionDetails, data);
   };
+  SapConfiguration = (data?: any): Observable<any> => {
+    return this.http.post<any>(ApiEndPoint.sapConfiguration, data);
+  };
+  GetAllSapConfiguration = (data?: any): Observable<PlantsResponse> => {
+    return this.http.post<PlantsResponse>(
+      ApiEndPoint.getAllSapConfiguration,
+      data,
+    );
+  };
 }

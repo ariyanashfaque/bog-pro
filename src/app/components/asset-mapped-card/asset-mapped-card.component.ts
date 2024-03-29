@@ -13,6 +13,7 @@ import {
   IonCardHeader,
   IonCardContent,
   IonCardSubtitle,
+  IonImg,
 } from "@ionic/angular/standalone";
 import { Router, RouterModule } from "@angular/router";
 import { Component, Input, OnInit, inject } from "@angular/core";
@@ -20,6 +21,7 @@ import { AssetsModel } from "src/app/store/models/plant.model";
 
 @Component({
   imports: [
+    IonImg,
     IonRow,
     IonCol,
     IonCard,
@@ -45,11 +47,13 @@ export class AssetMappedCardComponent implements OnInit {
   router = inject(Router);
 
   @Input() plantId: string;
+  @Input() toggleChecked: boolean;
   @Input() asset: AssetsModel;
 
   constructor() {
     this.asset = {};
     this.plantId = "";
+    this.toggleChecked = false;
   }
 
   ngOnInit() {}
