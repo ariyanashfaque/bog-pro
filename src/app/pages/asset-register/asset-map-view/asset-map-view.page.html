@@ -8,44 +8,28 @@
 <ion-content [fullscreen]="true">
   <div class="h-full w-full overflow-scroll bg-gray-300">
     <!-- Content Body -->
-    <div class="pt-20 px-4">
-      <div class="mx-auto">
-        <div
-          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden cursor-pointer"
-          (click)="toggleChildMenu()"
-          id="open-custom-dialog"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-full text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
-    </div>
-    <div class="pt-20 px-4">
-      <div class="mx-auto">
-        <div
-          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden cursor-pointer"
-          (click)="toggleChildMenu()"
-          id="open-custom-dialog"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-full text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
-    </div>
+    <map-view></map-view>
   </div>
 </ion-content>
+
+<div class="absolute pt-48 px-4">
+  <div class="mx-auto">
+    <div
+      class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden cursor-pointer"
+      (click)="toggleChildMenu()"
+      id="open-custom-dialog"
+    >
+      <img
+        class="object-cover w-full h-full"
+        src="../../../assets/silo.png"
+        alt="silo"
+      />
+    </div>
+    <div class="w-full text-xs text-center mt-1">
+      <span class="text-[#000000DE]">Silo</span>
+    </div>
+  </div>
+</div>
 
 <!-- Side bar Toggle Button -->
 <button class="fixed bottom-[35px] right-[84px] z-50">

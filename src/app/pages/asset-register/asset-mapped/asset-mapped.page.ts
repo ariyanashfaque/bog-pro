@@ -94,7 +94,7 @@ export class AssetMappedPage implements OnInit {
         this.store.dispatch(
           UPDATE_PLANT({
             assets: response?.data,
-          }),
+          })
         );
       },
       error: (error: HttpErrorResponse) => {
@@ -123,14 +123,14 @@ export class AssetMappedPage implements OnInit {
         if (plant?.assets) {
           this.assets = plant.assets;
           this.registeredAssets = plant.assets.filter(
-            (asset) => asset?.assetRegisteredStatus?.assetRegistered,
+            (asset) => asset?.assetRegisteredStatus?.assetRegistered
           );
           this.draftAssets = plant.assets.filter(
-            (asset) => !asset?.assetRegisteredStatus?.assetRegistered,
+            (asset) => !asset?.assetRegisteredStatus?.assetRegistered
           );
 
           const parentTypes = new Set(
-            this.assets.map((asset) => asset?.assetInfo?.assetParentType),
+            this.assets.map((asset) => asset?.assetInfo?.assetParentType)
           );
 
           this.groupedAssets = [];
@@ -138,7 +138,7 @@ export class AssetMappedPage implements OnInit {
             this.groupedAssets.push({
               assetParentType: parentType,
               assets: this.registeredAssets.filter(
-                (asset) => asset?.assetInfo?.assetParentType === parentType,
+                (asset) => asset?.assetInfo?.assetParentType === parentType
               ),
             });
           });
@@ -146,14 +146,17 @@ export class AssetMappedPage implements OnInit {
       },
     });
 
-    console.log(this.assets);
+    console.log("Assets:", this.assets);
+    console.log("Registered Assets:", this.registeredAssets);
+    console.log("Draft Assets:", this.draftAssets);
+    console.log("Grouped Assets:", this.groupedAssets);
   }
 
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
 
     const parentTypes = new Set(
-      this.assets.map((asset) => asset?.assetInfo?.assetParentType),
+      this.assets.map((asset) => asset?.assetInfo?.assetParentType)
     );
     this.groupedAssets = [];
 
@@ -162,7 +165,7 @@ export class AssetMappedPage implements OnInit {
         this.groupedAssets.push({
           assetParentType: parentType,
           assets: this.draftAssets.filter(
-            (asset) => asset?.assetInfo?.assetParentType === parentType,
+            (asset) => asset?.assetInfo?.assetParentType === parentType
           ),
         });
       });
@@ -171,7 +174,7 @@ export class AssetMappedPage implements OnInit {
         this.groupedAssets.push({
           assetParentType: parentType,
           assets: this.registeredAssets.filter(
-            (asset) => asset?.assetInfo?.assetParentType === parentType,
+            (asset) => asset?.assetInfo?.assetParentType === parentType
           ),
         });
       });

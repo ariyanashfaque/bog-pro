@@ -1,5 +1,14 @@
 import { on } from "@ngrx/store";
-import { Component, model, OnInit, output, signal } from "@angular/core";
+import {
+  Component,
+  inject,
+  Input,
+  model,
+  OnInit,
+  output,
+  signal,
+  WritableSignal,
+} from "@angular/core";
 import { IonIcon, IonText } from "@ionic/angular/standalone";
 
 @Component({

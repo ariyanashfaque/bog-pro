@@ -5,78 +5,76 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" sizeLg="12" sizeMd="12" sizeSm="12">
         <div class="max-w-full mx-auto p-4 bg-white border-b-[2px] shadowpart1">
-            <ion-grid >
-              <ion-row >
-                <ion-col size="12" sizeMd="6" sizeLg="6">
-                  <ion-select
-                    fill="outline"
-                    [multiple]="true"
-                    label="Select GRU"
-                    label-placement="floating"
-                  >
-                    <ion-select-option value="apple">
-                      5701 Mt Keith Debottlenecking
-                    </ion-select-option>
-                    <ion-select-option value="banana">
-                      5701 Mt Keith Debottlenecking
-                    </ion-select-option>
-                    <ion-select-option value="orange">
-                      5701 Mt Keith Debottlenecking
-                    </ion-select-option>
-                  </ion-select>
-                </ion-col>
-                <ion-col size="12" sizeMd="6" sizeLg="6">
-                  <ion-select
-                    fill="outline"
-                    [multiple]="true"
-                    label="Select GRU"
-                    label-placement="floating"
-                  >
-                    <ion-select-option value="apple">
-                      5701 Mt Keith Debottlenecking
-                    </ion-select-option>
-                    <ion-select-option value="banana">
-                      5701 Mt Keith Debottlenecking
-                    </ion-select-option>
-                    <ion-select-option value="orange">
-                      5701 Mt Keith Debottlenecking
-                    </ion-select-option>
-                  </ion-select>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12" sizeMd="6" sizeLg="6">
+                <ion-select
+                  fill="outline"
+                  [multiple]="true"
+                  label="Select GRU"
+                  label-placement="floating"
+                >
+                  <ion-select-option value="apple">
+                    5701 Mt Keith Debottlenecking
+                  </ion-select-option>
+                  <ion-select-option value="banana">
+                    5701 Mt Keith Debottlenecking
+                  </ion-select-option>
+                  <ion-select-option value="orange">
+                    5701 Mt Keith Debottlenecking
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+              <ion-col size="12" sizeMd="6" sizeLg="6">
+                <ion-select
+                  fill="outline"
+                  [multiple]="true"
+                  label="Select GRU"
+                  label-placement="floating"
+                >
+                  <ion-select-option value="apple">
+                    5701 Mt Keith Debottlenecking
+                  </ion-select-option>
+                  <ion-select-option value="banana">
+                    5701 Mt Keith Debottlenecking
+                  </ion-select-option>
+                  <ion-select-option value="orange">
+                    5701 Mt Keith Debottlenecking
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </div>
 
         <div class="max-w-full mx-auto bg-white p-4 shadowpart2">
-         
           <ion-grid>
             <ion-row>
-              @defer (when !isLoading()) {
-                @for (plant of plants; track $index) {
-                  <ion-col size="12" sizeMd="6" sizeLg="6">
-                    <app-plant-card
-                      [plant]="plant"
-                      (click)="handlePlantStore(plant)"
-                      (isMenuToggleOpen)="handleErrorModal($event)"
-                    >
-                    </app-plant-card>
-                  </ion-col>
-                } @empty {
-                  <ion-col size="12">
-                    <div
-                      class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
-                    >
-                      <h3 class="text-center">No plants found</h3>
-                    </div>
-                  </ion-col>
-                }
-              } @placeholder {
-                <ion-col size="12" sizeMd="6" sizeLg="6">
-                  <app-loading-skeleton></app-loading-skeleton>
-                </ion-col>
-                <ion-col size="12" sizeMd="6" sizeLg="6">
-                  <app-loading-skeleton></app-loading-skeleton>
-                </ion-col>
+              @defer (when !isLoading()) { @for (plant of plants; track $index)
+              {
+              <ion-col size="12" sizeMd="6" sizeLg="6">
+                <app-plant-card
+                  [plant]="plant"
+                  (click)="handlePlantStore(plant)"
+                  (isMenuToggleOpen)="handleErrorModal($event)"
+                >
+                </app-plant-card>
+              </ion-col>
+              } @empty {
+              <ion-col size="12">
+                <div
+                  class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+                >
+                  <h3 class="text-center">No plants found</h3>
+                </div>
+              </ion-col>
+              } } @placeholder {
+              <ion-col size="12" sizeMd="6" sizeLg="6">
+                <app-loading-skeleton></app-loading-skeleton>
+              </ion-col>
+              <ion-col size="12" sizeMd="6" sizeLg="6">
+                <app-loading-skeleton></app-loading-skeleton>
+              </ion-col>
               }
             </ion-row>
           </ion-grid>
