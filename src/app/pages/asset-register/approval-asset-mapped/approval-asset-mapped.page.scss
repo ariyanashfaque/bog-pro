@@ -55,3 +55,8 @@ ion-toggle::part(track) {
   width: 45px;
   height: 25px;
 }
+ion-backdrop {
+  background: var(--ion-color-dark);
+  opacity: 0.6;
+  z-index: 40;
+}

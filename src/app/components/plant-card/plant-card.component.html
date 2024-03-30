@@ -89,70 +89,88 @@
       <!-- Mapped Assets part -->
 
       @if (totalAssetMapped) {
-        <div class="customcolor flex justify-between px-2">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="10" class="my-auto">
-                <ion-text
-                  color="secondary"
-                  class="text-[16px] font-gotham_medium"
-                >
-                  Total number of assets mapped
-                </ion-text>
-              </ion-col>
-              <ion-col class="flex justify-center" size="2">
-                <ion-button
-                  size="small"
-                  shape="round"
-                  fill="outline"
-                  color="secondary"
-                  class="bg-white rounded-full"
-                  [routerLink]="['/asset-register/asset-mapped', plant.id]"
-                >
-                  <p class="text-[14px] font-gotham_medium">
-                    {{ totalAssetMapped }}
-                  </p>
-                  <ion-icon
-                    slot="end"
-                    name="chevron-forward-outline"
-                  ></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
+      <div class="customcolor flex justify-between px-2">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10" class="my-auto">
+              <ion-text
+                color="secondary"
+                class="text-[16px] font-gotham_medium"
+              >
+                Total number of assets mapped
+              </ion-text>
+            </ion-col>
+            <ion-col class="flex justify-center" size="2">
+              @if (isApprover) {
+
+              <ion-button
+                size="small"
+                shape="round"
+                fill="outline"
+                color="secondary"
+                class="bg-white rounded-full"
+                [routerLink]="[
+                  '/asset-register/approval-asset-mapped',
+                  plant.id
+                ]"
+              >
+                <p class="text-[14px] font-gotham_medium">
+                  {{ totalAssetMapped }}
+                </p>
+                <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+              </ion-button>
+              }@else {
+              <ion-button
+                size="small"
+                shape="round"
+                fill="outline"
+                color="secondary"
+                class="bg-white rounded-full"
+                [routerLink]="['/asset-register/asset-mapped', plant.id]"
+              >
+                <p class="text-[14px] font-gotham_medium">
+                  {{ totalAssetMapped }}
+                </p>
+                <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+              </ion-button>
+
+              }
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
       } @else {
-        <!-- Mapped Assets part -->
-        <div class="customcolor bgcolor flex justify-between px-2">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="10" class="my-auto">
-                <ion-text
-                  color="secondary"
-                  class="text-[16px] font-gotham_medium"
-                >
-                  <p class="font-gotham_medium">
-                    Zero asset mapped in this plant
-                  </p>
-                </ion-text>
-                <ion-text color="black" class="text-[12px] font-gotham_book">
-                  Click on the map to add asset
-                </ion-text>
-              </ion-col>
-              <ion-col class="flex justify-center my-auto" size="2">
-                <ion-button
-                  size="small"
-                  shape="round"
-                  fill="outline"
-                  color="secondary"
-                  class="bg-white h-8 rounded-full"
-                >
-                  <p class="text-[14px] font-gotham_medium">Map</p>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
+      <!-- Mapped Assets part -->
+      <div class="customcolor bgcolor flex justify-between px-2">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10" class="my-auto">
+              <ion-text
+                color="secondary"
+                class="text-[16px] font-gotham_medium"
+              >
+                <p class="font-gotham_medium">
+                  Zero asset mapped in this plant
+                </p>
+              </ion-text>
+              <ion-text color="black" class="text-[12px] font-gotham_book">
+                Click on the map to add asset
+              </ion-text>
+            </ion-col>
+            <ion-col class="flex justify-center my-auto" size="2">
+              <ion-button
+                size="small"
+                shape="round"
+                fill="outline"
+                color="secondary"
+                class="bg-white h-8 rounded-full"
+              >
+                <p class="text-[14px] font-gotham_medium">Map</p>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
       }
 
       <!-- Error Assets part -->

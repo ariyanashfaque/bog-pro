@@ -5,6 +5,7 @@ import {
   signal,
   Component,
   WritableSignal,
+  EventEmitter,
 } from "@angular/core";
 import {
   IonRow,
@@ -21,6 +22,7 @@ import {
   IonContent,
   IonToolbar,
   IonSegment,
+  IonBackdrop,
   IonCardTitle,
   IonAccordion,
   IonCardHeader,
@@ -40,43 +42,51 @@ import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
+import { AssetUpdateModalComponent } from "../../../components/asset-mapped-card/asset-update-modal/asset-update-modal.component";
+import { ApprovalAssetMappedCardComponent } from "../../../components/approval-asset-mapped-card/approval-asset-mapped-card.component";
 
 @Component({
-  imports: [
-    IonCol,
-    IonRow,
-    IonText,
-    IonIcon,
-    IonItem,
-    IonCard,
-    IonGrid,
-    IonTitle,
-    IonLabel,
-    IonToggle,
-    IonHeader,
-    IonSegment,
-    IonToolbar,
-    IonContent,
-    IonAccordion,
-    IonCardTitle,
-    IonCardHeader,
-    HeaderComponent,
-    IonSegmentButton,
-    IonAccordionGroup,
-    LoadingSkeletonComponent,
-    AssetMappedCardComponent,
-  ],
-  standalone: true,
-  selector: "app-asset-mapped",
-  templateUrl: "./asset-mapped.page.html",
-  styleUrls: ["./asset-mapped.page.scss"],
+    selector: 'app-approval-asset-mapped',
+    templateUrl: './approval-asset-mapped.page.html',
+    styleUrls: ['./approval-asset-mapped.page.scss'],
+    standalone: true,
+    imports: [
+        IonCol,
+        IonRow,
+        IonText,
+        IonIcon,
+        IonItem,
+        IonCard,
+        IonGrid,
+        IonTitle,
+        IonLabel,
+        IonToggle,
+        IonHeader,
+        IonSegment,
+        IonToolbar,
+        IonContent,
+        IonBackdrop,
+        IonAccordion,
+        IonCardTitle,
+        IonCardHeader,
+        HeaderComponent,
+        IonSegmentButton,
+        IonAccordionGroup,
+        LoadingSkeletonComponent,
+        AssetMappedCardComponent,
+        AssetUpdateModalComponent,
+        ApprovalAssetMappedCardComponent
+    ]
 })
-export class AssetMappedPage implements OnInit {
+export class ApprovalAssetMappedPage implements OnInit {
+
   plantId: string;
   store = inject(Store);
   assets: AssetsModel[];
+  assetss: AssetsModel[];
   toggleChecked: boolean;
   draftAssets: AssetsModel[];
+  isMenuOpen: boolean = false;
   registeredAssets: AssetsModel[];
   httpService = inject(HttpService);
   toastService = inject(ToastService);
@@ -109,8 +119,10 @@ export class AssetMappedPage implements OnInit {
 
   constructor() {
     this.assets = [];
+    this.assetss = [];
     this.plantId = "";
     this.draftAssets = [];
+    this.isMenuOpen = false;
     this.groupedAssets = [];
     this.registeredAssets = [];
     this.dreaftGroupAssets = [];
@@ -122,12 +134,14 @@ export class AssetMappedPage implements OnInit {
       next: (plant: PlantsModel) => {
         if (plant?.assets) {
           this.assets = plant.assets;
+
           this.registeredAssets = plant.assets.filter(
             (asset) => asset?.assetRegisteredStatus?.assetRegistered
           );
           this.draftAssets = plant.assets.filter(
             (asset) => !asset?.assetRegisteredStatus?.assetRegistered
           );
+          this.assetss = this.registeredAssets;
 
           const parentTypes = new Set(
             this.assets.map((asset) => asset?.assetInfo?.assetParentType)
@@ -145,36 +159,47 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
+
+    console.log(this.assets);
   }
 
+  handleErrorModal = (event: any) => {
+    this.isMenuOpen = event;
+  };
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
 
-    const parentTypes = new Set(
-      this.assets.map((asset) => asset?.assetInfo?.assetParentType)
-    );
-    this.groupedAssets = [];
+    // const parentTypes = new Set(
+    //   this.assets.map((asset) => asset?.assetInfo?.assetParentType),
+    // );
+    // this.groupedAssets = [];
 
     if (this.toggleChecked) {
-      parentTypes.forEach((parentType) => {
-        this.groupedAssets.push({
-          assetParentType: parentType,
-          assets: this.draftAssets.filter(
-            (asset) => asset?.assetInfo?.assetParentType === parentType
-          ),
-        });
-      });
+      this.assetss = this.draftAssets;
     } else {
-      parentTypes.forEach((parentType) => {
-        this.groupedAssets.push({
-          assetParentType: parentType,
-          assets: this.registeredAssets.filter(
-            (asset) => asset?.assetInfo?.assetParentType === parentType
-          ),
-        });
-      });
+      this.assetss = this.registeredAssets;
     }
 
-    // console.log(this.groupedAssets);
+    // if (this.toggleChecked) {
+    //   parentTypes.forEach((parentType) => {
+    //     this.groupedAssets.push({
+    //       assetParentType: parentType,
+    //       assets: this.draftAssets.filter(
+    //         (asset) => asset?.assetInfo?.assetParentType === parentType,
+    //       ),
+    //     });
+    //   });
+    // } else {
+    //   parentTypes.forEach((parentType) => {
+    //     this.groupedAssets.push({
+    //       assetParentType: parentType,
+    //       assets: this.registeredAssets.filter(
+    //         (asset) => asset?.assetInfo?.assetParentType === parentType,
+    //       ),
+    //     });
+    //   });
+    // }
+
+    console.log(this.assets);
   }
 }

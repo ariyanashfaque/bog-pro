@@ -32,7 +32,7 @@ export class PlantCardComponent implements OnInit {
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
   isMenuOpen: boolean = false;
   totalAssetMapped: number = 5;
-
+  isApprover: boolean = false;
   constructor() {
     this.plant = {};
   }
