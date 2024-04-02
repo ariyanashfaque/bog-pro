@@ -28,6 +28,7 @@ export class AssetModalComponent implements OnInit {
   // array model
   assetData = input<any[]>();
   selectedAsset = output<any>();
+  selectedIndex = signal<number>(-1);
 
   toggleVisibility(buttonId: string) {
     if (this.activeAccordion === buttonId) {
@@ -48,13 +49,14 @@ export class AssetModalComponent implements OnInit {
     this.activeAccordion = "";
   }
 
-  onAssetClick(asset: any) {
-    // this.isSubAssetModalOpen.update(
-    //   (isSubAssetModalOpen) => !isSubAssetModalOpen
-    // );
-
-    // value insert in selectedAsset output
+  onAssetClick(asset: any, index: number) {
     this.selectedAsset.emit(asset);
+    if (this.selectedIndex() === index) {
+      this.selectedIndex.update(() => -1);
+    } else {
+      this.selectedIndex.update(() => index);
+    }
+    console.log("Index: ", this.selectedIndex());
   }
 
   constructor() {

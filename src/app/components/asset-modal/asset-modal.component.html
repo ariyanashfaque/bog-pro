@@ -18,9 +18,12 @@
   >
     @for (asset of assetData(); track $index) {
     <div class="">
-      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset)">
+      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset, $index)">
         <div
-          class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#b9dee4] rounded-md flex justify-center items-center"
+          class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center"
+          [class]="
+            selectedIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
+          "
         >
           <img
             class="object-cover w-full h-full rounded-md"
@@ -28,7 +31,12 @@
             alt="silo"
           />
           <div
-            class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 border-[#b9dee4] text-xs font-bold text-[#228693] flex items-center justify-center"
+            class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
+            [class]="
+              selectedIndex() == $index
+                ? 'border-[#3CB4AA]'
+                : 'border-[#b9dee4]'
+            "
           >
             {{ asset.assets.length }}
           </div>
@@ -74,7 +82,7 @@
   >
     @for (asset of assetData(); track $index) {
     <div class="">
-      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset)">
+      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset, $index)">
         <div
           class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
         >
@@ -121,7 +129,7 @@
   >
     @for (asset of assetData(); track $index) {
     <div class="">
-      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset)">
+      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset, $index)">
         <div
           class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
         >
