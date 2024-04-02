@@ -1,10 +1,12 @@
 import {
   Component,
   effect,
+  ElementRef,
   inject,
   Input,
   OnInit,
   signal,
+  viewChild,
   WritableSignal,
 } from "@angular/core";
 import { HeaderComponent } from "src/app/components/header/header.component";
@@ -13,7 +15,6 @@ import { ChildAssetModalComponent } from "src/app/components/child-asset-modal/c
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-assets-modal/sub-asset-modal.component";
 import { AssetModalComponent } from "src/app/components/asset-modal/asset-modal.component";
-import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 
 import {
   IonIcon,
@@ -39,6 +40,7 @@ import { UPDATE_PLANT } from "src/app/store/actions/plant.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
+import { MapService } from "src/app/services/map-service/map.service";
 
 @Component({
   selector: "app-asset-map-view",
@@ -62,10 +64,11 @@ import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/lo
     AssetInfoMenuComponent,
     SubAssetModalComponent,
     ChildAssetModalComponent,
-    MapViewComponent,
   ],
 })
 export class AssetMapViewPage implements OnInit {
+  mapService = inject(MapService);
+  mapRef = viewChild.required<ElementRef<HTMLDivElement>>("mapRef");
   plantId: string;
   store = inject(Store);
   assets: AssetsModel[];
@@ -101,6 +104,10 @@ export class AssetMapViewPage implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.mapService.initializeMap(this.mapRef());
+  }
+
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: PlantsModel) => {
@@ -134,6 +141,10 @@ export class AssetMapViewPage implements OnInit {
     console.log("Registered Assets:", this.registeredAssets);
     console.log("Draft Assets:", this.draftAssets);
     console.log("Grouped Assets:", this.groupedAssets);
+  }
+
+  ngOnDestroy(): void {
+    this.mapService.destroyMap();
   }
 
   isChildOpen = signal<boolean>(false);
