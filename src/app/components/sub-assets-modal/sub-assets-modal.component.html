@@ -1,5 +1,5 @@
 <div
-  class="fixed w-28 h-[450px] right-28 top-[102px] rounded-l-3xl shadow-[-3px_0px_20px_3px_#00000024] bg-white transform transition-transform overflow-hidden duration-800 z-50"
+  class="fixed w-28 max-h-[450px] right-28 top-[102px] rounded-l-3xl shadow-[-3px_0px_20px_3px_#00000024] bg-white transform transition-transform overflow-hidden duration-800 z-50"
   [class]="!isMenuOpen() ? 'translate-x-56' : ''"
 >
   <!-- Your Content -->
@@ -7,20 +7,7 @@
   <div
     class="w-full max-h-[412px] flex flex-col space-y-3 items-center overflow-y-scroll bg-white my-5"
   >
-    <div class="cursor-pointer">
-      <div
-        class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-      >
-        <img
-          class="object-cover w-full h-full"
-          src="../../../assets/silo.png"
-          alt="silo"
-        />
-      </div>
-      <div class="w-full text-xs text-center mt-1">
-        <span class="text-[#000000DE]">Silo</span>
-      </div>
-    </div>
+    @for(asset of selectedAsset().assets; track $index){
     <div class="cursor-pointer">
       <div
         class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
@@ -32,92 +19,9 @@
         />
       </div>
       <div class="w-[70px] text-xs text-center mt-1">
-        <span class="text-[#000000DE]">Siloooooooooo</span>
+        <span class="text-[#000000DE]">{{ asset.assetInfo.assetName }}</span>
       </div>
     </div>
-    <div class="cursor-pointer">
-      <div
-        class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-      >
-        <img
-          class="object-cover w-full h-full"
-          src="../../../assets/silo.png"
-          alt="silo"
-        />
-      </div>
-      <div class="w-full text-xs text-center mt-1">
-        <span class="text-[#000000DE]">Silo</span>
-      </div>
-    </div>
-    <div class="cursor-pointer">
-      <div
-        class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-      >
-        <img
-          class="object-cover w-full h-full"
-          src="../../../assets/silo.png"
-          alt="silo"
-        />
-      </div>
-      <div class="w-full text-xs text-center mt-1">
-        <span class="text-[#000000DE]">Silo</span>
-      </div>
-    </div>
-    <div class="cursor-pointer">
-      <div
-        class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-      >
-        <img
-          class="object-cover w-full h-full"
-          src="../../../assets/silo.png"
-          alt="silo"
-        />
-      </div>
-      <div class="w-full text-xs text-center mt-1">
-        <span class="text-[#000000DE]">Silo</span>
-      </div>
-    </div>
-    <div class="cursor-pointer">
-      <div
-        class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-      >
-        <img
-          class="object-cover w-full h-full"
-          src="../../../assets/silo.png"
-          alt="silo"
-        />
-      </div>
-      <div class="w-full text-xs text-center mt-1">
-        <span class="text-[#000000DE]">Silo</span>
-      </div>
-    </div>
-    <div class="cursor-pointer">
-      <div
-        class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-      >
-        <img
-          class="object-cover w-full h-full"
-          src="../../../assets/silo.png"
-          alt="silo"
-        />
-      </div>
-      <div class="w-full text-xs text-center mt-1">
-        <span class="text-[#000000DE]">Silo</span>
-      </div>
-    </div>
-    <div class="cursor-pointer">
-      <div
-        class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-      >
-        <img
-          class="object-cover w-full h-full"
-          src="../../../assets/silo.png"
-          alt="silo"
-        />
-      </div>
-      <div class="w-full text-xs text-center mt-1">
-        <span class="text-[#000000DE]">Silo</span>
-      </div>
-    </div>
+    }
   </div>
 </div>

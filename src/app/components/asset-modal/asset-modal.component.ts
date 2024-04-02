@@ -1,7 +1,9 @@
 import { on } from "@ngrx/store";
 import {
   Component,
+  effect,
   inject,
+  input,
   Input,
   model,
   OnInit,
@@ -23,6 +25,9 @@ export class AssetModalComponent implements OnInit {
   isChildOpen = model<boolean>();
   isSubAssetModalOpen = model<boolean>(false);
   activeAccordion: string = "recommended";
+  // array model
+  assetData = input<any[]>();
+  selectedAsset = output<any>();
 
   toggleVisibility(buttonId: string) {
     if (this.activeAccordion === buttonId) {
@@ -43,13 +48,22 @@ export class AssetModalComponent implements OnInit {
     this.activeAccordion = "";
   }
 
-  onAssetClick() {
-    this.isSubAssetModalOpen.update(
-      (isSubAssetModalOpen) => !isSubAssetModalOpen
-    );
+  onAssetClick(asset: any) {
+    // this.isSubAssetModalOpen.update(
+    //   (isSubAssetModalOpen) => !isSubAssetModalOpen
+    // );
+
+    // value insert in selectedAsset output
+    this.selectedAsset.emit(asset);
   }
 
-  constructor() {}
+  constructor() {
+    effect(() => {
+      console.log("assetData", this.assetData);
+    });
+
+    console.log("assetData", this.assetData);
+  }
 
   ngOnInit() {}
 

@@ -68,11 +68,15 @@
 <app-asset-info-menu [(isMenuOpen)]="isAssetInfoMenuOpen"></app-asset-info-menu>
 
 <!-- Sub-Assets Modal -->
-<app-sub-asset-modal [(isMenuOpen)]="isSubAssetModalOpen"></app-sub-asset-modal>
+<app-sub-asset-modal
+  [(isMenuOpen)]="isSubAssetModalOpen"
+  [(selectedAsset)]="selectedAsset"
+></app-sub-asset-modal>
 
 <!-- Sidebar -->
 <app-asset-modal
   [(isMenuOpen)]="isAssetInfoMenuOpen"
   [(isChildOpen)]="isChildOpen"
-  [(isSubAssetModalOpen)]="isSubAssetModalOpen"
+  [assetData]="groupedAssets"
+  (selectedAsset)="onAssetReceived($event)"
 ></app-asset-modal>

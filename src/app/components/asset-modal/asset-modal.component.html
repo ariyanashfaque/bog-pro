@@ -16,9 +16,9 @@
   <div
     class="w-full max-h-[calc(100vh-170px)] bg-transparent flex flex-col items-center overflow-y-scroll"
   >
-    @for (structure of structures; track $index) {
+    @for (asset of assetData(); track $index) {
     <div class="">
-      <div class="cursor-pointer mx-auto" (click)="onAssetClick()">
+      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset)">
         <div
           class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#b9dee4] rounded-md flex justify-center items-center"
         >
@@ -30,11 +30,11 @@
           <div
             class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 border-[#b9dee4] text-xs font-bold text-[#228693] flex items-center justify-center"
           >
-            5
+            {{ asset.assets.length }}
           </div>
         </div>
         <div class="w-full text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
+          <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
         </div>
       </div>
     </div>
@@ -72,9 +72,9 @@
         : 'max-h-0'
     "
   >
-    @for (structure of structures; track $index) {
+    @for (asset of assetData(); track $index) {
     <div class="">
-      <div class="cursor-pointer mx-auto" (click)="onAssetClick()">
+      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset)">
         <div
           class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
         >
@@ -85,7 +85,7 @@
           />
         </div>
         <div class="w-full text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
+          <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
         </div>
       </div>
     </div>
@@ -119,9 +119,9 @@
       activeAccordion == 'others' ? ' max-h-[calc(100vh-270px)]  ' : 'max-h-0'
     "
   >
-    @for (structure of structures; track $index) {
+    @for (asset of assetData(); track $index) {
     <div class="">
-      <div class="cursor-pointer mx-auto" (click)="onAssetClick()">
+      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset)">
         <div
           class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
         >
@@ -132,7 +132,7 @@
           />
         </div>
         <div class="w-full text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
+          <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
         </div>
       </div>
     </div>

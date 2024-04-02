@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   model,
+  effect,
 } from "@angular/core";
 import {
   IonRow,
@@ -51,8 +52,13 @@ import {
 })
 export class SubAssetModalComponent implements OnInit {
   isMenuOpen = model(false);
+  selectedAsset = model<any>({});
 
-  constructor() {}
+  constructor() {
+    effect(() => {
+      console.log("selectedAsset in sub asset modal", this.selectedAsset());
+    });
+  }
 
   ngOnInit() {}
 
