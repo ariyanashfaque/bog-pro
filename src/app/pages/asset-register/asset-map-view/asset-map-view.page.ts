@@ -15,7 +15,6 @@ import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { AssetModalComponent } from "src/app/components/asset-modal/asset-modal.component";
-import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-assets-modal/sub-asset-modal.component";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
@@ -59,7 +58,6 @@ import {
     AssetInfoMenuComponent,
     SubAssetModalComponent,
     ChildAssetModalComponent,
-    MapViewComponent,
   ],
 })
 export class AssetMapViewPage implements OnInit {
