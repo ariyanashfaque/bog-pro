@@ -86,12 +86,13 @@ import {
   ],
 
   standalone: true,
-  selector: "app-asset-update-modal",
-  templateUrl: "./asset-update-modal.component.html",
-  styleUrls: ["./asset-update-modal.component.scss"],
+
+  selector: "app-asset-approval-update-modal",
+  templateUrl: "./asset-approval-update-modal.component.html",
+  styleUrls: ["./asset-approval-update-modal.component.scss"],
 })
-export class AssetUpdateModalComponent implements OnInit {
-  @Input() isMenuOpen: boolean = false;
+export class AssetApprovalUpdateModalComponent implements OnInit {
+  @Input() isApprovalMenuOpen: boolean = false;
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
   store = inject(Store);
@@ -129,7 +130,7 @@ export class AssetUpdateModalComponent implements OnInit {
     this.plantId = "";
     this.segment = "info";
     this.assetCategory = {};
-    this.isMenuOpen = false;
+    this.isApprovalMenuOpen = false;
     this.asset.assetCategories = [];
 
     this.assetRegistrationForm = new FormGroup({
@@ -141,7 +142,9 @@ export class AssetUpdateModalComponent implements OnInit {
       assetName: new FormControl("", Validators.required),
       costCenter: new FormControl("", Validators.required),
       assetStatus: new FormControl("", Validators.required),
-      assetId: new FormControl({ value: "", disabled: true }),
+      assetId: new FormControl(""),
+      hacCode: new FormControl(""),
+
     });
   }
 
@@ -170,12 +173,12 @@ export class AssetUpdateModalComponent implements OnInit {
     this.segment = event?.detail?.value;
   }
   menuToggle() {
-    this.isMenuOpen = !this.isMenuOpen;
-    this.isMenuToggleOpen.emit(this.isMenuOpen);
+    this.isApprovalMenuOpen = !this.isApprovalMenuOpen;
+    this.isMenuToggleOpen.emit(this.isApprovalMenuOpen);
   }
 
   handleSelectedCategory(event: CategoriesModel[]) {
-    this.isMenuOpen = false;
+    this.isApprovalMenuOpen = false;
     this.asset = { ...this.asset, assetCategories: event };
   }
 

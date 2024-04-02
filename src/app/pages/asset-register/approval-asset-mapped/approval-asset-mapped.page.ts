@@ -42,8 +42,8 @@ import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
-import { AssetUpdateModalComponent } from "../../../components/asset-mapped-card/asset-update-modal/asset-update-modal.component";
 import { ApprovalAssetMappedCardComponent } from "../../../components/approval-asset-mapped-card/approval-asset-mapped-card.component";
+import { AssetApprovalUpdateModalComponent } from "../../../components/approval-asset-mapped-card/asset-approval-update-modal/asset-approval-update-modal.component";
 
 @Component({
     selector: 'app-approval-asset-mapped',
@@ -74,8 +74,9 @@ import { ApprovalAssetMappedCardComponent } from "../../../components/approval-a
         IonAccordionGroup,
         LoadingSkeletonComponent,
         AssetMappedCardComponent,
-        AssetUpdateModalComponent,
-        ApprovalAssetMappedCardComponent
+        
+        ApprovalAssetMappedCardComponent,
+        AssetApprovalUpdateModalComponent
     ]
 })
 export class ApprovalAssetMappedPage implements OnInit {
@@ -86,7 +87,7 @@ export class ApprovalAssetMappedPage implements OnInit {
   assetss: AssetsModel[];
   toggleChecked: boolean;
   draftAssets: AssetsModel[];
-  isMenuOpen: boolean = false;
+  isApprovalMenuOpen: boolean = false;
   registeredAssets: AssetsModel[];
   httpService = inject(HttpService);
   toastService = inject(ToastService);
@@ -122,7 +123,7 @@ export class ApprovalAssetMappedPage implements OnInit {
     this.assetss = [];
     this.plantId = "";
     this.draftAssets = [];
-    this.isMenuOpen = false;
+    this.isApprovalMenuOpen = false;
     this.groupedAssets = [];
     this.registeredAssets = [];
     this.dreaftGroupAssets = [];
@@ -164,7 +165,7 @@ export class ApprovalAssetMappedPage implements OnInit {
   }
 
   handleErrorModal = (event: any) => {
-    this.isMenuOpen = event;
+    this.isApprovalMenuOpen = event;
   };
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;

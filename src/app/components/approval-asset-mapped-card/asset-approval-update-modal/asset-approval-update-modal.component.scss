@@ -53,3 +53,27 @@ span {
 ion-button[disabled] {
   --ion-color-base: #32808e !important;
 }
+
+.rejectCard {
+  background-color: #fdd1d4;
+}
+
+.RejectSelect {
+  ion-select::part(icon) {
+    color: red !important;
+  }
+
+  ion-select[fill="outline"] {
+    --border-color: red;
+    background-color: #ffffff;
+  }
+}
+.bgRejectBtn {
+  background-color: #ffffff;
+  border: solid red 2px;
+}
+
+.bgacceptBtn {
+  background-color: red;
+  border: solid red 2px;
+}

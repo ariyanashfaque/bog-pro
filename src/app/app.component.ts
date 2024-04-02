@@ -41,6 +41,7 @@ import {
   chevronForwardOutline,
   documentAttachOutline,
   chevronDownCircleOutline,
+  alertCircleOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { Component, inject } from "@angular/core";
@@ -64,6 +65,7 @@ export class AppComponent {
       camera,
       person,
       business,
+      alertCircleOutline,
       navigate,
       addCircle,
       caretBack,

@@ -1,6 +1,6 @@
 <div
-  class="relative custom bottom-20 left-60 w-[700px] h-[650px] bg-red-500 rounded-md shadow transform transition-transform duration-800 z-50"
-  [class]="!isMenuOpen ? 'translate-y-full' : ''"
+  class="relative custom bottom-20 left-60 w-[700px] h-[630px] bg-red-500 rounded-md shadow transform transition-transform duration-800 z-50"
+  [class]="!isApprovalMenuOpen ? 'translate-y-full' : ''"
 >
   <div class="absolute top-20 w-full h-[600px] bg-white"></div>
   <div class="h-full w-full flex">
@@ -39,7 +39,7 @@
     <div class="-ml-[88px] h-full w-[20px] bg-white rounded-tr-[10px]"></div>
   </div>
 
-  <div class="absolute top-9 w-full h-full overflow-x-scroll">
+  <div class="absolute top-9 bottom-32 w-full h-full overflow-x-scroll">
     <ion-grid>
       <ion-row>
         <ion-col size="12">
@@ -121,13 +121,13 @@
             <ion-grid>
               <form [formGroup]="assetRegistrationForm">
                 <ion-row class="my-4">
-                  <ion-col size="12" sizeMd="6">
+                  <ion-col size="12">
                     <ion-input
                       required
                       fill="outline"
                       color="primary"
                       inputmode="text"
-                      placeholder="Enter name"
+                      placeholder="Hopper is situated near the walkway"
                       labelPlacement="floating"
                       formControlName="assetName"
                       errorText="Asset name required"
@@ -138,24 +138,8 @@
                       </ion-label>
                     </ion-input>
                   </ion-col>
-                  <ion-col size="12" sizeMd="6">
-                    <ion-input
-                      required
-                      type="text"
-                      label="Status"
-                      fill="outline"
-                      labelPlacement="floating"
-                      placeholder="Enter Status"
-                      formControlName="assetStatus"
-                      errorText="Asset status required"
-                    >
-                      <ion-label slot="label">
-                        Enter Status
-                        <ion-text color="danger">*</ion-text>
-                      </ion-label>
-                    </ion-input>
-                  </ion-col>
-                  <ion-col size="12" sizeMd="6">
+
+                  <ion-col size="4">
                     <ion-input
                       required
                       type="text"
@@ -168,59 +152,64 @@
                     </ion-input>
                   </ion-col>
 
-                  <ion-col size="12" sizeMd="6">
+                  <ion-col size="4">
                     <ion-input
                       type="text"
                       fill="outline"
-                      label="Enter SAP ID"
                       formControlName="sapId"
                       labelPlacement="floating"
-                      placeholder="Enter SAP ID"
+                      placeholder="125152"
                     >
+                      <ion-label slot="label"> SAP ID </ion-label>
                     </ion-input>
                   </ion-col>
-
-                  <ion-col size="12" sizeMd="6">
-                    <div class="border-2 flex justify-between rounded-md">
-                      <ion-grid>
-                        <ion-row>
-                          <ion-col size="10" class="my-auto">
-                            <ion-text color="dark"> Category </ion-text>
-                          </ion-col>
-                          <ion-col class="flex justify-center" size="2">
-                            <ion-button
-                              size="small"
-                              shape="round"
-                              fill="clear"
-                              color="white"
-                            >
-                              <ion-icon
-                                color="primary"
-                                slot="end"
-                                name="chevron-down-outline"
-                              >
-                              </ion-icon>
-                            </ion-button>
-                          </ion-col>
-                        </ion-row>
-                      </ion-grid>
-                    </div>
-                  </ion-col>
-
-                  <ion-col size="12" sizeMd="6">
+                  <ion-col size="4">
                     <ion-input
-                      required
                       type="text"
                       fill="outline"
+                      formControlName="hacCode"
                       labelPlacement="floating"
-                      formControlName="costCenter"
-                      placeholder="Enter cost center"
+                      placeholder="125152"
                     >
-                      <ion-label slot="label">
-                        Enter cost center
-                        <ion-text color="danger">*</ion-text>
-                      </ion-label>
+                      <ion-label slot="label"> HAC code </ion-label>
                     </ion-input>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-select
+                      fill="outline"
+                      label="Status"
+                      label-placement="floating"
+                      interface="popover"
+                    >
+                      <ion-select-option value="apple">
+                        asset approved
+                      </ion-select-option>
+                      <ion-select-option value="banana">
+                        asset draft
+                      </ion-select-option>
+                      <ion-select-option value="orange">
+                        asset decomision
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-select
+                      fill="outline"
+                      label="Cost Center"
+                      label-placement="floating"
+                      interface="popover"
+                    >
+                      <ion-select-option value="apple">
+                        asset approved
+                      </ion-select-option>
+                      <ion-select-option value="banana">
+                        asset draft
+                      </ion-select-option>
+                      <ion-select-option value="orange">
+                        asset decomision
+                      </ion-select-option>
+                    </ion-select>
                   </ion-col>
                 </ion-row>
 
@@ -524,8 +513,68 @@
       </ion-row>
     </ion-grid>
   </div>
-  <ion-footer class="fixed bottom-[-40px] w-full ion-no-padding">
-    <ion-toolbar color="secondary">
+  <ion-footer class="fixed bottom-[-56px] w-full ion-no-padding">
+    <div class="w-full h-44 p-2 rejectCard">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-text class="font-gotham_medium text-[16px]" color="danger">
+              Reason for decommission
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <div class="RejectSelect">
+              <ion-select
+                fill="outline"
+                color="danger"
+                label-placement="floating"
+                interface="popover"
+              >
+                <ion-label color="danger" slot="label">
+                  Asset markup is no longer on the map
+                </ion-label>
+
+                <ion-select-option value="apple">
+                  asset approved
+                </ion-select-option>
+                <ion-select-option value="banana">
+                  asset draft
+                </ion-select-option>
+                <ion-select-option value="orange">
+                  asset decomision
+                </ion-select-option>
+              </ion-select>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <div class="flex gap-3">
+              <div>
+                <button
+                  class="inline-flex items-center bgRejectBtn justify-center w-28 h-10 rounded-full"
+                >
+                  <ion-text color="danger"> Reject </ion-text>
+                </button>
+              </div>
+              <div>
+                <button
+                  class="inline-flex items-center bgacceptBtn justify-center w-28 h-10 rounded-full"
+                >
+                  <ion-text color="textwhite"> Accept </ion-text>
+                </button>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- <ion-toolbar color="secondary">
+    
+
       <ion-buttons slot="start" class="w-full">
         <ion-button
           expand="full"
@@ -542,13 +591,14 @@
           Approve
         </ion-button>
       </ion-buttons>
-    </ion-toolbar>
+      
+    </ion-toolbar> -->
   </ion-footer>
 </div>
 
 <!-- <div
   class="relative bottom-20 left-60 w-[700px] h-[650px] rounded-md bg-red-500 shadow transform transition-transform duration-800 z-50"
-  [class]="isMenuOpen ? 'translate-y-full' : ''"
+  [class]="isApprovalMenuOpen ? 'translate-y-full' : ''"
 >
   <div class="h-full w-full flex">
     <div class="h-full w-[calc(100%-105px)] bg-white rounded-tl-[10px]"></div>
@@ -578,7 +628,7 @@
 <div>
   <div
     class="relative bottom-10 left-60 w-[700px] h-[650px] rounded-md shadow transform transition-transform duration-800 z-50"
-    [class]="isMenuOpen ? 'translate-y-full' : ''"
+    [class]="isApprovalMenuOpen ? 'translate-y-full' : ''"
   >
     <div class="h-full w-full">
       <div class="h-full w-full flex">

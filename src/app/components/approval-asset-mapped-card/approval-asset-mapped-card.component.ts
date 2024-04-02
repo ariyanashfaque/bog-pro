@@ -26,7 +26,6 @@ import {
   EventEmitter,
 } from "@angular/core";
 import { AssetsModel } from "src/app/store/models/plant.model";
-import { AssetUpdateModalComponent } from "./asset-update-modal/asset-update-modal.component";
 
 @Component({
   standalone: true,
@@ -51,7 +50,6 @@ import { AssetUpdateModalComponent } from "./asset-update-modal/asset-update-mod
     IonCardHeader,
     IonCardContent,
     IonCardSubtitle,
-    AssetUpdateModalComponent,
   ],
 })
 export class ApprovalAssetMappedCardComponent implements OnInit {

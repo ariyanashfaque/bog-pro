@@ -157,11 +157,11 @@
   </ion-grid>
 </ion-content>
 
-@if (isMenuOpen) {
-<app-asset-update-modal
-  [isMenuOpen]="isMenuOpen"
+@if (isApprovalMenuOpen) {
+<app-asset-approval-update-modal
+  [isApprovalMenuOpen]="isApprovalMenuOpen"
   (isMenuToggleOpen)="handleErrorModal($event)"
-></app-asset-update-modal>
-} @if (isMenuOpen) {
-<ion-backdrop [visible]="isMenuOpen"> </ion-backdrop>
+></app-asset-approval-update-modal>
+} @if (isApprovalMenuOpen) {
+<ion-backdrop [visible]="isApprovalMenuOpen"> </ion-backdrop>
 }
