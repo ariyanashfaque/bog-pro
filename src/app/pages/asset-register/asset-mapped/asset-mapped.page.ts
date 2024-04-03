@@ -42,7 +42,6 @@ import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
-import { ApprovalAssetMappedCardComponent } from "../../../components/approval-asset-mapped-card/approval-asset-mapped-card.component";
 import { AssetApprovalUpdateModalComponent } from "src/app/components/asset-mapped-card/asset-approval-update-modal/asset-approval-update-modal.component";
 
 @Component({
@@ -70,7 +69,6 @@ import { AssetApprovalUpdateModalComponent } from "src/app/components/asset-mapp
     IonAccordionGroup,
     LoadingSkeletonComponent,
     AssetMappedCardComponent,
-    ApprovalAssetMappedCardComponent,
     AssetApprovalUpdateModalComponent,
   ],
   standalone: true,

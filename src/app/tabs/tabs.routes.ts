@@ -74,13 +74,6 @@ export const routes: Routes = [
           ).then((routes) => routes.routes),
       },
       {
-        path: "approval-asset-mapped/:id",
-        loadChildren: () =>
-          import(
-            "../pages/asset-register/approval-asset-mapped/approval-asset-mapped.routes"
-          ).then((routes) => routes.routes),
-      },
-      {
         path: "asset-map-view/:id",
         loadChildren: () =>
           import(
