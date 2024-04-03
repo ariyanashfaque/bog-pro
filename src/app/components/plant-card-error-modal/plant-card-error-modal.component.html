@@ -1,104 +1,131 @@
 <div
-  class="custom fixed w-full bottom-[-60px] h-3/4 md:h-2/4 border border-white-200 rounded-lg shadow bg-white-800 transform transition-transform duration-800"
+  class="relative custom bottom-0 w-full h-[550px] rounded-md shadow transform transition-transform duration-800 z-50"
   [class]="!isMenuOpen ? 'translate-y-full' : ''"
 >
-  <div
-    class="buttonBg absolute right-6 -mt-7 md:-mt-10 md:w-20 md:h-20 w-12 h-12 rounded-full"
-  >
-    <div
-      class="cursor-pointer absolute md:mt-2 md:ml-2 mt-1 ml-1 md:w-16 md:h-16 w-10 h-10 bg-black rounded-full"
-      (click)="menuToggle()"
-    >
-      <ion-icon size="large" class="w-full h-full fill-white" name="close">
-      </ion-icon>
+  <div class="absolute top-20 w-full h-[600px] bg-white"></div>
+  <div class="h-full w-full flex">
+    <div class="h-full w-full bg-white rounded-tl-[30px]"></div>
+
+    <div class="">
+      <svg
+        class="-ml-2"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        width="200"
+        height="200"
+      >
+        <image
+          width="120"
+          height="100"
+          xlink:href="data:img/png;base64,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"
+        />
+      </svg>
     </div>
+
+    <!-- <div class="h-full w-full">
+      <ion-img
+        class="-ml-12 -mt-[16.5px]"
+        src="../../../../assets/curvenew.png"
+      ></ion-img>
+    </div> -->
+    <div class="w-auto h-full relative">
+      <div
+        (click)="menuToggle()"
+        class="absolute -ml-[156px] -top-[28px] cursor-pointer w-[56px] h-[56px] bg-black rounded-full flex justify-center items-center"
+      >
+        <ion-icon class="text-4xl fill-white" name="close"> </ion-icon>
+      </div>
+    </div>
+    <div class="-ml-[88px] h-full w-[25px] bg-white rounded-tr-[50px]"></div>
   </div>
 
-  <div class="mx-12 mt-8">
-    <div class="assetName font-bold text-[20px] md:text-[28px]">
-      <p>5701 MT Keith Debottlenecking Concrete Plant</p>
+  <div class="absolute top-2 bottom-0 w-full h-full">
+    <div class="mx-10 mt-8">
+      <div class="assetName font-bold text-[20px] md:text-[28px]">
+        <p>5701 MT Keith Debottlenecking Concrete Plant</p>
+      </div>
+      <div class="Showerror font-bold text-[20px] md:text-[24px]">3 errors</div>
     </div>
-    <div class="Showerror font-bold text-[20px] md:text-[24px]">3 errors</div>
+
+    <ion-grid class="mx-6">
+      <ion-row class="h-96 overflow-y-scroll">
+        <ion-col size="12">
+          <div class="modalInnerCard p-4">
+            <p class="cardTitle font-gotham_medium text-[20px]">Silo 1</p>
+            <p class="md:text-[20px]">
+              industry's standard dummy text ever since the 1500s, when an
+              unknown printer took a galley of type and scrambled
+            </p>
+            <div
+              class="flex items-center errorCardBtn border-2 w-[200px] h-[40px] rounded-full mt-2"
+            >
+              <div class="">
+                <ion-icon
+                  class="ml-3 mt-2"
+                  style="font-size: 16px"
+                  name="navigate"
+                >
+                </ion-icon>
+              </div>
+              <div class="ml-2">
+                <ion-text class="text-[15px] font-gotham_book">
+                  View asset location
+                </ion-text>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+
+        <ion-col size="12">
+          <div class="modalInnerCard p-4">
+            <p class="text-red-600 font-bold md:text-[20px]">Silo 1</p>
+            <p class="md:text-[20px]">
+              industry's standard dummy text ever since the 1500s, when an
+              unknown printer took a galley of type and scrambled
+            </p>
+            <div
+              class="flex items-center shadow-red-300 shadow-sm border-2 text-red-600 text-sm border-red-300 w-[200px] h-[40px] rounded-full mt-2"
+            >
+              <div class="">
+                <ion-icon
+                  class="ml-3 mt-2"
+                  style="font-size: 16px"
+                  name="navigate"
+                >
+                </ion-icon>
+              </div>
+              <div class="ml-2">
+                <p class="md:text-[15px]">View asset location</p>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+
+        <ion-col size="12">
+          <div class="modalInnerCard p-4">
+            <p class="text-red-600 font-bold md:text-[20px]">Silo 1</p>
+            <p class="md:text-[20px]">
+              industry's standard dummy text ever since the 1500s, when an
+              unknown printer took a galley of type and scrambled
+            </p>
+            <div
+              class="flex items-center shadow-red-300 shadow-sm border-2 text-red-600 text-sm border-red-300 w-[200px] h-[40px] rounded-full mt-2"
+            >
+              <div class="">
+                <ion-icon
+                  class="ml-3 mt-2"
+                  style="font-size: 16px"
+                  name="navigate"
+                >
+                </ion-icon>
+              </div>
+              <div class="ml-2">
+                <p class="md:text-[15px]">View asset location</p>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
-
-  <ion-grid class="mx-8">
-    <ion-row class="h-96 overflow-y-scroll">
-      <ion-col size="12">
-        <div class="modalInnerCard p-4">
-          <p class="cardTitle font-gotham_medium text-[20px]">Silo 1</p>
-          <p class="md:text-[20px]">
-            industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled
-          </p>
-          <div
-            class="flex items-center errorCardBtn border-2 w-[200px] h-[40px] rounded-full mt-2"
-          >
-            <div class="">
-              <ion-icon
-                class="ml-3 mt-2"
-                style="font-size: 16px"
-                name="navigate"
-              >
-              </ion-icon>
-            </div>
-            <div class="ml-2">
-              <ion-text class="text-[15px] font-gotham_book">
-                View asset location
-              </ion-text>
-            </div>
-          </div>
-        </div>
-      </ion-col>
-
-      <ion-col size="12">
-        <div class="modalInnerCard p-4">
-          <p class="text-red-600 font-bold md:text-[20px]">Silo 1</p>
-          <p class="md:text-[20px]">
-            industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled
-          </p>
-          <div
-            class="flex items-center shadow-red-300 shadow-sm border-2 text-red-600 text-sm border-red-300 w-[200px] h-[40px] rounded-full mt-2"
-          >
-            <div class="">
-              <ion-icon
-                class="ml-3 mt-2"
-                style="font-size: 16px"
-                name="navigate"
-              >
-              </ion-icon>
-            </div>
-            <div class="ml-2">
-              <p class="md:text-[15px]">View asset location</p>
-            </div>
-          </div>
-        </div>
-      </ion-col>
-
-      <ion-col size="12">
-        <div class="modalInnerCard p-4">
-          <p class="text-red-600 font-bold md:text-[20px]">Silo 1</p>
-          <p class="md:text-[20px]">
-            industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled
-          </p>
-          <div
-            class="flex items-center shadow-red-300 shadow-sm border-2 text-red-600 text-sm border-red-300 w-[200px] h-[40px] rounded-full mt-2"
-          >
-            <div class="">
-              <ion-icon
-                class="ml-3 mt-2"
-                style="font-size: 16px"
-                name="navigate"
-              >
-              </ion-icon>
-            </div>
-            <div class="ml-2">
-              <p class="md:text-[15px]">View asset location</p>
-            </div>
-          </div>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 </div>

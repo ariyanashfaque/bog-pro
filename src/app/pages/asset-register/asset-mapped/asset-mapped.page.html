@@ -7,7 +7,7 @@
         <div
           class="max-w-full flex justify-between mx-auto bg-white border-b-[2px] shadowpart1"
         >
-          <div class="font-[24px] font-gotham_medium p-4">Assets (6)</div>
+          <div class="font-[24px] font-gotham_medium p-4">Assets (2)</div>
           <div class="font-[24px] font-gotham_medium p-4 flex gap-3">
             <ion-text
               class="font-[32px] font-gotham_medium"
@@ -35,28 +35,37 @@
 
         <div class="max-w-full mx-auto bg-white p-4 shadowpart2">
           @defer (when !isLoading()) {
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-grid>
+                  <ion-row>
+                    @for (asset of assetss; track $index) {
+                    <ion-col size="6">
+                      <app-asset-mapped-card
+                        [asset]="asset"
+                        [plantId]="plantId"
+                        [toggleChecked]="toggleChecked"
+                        (isMenuToggleOpen)="handleErrorModal($event)"
+                      ></app-asset-mapped-card>
+                    </ion-col>
+                    } @empty {
+                    <ion-col size="12">
+                      <div
+                        class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+                      >
+                        <h3 class="text-center">No assets found</h3>
+                      </div>
+                    </ion-col>
+                    }
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          }
 
-            <ion-grid >
-              <ion-row>
-                <ion-col size="6">11</ion-col>
-                <ion-col size="6">22</ion-col>
-              </ion-row>
-            </ion-grid>
-            @for (asset of assets; track $index) {
-
-              <ion-grid >
-                <ion-row>
-                  <ion-col size="12">
-                    <app-asset-mapped-card
-                    [asset]="asset"
-                    [plantId]="plantId"
-                    [toggleChecked]="toggleChecked"
-                  >
-                  </app-asset-mapped-card>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            } @empty {
+          <!-- } @empty {
               <ion-col size="12">
                 <div
                   class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
@@ -72,10 +81,10 @@
             <ion-col size="12" sizeMd="6" sizeLg="6">
               <app-loading-skeleton></app-loading-skeleton>
             </ion-col>
-          }
-        </div>
+          } -->
+          <!-- </div> -->
 
-        <!-- <div class="max-w-full mx-auto bg-white p-4 shadowpart2">
+          <!-- <div class="max-w-full mx-auto bg-white p-4 shadowpart2">
           @defer (when !isLoading()) {
             @for (groupedAsset of groupedAssets; track $index) {
               @if (groupedAsset?.assets) {
@@ -142,7 +151,16 @@
             </ion-col>
           }
         </div> -->
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<app-asset-approval-update-modal
+  [isApprovalMenuOpen]="isApprovalMenuOpen"
+  (isMenuToggleOpen)="handleErrorModal($event)"
+></app-asset-approval-update-modal>
+@if (isApprovalMenuOpen) {
+<ion-backdrop [visible]="isApprovalMenuOpen"> </ion-backdrop>
+}

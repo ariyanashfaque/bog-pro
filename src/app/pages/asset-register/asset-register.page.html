@@ -82,10 +82,15 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <app-plant-card-error-modal
-    [isMenuOpen]="isMenuOpen"
-    (isMenuToggleOpen)="handleErrorModal($event)"
-  >
-  </app-plant-card-error-modal>
 </ion-content>
+
+@if (isMenuOpen) {
+<app-plant-card-error-modal
+  [isMenuOpen]="isMenuOpen"
+  (isMenuToggleOpen)="handleErrorModal($event)"
+>
+</app-plant-card-error-modal>
+} @if (isMenuOpen) {
+
+<ion-backdrop [visible]="isMenuOpen"> </ion-backdrop>
+}

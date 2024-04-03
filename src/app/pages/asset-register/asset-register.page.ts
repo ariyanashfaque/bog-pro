@@ -27,6 +27,7 @@ import {
   IonToolbar,
   IonSelectOption,
   IonSkeletonText,
+  IonBackdrop,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
 import { RouterModule } from "@angular/router";
@@ -55,6 +56,7 @@ import { PlantCardErrorModalComponent } from "src/app/components/plant-card-erro
     IonToolbar,
     IonLoading,
     IonContent,
+    IonBackdrop,
     RouterModule,
     IonSkeletonText,
     HeaderComponent,
