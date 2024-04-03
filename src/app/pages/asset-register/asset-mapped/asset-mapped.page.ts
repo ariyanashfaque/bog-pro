@@ -5,7 +5,6 @@ import {
   signal,
   Component,
   WritableSignal,
-  EventEmitter,
 } from "@angular/core";
 import {
   IonRow,
@@ -119,11 +118,11 @@ export class AssetMappedPage implements OnInit {
     this.assetss = [];
     this.plantId = "";
     this.draftAssets = [];
-    this.isApprovalMenuOpen = false;
     this.groupedAssets = [];
     this.registeredAssets = [];
     this.dreaftGroupAssets = [];
     this.registerGroupAssets = [];
+    this.isApprovalMenuOpen = false;
   }
 
   ngOnInit() {
@@ -166,36 +165,11 @@ export class AssetMappedPage implements OnInit {
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
 
-    // const parentTypes = new Set(
-    //   this.assets.map((asset) => asset?.assetInfo?.assetParentType),
-    // );
-    // this.groupedAssets = [];
-
     if (this.toggleChecked) {
       this.assetss = this.draftAssets;
     } else {
       this.assetss = this.registeredAssets;
     }
-
-    // if (this.toggleChecked) {
-    //   parentTypes.forEach((parentType) => {
-    //     this.groupedAssets.push({
-    //       assetParentType: parentType,
-    //       assets: this.draftAssets.filter(
-    //         (asset) => asset?.assetInfo?.assetParentType === parentType,
-    //       ),
-    //     });
-    //   });
-    // } else {
-    //   parentTypes.forEach((parentType) => {
-    //     this.groupedAssets.push({
-    //       assetParentType: parentType,
-    //       assets: this.registeredAssets.filter(
-    //         (asset) => asset?.assetInfo?.assetParentType === parentType,
-    //       ),
-    //     });
-    //   });
-    // }
 
     console.log(this.assets);
   }

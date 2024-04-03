@@ -1,14 +1,13 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import {
-  Component,
-  EventEmitter,
   Input,
   OnInit,
   Output,
-  WritableSignal,
   inject,
-  input,
   signal,
+  Component,
+  EventEmitter,
+  WritableSignal,
 } from "@angular/core";
 import {
   FormGroup,
@@ -19,35 +18,35 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import {
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonIcon,
   IonImg,
   IonRow,
-  IonModal,
-  IonButton,
-  IonContent,
-  IonTitle,
-  IonToolbar,
-  IonList,
-  IonFooter,
-  IonButtons,
-  IonGrid,
   IonCol,
-  IonSelect,
-  IonSelectOption,
-  IonTextarea,
-  IonInput,
+  IonItem,
+  IonIcon,
+  IonList,
+  IonGrid,
   IonText,
-  IonSegmentButton,
+  IonLabel,
+  IonModal,
+  IonTitle,
+  IonInput,
+  IonHeader,
+  IonButton,
+  IonFooter,
+  IonSelect,
+  IonContent,
+  IonToolbar,
+  IonButtons,
   IonSegment,
+  IonTextarea,
+  IonSelectOption,
+  IonSegmentButton,
   LoadingController,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
-import { HttpService } from "src/app/services/http-service/http-client.service";
-import { ToastService } from "src/app/services/toast-service/toast.service";
 import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
+import { ToastService } from "src/app/services/toast-service/toast.service";
+import { HttpService } from "src/app/services/http-service/http-client.service";
 import {
   AssetsModel,
   PlantsModel,
@@ -92,21 +91,21 @@ import {
   styleUrls: ["./asset-approval-update-modal.component.scss"],
 })
 export class AssetApprovalUpdateModalComponent implements OnInit {
-  @Input() isApprovalMenuOpen: boolean = false;
-  @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
-  store = inject(Store);
-  router = inject(Router);
-  httpService = inject(HttpService);
-  toastService = inject(ToastService);
-  loadingCtrl = inject(LoadingController);
 
   plantId: string;
   segment: string;
   asset: AssetsModel;
+  store = inject(Store);
+  router = inject(Router);
   assetRegistrationForm: FormGroup;
+  httpService = inject(HttpService);
   assetCategory: AssetCategoryModel;
+  toastService = inject(ToastService);
+  loadingCtrl = inject(LoadingController);
+  @Input() isApprovalMenuOpen: boolean = false;
   isFormValid: WritableSignal<boolean> = signal(false);
+  @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
   @Input()
   set id(plantId: string) {
@@ -135,6 +134,8 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
 
     this.assetRegistrationForm = new FormGroup({
       sapId: new FormControl(""),
+      assetId: new FormControl(""),
+      hacCode: new FormControl(""),
       assetType: new FormControl(""),
       assetImages: new FormControl(""),
       assetLocation: new FormControl(""),
@@ -142,8 +143,6 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
       assetName: new FormControl("", Validators.required),
       costCenter: new FormControl("", Validators.required),
       assetStatus: new FormControl("", Validators.required),
-      assetId: new FormControl(""),
-      hacCode: new FormControl(""),
 
     });
   }

@@ -55,12 +55,11 @@ import { AssetsModel } from "src/app/store/models/plant.model";
 export class AssetMappedCardComponent implements OnInit {
   router = inject(Router);
   @Input() plantId: string;
+  isApprover: boolean = true;
   isMenuOpen: boolean = false;
   @Input() asset: AssetsModel;
   @Input() toggleChecked: boolean;
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
-  isApprover: boolean = true;
-  // isUser: boolean = false;
   constructor() {
     this.asset = {};
     this.plantId = "";
@@ -73,11 +72,7 @@ export class AssetMappedCardComponent implements OnInit {
     this.isMenuToggleOpen.emit(!this.isMenuOpen);
   };
 
-  // handleNavigate = (assetId?: string) => {
-  //   this.router.navigate([
-  //     `/asset-register/asset-mapped/${this.plantId}/asset/${assetId}`,
-  //   ]);
-  // };
+
   handleNavigate = (assetId?: string) => {
     this.router.navigate([
       `/asset-register/asset-mapped/${this.plantId}/asset/${assetId}`,

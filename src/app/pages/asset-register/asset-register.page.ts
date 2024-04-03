@@ -26,7 +26,9 @@ import {
   IonLoading,
   IonToolbar,
   IonSelectOption,
-  IonSkeletonText, IonBackdrop } from "@ionic/angular/standalone";
+  IonSkeletonText,
+  IonBackdrop,
+} from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
 import { RouterModule } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -39,7 +41,7 @@ import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/lo
 import { PlantCardErrorModalComponent } from "src/app/components/plant-card-error-modal/plant-card-error-modal.component";
 
 @Component({
-  imports: [IonBackdrop, 
+  imports: [
     IonCol,
     IonRow,
     IonList,
@@ -54,6 +56,7 @@ import { PlantCardErrorModalComponent } from "src/app/components/plant-card-erro
     IonToolbar,
     IonLoading,
     IonContent,
+    IonBackdrop,
     RouterModule,
     IonSkeletonText,
     HeaderComponent,

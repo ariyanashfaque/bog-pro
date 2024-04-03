@@ -90,18 +90,18 @@ import { Router } from "@angular/router";
   ],
 })
 export class AssetPage implements OnInit {
-  store = inject(Store);
-  router = inject(Router);
-  httpService = inject(HttpService);
-  toastService = inject(ToastService);
-  loadingCtrl = inject(LoadingController);
 
   plantId: string;
   segment: string;
   asset: AssetsModel;
   isMenuOpen: boolean;
+  store = inject(Store);
+  router = inject(Router);
   assetRegistrationForm: FormGroup;
+  httpService = inject(HttpService);
   assetCategory: AssetCategoryModel;
+  toastService = inject(ToastService);
+  loadingCtrl = inject(LoadingController);
   isMenuToggleOpen = new EventEmitter<boolean>(false);
   isFormValid: WritableSignal<boolean> = signal(false);
 
