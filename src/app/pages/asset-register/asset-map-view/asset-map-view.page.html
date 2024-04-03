@@ -6,9 +6,9 @@
 
 <!-- Content -->
 <ion-content [fullscreen]="true">
-  <div class="h-full w-full overflow-scroll bg-gray-300">
+  <div class="h-full w-full overflow-scroll bg-gray-200">
     <!-- Content Body -->
-    <div #mapRef class="maps" id="map"></div>
+    <map-view></map-view>
   </div>
 </ion-content>
 
@@ -68,11 +68,15 @@
 <app-asset-info-menu [(isMenuOpen)]="isAssetInfoMenuOpen"></app-asset-info-menu>
 
 <!-- Sub-Assets Modal -->
-<app-sub-asset-modal [(isMenuOpen)]="isSubAssetModalOpen"></app-sub-asset-modal>
+<app-sub-asset-modal
+  [(isMenuOpen)]="isSubAssetModalOpen"
+  [(selectedAsset)]="selectedAsset"
+></app-sub-asset-modal>
 
 <!-- Sidebar -->
 <app-asset-modal
   [(isMenuOpen)]="isAssetInfoMenuOpen"
   [(isChildOpen)]="isChildOpen"
-  [(isSubAssetModalOpen)]="isSubAssetModalOpen"
+  [assetData]="groupedAssets"
+  (selectedAsset)="onAssetReceived($event)"
 ></app-asset-modal>

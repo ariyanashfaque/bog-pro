@@ -8,6 +8,7 @@ export class MapService {
   private map: google.maps.Map;
   private mapMptions: google.maps.MapOptions;
   private mapCenter: google.maps.LatLngLiteral;
+  private mapMarker: google.maps.marker.AdvancedMarkerElement;
   private rectangles: google.maps.Rectangle[] = [];
 
   private loader = new Loader({
@@ -61,9 +62,7 @@ export class MapService {
     });
   }
 
-  public async addRectangleZone() {
-    const { Rectangle, InfoWindow } = await this.importShapeLibrary("maps");
-
+  public addRectangleZone() {
     const rectangleCoordinates = [
       { north: 18.4088, south: 18.4084, east: 77.0995, west: 77.0993 }, // Adjusted east value to create a gap
       { north: 18.4092, south: 18.4088, east: 77.1, west: 77.0996 },
@@ -75,44 +74,17 @@ export class MapService {
       strokeWeight: 2,
       fillColor: "#FF0000",
       fillOpacity: 0.35,
-      clickable: true,
+      clickable: false
     };
 
-    rectangleCoordinates.forEach((coords) => {
-      const rectangle = new Rectangle({
+     rectangleCoordinates.forEach(coords => {
+      const rectangle = new google.maps.Rectangle({
         bounds: coords,
         map: this.map,
         ...rectangleOptions,
-      });
-      this.rectangles.push(rectangle);
-       
-      // Info window is being used to make the custom popup in the zone for Asset approval (late progress)
-      // const infoWindowContent = `
-      //   <div>
-      //     <h3>Zone</h3>
-      //     <ion-button>Save</ion-button>
-      //   </div>
-      // `;
-
-      // const infoWindow = new InfoWindow({
-      //   content: infoWindowContent,
-      // });
-
-      rectangle.addListener("click", () => {
-        const centerLat = (coords.north + coords.south) / 2;
-        const centerLng = (coords.east + coords.west) / 2;
-        const center = { lat: centerLat, lng: centerLng };
-        // infoWindow.setPosition(center);
-        // infoWindow.open(this.map);
-        this.map.setCenter(center);
-        this.map.setZoom(20); 
-      });
-
-      rectangle.addListener("dblclick", () => {
-        this.map.setZoom(16);
-        // infoWindow.close();
-      });
-    });
+        });
+        this.rectangles.push(rectangle);
+     });
   }
 
   private async addMapStyles() {
@@ -129,12 +101,10 @@ export class MapService {
   private async importMapsLibrary(type: Library) {
     return (await this.loader.importLibrary(type)) as google.maps.MapsLibrary;
   }
-
+  private async importCircleLibrary(type: Library) {
+    return (await this.loader.importLibrary(type)) as google.maps.MapsLibrary;
+  }
   private async importMarkersLibrary(type: Library) {
     return (await this.loader.importLibrary(type)) as google.maps.MarkerLibrary;
-  }
-
-  private async importShapeLibrary(type: Library) {
-    return (await this.loader.importLibrary(type)) as google.maps.MapsLibrary;
   }
 }
