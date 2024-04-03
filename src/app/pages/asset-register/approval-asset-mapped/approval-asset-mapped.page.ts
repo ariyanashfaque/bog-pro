@@ -74,7 +74,6 @@ import { AssetApprovalUpdateModalComponent } from "../../../components/approval-
         IonAccordionGroup,
         LoadingSkeletonComponent,
         AssetMappedCardComponent,
-        
         ApprovalAssetMappedCardComponent,
         AssetApprovalUpdateModalComponent
     ]

@@ -70,7 +70,7 @@
         </ion-grid>
       </div>
 
-      @if (!isApprover) {
+      @if (isApprover) {
       <div class="flex justify-between">
         <ion-grid>
           <ion-row>
@@ -78,14 +78,13 @@
               <div class="flex items-center">
                 <ion-icon
                   size="large"
-                  color="tertiary"
+                  class="customtext"
                   name="alert-circle-outline"
                 ></ion-icon>
               </div>
               <div>
                 <ion-text
-                  color="tertiary"
-                  class="mx-1 text-[14px] font-gotham_medium"
+                  class="mx-1 text-[14px] customtext font-gotham_medium"
                 >
                   Asset approval pending (10)
                 </ion-text>
@@ -110,25 +109,6 @@
               </ion-text>
             </ion-col>
             <ion-col class="flex justify-center" size="2">
-              @if (isApprover) {
-
-              <ion-button
-                size="small"
-                shape="round"
-                fill="outline"
-                color="secondary"
-                class="bg-white rounded-full"
-                [routerLink]="[
-                  '/asset-register/approval-asset-mapped',
-                  plant.id
-                ]"
-              >
-                <p class="text-[14px] font-gotham_medium">
-                  {{ totalAssetMapped }}
-                </p>
-                <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-              </ion-button>
-              }@else {
               <ion-button
                 size="small"
                 shape="round"
@@ -142,8 +122,6 @@
                 </p>
                 <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
               </ion-button>
-
-              }
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -180,11 +158,12 @@
           </ion-row>
         </ion-grid>
       </div>
-      } @if (isApprover) {
+      } @if (!isApprover) {
       <div class="flex justify-between">
         <ion-grid>
           <ion-row>
             <ion-col class="flex items-center gap-1" size="12">
+              @if (isError) {
               <div class="flex items-center">
                 <ion-icon
                   size="large"
@@ -195,11 +174,29 @@
               <div>
                 <ion-text
                   color="danger"
+                  (click)="handleMenuToggle()"
                   class="mx-1 text-[14px] font-gotham_medium"
                 >
                   Fix all the errors in this plant(10)
                 </ion-text>
               </div>
+              } @else {
+              <div class="flex items-center">
+                <ion-icon
+                  size="large"
+                  color="black"
+                  name="alert-circle-outline"
+                ></ion-icon>
+              </div>
+              <div>
+                <ion-text
+                  color="black"
+                  class="mx-1 text-[14px] font-gotham_medium"
+                >
+                  Add assets through SAP or manual
+                </ion-text>
+              </div>
+              }
             </ion-col>
           </ion-row>
         </ion-grid>

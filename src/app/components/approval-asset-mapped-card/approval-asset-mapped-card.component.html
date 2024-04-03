@@ -267,7 +267,7 @@
 
           <!-- second row  -->
           <ion-row class="">
-            <ion-col size="10" class="flex gap-6">
+            <ion-col [size]="isApprover ? '10' : '8'" class="flex gap-6">
               @if (toggleChecked) {
               <div class="">
                 <div class="">
@@ -322,11 +322,15 @@
                 </div>
               </div>
             </ion-col>
-            <ion-col size="2" class="flex items-center justify-center mt-2">
+            <ion-col
+              [size]="isApprover ? '2' : '4'"
+              class="flex items-center justify-center mt-2"
+            >
+              @if (isApprover) {
               <div>
                 <button
                   (click)="handleMenuToggle()"
-                  class="inline-flex items-center bgEditBtn justify-center w-8 h-8 rounded-full"
+                  class="inline-flex items-center approverbgEditBtn justify-center w-8 h-8 rounded-full"
                 >
                   <ion-icon
                     color="secondary"
@@ -335,6 +339,28 @@
                   ></ion-icon>
                 </button>
               </div>
+              } @else {
+              <div class="flex justify-between gap-4">
+                <button
+                  class="p-[5px] inline-flex items-center justify-center w-8 h-8 rounded-full"
+                  [class]="
+                    asset.assetRegisteredStatus?.assetDeletionApprovalPending
+                      ? 'deletePending'
+                      : 'bgDeleteBtn'
+                  "
+                >
+                  <ion-icon src="../../../assets/icon/asset-icons/delete.svg">
+                  </ion-icon>
+                </button>
+                <button
+                  [routerLink]="['/asset-register/asset-map-view', asset.id]"
+                  class="p-[5px] inline-flex items-center bgEditBtn justify-center w-8 h-8 rounded-full"
+                >
+                  <ion-icon src="../../../assets/icon/asset-icons/edit.svg">
+                  </ion-icon>
+                </button>
+              </div>
+              }
             </ion-col>
           </ion-row>
         </ion-col>

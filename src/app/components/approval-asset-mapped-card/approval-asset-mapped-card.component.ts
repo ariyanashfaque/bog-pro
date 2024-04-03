@@ -59,7 +59,8 @@ export class ApprovalAssetMappedCardComponent implements OnInit {
   @Input() asset: AssetsModel;
   @Input() toggleChecked: boolean;
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
-
+  isApprover: boolean = true;
+  // isUser: boolean = false;
   constructor() {
     this.asset = {};
     this.plantId = "";
@@ -72,6 +73,11 @@ export class ApprovalAssetMappedCardComponent implements OnInit {
     this.isMenuToggleOpen.emit(!this.isMenuOpen);
   };
 
+  // handleNavigate = (assetId?: string) => {
+  //   this.router.navigate([
+  //     `/asset-register/asset-mapped/${this.plantId}/asset/${assetId}`,
+  //   ]);
+  // };
   handleNavigate = (assetId?: string) => {
     this.router.navigate([
       `/asset-register/asset-mapped/${this.plantId}/asset/${assetId}`,

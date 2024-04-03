@@ -33,14 +33,16 @@ export class PlantCardComponent implements OnInit {
   isMenuOpen: boolean = false;
   totalAssetMapped: number = 5;
   isApprover: boolean = false;
+  isError:boolean=true;
+
   constructor() {
     this.plant = {};
   }
   ngOnInit() {}
 
   handleMenuToggle = () => {
-    if (this.plant?.totalRejectedAssets) {
-      this.isMenuToggleOpen.emit(!this.isMenuOpen);
-    }
+    console.log(this.isMenuOpen);
+    
+    this.isMenuToggleOpen.emit(!this.isMenuOpen);
   };
 }
