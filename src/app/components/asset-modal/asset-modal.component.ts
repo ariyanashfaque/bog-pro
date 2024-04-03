@@ -25,10 +25,9 @@ export class AssetModalComponent implements OnInit {
   isChildOpen = model<boolean>();
   isSubAssetModalOpen = model<boolean>(false);
   activeAccordion: string = "recommended";
-  // array model
   assetData = input<any[]>();
   selectedAsset = output<any>();
-  selectedIndex = signal<number>(-1);
+  activeIndex = model<number>(-1);
 
   toggleVisibility(buttonId: string) {
     if (this.activeAccordion === buttonId) {
@@ -47,16 +46,17 @@ export class AssetModalComponent implements OnInit {
       structure.child = false;
     });
     this.activeAccordion = "";
+    this.activeIndex.update(() => -1);
   }
 
   onAssetClick(asset: any, index: number) {
     this.selectedAsset.emit(asset);
-    if (this.selectedIndex() === index) {
-      this.selectedIndex.update(() => -1);
+    if (this.activeIndex() === index) {
+      this.activeIndex.update(() => -1);
     } else {
-      this.selectedIndex.update(() => index);
+      this.activeIndex.update(() => index);
     }
-    console.log("Index: ", this.selectedIndex());
+    console.log("Index: ", this.activeIndex());
   }
 
   constructor() {
