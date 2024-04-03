@@ -17,7 +17,6 @@ import {
   IonAvatar,
   IonButton,
 } from "@ionic/angular/standalone";
-import { idCard } from "ionicons/icons";
 
 @Component({
   selector: "app-assessment-modal",
@@ -131,7 +130,7 @@ export class AssessmentModalComponent implements OnInit {
   // a function to remove the selected user from the selectedUsers array
   removeUser(user: any) {
     this.selectedUsers = this.selectedUsers.filter(
-      (selectedUser) => selectedUser !== user,
+      (selectedUser) => selectedUser !== user
     );
     user.selected = false;
   }
