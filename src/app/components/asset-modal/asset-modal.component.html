@@ -22,7 +22,7 @@
         <div
           class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center"
           [class]="
-            selectedIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
+            activeIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
           "
         >
           <img
@@ -33,9 +33,7 @@
           <div
             class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
             [class]="
-              selectedIndex() == $index
-                ? 'border-[#3CB4AA]'
-                : 'border-[#b9dee4]'
+              activeIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
             "
           >
             {{ asset.assets.length }}
@@ -84,13 +82,24 @@
     <div class="">
       <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset, $index)">
         <div
-          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+          class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center"
+          [class]="
+            activeIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
+          "
         >
           <img
-            class="object-cover w-full h-full"
+            class="object-cover w-full h-full rounded-md"
             src="../../../assets/silo.png"
             alt="silo"
           />
+          <div
+            class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
+            [class]="
+              activeIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
+            "
+          >
+            {{ asset.assets.length }}
+          </div>
         </div>
         <div class="w-full text-xs text-center mt-1">
           <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>

@@ -61,6 +61,7 @@
 @if (isChildOpen()) {
 <app-child-asset-modal
   [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
+  (click)="closeSubAssetModal()"
 ></app-child-asset-modal>
 }
 
@@ -79,4 +80,5 @@
   [(isChildOpen)]="isChildOpen"
   [assetData]="groupedAssets"
   (selectedAsset)="onAssetReceived($event)"
+  [(activeIndex)]="assetModalActiveIndex"
 ></app-asset-modal>

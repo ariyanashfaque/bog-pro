@@ -30,6 +30,7 @@ import {
   IonToolbar,
   IonBackdrop,
   IonProgressBar,
+  IonFab,
 } from "@ionic/angular/standalone";
 import {
   AssetsModel,
@@ -42,6 +43,7 @@ import {
   styleUrls: ["./asset-map-view.page.scss"],
   standalone: true,
   imports: [
+    IonFab,
     IonText,
     IonIcon,
     IonModal,
@@ -73,6 +75,7 @@ export class AssetMapViewPage implements OnInit {
   isSubAssetModalOpen = signal<boolean>(false);
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
+  assetModalActiveIndex = signal<number>(-1);
 
   @Input()
   set id(plantId: string) {
@@ -129,11 +132,17 @@ export class AssetMapViewPage implements OnInit {
     this.groupedAssets = [];
   }
 
+  closeSubAssetModal() {
+    this.isSubAssetModalOpen.update((isSubAssetModalOpen) => false);
+    this.assetModalActiveIndex.update(() => -1);
+  }
+
   toggleInfoMenu() {
     this.isAssetInfoMenuOpen.update(
       (isAssetInfoMenuOpen) => !isAssetInfoMenuOpen
     );
     this.isSubAssetModalOpen.update((isSubAssetModalOpen) => false);
+    this.assetModalActiveIndex.update(() => -1);
   }
 
   toggleChildMenu = () => {
