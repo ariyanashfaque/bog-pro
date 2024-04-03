@@ -1,39 +1,8 @@
-import {
-  FormGroup,
-  Validators,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-} from "@angular/forms";
-import {
-  IonImg,
-  IonRow,
-  IonCol,
-  IonText,
-  IonGrid,
-  IonIcon,
-  IonTitle,
-  IonInput,
-  IonLabel,
-  IonHeader,
-  IonButton,
-  IonSelect,
-  IonFooter,
-  IonContent,
-  IonToolbar,
-  IonSegment,
-  IonButtons,
-  IonBackdrop,
-  IonTextarea,
-  IonActionSheet,
-  IonSelectOption,
-  IonSegmentButton,
-  LoadingController,
-} from "@ionic/angular/standalone";
-import { Store } from "@ngrx/store";
+import { HttpErrorResponse } from "@angular/common/http";
 import {
   Input,
   OnInit,
+  Output,
   inject,
   signal,
   Component,
@@ -41,60 +10,92 @@ import {
   WritableSignal,
 } from "@angular/core";
 import {
+  FormGroup,
+  Validators,
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+} from "@angular/forms";
+import { Router } from "@angular/router";
+import {
+  IonImg,
+  IonRow,
+  IonCol,
+  IonItem,
+  IonIcon,
+  IonList,
+  IonGrid,
+  IonText,
+  IonLabel,
+  IonModal,
+  IonTitle,
+  IonInput,
+  IonHeader,
+  IonButton,
+  IonFooter,
+  IonSelect,
+  IonContent,
+  IonToolbar,
+  IonButtons,
+  IonSegment,
+  IonTextarea,
+  IonSelectOption,
+  IonSegmentButton,
+  LoadingController,
+} from "@ionic/angular/standalone";
+import { Store } from "@ngrx/store";
+import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
+import { ToastService } from "src/app/services/toast-service/toast.service";
+import { HttpService } from "src/app/services/http-service/http-client.service";
+import {
   AssetsModel,
   PlantsModel,
   AssetResponse,
-  AssetCategoryModel,
   CategoriesModel,
+  AssetCategoryModel,
 } from "src/app/store/models/plant.model";
-import { HttpErrorResponse } from "@angular/common/http";
-import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
-import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header/header.component";
-import { HttpService } from "src/app/services/http-service/http-client.service";
-import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
-import { Router } from "@angular/router";
 
 @Component({
-  standalone: true,
-  selector: "app-asset",
-  templateUrl: "./asset.page.html",
-  styleUrls: ["./asset.page.scss"],
   imports: [
     IonCol,
-    IonRow,
     IonImg,
-    IonIcon,
-    IonGrid,
+    IonRow,
     IonText,
-    IonLabel,
+    IonGrid,
+    IonList,
+    IonItem,
+    IonIcon,
     IonInput,
     IonTitle,
+    IonModal,
+    IonLabel,
     IonFooter,
     IonButton,
     IonHeader,
     IonSelect,
-    IonButtons,
     IonSegment,
+    IonButtons,
     IonToolbar,
     IonContent,
     IonTextarea,
-    IonBackdrop,
     FormsModule,
-    IonActionSheet,
-    HeaderComponent,
     IonSelectOption,
     IonSegmentButton,
     ReactiveFormsModule,
-    AssetCategorySelectModalComponent,
   ],
+
+  standalone: true,
+
+  selector: "app-asset-approval-update-modal",
+  templateUrl: "./asset-approval-update-modal.component.html",
+  styleUrls: ["./asset-approval-update-modal.component.scss"],
 })
-export class AssetPage implements OnInit {
+export class AssetApprovalUpdateModalComponent implements OnInit {
+
 
   plantId: string;
   segment: string;
   asset: AssetsModel;
-  isMenuOpen: boolean;
   store = inject(Store);
   router = inject(Router);
   assetRegistrationForm: FormGroup;
@@ -102,8 +103,9 @@ export class AssetPage implements OnInit {
   assetCategory: AssetCategoryModel;
   toastService = inject(ToastService);
   loadingCtrl = inject(LoadingController);
-  isMenuToggleOpen = new EventEmitter<boolean>(false);
+  @Input() isApprovalMenuOpen: boolean = false;
   isFormValid: WritableSignal<boolean> = signal(false);
+  @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
   @Input()
   set id(plantId: string) {
@@ -127,11 +129,13 @@ export class AssetPage implements OnInit {
     this.plantId = "";
     this.segment = "info";
     this.assetCategory = {};
-    this.isMenuOpen = false;
+    this.isApprovalMenuOpen = false;
     this.asset.assetCategories = [];
 
     this.assetRegistrationForm = new FormGroup({
       sapId: new FormControl(""),
+      assetId: new FormControl(""),
+      hacCode: new FormControl(""),
       assetType: new FormControl(""),
       assetImages: new FormControl(""),
       assetLocation: new FormControl(""),
@@ -139,7 +143,7 @@ export class AssetPage implements OnInit {
       assetName: new FormControl("", Validators.required),
       costCenter: new FormControl("", Validators.required),
       assetStatus: new FormControl("", Validators.required),
-      assetId: new FormControl({ value: "", disabled: true }),
+
     });
   }
 
@@ -167,18 +171,13 @@ export class AssetPage implements OnInit {
   handleChange(event: any) {
     this.segment = event?.detail?.value;
   }
-
-  handleMenuToggle = () => {
-    this.isMenuOpen = !this.isMenuOpen;
-    this.isMenuToggleOpen.emit(this.isMenuOpen);
-  };
-
-  handleErrorModal = (event: any) => {
-    this.isMenuOpen = event;
-  };
+  menuToggle() {
+    this.isApprovalMenuOpen = !this.isApprovalMenuOpen;
+    this.isMenuToggleOpen.emit(this.isApprovalMenuOpen);
+  }
 
   handleSelectedCategory(event: CategoriesModel[]) {
-    this.isMenuOpen = false;
+    this.isApprovalMenuOpen = false;
     this.asset = { ...this.asset, assetCategories: event };
   }
 

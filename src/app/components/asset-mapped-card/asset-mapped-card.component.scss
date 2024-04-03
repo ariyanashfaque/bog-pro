@@ -5,11 +5,20 @@
 
 .deleterequest {
   background-color: #fff0f2;
-
   border-color: red;
 }
-.bgEditBtn {
+.approverbgEditBtn {
   background-color: #c2dddd;
+}
+// .bgDeleteBtn {
+//   background-color: #0073824d;
+// }
+// .deletePending {
+//   background-color: #c6c6c6;
+// }
+
+.bgEditBtn {
+  background-color: #007382;
 }
 .bgDeleteBtn {
   background-color: #0073824d;
@@ -41,6 +50,11 @@ ion-badge {
 .imagebox {
   background-color: #fff;
   border-color: #007382;
+}
+
+.errorbox {
+  background-color: #fff;
+  border-color: red;
 }
 .sourceBadge {
   background-color: #bec4c4;

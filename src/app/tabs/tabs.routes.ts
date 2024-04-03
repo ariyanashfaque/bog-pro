@@ -15,14 +15,14 @@ export const routes: Routes = [
         path: "dashboard",
         loadComponent: () =>
           import("../pages/dashboard/dashboard.page").then(
-            (page) => page.DashboardPage,
+            (page) => page.DashboardPage
           ),
       },
       {
         path: "map-view",
         loadComponent: () =>
           import("../pages/map-view/map-view.page").then(
-            (page) => page.MapViewPage,
+            (page) => page.MapViewPage
           ),
       },
       {
@@ -32,7 +32,7 @@ export const routes: Routes = [
             path: "",
             loadComponent: () =>
               import("../pages/assessment/assessment.page").then(
-                (page) => page.AssessmentPage,
+                (page) => page.AssessmentPage
               ),
           },
         ],
@@ -44,7 +44,7 @@ export const routes: Routes = [
             path: "",
             loadComponent: () =>
               import("../pages/asset-register/asset-register.page").then(
-                (page) => page.AssetRegisterPage,
+                (page) => page.AssetRegisterPage
               ),
           },
         ],
@@ -53,7 +53,7 @@ export const routes: Routes = [
         path: "action-management",
         loadComponent: () =>
           import("../pages/action-management/action-management.page").then(
-            (page) => page.ActionManagementPage,
+            (page) => page.ActionManagementPage
           ),
       },
     ],
@@ -89,7 +89,7 @@ export const routes: Routes = [
         path: ":id",
         loadChildren: () =>
           import("../pages/assessment/findings/findings.routes").then(
-            (routes) => routes.routes,
+            (routes) => routes.routes
           ),
       },
     ],
@@ -106,7 +106,7 @@ export const routes: Routes = [
         path: "",
         loadChildren: () =>
           import("../pages/sap-configuration/sap-configuration.routes").then(
-            (routes) => routes.routes,
+            (routes) => routes.routes
           ),
       },
     ],
