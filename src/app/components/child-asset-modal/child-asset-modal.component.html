@@ -61,9 +61,14 @@
       class="w-full max-h-[236px] px-2 py-2 flex items-start gap-2 flex-wrap overflow-y-auto"
     >
       <!-- Assets -->
-      <div class="cursor-pointer" (click)="onAssetClick()">
+      @for(subAsset of subAssets; track $index){
+
+      <div class="cursor-pointer" (click)="onAssetClick(subAsset, $index)">
         <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+          class="h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center overflow-hidden"
+          [class]="
+            activeIndex() == $index ? 'border-[#007382]' : 'border-[#D6EAEB]'
+          "
         >
           <img
             class="object-cover w-full h-full"
@@ -72,149 +77,10 @@
           />
         </div>
         <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
+          <span class="text-[#000000DE]">{{ subAsset.name }}</span>
         </div>
       </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo000000000000</span>
-        </div>
-      </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo000000000000</span>
-        </div>
-      </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
-      <div class="cursor-pointer">
-        <div
-          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/silo.png"
-            alt="silo"
-          />
-        </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">Silo</span>
-        </div>
-      </div>
+      }
     </div>
   </div>
 </div>

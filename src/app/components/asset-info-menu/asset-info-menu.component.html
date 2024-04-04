@@ -32,6 +32,23 @@
     class="absolute text-black top-9 w-full h-full bg-white overflow-y-scroll"
   >
     <!-- Your Content -->
-    <div class="px-5 py-10"></div>
+    <div class="px-5 py-10">
+      <ion-text color="primary">
+        <h1>
+          Selected Asset:
+          <span class="font-bold text-2xl">{{ asset().name }}</span>
+        </h1>
+      </ion-text>
+
+      <ion-button
+        class="fixed bottom-0 right-0"
+        (click)="nextButton()"
+        expand="block"
+        fill="clear"
+        shape="round"
+      >
+        next
+      </ion-button>
+    </div>
   </div>
 </div>

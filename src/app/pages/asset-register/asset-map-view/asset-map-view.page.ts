@@ -76,6 +76,8 @@ export class AssetMapViewPage implements OnInit {
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
   assetModalActiveIndex = signal<number>(-1);
+  childAsset = signal<any>({});
+  subAssetActiveIndex = signal<number>(-1);
 
   @Input()
   set id(plantId: string) {
@@ -130,6 +132,9 @@ export class AssetMapViewPage implements OnInit {
     this.assets = [];
     this.plantId = "";
     this.groupedAssets = [];
+    effect(() => {
+      console.log("subAssetActiveIndex in page: ", this.subAssetActiveIndex());
+    });
   }
 
   closeSubAssetModal() {
@@ -143,6 +148,7 @@ export class AssetMapViewPage implements OnInit {
     );
     this.isSubAssetModalOpen.update((isSubAssetModalOpen) => false);
     this.assetModalActiveIndex.update(() => -1);
+    this.subAssetActiveIndex.update(() => -1);
   }
 
   toggleChildMenu = () => {

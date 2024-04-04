@@ -62,11 +62,17 @@
 <app-child-asset-modal
   [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
   (click)="closeSubAssetModal()"
+  [(childAsset)]="childAsset"
+  [(activeIndex)]="subAssetActiveIndex"
 ></app-child-asset-modal>
 }
 
 <!-- Asset info menu -->
-<app-asset-info-menu [(isMenuOpen)]="isAssetInfoMenuOpen"></app-asset-info-menu>
+<app-asset-info-menu
+  [(isMenuOpen)]="isAssetInfoMenuOpen"
+  [(asset)]="childAsset"
+  [(subAssetActiveIndex)]="subAssetActiveIndex"
+></app-asset-info-menu>
 
 <!-- Sub-Assets Modal -->
 <app-sub-asset-modal

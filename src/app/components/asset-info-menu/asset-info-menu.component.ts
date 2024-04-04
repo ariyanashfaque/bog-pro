@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  effect,
+  EventEmitter,
+  Input,
+  model,
+  OnInit,
+  Output,
+} from "@angular/core";
 import {
   IonIcon,
   IonText,
@@ -9,6 +17,7 @@ import {
   IonRow,
   IonInput,
   IonTextarea,
+  IonButton,
 } from "@ionic/angular/standalone";
 
 @Component({
@@ -17,6 +26,7 @@ import {
   styleUrls: ["./asset-info-menu.component.scss"],
   standalone: true,
   imports: [
+    IonButton,
     IonTextarea,
     IonInput,
     IonRow,
@@ -33,12 +43,26 @@ export class AssetInfoMenuComponent implements OnInit {
   @Output() isMenuOpenChange: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
-  constructor() {}
+  asset = model<any>({});
+  subAssetActiveIndex = model<number>(-1);
+
+  constructor() {
+    effect(() => {
+      console.log("asset in asset info menu", this.asset());
+      console.log("subAssetActiveIndex", this.subAssetActiveIndex());
+    });
+  }
 
   ngOnInit() {}
 
   menuToggle() {
     this.isMenuOpen = !this.isMenuOpen;
     this.isMenuOpenChange.emit(this.isMenuOpen);
+  }
+
+  nextButton() {
+    this.subAssetActiveIndex.update(
+      (subAssetActiveIndex) => subAssetActiveIndex + 1
+    );
   }
 }
