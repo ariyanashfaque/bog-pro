@@ -186,3 +186,8 @@ ion-select::part(icon) {
   color: #007382;
   width: 17px;
 }
+
+// Google maps js api shows blue focus border | Removed
+.gm-style iframe + div {
+  border: none !important;
+}

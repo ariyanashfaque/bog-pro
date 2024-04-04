@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, input, model, OnInit } from "@angular/core";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 
 @Component({
@@ -9,14 +9,15 @@ import { RoundProgressComponent } from "angular-svg-round-progressbar";
   imports: [RoundProgressComponent],
 })
 export class ChildAssetModalComponent implements OnInit {
-  @Input() isAssetInfoOpen: boolean;
-  // @Output() isModalMove: EventEmitter<boolean> = new EventEmitter<boolean>();
+  isAssetInfoMenuOpen = model(false);
 
-  constructor() {
-    console.log("isAssetInfoOpen: ", this.isAssetInfoOpen);
+  onAssetClick() {
+    this.isAssetInfoMenuOpen.update(
+      (isAssetInfoMenuOpen) => !isAssetInfoMenuOpen
+    );
   }
 
-  ngOnInit() {
-    // this.isModalMove.emit(this.isAssetInfoOpen);
-  }
+  constructor() {}
+
+  ngOnInit() {}
 }
