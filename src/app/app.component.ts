@@ -42,6 +42,7 @@ import {
   trashBinOutline,
   documentAttachOutline,
   chevronDownCircleOutline,
+  alertCircleOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { Component, inject } from "@angular/core";
@@ -96,6 +97,7 @@ export class AppComponent {
       listCircleOutline,
       syncCircleOutline,
       chevronDownOutline,
+      alertCircleOutline,
       documentTextOutline,
       personCircleOutline,
       notificationsOutline,

@@ -42,8 +42,6 @@ ion-item {
   border: 2px solid #007382;
 }
 ion-toggle {
-
-
   --handle-width: 20px;
   --handle-height: 20px;
   --handle-spacing: 3px;
@@ -56,4 +54,9 @@ ion-toggle {
 ion-toggle::part(track) {
   width: 45px;
   height: 25px;
+}
+ion-backdrop {
+  background: var(--ion-color-dark);
+  opacity: 0.6;
+  z-index: 40;
 }

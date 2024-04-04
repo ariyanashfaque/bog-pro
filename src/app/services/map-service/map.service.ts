@@ -46,7 +46,6 @@ export class MapService {
     });
 
     this.addRectangleZone();
-
   }
 
   public async addMarker(position: google.maps.LatLngLiteral) {

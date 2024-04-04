@@ -1,6 +1,7 @@
 import {
   IonCol,
   IonRow,
+  IonImg,
   IonGrid,
   IonText,
   IonIcon,
@@ -9,14 +10,21 @@ import {
   IonBadge,
   IonButton,
   IonButtons,
+  IonBackdrop,
   IonCardTitle,
   IonCardHeader,
   IonCardContent,
   IonCardSubtitle,
-  IonImg,
 } from "@ionic/angular/standalone";
 import { Router, RouterModule } from "@angular/router";
-import { Component, Input, OnInit, inject } from "@angular/core";
+import {
+  Input,
+  OnInit,
+  Output,
+  inject,
+  Component,
+  EventEmitter,
+} from "@angular/core";
 import { AssetsModel } from "src/app/store/models/plant.model";
 
 @Component({
@@ -32,6 +40,7 @@ import { AssetsModel } from "src/app/store/models/plant.model";
     IonLabel,
     IonButton,
     IonButtons,
+    IonBackdrop,
     RouterModule,
     IonCardTitle,
     IonCardHeader,
@@ -45,18 +54,24 @@ import { AssetsModel } from "src/app/store/models/plant.model";
 })
 export class AssetMappedCardComponent implements OnInit {
   router = inject(Router);
-
   @Input() plantId: string;
-  @Input() toggleChecked: boolean;
+  isApprover: boolean = true;
+  isMenuOpen: boolean = false;
   @Input() asset: AssetsModel;
-
+  @Input() toggleChecked: boolean;
+  @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
   constructor() {
     this.asset = {};
     this.plantId = "";
+    this.isMenuOpen = false;
     this.toggleChecked = false;
   }
 
   ngOnInit() {}
+  handleMenuToggle = () => {
+    this.isMenuToggleOpen.emit(!this.isMenuOpen);
+  };
+
 
   handleNavigate = (assetId?: string) => {
     this.router.navigate([
