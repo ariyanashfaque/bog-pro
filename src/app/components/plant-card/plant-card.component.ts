@@ -10,6 +10,7 @@ import {
 import { RouterModule } from "@angular/router";
 import { PlantsModel } from "src/app/store/models/plant.model";
 import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
+import { AccessModel } from "src/app/store/models/role.model";
 
 @Component({
   standalone: true,
@@ -29,20 +30,23 @@ import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 })
 export class PlantCardComponent implements OnInit {
   @Input() plant: PlantsModel;
+  @Input() role: AccessModel;
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
   isMenuOpen: boolean = false;
   totalAssetMapped: number = 5;
   isApprover: boolean = false;
-  isError:boolean=true;
+  isError: boolean = true;
 
   constructor() {
     this.plant = {};
   }
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.role);
+  }
 
   handleMenuToggle = () => {
     console.log(this.isMenuOpen);
-    
+
     this.isMenuToggleOpen.emit(!this.isMenuOpen);
   };
 }

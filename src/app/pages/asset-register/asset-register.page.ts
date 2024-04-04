@@ -39,6 +39,10 @@ import { HttpService } from "src/app/services/http-service/http-client.service";
 import { PlantCardComponent } from "src/app/components/plant-card/plant-card.component";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { PlantCardErrorModalComponent } from "src/app/components/plant-card-error-modal/plant-card-error-modal.component";
+import {
+  CountryHseHead,
+  Champion,
+} from "src/app/store/models/role.model";
 
 @Component({
   imports: [
@@ -72,15 +76,37 @@ import { PlantCardErrorModalComponent } from "src/app/components/plant-card-erro
 })
 export class AssetRegisterPage implements OnInit {
   store = inject(Store);
+  plants: PlantsModel[];
+  champion: Champion;
+  country_hse_head: CountryHseHead;
+  isMenuOpen: boolean = false;
   httpService = inject(HttpService);
   toastService = inject(ToastService);
-
-  plants: PlantsModel[];
-  isMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
+  role: any;
 
   constructor() {
+    this.champion = {
+      role: "champion",
+      title: "champion/Engineer",
+      access: {
+        l1Aproval: false,
+        InventoryEdit: true,
+        inventoryCreation: true,
+      },
+    };
+
+    this.country_hse_head = {
+      role: "country_hse_head",
+      title: "country HSE Head",
+      access: {
+        l1Aproval: true,
+        InventoryEdit: false,
+        inventoryCreation: false,
+      },
+    };
     this.plants = [];
+    this.role = {};
   }
 
   ionViewDidEnter() {}
@@ -91,6 +117,8 @@ export class AssetRegisterPage implements OnInit {
       .subscribe({ next: (plants) => (this.plants = plants) });
 
     this.GetAllPlants();
+    this.role = this.country_hse_head;
+    console.log(this.role);
   }
 
   handleErrorModal = (event: any) => {
