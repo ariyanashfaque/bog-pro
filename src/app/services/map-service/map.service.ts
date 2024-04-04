@@ -51,10 +51,30 @@ export class MapService {
   public async addMarker(position: google.maps.LatLngLiteral) {
     const { AdvancedMarkerElement } = await this.importMarkersLibrary("marker");
 
+    const markerImage = document.createElement("img");
+    markerImage.src = "../assets/check-in/plant.svg";
+    markerImage.width = 60;
+    markerImage.height = 60;
+
+    const mapMarker = document.createElement("div");
+    const counterElement = document.createElement("div");
+    counterElement.textContent = "3";
+    counterElement.style.top = "-10%";
+    counterElement.style.right = "-10%";
+    counterElement.style.color = "white";
+    counterElement.style.padding = "3px 6px";
+    counterElement.style.borderRadius = "50%";
+    counterElement.style.position = "absolute";
+    counterElement.style.backgroundColor = "red";
+
+    mapMarker.appendChild(markerImage);
+    mapMarker.appendChild(counterElement);
+
     const marker = new AdvancedMarkerElement({
       map: this.map,
       position: position,
       gmpClickable: true,
+      content: mapMarker,
     });
 
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
@@ -74,17 +94,17 @@ export class MapService {
       strokeWeight: 2,
       fillColor: "#FF0000",
       fillOpacity: 0.35,
-      clickable: false
+      clickable: false,
     };
 
-     rectangleCoordinates.forEach(coords => {
+    rectangleCoordinates.forEach((coords) => {
       const rectangle = new google.maps.Rectangle({
         bounds: coords,
         map: this.map,
         ...rectangleOptions,
-        });
-        this.rectangles.push(rectangle);
-     });
+      });
+      this.rectangles.push(rectangle);
+    });
   }
 
   private async addMapStyles() {
