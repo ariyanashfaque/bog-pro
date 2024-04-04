@@ -1,14 +1,20 @@
 <app-header class="z-20 fixed w-full" headerTitle="Bird eye view"></app-header>
 
 @if (isChildOpen() == true) {
-<ion-backdrop class="z-10" [visible]="true"> </ion-backdrop>
+<ion-backdrop class="z-10" [visible]="true"></ion-backdrop>
 }
 
 <!-- Content -->
 <ion-content [fullscreen]="true">
   <div class="h-full w-full overflow-scroll bg-gray-200">
     <!-- Content Body -->
-    <map-view></map-view>
+    <div
+      (dndDrop)="onDrop($event)"
+      dndDropzone
+      #mapRef
+      class="maps"
+      id="map"
+    ></div>
   </div>
 </ion-content>
 

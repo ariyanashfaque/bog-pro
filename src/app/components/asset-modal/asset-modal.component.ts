@@ -12,13 +12,14 @@ import {
   WritableSignal,
 } from "@angular/core";
 import { IonIcon, IonText } from "@ionic/angular/standalone";
+import { DndModule } from "ngx-drag-drop";
 
 @Component({
   selector: "app-asset-modal",
   templateUrl: "./asset-modal.component.html",
   styleUrls: ["./asset-modal.component.scss"],
   standalone: true,
-  imports: [IonText, IonIcon],
+  imports: [IonText, IonIcon, DndModule],
 })
 export class AssetModalComponent implements OnInit {
   isMenuOpen = model<boolean>();
@@ -57,6 +58,13 @@ export class AssetModalComponent implements OnInit {
       this.activeIndex.update(() => index);
     }
     console.log("Index: ", this.activeIndex());
+  }
+
+  onDragStart(event: MouseEvent,asset: any){
+    console.log(asset);
+    this.selectedAsset.emit(asset);
+    event.stopPropagation();
+
   }
 
   constructor() {

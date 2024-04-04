@@ -1,10 +1,13 @@
 import {
   Component,
   effect,
+  ElementRef,
   inject,
   Input,
   OnInit,
   signal,
+  ViewChild,
+  viewChild,
   WritableSignal,
 } from "@angular/core";
 import { Store } from "@ngrx/store";
@@ -37,6 +40,8 @@ import {
   PlantsModel,
   AssetsResponse,
 } from "src/app/store/models/plant.model";
+import { MapService } from "src/app/services/map-service/map.service";
+import { DndDropEvent, DndModule } from "ngx-drag-drop";
 @Component({
   selector: "app-asset-map-view",
   templateUrl: "./asset-map-view.page.html",
@@ -50,6 +55,7 @@ import {
     IonTitle,
     IonButton,
     IonHeader,
+    DndModule,
     IonToolbar,
     IonContent,
     IonBackdrop,
@@ -64,10 +70,14 @@ import {
   ],
 })
 export class AssetMapViewPage implements OnInit {
+  mapService = inject(MapService);
+  // mapRef = viewChild.required<ElementRef<HTMLDivElement>>("mapRef");
+  @ViewChild("mapRef", { static: true }) mapRef: ElementRef<HTMLDivElement>;
   plantId: string;
   store = inject(Store);
   assets: AssetsModel[];
   selectedAsset = signal<any>({});
+  isDragging: boolean = false;
   httpService = inject(HttpService);
   toastService = inject(ToastService);
   isChildOpen = signal<boolean>(false);
@@ -99,6 +109,10 @@ export class AssetMapViewPage implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.mapService.initializeMap(this.mapRef);
+  }
+
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: PlantsModel) => {
@@ -124,6 +138,27 @@ export class AssetMapViewPage implements OnInit {
 
     console.log("Assets:", this.assets);
     console.log("Grouped Assets:", this.groupedAssets);
+  }
+
+  onDrop(event: DndDropEvent) {
+    this.mapService.isDragging.next(true);
+    this.mapService.addDropedAsset();
+
+    // const bounds = this.mapRef.nativeElement.getBoundingClientRect();
+    // const mouseX = event.event.clientX - bounds.left;
+    // const mouseY = event.event.clientY - bounds.top;
+
+    // const points = this.mapService.calculateBounds(mouseX, mouseY);
+    // console.log(points);
+  }
+
+  // movedMouse(event: MouseEvent){
+  // this.mapService.isDragging.next(true);
+
+  // }
+
+  ngOnDestroy(): void {
+    this.mapService.destroyMap();
   }
 
   constructor() {
