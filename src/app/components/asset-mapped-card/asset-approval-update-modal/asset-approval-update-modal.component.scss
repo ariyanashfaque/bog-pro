@@ -81,3 +81,13 @@ ion-button[disabled] {
 .categoryBg {
   background-color: #edf5f5;
 }
+
+ion-icon.active {
+  .svg {
+    color: #007382;
+  }
+
+  align-items: center;
+  border-color: #007382;
+  background-color: #edf5f5;
+}

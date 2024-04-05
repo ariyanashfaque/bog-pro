@@ -90,7 +90,6 @@ import { Router } from "@angular/router";
   ],
 })
 export class AssetPage implements OnInit {
-
   plantId: string;
   segment: string;
   asset: AssetsModel;
@@ -144,6 +143,8 @@ export class AssetPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.asset.assetCategories);
+
     this.assetRegistrationForm.valueChanges.subscribe({
       next: () => {
         if (this.assetRegistrationForm.valid) {
@@ -180,6 +181,7 @@ export class AssetPage implements OnInit {
   handleSelectedCategory(event: CategoriesModel[]) {
     this.isMenuOpen = false;
     this.asset = { ...this.asset, assetCategories: event };
+    console.log(this.asset);
   }
 
   handleSendForApproval = async () => {

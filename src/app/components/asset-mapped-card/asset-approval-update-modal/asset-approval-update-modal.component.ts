@@ -91,7 +91,10 @@ import {
   styleUrls: ["./asset-approval-update-modal.component.scss"],
 })
 export class AssetApprovalUpdateModalComponent implements OnInit {
-
+  selectedCategories: CategoriesModel[];
+  selectedCategoriesEmit = new EventEmitter<CategoriesModel[]>();
+  categories: CategoriesModel[];
+  selectedCategoryCount: number;
 
   plantId: string;
   segment: string;
@@ -125,10 +128,86 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
   }
 
   constructor() {
+    this.categories = [
+      {
+        id: "ASSET001",
+        order: 1,
+        categorySelected: true,
+        categoryType: "sim",
+        categoryTitle: "Sim",
+      },
+      {
+        id: "ASSET001",
+
+        order: 3,
+        categorySelected: false,
+        categoryType: "quarry",
+        categoryTitle: "Quarry",
+      },
+      {
+        id: "ASSET002",
+
+        order: 4,
+        categorySelected: false,
+        categoryType: "electrical",
+        categoryTitle: "Electrical",
+      },
+      {
+        id: "ASSET003",
+
+        order: 7,
+        categorySelected: false,
+        categoryType: "environment",
+        categoryTitle: "Environment",
+      },
+      {
+        id: "ASSET004",
+
+        order: 8,
+        categorySelected: false,
+        categoryType: "electrical",
+        categoryTitle: "Electrical",
+      },
+      {
+        id: "ASSET005",
+
+        order: 5,
+        categorySelected: false,
+        categoryType: "hotMaterial",
+        categoryTitle: "Hot Material",
+      },
+      {
+        id: "ASSET006",
+
+        order: 6,
+        categorySelected: false,
+        categoryType: "fireProtection",
+        categoryTitle: "Fire Protection",
+      },
+      {
+        id: "ASSET007",
+        order: 2,
+        categorySelected: false,
+        categoryType: "materialManagement",
+        categoryTitle: "Material Management",
+      },
+    ];
+    this.selectedCategories = [];
+    this.assetCategory = {
+      sim: false,
+      quarry: false,
+      insurance: false,
+      electrical: false,
+      environment: false,
+      hotMaterial: false,
+      fireProtection: false,
+      materialManagement: false,
+    };
+    this.selectedCategoryCount = 0;
+
     this.asset = {};
     this.plantId = "";
     this.segment = "info";
-    this.assetCategory = {};
     this.isApprovalMenuOpen = false;
     this.asset.assetCategories = [];
 
@@ -143,11 +222,71 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
       assetName: new FormControl("", Validators.required),
       costCenter: new FormControl("", Validators.required),
       assetStatus: new FormControl("", Validators.required),
-
     });
   }
 
   ngOnInit() {
+    this.selectedCategories = this.categories.map((category) => {
+      // return {
+      //   ...category,
+      //   categorySelected: true,
+      // };
+      if (
+        this.selectedCategories &&
+        this.selectedCategories.find(
+          (selectedCategory) =>
+            selectedCategory.id === category.id &&
+            selectedCategory.categorySelected
+        )
+      ) {
+        return {
+          ...category,
+          categorySelected: true,
+        };
+      } else {
+        return {
+          ...category,
+          categorySelected: false,
+        };
+      }
+    });
+
+    console.log(this.selectedCategories);
+    console.log(this.categories);
+
+    // this.store.select("categories").subscribe({
+    //   next: (categories: CategoriesModel[]) => {
+    //     this.categories = categories
+    //       .map((category) => {
+    //         if (
+    //           this.selectedCategories &&
+    //           this.selectedCategories.find(
+    //             (selectedCategory) =>
+    //               selectedCategory.id === category.id &&
+    //               selectedCategory.categorySelected
+    //           )
+    //         ) {
+    //           return {
+    //             ...category,
+    //             categorySelected: true,
+    //           };
+    //         } else {
+    //           return {
+    //             ...category,
+    //             categorySelected: false,
+    //           };
+    //         }
+    //       })
+    //       .sort((a, b) => {
+    //         if (a?.order > b.order) return 1;
+    //         if (a.order < b.order) return -1;
+    //         return 0;
+    //       });
+
+    //     console.log(this.categories);
+    //   },
+    // });
+
     this.assetRegistrationForm.valueChanges.subscribe({
       next: () => {
         if (this.assetRegistrationForm.valid) {
@@ -170,15 +309,25 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
   }
   handleChange(event: any) {
     this.segment = event?.detail?.value;
+    this.asset = { ...this.asset, assetCategories: event };
+    console.log();
   }
   menuToggle() {
     this.isApprovalMenuOpen = !this.isApprovalMenuOpen;
     this.isMenuToggleOpen.emit(this.isApprovalMenuOpen);
   }
 
+  handleCategory = (category: CategoriesModel) => {
+    category.categorySelected = !category.categorySelected;
+    this.selectedCategoryCount = this.categories?.filter(
+      (category) => category.categorySelected
+    ).length;
+    this.selectedCategoriesEmit.emit(this.categories);
+  };
+
   handleSelectedCategory(event: CategoriesModel[]) {
-    this.isApprovalMenuOpen = false;
     this.asset = { ...this.asset, assetCategories: event };
+    console.log(this.asset);
   }
 
   handleSendForApproval = async () => {

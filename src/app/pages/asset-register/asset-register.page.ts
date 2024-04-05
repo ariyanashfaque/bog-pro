@@ -75,15 +75,15 @@ import {
   templateUrl: "./asset-register.page.html",
 })
 export class AssetRegisterPage implements OnInit {
+  role: any;
+  champion: Champion;
   store = inject(Store);
   plants: PlantsModel[];
-  champion: Champion;
-  country_hse_head: CountryHseHead;
   isMenuOpen: boolean = false;
+  country_hse_head: CountryHseHead;
   httpService = inject(HttpService);
   toastService = inject(ToastService);
   isLoading: WritableSignal<boolean> = signal(false);
-  role: any;
 
   constructor() {
     this.champion = {
