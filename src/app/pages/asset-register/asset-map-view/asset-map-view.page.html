@@ -1,7 +1,7 @@
 <app-header class="z-20 fixed w-full" headerTitle="Bird eye view"></app-header>
 
 @if (isChildOpen() == true) {
-<ion-backdrop class="z-10" [visible]="true"> </ion-backdrop>
+<ion-backdrop class="z-10" [visible]="true"></ion-backdrop>
 }
 
 <!-- Content -->
@@ -57,14 +57,14 @@
   asset info menu
 </button>
 
-<!-- CHILD MODAL -->
+<!-- Sub Asset MODAL -->
 @if (isChildOpen()) {
-<app-child-asset-modal
+<app-sub-asset-modal
   [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
   (click)="closeSubAssetModal()"
   [(childAsset)]="childAsset"
   [(activeIndex)]="subAssetActiveIndex"
-></app-child-asset-modal>
+></app-sub-asset-modal>
 }
 
 <!-- Asset info menu -->
@@ -74,17 +74,17 @@
   [(subAssetActiveIndex)]="subAssetActiveIndex"
 ></app-asset-info-menu>
 
-<!-- Sub-Assets Modal -->
-<app-sub-asset-modal
+<!-- Sub-Assets sidebar -->
+<app-sub-asset-sidebar
   [(isMenuOpen)]="isSubAssetModalOpen"
   [(selectedAsset)]="selectedAsset"
-></app-sub-asset-modal>
+></app-sub-asset-sidebar>
 
-<!-- Sidebar -->
-<app-asset-modal
+<!-- Asset Sidebar -->
+<app-asset-sidebar
   [(isMenuOpen)]="isAssetInfoMenuOpen"
   [(isChildOpen)]="isChildOpen"
   [assetData]="groupedAssets"
   (selectedAsset)="onAssetReceived($event)"
   [(activeIndex)]="assetModalActiveIndex"
-></app-asset-modal>
+></app-asset-sidebar>

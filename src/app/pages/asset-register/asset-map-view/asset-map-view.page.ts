@@ -14,10 +14,10 @@ import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
-import { AssetModalComponent } from "src/app/components/asset-modal/asset-modal.component";
+import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-sidebar.component";
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
-import { SubAssetModalComponent } from "src/app/components/sub-assets-modal/sub-asset-modal.component";
-import { ChildAssetModalComponent } from "src/app/components/child-asset-modal/child-asset-modal.component";
+import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
+import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 import {
   IonIcon,
@@ -56,11 +56,11 @@ import {
     IonProgressBar,
     HeaderComponent,
     MapViewComponent,
-    AssetModalComponent,
+    AssetSidebarComponent,
     RoundProgressComponent,
     AssetInfoMenuComponent,
+    SubAssetSidebarComponent,
     SubAssetModalComponent,
-    ChildAssetModalComponent,
   ],
 })
 export class AssetMapViewPage implements OnInit {

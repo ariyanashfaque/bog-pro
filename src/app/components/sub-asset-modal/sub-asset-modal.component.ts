@@ -10,13 +10,13 @@ import {
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 
 @Component({
-  selector: "app-child-asset-modal",
+  selector: "app-sub-asset-modal",
   standalone: true,
-  templateUrl: "./child-asset-modal.component.html",
-  styleUrls: ["./child-asset-modal.component.scss"],
+  templateUrl: "./sub-asset-modal.component.html",
+  styleUrls: ["./sub-asset-modal.component.scss"],
   imports: [RoundProgressComponent],
 })
-export class ChildAssetModalComponent implements OnInit, OnChanges {
+export class SubAssetModalComponent implements OnInit, OnChanges {
   isAssetInfoMenuOpen = model(false);
   childAsset = model<any>({});
   activeIndex = model<number>(-1);

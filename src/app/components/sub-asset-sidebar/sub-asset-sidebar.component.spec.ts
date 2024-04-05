@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { IonicModule } from "@ionic/angular";
 
-import { SubAssetsModalComponent } from "./sub-asset-modal.component";
+import { SubAssetSidebarComponent } from "./sub-asset-sidebar.component";
 
 describe("SubAssetsModalComponent", () => {
-  let component: SubAssetsModalComponent;
-  let fixture: ComponentFixture<SubAssetsModalComponent>;
+  let component: SubAssetSidebarComponent;
+  let fixture: ComponentFixture<SubAssetSidebarComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [SubAssetsModalComponent],
+      declarations: [SubAssetSidebarComponent],
       imports: [IonicModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SubAssetsModalComponent);
+    fixture = TestBed.createComponent(SubAssetSidebarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
