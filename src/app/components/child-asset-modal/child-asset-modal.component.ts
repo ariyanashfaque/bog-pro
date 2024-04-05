@@ -1,4 +1,12 @@
-import { Component, effect, input, model, OnInit } from "@angular/core";
+import {
+  Component,
+  effect,
+  input,
+  model,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 
 @Component({
@@ -8,7 +16,7 @@ import { RoundProgressComponent } from "angular-svg-round-progressbar";
   styleUrls: ["./child-asset-modal.component.scss"],
   imports: [RoundProgressComponent],
 })
-export class ChildAssetModalComponent implements OnInit {
+export class ChildAssetModalComponent implements OnInit, OnChanges {
   isAssetInfoMenuOpen = model(false);
   childAsset = model<any>({});
   activeIndex = model<number>(-1);
@@ -19,7 +27,17 @@ export class ChildAssetModalComponent implements OnInit {
     this.childAsset.update(() => this.subAssets[this.activeIndex()]);
   }
 
-  constructor() {}
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["activeIndex"] && this.activeIndex() !== -1) {
+      this.childAsset.update(() => this.subAssets[this.activeIndex()]);
+    }
+  }
+
+  constructor() {
+    effect(() => {
+      console.log("Active indexxxxx: ", this.activeIndex());
+    });
+  }
 
   ngOnInit() {}
 
