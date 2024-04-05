@@ -21,7 +21,7 @@ ion-segment ion-segment-button.segment-button-checked {
     display: inline;
   }
   .segment-change {
-    width: 550px;
+    width: 500px;
     display: flex;
     align-items: center;
     background-color: #007382;
@@ -90,4 +90,11 @@ ion-icon.active {
   align-items: center;
   border-color: #007382;
   background-color: #edf5f5;
+}
+
+.scrollrow {
+  justify-content: flex-start; // changed
+  flex-wrap: nowrap;
+  overflow-x: scroll !important;
+  overflow-y: hidden;
 }

@@ -91,24 +91,23 @@ import {
   styleUrls: ["./asset-approval-update-modal.component.scss"],
 })
 export class AssetApprovalUpdateModalComponent implements OnInit {
-  selectedCategories: CategoriesModel[];
-  selectedCategoriesEmit = new EventEmitter<CategoriesModel[]>();
-  categories: CategoriesModel[];
-  selectedCategoryCount: number;
-
   plantId: string;
   segment: string;
   asset: AssetsModel;
   store = inject(Store);
   router = inject(Router);
+  categories: CategoriesModel[];
+  selectedCategoryCount: number;
   assetRegistrationForm: FormGroup;
   httpService = inject(HttpService);
   assetCategory: AssetCategoryModel;
   toastService = inject(ToastService);
+  selectedCategories: CategoriesModel[];
   loadingCtrl = inject(LoadingController);
   @Input() isApprovalMenuOpen: boolean = false;
   isFormValid: WritableSignal<boolean> = signal(false);
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
+  selectedCategoriesEmit = new EventEmitter<CategoriesModel[]>();
 
   @Input()
   set id(plantId: string) {
@@ -132,13 +131,12 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
       {
         id: "ASSET001",
         order: 1,
-        categorySelected: true,
+        categorySelected: false,
         categoryType: "sim",
         categoryTitle: "Sim",
       },
       {
         id: "ASSET001",
-
         order: 3,
         categorySelected: false,
         categoryType: "quarry",
@@ -146,7 +144,6 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
       },
       {
         id: "ASSET002",
-
         order: 4,
         categorySelected: false,
         categoryType: "electrical",
@@ -154,7 +151,6 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
       },
       {
         id: "ASSET003",
-
         order: 7,
         categorySelected: false,
         categoryType: "environment",
@@ -162,7 +158,6 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
       },
       {
         id: "ASSET004",
-
         order: 8,
         categorySelected: false,
         categoryType: "electrical",
@@ -170,7 +165,6 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
       },
       {
         id: "ASSET005",
-
         order: 5,
         categorySelected: false,
         categoryType: "hotMaterial",
@@ -178,7 +172,6 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
       },
       {
         id: "ASSET006",
-
         order: 6,
         categorySelected: false,
         categoryType: "fireProtection",
@@ -226,33 +219,11 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedCategories = this.categories.map((category) => {
-      // return {
-      //   ...category,
-      //   categorySelected: true,
-      // };
-      if (
-        this.selectedCategories &&
-        this.selectedCategories.find(
-          (selectedCategory) =>
-            selectedCategory.id === category.id &&
-            selectedCategory.categorySelected
-        )
-      ) {
-        return {
-          ...category,
-          categorySelected: true,
-        };
-      } else {
-        return {
-          ...category,
-          categorySelected: false,
-        };
-      }
+    this.store.select("categories").subscribe({
+      next: (categories: CategoriesModel[]) => {
+        console.log(categories);
+      },
     });
-
-    console.log(this.selectedCategories);
-    console.log(this.categories);
 
     // this.store.select("categories").subscribe({
     //   next: (categories: CategoriesModel[]) => {
@@ -286,6 +257,33 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
     //     console.log(this.categories);
     //   },
     // });
+
+    this.selectedCategories = this.categories.map((category) => {
+      if (
+        this.selectedCategories &&
+        this.selectedCategories.find(
+          (selectedCategory) =>
+            selectedCategory.id === category.id &&
+            selectedCategory.categorySelected
+        )
+      ) {
+        return {
+          ...category,
+          categorySelected: true,
+        };
+      } else {
+        return {
+          ...category,
+          categorySelected: false,
+        };
+      }
+    });
+
+    this.selectedCategoryCount = this.categories?.filter(
+      (category) => category.categorySelected
+    ).length;
+
+    console.log(this.selectedCategories);
 
     this.assetRegistrationForm.valueChanges.subscribe({
       next: () => {

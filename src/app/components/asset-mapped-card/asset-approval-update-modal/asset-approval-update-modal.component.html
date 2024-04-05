@@ -21,13 +21,6 @@
         />
       </svg>
     </div>
-
-    <!-- <div class="h-full w-full">
-      <ion-img
-        class="-ml-12 -mt-[16.5px]"
-        src="../../../../assets/curvenew.png"
-      ></ion-img>
-    </div> -->
     <div class="w-auto h-full relative">
       <div
         (click)="menuToggle()"
@@ -43,7 +36,7 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12">
-          <div class="max-w-full mx-auto p-6 border-b-[2px]">
+          <div class="max-w-full mx-auto p-5 border-b-[2px]">
             <ion-segment
               class="p-2"
               [value]="segment"
@@ -229,14 +222,23 @@
                   </ion-col>
                 </ion-row>
               </form>
-              <div class="categoryBg w-[700px] -ml-[33px] p-4 ion-no-padding">
+              <div
+                class="categoryBg w-[700px] -ml-[33px] p-4 ion-no-padding overflow-x-scroll"
+              >
                 <div class="ml-7">
-                  <div class="font-bold text-[20px]">Select Category</div>
+                  <div class="font-bold text-[14px]">
+                    <ion-text class="font-gotham_medium" color="primary">
+                      Select Category* ({{ selectedCategoryCount }})
+                    </ion-text>
+                  </div>
                 </div>
                 <ion-grid class="w-[full]">
-                  <ion-row class="md:mx-4 my-2 ion-justify-content-between">
+                  <ion-row
+                    scrollX="true"
+                    class="scrollrow md:mx-4 my-2 ion-justify-content-between"
+                  >
                     @for (category of categories; track $index) {
-                    <ion-col size="1.3">
+                    <ion-col size="2">
                       <ion-button
                         fill="clear"
                         class="ion-no-padding w-full"
@@ -301,102 +303,6 @@
                     }
                   </ion-row>
                 </ion-grid>
-                <!-- <ion-grid class="w-full mt-2 ion-no-padding">
-                  <ion-row class="ion-no-padding ion-justify-content-between">
-                    <ion-col size="3" sizeMd="2" sizeLg="2">
-                      <ion-button fill="clear" class="ion-no-padding w-full">
-                        <ion-icon
-                          src="../../../assets/segment-icons/sim.svg"
-                          class="border-[3px] rounded-[6px] p-2 w-12 h-12"
-                        ></ion-icon>
-                      </ion-button>
-                      <ion-text
-                        color="dark"
-                        style="text-align: center"
-                        class="text-[16px]"
-                      >
-                        <p>category</p>
-                      </ion-text>
-                    </ion-col>
-                    <ion-col size="3" sizeMd="2" sizeLg="2">
-                      <ion-button fill="clear" class="ion-no-padding w-full">
-                        <ion-icon
-                          src="../../../assets/segment-icons/sim.svg"
-                          class="border-[3px] rounded-[6px] p-2 w-12 h-12"
-                        ></ion-icon>
-                      </ion-button>
-                      <ion-text
-                        color="dark"
-                        style="text-align: center"
-                        class="text-[16px]"
-                      >
-                        <p>category</p>
-                      </ion-text>
-                    </ion-col>
-
-                    <ion-col size="3" sizeMd="2" sizeLg="2">
-                      <ion-button fill="clear" class="ion-no-padding w-full">
-                        <ion-icon
-                          src="../../../assets/segment-icons/sim.svg"
-                          class="border-[3px] rounded-[6px] p-2 w-12 h-12"
-                        ></ion-icon>
-                      </ion-button>
-                      <ion-text
-                        color="dark"
-                        style="text-align: center"
-                        class="text-[16px]"
-                      >
-                        <p>category</p>
-                      </ion-text>
-                    </ion-col>
-                    <ion-col size="3" sizeMd="2" sizeLg="2">
-                      <ion-button fill="clear" class="ion-no-padding w-full">
-                        <ion-icon
-                          src="../../../assets/segment-icons/sim.svg"
-                          class="border-[3px] rounded-[6px] p-2 w-12 h-12"
-                        ></ion-icon>
-                      </ion-button>
-                      <ion-text
-                        color="dark"
-                        style="text-align: center"
-                        class="text-[16px]"
-                      >
-                        <p>category</p>
-                      </ion-text>
-                    </ion-col>
-                    <ion-col size="3" sizeMd="2" sizeLg="2">
-                      <ion-button fill="clear" class="ion-no-padding w-full">
-                        <ion-icon
-                          src="../../../assets/segment-icons/sim.svg"
-                          class="border-[3px] rounded-[6px] p-2 w-12 h-12"
-                        ></ion-icon>
-                      </ion-button>
-                      <ion-text
-                        color="dark"
-                        style="text-align: center"
-                        class="text-[16px]"
-                      >
-                        <p>category</p>
-                      </ion-text>
-                    </ion-col>
-
-                    <ion-col size="3" sizeMd="2" sizeLg="2">
-                      <ion-button fill="clear" class="ion-no-padding w-full">
-                        <ion-icon
-                          src="../../../assets/segment-icons/sim.svg"
-                          class="border-[3px] rounded-[6px] p-2 w-12 h-12"
-                        ></ion-icon>
-                      </ion-button>
-                      <ion-text
-                        color="dark"
-                        style="text-align: center"
-                        class="text-[16px]"
-                      >
-                        <p>category</p>
-                      </ion-text>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid> -->
               </div>
               <ion-row>
                 <ion-col size="6">
