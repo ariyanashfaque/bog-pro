@@ -159,7 +159,6 @@ export class AssetMappedPage implements OnInit {
     console.log("Assets:", this.assets);
     console.log("Registered Assets:", this.registeredAssets);
     console.log("Draft Assets:", this.draftAssets);
-    console.log("Grouped Assets:", this.groupedAssets);
   }
 
   handleErrorModal = (event: any) => {
