@@ -41,19 +41,18 @@ import {
   WritableSignal,
 } from "@angular/core";
 import {
-  AssetsModel,
-  PlantsModel,
-  AssetResponse,
+  SiteModel,
+  AssetModel,
+  AssetResponseModel,
   AssetCategoryModel,
-  CategoriesModel,
-} from "src/app/store/models/plant.model";
+} from "src/app/store/models/asset.model";
+import { Router } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
-import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
+import { UPDATE_ASSET } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
-import { Router } from "@angular/router";
 
 @Component({
   standalone: true,
@@ -92,7 +91,7 @@ import { Router } from "@angular/router";
 export class AssetPage implements OnInit {
   plantId: string;
   segment: string;
-  asset: AssetsModel;
+  asset: AssetModel;
   isMenuOpen: boolean;
   store = inject(Store);
   router = inject(Router);
@@ -112,7 +111,7 @@ export class AssetPage implements OnInit {
   @Input()
   set assetId(assetId: string) {
     this.store.select("plant").subscribe({
-      next: (plant: PlantsModel) => {
+      next: (plant: SiteModel) => {
         if (plant.assets) {
           this.asset = plant.assets.find((asset) => asset.id === assetId) ?? {};
           this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
@@ -125,7 +124,6 @@ export class AssetPage implements OnInit {
     this.asset = {};
     this.plantId = "";
     this.segment = "info";
-    this.assetCategory = {};
     this.isMenuOpen = false;
     this.asset.assetCategories = [];
 
@@ -178,10 +176,9 @@ export class AssetPage implements OnInit {
     this.isMenuOpen = event;
   };
 
-  handleSelectedCategory(event: CategoriesModel[]) {
+  handleSelectedCategory(event: AssetCategoryModel[]) {
     this.isMenuOpen = false;
     this.asset = { ...this.asset, assetCategories: event };
-    console.log(this.asset);
   }
 
   handleSendForApproval = async () => {
@@ -194,7 +191,7 @@ export class AssetPage implements OnInit {
     this.httpService
       .AssetSendForApproval({ plantId: this.plantId, asset: this.asset })
       .subscribe({
-        next: (response: AssetResponse) => {
+        next: (response: AssetResponseModel) => {
           this.store.dispatch(UPDATE_ASSET(response.data));
         },
         error: (error: HttpErrorResponse) => {

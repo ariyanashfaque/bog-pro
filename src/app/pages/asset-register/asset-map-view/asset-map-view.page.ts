@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
-import { UPDATE_PLANT } from "src/app/store/actions/plant.action";
+import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
@@ -33,10 +33,10 @@ import {
   IonFab,
 } from "@ionic/angular/standalone";
 import {
-  AssetsModel,
-  PlantsModel,
-  AssetsResponse,
-} from "src/app/store/models/plant.model";
+  AssetModel,
+  SiteModel,
+  AssetsResponseModel,
+} from "src/app/store/models/asset.model";
 @Component({
   selector: "app-asset-map-view",
   templateUrl: "./asset-map-view.page.html",
@@ -66,7 +66,7 @@ import {
 export class AssetMapViewPage implements OnInit {
   plantId: string;
   store = inject(Store);
-  assets: AssetsModel[];
+  assets: AssetModel[];
   selectedAsset = signal<any>({});
   httpService = inject(HttpService);
   toastService = inject(ToastService);
@@ -74,7 +74,7 @@ export class AssetMapViewPage implements OnInit {
   isAssetInfoMenuOpen = signal<boolean>(false);
   isSubAssetModalOpen = signal<boolean>(false);
   isLoading: WritableSignal<boolean> = signal(false);
-  groupedAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
+  groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
   assetModalActiveIndex = signal<number>(-1);
 
   @Input()
@@ -82,11 +82,11 @@ export class AssetMapViewPage implements OnInit {
     this.plantId = plantId;
     this.isLoading.set(true);
     this.httpService.GetAllAssets({ plantId }).subscribe({
-      next: (response: AssetsResponse) => {
+      next: (response: AssetsResponseModel) => {
         this.store.dispatch(
           UPDATE_PLANT({
             assets: response?.data,
-          })
+          }),
         );
       },
       error: (error: HttpErrorResponse) => {
@@ -101,12 +101,12 @@ export class AssetMapViewPage implements OnInit {
 
   ngOnInit() {
     this.store.select("plant").subscribe({
-      next: (plant: PlantsModel) => {
+      next: (plant: SiteModel) => {
         if (plant?.assets) {
           this.assets = plant.assets;
 
           const parentTypes = new Set(
-            this.assets.map((asset) => asset?.assetInfo?.assetParentType)
+            this.assets.map((asset) => asset?.assetInfo?.assetParentType),
           );
 
           this.groupedAssets = [];
@@ -114,7 +114,7 @@ export class AssetMapViewPage implements OnInit {
             this.groupedAssets.push({
               assetParentType: parentType,
               assets: this.assets.filter(
-                (asset) => asset?.assetInfo?.assetParentType === parentType
+                (asset) => asset?.assetInfo?.assetParentType === parentType,
               ),
             });
           });
@@ -139,7 +139,7 @@ export class AssetMapViewPage implements OnInit {
 
   toggleInfoMenu() {
     this.isAssetInfoMenuOpen.update(
-      (isAssetInfoMenuOpen) => !isAssetInfoMenuOpen
+      (isAssetInfoMenuOpen) => !isAssetInfoMenuOpen,
     );
     this.isSubAssetModalOpen.update((isSubAssetModalOpen) => false);
     this.assetModalActiveIndex.update(() => -1);

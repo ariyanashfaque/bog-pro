@@ -2,16 +2,16 @@ import {
   PlantReducer,
   PlantsReducer,
   CategoriesReducer,
-} from "./reducers/plant.reducer";
+} from "./reducers/asset.reducer";
 import { ActionReducerMap } from "@ngrx/store";
 import { UserModel } from "./models/user.model";
 import { UserReducer } from "./reducers/user.reducer";
-import { CategoriesModel, PlantsModel } from "./models/plant.model";
+import { AssetCategoryModel, SiteModel } from "./models/asset.model";
 export interface StoreState {
   user: UserModel;
-  plant: PlantsModel;
-  plants: PlantsModel[];
-  categories: CategoriesModel[];
+  plant: SiteModel;
+  plants: SiteModel[];
+  categories: AssetCategoryModel[];
 }
 
 export const Reducer: ActionReducerMap<StoreState> = {

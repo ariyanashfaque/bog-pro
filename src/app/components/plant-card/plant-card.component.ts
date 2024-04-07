@@ -8,15 +8,11 @@ import {
   IonButton,
 } from "@ionic/angular/standalone";
 import { RouterModule } from "@angular/router";
-import { PlantsModel } from "src/app/store/models/plant.model";
-import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
+import { SiteModel } from "src/app/store/models/asset.model";
 import { AccessModel } from "src/app/store/models/role.model";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 
 @Component({
-  standalone: true,
-  selector: "app-plant-card",
-  templateUrl: "./plant-card.component.html",
-  styleUrls: ["./plant-card.component.scss"],
   imports: [
     IonCol,
     IonRow,
@@ -27,15 +23,20 @@ import { AccessModel } from "src/app/store/models/role.model";
     IonButton,
     RouterModule,
   ],
+  standalone: true,
+  selector: "app-plant-card",
+  templateUrl: "./plant-card.component.html",
+  styleUrls: ["./plant-card.component.scss"],
 })
 export class PlantCardComponent implements OnInit {
-  @Input() plant: PlantsModel;
+  @Input() plant: SiteModel;
   @Input() role: AccessModel;
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
-  isMenuOpen: boolean = false;
-  totalAssetMapped: number = 5;
-  isApprover: boolean = false;
+
   isError: boolean = true;
+  isMenuOpen: boolean = false;
+  isApprover: boolean = false;
+  totalAssetMapped: number = 5;
 
   constructor() {
     this.plant = {};

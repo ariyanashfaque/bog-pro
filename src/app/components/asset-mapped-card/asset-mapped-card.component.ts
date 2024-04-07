@@ -24,8 +24,18 @@ import {
   inject,
   Component,
   EventEmitter,
+  input,
+  model,
 } from "@angular/core";
-import { AssetsModel } from "src/app/store/models/plant.model";
+import {
+  AssetMappedStatusModel,
+  AssetModel,
+  AssetStatusModel,
+  DraftApproverAssetStatus,
+  DraftEngineerAssetStatus,
+  RegisteredApproverAssetStatus,
+  RegisteredEngineerAssetStatus,
+} from "src/app/store/models/asset.model";
 
 @Component({
   imports: [
@@ -54,28 +64,50 @@ import { AssetsModel } from "src/app/store/models/plant.model";
 })
 export class AssetMappedCardComponent implements OnInit {
   router = inject(Router);
-  @Input() plantId: string;
+
+  isDraft: boolean = false;
+  role: string = "engineer";
+  assetStatus: AssetMappedStatusModel;
+  // role: string = "country_hse_head";
+
   isApprover: boolean = true;
   isMenuOpen: boolean = false;
-  @Input() asset: AssetsModel;
   @Input() toggleChecked: boolean;
+  plantId = input.required<string>();
+  asset = model.required<AssetModel>();
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
+
   constructor() {
-    this.asset = {};
-    this.plantId = "";
     this.isMenuOpen = false;
     this.toggleChecked = false;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.asset().assetStatus?.forEach((status: AssetStatusModel) => {
+      if (this.isDraft && status.isDraft && this.role === status.role) {
+        this.assetStatus = status.status as DraftEngineerAssetStatus;
+      }
+      if (!this.isDraft && status.isRegistered && this.role === status.role) {
+        this.assetStatus = status.status as RegisteredEngineerAssetStatus;
+      }
+      // if (this.isDraft === status.isDraft && this.role === status.role) {
+      //   this.assetStatus = status.status as DraftApproverAssetStatus;
+      // }
+      // if (!this.isDraft === status.isRegistered && this.role === status.role) {
+      //   this.assetStatus = status.status as RegisteredApproverAssetStatus;
+      // }
+    });
+    console.log(this.assetStatus);
+    console.log(this.asset().assetStatus);
+  }
+
   handleMenuToggle = () => {
     this.isMenuToggleOpen.emit(!this.isMenuOpen);
   };
 
-
   handleNavigate = (assetId?: string) => {
     this.router.navigate([
-      `/asset-register/asset-mapped/${this.plantId}/asset/${assetId}`,
+      `/asset-register/asset-mapped/${this.plantId()}/asset/${assetId}`,
     ]);
   };
 }
