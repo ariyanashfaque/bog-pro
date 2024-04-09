@@ -1,4 +1,14 @@
 import {
+  Input,
+  input,
+  model,
+  OnInit,
+  Output,
+  inject,
+  Component,
+  EventEmitter,
+} from "@angular/core";
+import {
   IonCol,
   IonRow,
   IonImg,
@@ -17,25 +27,7 @@ import {
   IonCardSubtitle,
 } from "@ionic/angular/standalone";
 import { Router, RouterModule } from "@angular/router";
-import {
-  Input,
-  OnInit,
-  Output,
-  inject,
-  Component,
-  EventEmitter,
-  input,
-  model,
-} from "@angular/core";
-import {
-  AssetMappedStatusModel,
-  AssetModel,
-  AssetStatusModel,
-  DraftApproverAssetStatus,
-  DraftEngineerAssetStatus,
-  RegisteredApproverAssetStatus,
-  RegisteredEngineerAssetStatus,
-} from "src/app/store/models/asset.model";
+import { AssetModel } from "src/app/store/models/asset.model";
 
 @Component({
   imports: [
@@ -65,9 +57,9 @@ import {
 export class AssetMappedCardComponent implements OnInit {
   router = inject(Router);
 
+  assetStatus: any;
   isDraft: boolean = false;
   role: string = "engineer";
-  assetStatus: AssetMappedStatusModel;
   // role: string = "country_hse_head";
 
   isApprover: boolean = true;
@@ -82,24 +74,7 @@ export class AssetMappedCardComponent implements OnInit {
     this.toggleChecked = false;
   }
 
-  ngOnInit() {
-    this.asset().assetStatus?.forEach((status: AssetStatusModel) => {
-      if (this.isDraft && status.isDraft && this.role === status.role) {
-        this.assetStatus = status.status as DraftEngineerAssetStatus;
-      }
-      if (!this.isDraft && status.isRegistered && this.role === status.role) {
-        this.assetStatus = status.status as RegisteredEngineerAssetStatus;
-      }
-      // if (this.isDraft === status.isDraft && this.role === status.role) {
-      //   this.assetStatus = status.status as DraftApproverAssetStatus;
-      // }
-      // if (!this.isDraft === status.isRegistered && this.role === status.role) {
-      //   this.assetStatus = status.status as RegisteredApproverAssetStatus;
-      // }
-    });
-    console.log(this.assetStatus);
-    console.log(this.asset().assetStatus);
-  }
+  ngOnInit() {}
 
   handleMenuToggle = () => {
     this.isMenuToggleOpen.emit(!this.isMenuOpen);

@@ -80,6 +80,7 @@ export class AssetMappedPage implements OnInit {
   httpService = inject(HttpService);
   toastService = inject(ToastService);
 
+  assetId: string;
   plantId: string;
   assets: AssetModel[];
   assetss: AssetModel[];
@@ -118,6 +119,7 @@ export class AssetMappedPage implements OnInit {
     this.assets = [];
     this.assetss = [];
     this.plantId = "";
+    this.assetId = "";
     this.draftAssets = [];
     this.groupedAssets = [];
     this.registeredAssets = [];
@@ -161,6 +163,10 @@ export class AssetMappedPage implements OnInit {
   handleErrorModal = (event: any) => {
     this.isApprovalMenuOpen = event;
   };
+  handleAssetId = (event: any) => {
+    this.assetId = event;
+  };
+
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
 

@@ -112,11 +112,11 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
   }
 
   @Input()
-  set assetId(assetId: string) {
+  set assetID(assetID: string) {
     this.store.select("plant").subscribe({
       next: (plant: SiteModel) => {
         if (plant.assets) {
-          this.asset = plant.assets.find((asset) => asset.id === assetId) ?? {};
+          this.asset = plant.assets.find((asset) => asset.id === assetID) ?? {};
           this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
         }
       },

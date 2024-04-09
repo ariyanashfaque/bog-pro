@@ -45,6 +45,7 @@
                             [asset]="asset"
                             [plantId]="plantId"
                             [toggleChecked]="toggleChecked"
+                            (getAssetId)="handleAssetId($event)"
                             (isMenuToggleOpen)="handleErrorModal($event)"
                           ></app-asset-mapped-card>
                         </ion-col>
@@ -78,6 +79,7 @@
 
 <app-asset-approval-update-modal
   [isApprovalMenuOpen]="isApprovalMenuOpen"
+  [assetID]="assetId"
   (isMenuToggleOpen)="handleErrorModal($event)"
 ></app-asset-approval-update-modal>
 
