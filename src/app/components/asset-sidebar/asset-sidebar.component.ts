@@ -15,13 +15,13 @@ import { IonIcon, IonText } from "@ionic/angular/standalone";
 import { DndModule } from "ngx-drag-drop";
 
 @Component({
-  selector: "app-asset-modal",
-  templateUrl: "./asset-modal.component.html",
-  styleUrls: ["./asset-modal.component.scss"],
+  selector: "app-asset-sidebar",
+  templateUrl: "./asset-sidebar.component.html",
+  styleUrls: ["./asset-sidebar.component.scss"],
   standalone: true,
   imports: [IonText, IonIcon, DndModule],
 })
-export class AssetModalComponent implements OnInit {
+export class AssetSidebarComponent implements OnInit {
   isMenuOpen = model<boolean>();
   isChildOpen = model<boolean>();
   isSubAssetModalOpen = model<boolean>(false);

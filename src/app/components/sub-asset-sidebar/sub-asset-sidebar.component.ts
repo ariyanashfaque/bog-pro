@@ -27,9 +27,9 @@ import {
 } from "@ionic/angular/standalone";
 
 @Component({
-  selector: "app-sub-asset-modal",
-  templateUrl: "./sub-assets-modal.component.html",
-  styleUrls: ["./sub-assets-modal.component.scss"],
+  selector: "app-sub-asset-sidebar",
+  templateUrl: "./sub-asset-sidebar.component.html",
+  styleUrls: ["./sub-asset-sidebar.component.scss"],
   standalone: true,
   imports: [
     IonButton,
@@ -50,7 +50,7 @@ import {
     IonSelectOption,
   ],
 })
-export class SubAssetModalComponent implements OnInit {
+export class SubAssetSidebarComponent implements OnInit {
   isMenuOpen = model(false);
   selectedAsset = model<any>({});
 

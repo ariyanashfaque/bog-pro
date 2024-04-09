@@ -27,7 +27,7 @@
     >
       <img
         class="object-cover w-full h-full"
-        src="../../../assets/silo.png"
+        src="../../../assets/Silo.png"
         alt="silo"
       />
     </div>
@@ -37,7 +37,7 @@
   </div>
 </div> -->
 
-<!-- Side bar Toggle Button -->
+<!-- Side bar Save Button -->
 <button class="fixed bottom-[35px] right-[84px] z-50">
   <ion-icon
     class="bg-[#007382] text-white text-3xl p-3 rounded-full"
@@ -63,28 +63,34 @@
   asset info menu
 </button>
 
-<!-- CHILD MODAL -->
+<!-- Sub Asset MODAL -->
 @if (isChildOpen()) {
-<app-child-asset-modal
+<app-sub-asset-modal
   [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
   (click)="closeSubAssetModal()"
-></app-child-asset-modal>
+  [(childAsset)]="childAsset"
+  [(activeIndex)]="subAssetActiveIndex"
+></app-sub-asset-modal>
 }
 
 <!-- Asset info menu -->
-<app-asset-info-menu [(isMenuOpen)]="isAssetInfoMenuOpen"></app-asset-info-menu>
+<app-asset-info-menu
+  [(isMenuOpen)]="isAssetInfoMenuOpen"
+  [(assetDummy)]="childAsset"
+  [(subAssetActiveIndex)]="subAssetActiveIndex"
+></app-asset-info-menu>
 
-<!-- Sub-Assets Modal -->
-<app-sub-asset-modal
+<!-- Sub-Assets sidebar -->
+<app-sub-asset-sidebar
   [(isMenuOpen)]="isSubAssetModalOpen"
   [(selectedAsset)]="selectedAsset"
-></app-sub-asset-modal>
+></app-sub-asset-sidebar>
 
-<!-- Sidebar -->
-<app-asset-modal
+<!-- Asset Sidebar -->
+<app-asset-sidebar
   [(isMenuOpen)]="isAssetInfoMenuOpen"
   [(isChildOpen)]="isChildOpen"
   [assetData]="groupedAssets"
   (selectedAsset)="onAssetReceived($event)"
   [(activeIndex)]="assetModalActiveIndex"
-></app-asset-modal>
+></app-asset-sidebar>

@@ -17,10 +17,10 @@ import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
-import { AssetModalComponent } from "src/app/components/asset-modal/asset-modal.component";
+import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-sidebar.component";
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
-import { SubAssetModalComponent } from "src/app/components/sub-assets-modal/sub-asset-modal.component";
-import { ChildAssetModalComponent } from "src/app/components/child-asset-modal/child-asset-modal.component";
+import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
+import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 import {
   IonIcon,
@@ -66,11 +66,11 @@ import { MAPBACKGROUND } from "src/app/utils/constant.util";
     IonProgressBar,
     HeaderComponent,
     MapViewComponent,
-    AssetModalComponent,
+    AssetSidebarComponent,
     RoundProgressComponent,
     AssetInfoMenuComponent,
+    SubAssetSidebarComponent,
     SubAssetModalComponent,
-    ChildAssetModalComponent,
   ],
 })
 export class AssetMapViewPage implements OnInit {
@@ -98,6 +98,8 @@ export class AssetMapViewPage implements OnInit {
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
   assetModalActiveIndex = signal<number>(-1);
+  childAsset = signal<any>({});
+  subAssetActiveIndex = signal<number>(-1);
   display: any;
 
   @Input()
@@ -161,6 +163,9 @@ export class AssetMapViewPage implements OnInit {
     this.assets = [];
     this.plantId = "";
     this.groupedAssets = [];
+    effect(() => {
+      console.log("subAssetActiveIndex in page: ", this.subAssetActiveIndex());
+    });
 
     this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
     this.mapMptions = {
@@ -249,6 +254,7 @@ export class AssetMapViewPage implements OnInit {
     );
     this.isSubAssetModalOpen.update((isSubAssetModalOpen) => false);
     this.assetModalActiveIndex.update(() => -1);
+    this.subAssetActiveIndex.update(() => -1);
   }
 
   toggleChildMenu = () => {
