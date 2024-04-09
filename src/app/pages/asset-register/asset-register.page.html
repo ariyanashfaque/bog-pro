@@ -55,6 +55,7 @@
               <ion-col size="12" sizeMd="6" sizeLg="6">
                 <app-plant-card
                   [plant]="plant"
+                  [role]="role"
                   (click)="handlePlantStore(plant)"
                   (isMenuToggleOpen)="handleErrorModal($event)"
                 >

@@ -57,5 +57,11 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
     {
       name: "Sub Asset 5",
     },
+    {
+      name: "Sub Asset 6",
+    },
+    {
+      name: "Sub Asset 7",
+    },
   ];
 }

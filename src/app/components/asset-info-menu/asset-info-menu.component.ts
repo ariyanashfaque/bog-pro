@@ -46,16 +46,17 @@ import {
   LoadingController,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
-import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
+import { UPDATE_ASSET } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import {
-  AssetsModel,
-  PlantsModel,
-  AssetResponse,
-  CategoriesModel,
+  AssetModel,
+  SiteModel,
+  // AssetResponse,
+  AssetResponseModel,
+  // CategoriesModel,
   AssetCategoryModel,
-} from "src/app/store/models/plant.model";
+} from "src/app/store/models/asset.model";
 
 @Component({
   selector: "app-asset-info-menu",
@@ -112,17 +113,21 @@ export class AssetInfoMenuComponent implements OnInit {
   // from other component
   plantId: string;
   segment: string;
-  asset: AssetsModel;
+  asset: AssetModel;
   store = inject(Store);
   router = inject(Router);
+  selectedCategoryCount: number;
+  categories: AssetCategoryModel[];
   assetRegistrationForm: FormGroup;
   httpService = inject(HttpService);
   assetCategory: AssetCategoryModel;
   toastService = inject(ToastService);
   loadingCtrl = inject(LoadingController);
+  selectedCategories: AssetCategoryModel[];
   @Input() isApprovalMenuOpen: boolean = false;
   isFormValid: WritableSignal<boolean> = signal(false);
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
+  selectedCategoriesEmit = new EventEmitter<AssetCategoryModel[]>();
 
   @Input()
   set id(plantId: string) {
@@ -130,11 +135,11 @@ export class AssetInfoMenuComponent implements OnInit {
   }
 
   @Input()
-  set assetId(assetId: string) {
+  set assetID(assetID: string) {
     this.store.select("plant").subscribe({
-      next: (plant: PlantsModel) => {
+      next: (plant: SiteModel) => {
         if (plant.assets) {
-          this.asset = plant.assets.find((asset) => asset.id === assetId) ?? {};
+          this.asset = plant.assets.find((asset) => asset.id === assetID) ?? {};
           this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
         }
       },
@@ -142,10 +147,63 @@ export class AssetInfoMenuComponent implements OnInit {
   }
 
   constructor() {
+    this.categories = [
+      {
+        order: 1,
+        isSelected: false,
+        categoryType: "sim",
+        categoryTitle: "Sim",
+      },
+      {
+        order: 3,
+        isSelected: false,
+        categoryType: "quarry",
+        categoryTitle: "Quarry",
+      },
+      {
+        order: 4,
+        isSelected: false,
+        categoryType: "electrical",
+        categoryTitle: "Electrical",
+      },
+      {
+        order: 7,
+        isSelected: false,
+        categoryType: "environment",
+        categoryTitle: "Environment",
+      },
+      {
+        order: 8,
+        isSelected: false,
+        categoryType: "electrical",
+        categoryTitle: "Electrical",
+      },
+      {
+        order: 5,
+        isSelected: false,
+        categoryType: "hotMaterial",
+        categoryTitle: "Hot Material",
+      },
+      {
+        order: 6,
+        isSelected: false,
+        categoryType: "fireProtection",
+        categoryTitle: "Fire Protection",
+      },
+      {
+        order: 2,
+        isSelected: false,
+        categoryType: "materialManagement",
+        categoryTitle: "Material Management",
+      },
+    ];
+    this.selectedCategories = [];
+
+    this.selectedCategoryCount = 0;
+
     this.asset = {};
     this.plantId = "";
     this.segment = "info";
-    this.assetCategory = {};
     this.isApprovalMenuOpen = false;
     this.asset.assetCategories = [];
 
@@ -164,6 +222,70 @@ export class AssetInfoMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.select("categories").subscribe({
+      next: (categories: AssetCategoryModel[]) => {
+        console.log(categories);
+      },
+    });
+
+    // this.store.select("categories").subscribe({
+    //   next: (categories: CategoriesModel[]) => {
+    //     this.categories = categories
+    //       .map((category) => {
+    //         if (
+    //           this.selectedCategories &&
+    //           this.selectedCategories.find(
+    //             (selectedCategory) =>
+    //               selectedCategory.id === category.id &&
+    //               selectedCategory.categorySelected
+    //           )
+    //         ) {
+    //           return {
+    //             ...category,
+    //             categorySelected: true,
+    //           };
+    //         } else {
+    //           return {
+    //             ...category,
+    //             categorySelected: false,
+    //           };
+    //         }
+    //       })
+    //       .sort((a, b) => {
+    //         if (a?.order > b.order) return 1;
+    //         if (a.order < b.order) return -1;
+    //         return 0;
+    //       });
+
+    //     console.log(this.categories);
+    //   },
+    // });
+
+    this.selectedCategories = this.categories.map((category) => {
+      if (
+        this.selectedCategories &&
+        this.selectedCategories.find(
+          (selectedCategory) => selectedCategory.isSelected,
+        )
+      ) {
+        return {
+          ...category,
+          isSelected: true,
+        };
+      } else {
+        return {
+          ...category,
+          isSelected: false,
+        };
+      }
+    });
+
+    this.selectedCategoryCount = this.categories?.filter(
+      (category) => category.isSelected,
+    ).length;
+
+    console.log(this.selectedCategories);
+
     this.assetRegistrationForm.valueChanges.subscribe({
       next: () => {
         if (this.assetRegistrationForm.valid) {
@@ -186,15 +308,25 @@ export class AssetInfoMenuComponent implements OnInit {
   }
   handleChange(event: any) {
     this.segment = event?.detail?.value;
+    this.asset = { ...this.asset, assetCategories: event };
+    console.log();
   }
   // menuToggle() {
   //   this.isApprovalMenuOpen = !this.isApprovalMenuOpen;
   //   this.isMenuToggleOpen.emit(this.isApprovalMenuOpen);
   // }
 
-  handleSelectedCategory(event: CategoriesModel[]) {
-    this.isApprovalMenuOpen = false;
+  handleCategory = (category: AssetCategoryModel) => {
+    category.isSelected = !category.isSelected;
+    this.selectedCategoryCount = this.categories?.filter(
+      (category) => category.isSelected,
+    ).length;
+    this.selectedCategoriesEmit.emit(this.categories);
+  };
+
+  handleSelectedCategory(event: AssetCategoryModel[]) {
     this.asset = { ...this.asset, assetCategories: event };
+    console.log(this.asset);
   }
 
   handleSendForApproval = async () => {
@@ -207,7 +339,7 @@ export class AssetInfoMenuComponent implements OnInit {
     this.httpService
       .AssetSendForApproval({ plantId: this.plantId, asset: this.asset })
       .subscribe({
-        next: (response: AssetResponse) => {
+        next: (response: AssetResponseModel) => {
           this.store.dispatch(UPDATE_ASSET(response.data));
         },
         error: (error: HttpErrorResponse) => {

@@ -9,7 +9,7 @@ import {
   ADD_PLANT,
   ADD_PLANTS,
   ADD_CATEGORIES,
-} from "src/app/store/actions/plant.action";
+} from "src/app/store/actions/asset.action";
 import {
   IonRow,
   IonCol,
@@ -34,11 +34,15 @@ import { RouterModule } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
-import { PlantsModel, PlantsResponse } from "src/app/store/models/plant.model";
+import {
+  SiteModel,
+  SitesResponseModel,
+} from "src/app/store/models/asset.model";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { PlantCardComponent } from "src/app/components/plant-card/plant-card.component";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { PlantCardErrorModalComponent } from "src/app/components/plant-card-error-modal/plant-card-error-modal.component";
+import { CountryHseHead, Champion } from "src/app/store/models/role.model";
 
 @Component({
   imports: [
@@ -71,16 +75,38 @@ import { PlantCardErrorModalComponent } from "src/app/components/plant-card-erro
   templateUrl: "./asset-register.page.html",
 })
 export class AssetRegisterPage implements OnInit {
+  role: any;
+  champion: Champion;
   store = inject(Store);
+  plants: SiteModel[];
+  isMenuOpen: boolean = false;
+  country_hse_head: CountryHseHead;
   httpService = inject(HttpService);
   toastService = inject(ToastService);
-
-  plants: PlantsModel[];
-  isMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
 
   constructor() {
+    this.champion = {
+      role: "champion",
+      title: "champion/Engineer",
+      access: {
+        l1Aproval: false,
+        InventoryEdit: true,
+        inventoryCreation: true,
+      },
+    };
+
+    this.country_hse_head = {
+      role: "country_hse_head",
+      title: "country HSE Head",
+      access: {
+        l1Aproval: true,
+        InventoryEdit: false,
+        inventoryCreation: false,
+      },
+    };
     this.plants = [];
+    this.role = {};
   }
 
   ionViewDidEnter() {}
@@ -91,6 +117,8 @@ export class AssetRegisterPage implements OnInit {
       .subscribe({ next: (plants) => (this.plants = plants) });
 
     this.GetAllPlants();
+    this.role = this.country_hse_head;
+    console.log(this.role);
   }
 
   handleErrorModal = (event: any) => {
@@ -100,8 +128,8 @@ export class AssetRegisterPage implements OnInit {
   GetAllPlants = async () => {
     this.isLoading.set(true);
     this.httpService.GetAllPlants().subscribe({
-      next: (response: PlantsResponse) => {
-        this.store.dispatch(ADD_PLANTS(response?.data?.plants));
+      next: (response: SitesResponseModel) => {
+        this.store.dispatch(ADD_PLANTS(response?.data?.sites));
         this.store.dispatch(ADD_CATEGORIES(response?.data?.categories));
       },
       error: (error: HttpErrorResponse) => {
@@ -114,7 +142,7 @@ export class AssetRegisterPage implements OnInit {
     });
   };
 
-  handlePlantStore = (plant: PlantsModel) => {
+  handlePlantStore = (plant: SiteModel) => {
     this.store.dispatch(ADD_PLANT(plant));
   };
 }
