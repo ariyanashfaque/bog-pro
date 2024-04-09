@@ -1,4 +1,14 @@
 import {
+  Input,
+  input,
+  model,
+  OnInit,
+  Output,
+  inject,
+  Component,
+  EventEmitter,
+} from "@angular/core";
+import {
   IonCol,
   IonRow,
   IonImg,
@@ -17,16 +27,7 @@ import {
   IonCardSubtitle,
 } from "@ionic/angular/standalone";
 import { Router, RouterModule } from "@angular/router";
-import {
-  Input,
-  OnInit,
-  Output,
-  inject,
-  Component,
-  EventEmitter,
-  output,
-} from "@angular/core";
-import { AssetsModel } from "src/app/store/models/plant.model";
+import { AssetModel } from "src/app/store/models/asset.model";
 
 @Component({
   imports: [
@@ -55,31 +56,33 @@ import { AssetsModel } from "src/app/store/models/plant.model";
 })
 export class AssetMappedCardComponent implements OnInit {
   router = inject(Router);
-  @Input() plantId: string;
+
+  assetStatus: any;
+  isDraft: boolean = false;
+  role: string = "engineer";
+  // role: string = "country_hse_head";
+
   isApprover: boolean = true;
   isMenuOpen: boolean = false;
-  assetID?: string;
-  @Output() getAssetId = new EventEmitter<string>();
-  @Input() asset: AssetsModel;
   @Input() toggleChecked: boolean;
+  plantId = input.required<string>();
+  asset = model.required<AssetModel>();
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
+
   constructor() {
-    this.asset = {};
-    this.plantId = "";
-    this.assetID = "";
     this.isMenuOpen = false;
     this.toggleChecked = false;
   }
 
   ngOnInit() {}
-  handleMenuToggle = (assetId?: string) => {
-    this.getAssetId.emit(assetId);
+
+  handleMenuToggle = () => {
     this.isMenuToggleOpen.emit(!this.isMenuOpen);
   };
 
-  // handleNavigate = (assetId?: string) => {
-  //   this.router.navigate([
-  //     `/asset-register/asset-mapped/${this.plantId}/asset/${assetId}`,
-  //   ]);
-  // };
+  handleNavigate = (assetId?: string) => {
+    this.router.navigate([
+      `/asset-register/asset-mapped/${this.plantId()}/asset/${assetId}`,
+    ]);
+  };
 }

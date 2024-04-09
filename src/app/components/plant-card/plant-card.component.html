@@ -33,7 +33,7 @@
                 color="black"
                 class="text-[14px] text-wrap font-gotham_medium"
               >
-                {{ plant.plantName }}
+                {{ plant.locations?.site?.location }}
               </ion-text>
             </ion-col>
           </ion-row>
@@ -71,136 +71,140 @@
       </div>
 
       @if (!role.l1Aproval) {
-      <div class="flex justify-between">
-        <ion-grid>
-          <ion-row>
-            <ion-col class="flex items-center gap-1" size="12">
-              <div class="flex items-center">
-                <ion-icon
-                  size="large"
-                  class="customtext"
-                  name="alert-circle-outline"
-                ></ion-icon>
-              </div>
-              <div>
-                <ion-text
-                  class="mx-1 text-[14px] customtext font-gotham_medium"
-                >
-                  Asset approval pending (10)
-                </ion-text>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
+        <div class="flex justify-between">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="flex items-center gap-1" size="12">
+                <div class="flex items-center">
+                  <ion-icon
+                    size="large"
+                    class="customtext"
+                    name="alert-circle-outline"
+                  ></ion-icon>
+                </div>
+                <div>
+                  <ion-text
+                    class="mx-1 text-[14px] customtext font-gotham_medium"
+                  >
+                    Asset approval pending (10)
+                  </ion-text>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
       }
       <!-- Mapped Assets part -->
 
       @if (totalAssetMapped) {
-      <div class="customcolor flex justify-between px-2">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="10" class="my-auto">
-              <ion-text
-                color="secondary"
-                class="text-[16px] font-gotham_medium"
-              >
-                Total number of assets mapped
-              </ion-text>
-            </ion-col>
-            <ion-col class="flex justify-center" size="2">
-              <ion-button
-                size="small"
-                shape="round"
-                fill="outline"
-                color="secondary"
-                class="bg-white rounded-full"
-                [routerLink]="['/asset-register/asset-mapped', plant.id]"
-              >
-                <p class="text-[14px] font-gotham_medium">
-                  {{ totalAssetMapped }}
-                </p>
-                <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
+        <div class="customcolor flex justify-between px-2">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="10" class="my-auto">
+                <ion-text
+                  color="secondary"
+                  class="text-[16px] font-gotham_medium"
+                >
+                  Total number of assets mapped
+                </ion-text>
+              </ion-col>
+              <ion-col class="flex justify-center" size="2">
+                <ion-button
+                  size="small"
+                  shape="round"
+                  fill="outline"
+                  color="secondary"
+                  class="bg-white rounded-full"
+                  [routerLink]="['/asset-register/asset-mapped', plant.id]"
+                >
+                  <p class="text-[14px] font-gotham_medium">
+                    {{ totalAssetMapped }}
+                  </p>
+                  <ion-icon
+                    slot="end"
+                    name="chevron-forward-outline"
+                  ></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
       } @else {
-      <!-- Mapped Assets part -->
-      <div class="customcolor bgcolor flex justify-between px-2">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="10" class="my-auto">
-              <ion-text
-                color="secondary"
-                class="text-[16px] font-gotham_medium"
-              >
-                <p class="font-gotham_medium">
-                  Zero asset mapped in this plant
-                </p>
-              </ion-text>
-              <ion-text color="black" class="text-[12px] font-gotham_book">
-                Click on the map to add asset
-              </ion-text>
-            </ion-col>
-            <ion-col class="flex justify-center my-auto" size="2">
-              <ion-button
-                size="small"
-                shape="round"
-                fill="outline"
-                color="secondary"
-                class="bg-white h-8 rounded-full"
-              >
-                <p class="text-[14px] font-gotham_medium">Map</p>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-      } @if (role.l1Aproval) {
-      <div class="flex justify-between">
-        <ion-grid>
-          <ion-row>
-            <ion-col class="flex items-center gap-1" size="12">
-              @if (isError) {
-              <div class="flex items-center">
-                <ion-icon
-                  size="large"
-                  color="danger"
-                  name="alert-circle-outline"
-                ></ion-icon>
-              </div>
-              <div>
+        <!-- Mapped Assets part -->
+        <div class="customcolor bgcolor flex justify-between px-2">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="10" class="my-auto">
                 <ion-text
-                  color="danger"
-                  (click)="handleMenuToggle()"
-                  class="mx-1 text-[14px] font-gotham_medium"
+                  color="secondary"
+                  class="text-[16px] font-gotham_medium"
                 >
-                  Fix all the errors in this plant(10)
+                  <p class="font-gotham_medium">
+                    Zero asset mapped in this plant
+                  </p>
                 </ion-text>
-              </div>
-              } @else {
-              <div class="flex items-center">
-                <ion-icon
-                  size="large"
-                  color="black"
-                  name="alert-circle-outline"
-                ></ion-icon>
-              </div>
-              <div>
-                <ion-text
-                  color="black"
-                  class="mx-1 text-[14px] font-gotham_medium"
+                <ion-text color="black" class="text-[12px] font-gotham_book">
+                  Click on the map to add asset
+                </ion-text>
+              </ion-col>
+              <ion-col class="flex justify-center my-auto" size="2">
+                <ion-button
+                  size="small"
+                  shape="round"
+                  fill="outline"
+                  color="secondary"
+                  class="bg-white h-8 rounded-full"
                 >
-                  Add assets through SAP or manual
-                </ion-text>
-              </div>
-              }
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
+                  <p class="text-[14px] font-gotham_medium">Map</p>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      }
+      @if (role.l1Aproval) {
+        <div class="flex justify-between">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="flex items-center gap-1" size="12">
+                @if (isError) {
+                  <div class="flex items-center">
+                    <ion-icon
+                      size="large"
+                      color="danger"
+                      name="alert-circle-outline"
+                    ></ion-icon>
+                  </div>
+                  <div>
+                    <ion-text
+                      color="danger"
+                      (click)="handleMenuToggle()"
+                      class="mx-1 text-[14px] font-gotham_medium"
+                    >
+                      Fix all the errors in this plant(10)
+                    </ion-text>
+                  </div>
+                } @else {
+                  <div class="flex items-center">
+                    <ion-icon
+                      size="large"
+                      color="black"
+                      name="alert-circle-outline"
+                    ></ion-icon>
+                  </div>
+                  <div>
+                    <ion-text
+                      color="black"
+                      class="mx-1 text-[14px] font-gotham_medium"
+                    >
+                      Add assets through SAP or manual
+                    </ion-text>
+                  </div>
+                }
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
       }
     </div>
   </div>

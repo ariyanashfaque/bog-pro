@@ -22,7 +22,7 @@
           (click)="menuToggle()"
           class="absolute ml-[7px] -top-[62px] cursor-pointer w-[54px] h-[54px] bg-black rounded-full flex justify-center items-center"
         >
-          <ion-icon class="text-4xl fill-white" name="close"> </ion-icon>
+          <ion-icon class="text-4xl fill-white" name="close"></ion-icon>
         </div>
       </div>
     </div>
@@ -47,58 +47,51 @@
                 @case (category?.categoryType === "sim") {
                   <ion-icon
                     src="../../../assets/segment-icons/sim.svg"
-                    [class.active]="category?.categorySelected"
+                    [class.active]="category?.isSelected"
                     class="border-[3px] rounded-[6px] p-2 w-12 h-12"
-                  >
-                  </ion-icon>
+                  ></ion-icon>
                 }
                 @case (category?.categoryType === "quarry") {
                   <ion-icon
-                    [class.active]="category?.categorySelected"
+                    [class.active]="category?.isSelected"
                     class="border-[3px] rounded-[6px] p-2 w-12 h-12"
                     src="../../../assets/segment-icons/quarry.svg"
-                  >
-                  </ion-icon>
+                  ></ion-icon>
                 }
                 @case (category?.categoryType === "quarry") {
                   <ion-icon
-                    [class.active]="category?.categorySelected"
+                    [class.active]="category?.isSelected"
                     class="border-[3px] rounded-[6px] p-2 w-12 h-12"
                     src="../../../assets/segment-icons/quarry.svg"
-                  >
-                  </ion-icon>
+                  ></ion-icon>
                 }
                 @case (category?.categoryType === "electrical") {
                   <ion-icon
-                    [class.active]="category?.categorySelected"
+                    [class.active]="category?.isSelected"
                     class="border-[3px] rounded-[6px] p-2 w-12 h-12"
                     src="../../../assets/segment-icons/electrical.svg"
-                  >
-                  </ion-icon>
+                  ></ion-icon>
                 }
                 @case (category?.categoryType === "hotMaterial") {
                   <ion-icon
-                    [class.active]="category?.categorySelected"
+                    [class.active]="category?.isSelected"
                     class="border-[3px] rounded-[6px] p-2 w-12 h-12"
                     src="../../../assets/segment-icons/hotMaterial.svg"
-                  >
-                  </ion-icon>
+                  ></ion-icon>
                 }
                 @case (category?.categoryType === "environment") {
                   <ion-icon
-                    [class.active]="category?.categorySelected"
+                    [class.active]="category?.isSelected"
                     class="border-[3px] rounded-[6px] p-2 w-12 h-12"
                     src="../../../assets/segment-icons/hotMaterial.svg"
-                  >
-                  </ion-icon>
+                  ></ion-icon>
                 }
                 @case (category?.categoryType === "materialManagement") {
                   <ion-icon
-                    [class.active]="category?.categorySelected"
+                    [class.active]="category?.isSelected"
                     class="border-[3px] rounded-[6px] p-2 w-12 h-12"
                     src="../../../assets/segment-icons/materialManagement.svg"
-                  >
-                  </ion-icon>
+                  ></ion-icon>
                 }
               }
             </ion-button>

@@ -44,16 +44,15 @@ import {
   LoadingController,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
-import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
+import { UPDATE_ASSET } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import {
-  AssetsModel,
-  PlantsModel,
-  AssetResponse,
-  CategoriesModel,
+  SiteModel,
+  AssetModel,
+  AssetResponseModel,
   AssetCategoryModel,
-} from "src/app/store/models/plant.model";
+} from "src/app/store/models/asset.model";
 
 @Component({
   imports: [
@@ -91,22 +90,21 @@ import {
 export class AssetApprovalUpdateModalComponent implements OnInit {
   plantId: string;
   segment: string;
-  asset: AssetsModel;
+  asset: AssetModel;
   store = inject(Store);
   router = inject(Router);
-  categories: CategoriesModel[];
   selectedCategoryCount: number;
+  categories: AssetCategoryModel[];
   assetRegistrationForm: FormGroup;
   httpService = inject(HttpService);
   assetCategory: AssetCategoryModel;
   toastService = inject(ToastService);
-  selectedCategories: CategoriesModel[];
   loadingCtrl = inject(LoadingController);
+  selectedCategories: AssetCategoryModel[];
   @Input() isApprovalMenuOpen: boolean = false;
   isFormValid: WritableSignal<boolean> = signal(false);
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
-  selectedCategoriesEmit = new EventEmitter<CategoriesModel[]>();
-  // @Input() assetID: string;
+  selectedCategoriesEmit = new EventEmitter<AssetCategoryModel[]>();
 
   @Input()
   set id(plantId: string) {
@@ -116,7 +114,7 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
   @Input()
   set assetID(assetID: string) {
     this.store.select("plant").subscribe({
-      next: (plant: PlantsModel) => {
+      next: (plant: SiteModel) => {
         if (plant.assets) {
           this.asset = plant.assets.find((asset) => asset.id === assetID) ?? {};
           this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
@@ -128,73 +126,56 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
   constructor() {
     this.categories = [
       {
-        id: "ASSET001",
         order: 1,
-        categorySelected: false,
+        isSelected: false,
         categoryType: "sim",
         categoryTitle: "Sim",
       },
       {
-        id: "ASSET001",
         order: 3,
-        categorySelected: false,
+        isSelected: false,
         categoryType: "quarry",
         categoryTitle: "Quarry",
       },
       {
-        id: "ASSET002",
         order: 4,
-        categorySelected: false,
+        isSelected: false,
         categoryType: "electrical",
         categoryTitle: "Electrical",
       },
       {
-        id: "ASSET003",
         order: 7,
-        categorySelected: false,
+        isSelected: false,
         categoryType: "environment",
         categoryTitle: "Environment",
       },
       {
-        id: "ASSET004",
         order: 8,
-        categorySelected: false,
+        isSelected: false,
         categoryType: "electrical",
         categoryTitle: "Electrical",
       },
       {
-        id: "ASSET005",
         order: 5,
-        categorySelected: false,
+        isSelected: false,
         categoryType: "hotMaterial",
         categoryTitle: "Hot Material",
       },
       {
-        id: "ASSET006",
         order: 6,
-        categorySelected: false,
+        isSelected: false,
         categoryType: "fireProtection",
         categoryTitle: "Fire Protection",
       },
       {
-        id: "ASSET007",
         order: 2,
-        categorySelected: false,
+        isSelected: false,
         categoryType: "materialManagement",
         categoryTitle: "Material Management",
       },
     ];
     this.selectedCategories = [];
-    this.assetCategory = {
-      sim: false,
-      quarry: false,
-      insurance: false,
-      electrical: false,
-      environment: false,
-      hotMaterial: false,
-      fireProtection: false,
-      materialManagement: false,
-    };
+
     this.selectedCategoryCount = 0;
 
     this.asset = {};
@@ -219,7 +200,7 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
 
   ngOnInit() {
     this.store.select("categories").subscribe({
-      next: (categories: CategoriesModel[]) => {
+      next: (categories: AssetCategoryModel[]) => {
         console.log(categories);
       },
     });
@@ -261,25 +242,23 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
       if (
         this.selectedCategories &&
         this.selectedCategories.find(
-          (selectedCategory) =>
-            selectedCategory.id === category.id &&
-            selectedCategory.categorySelected,
+          (selectedCategory) => selectedCategory.isSelected,
         )
       ) {
         return {
           ...category,
-          categorySelected: true,
+          isSelected: true,
         };
       } else {
         return {
           ...category,
-          categorySelected: false,
+          isSelected: false,
         };
       }
     });
 
     this.selectedCategoryCount = this.categories?.filter(
-      (category) => category.categorySelected,
+      (category) => category.isSelected,
     ).length;
 
     console.log(this.selectedCategories);
@@ -314,15 +293,15 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
     this.isMenuToggleOpen.emit(this.isApprovalMenuOpen);
   }
 
-  handleCategory = (category: CategoriesModel) => {
-    category.categorySelected = !category.categorySelected;
+  handleCategory = (category: AssetCategoryModel) => {
+    category.isSelected = !category.isSelected;
     this.selectedCategoryCount = this.categories?.filter(
-      (category) => category.categorySelected,
+      (category) => category.isSelected,
     ).length;
     this.selectedCategoriesEmit.emit(this.categories);
   };
 
-  handleSelectedCategory(event: CategoriesModel[]) {
+  handleSelectedCategory(event: AssetCategoryModel[]) {
     this.asset = { ...this.asset, assetCategories: event };
     console.log(this.asset);
   }
@@ -337,7 +316,7 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
     this.httpService
       .AssetSendForApproval({ plantId: this.plantId, asset: this.asset })
       .subscribe({
-        next: (response: AssetResponse) => {
+        next: (response: AssetResponseModel) => {
           this.store.dispatch(UPDATE_ASSET(response.data));
         },
         error: (error: HttpErrorResponse) => {
