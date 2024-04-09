@@ -1,9 +1,10 @@
 import {
-  AssetsModel,
-  AssetResponse,
-  AssetsResponse,
-  PlantsResponse,
-} from "src/app/store/models/plant.model";
+  SiteModel,
+  AssetModel,
+  AssetResponseModel,
+  SitesResponseModel,
+  AssetsResponseModel,
+} from "src/app/store/models/asset.model";
 import { Observable } from "rxjs";
 import { ApiEndPoint } from "./endPoint";
 import { Injectable, inject } from "@angular/core";
@@ -29,20 +30,20 @@ export class HttpService {
 
   AssetSendForApproval = (data: {
     plantId: string;
-    asset: AssetsModel;
-  }): Observable<AssetResponse> => {
-    return this.http.post<AssetResponse>(
+    asset: AssetModel;
+  }): Observable<AssetResponseModel> => {
+    return this.http.post<AssetResponseModel>(
       ApiEndPoint.assetSendForApproval,
       data,
     );
   };
 
-  GetAllPlants = (data?: any): Observable<PlantsResponse> => {
-    return this.http.post<PlantsResponse>(ApiEndPoint.getAllPlants, data);
+  GetAllPlants = (data?: any): Observable<SitesResponseModel> => {
+    return this.http.post<SitesResponseModel>(ApiEndPoint.getAllPlants, data);
   };
 
-  GetAllAssets = (data?: any): Observable<AssetsResponse> => {
-    return this.http.post<AssetsResponse>(ApiEndPoint.getAllAssets, data);
+  GetAllAssets = (data?: any): Observable<AssetsResponseModel> => {
+    return this.http.post<AssetsResponseModel>(ApiEndPoint.getAllAssets, data);
   };
 
   AddGuidedInspection = (data?: any): Observable<any> => {
@@ -69,8 +70,8 @@ export class HttpService {
   SapConfiguration = (data?: any): Observable<any> => {
     return this.http.post<any>(ApiEndPoint.sapConfiguration, data);
   };
-  GetAllSapConfiguration = (data?: any): Observable<PlantsResponse> => {
-    return this.http.post<PlantsResponse>(
+  GetAllSapConfiguration = (data?: any): Observable<SitesResponseModel> => {
+    return this.http.post<SitesResponseModel>(
       ApiEndPoint.getAllSapConfiguration,
       data,
     );

@@ -29,19 +29,19 @@ import {
   IonAccordionGroup,
 } from "@ionic/angular/standalone";
 import {
-  AssetsModel,
-  PlantsModel,
-  AssetsResponse,
-} from "src/app/store/models/plant.model";
+  AssetModel,
+  SiteModel,
+  AssetsResponseModel,
+} from "src/app/store/models/asset.model";
 import { Store } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
-import { UPDATE_PLANT } from "src/app/store/actions/plant.action";
+import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
-import { AssetApprovalUpdateModalComponent } from "src/app/components/asset-mapped-card/asset-approval-update-modal/asset-approval-update-modal.component";
+import { AssetApprovalUpdateModalComponent } from "src/app/components/asset-approval-update-modal/asset-approval-update-modal.component";
 
 @Component({
   imports: [
@@ -76,31 +76,32 @@ import { AssetApprovalUpdateModalComponent } from "src/app/components/asset-mapp
   styleUrls: ["./asset-mapped.page.scss"],
 })
 export class AssetMappedPage implements OnInit {
-  plantId: string;
   store = inject(Store);
-  assets: AssetsModel[];
-  assetss: AssetsModel[];
-  toggleChecked: boolean;
-  draftAssets: AssetsModel[];
-  isApprovalMenuOpen: boolean = false;
-  registeredAssets: AssetsModel[];
   httpService = inject(HttpService);
   toastService = inject(ToastService);
+
+  plantId: string;
+  assets: AssetModel[];
+  assetss: AssetModel[];
+  toggleChecked: boolean;
+  draftAssets: AssetModel[];
+  registeredAssets: AssetModel[];
+  isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
-  groupedAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
-  dreaftGroupAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
-  registerGroupAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
+  groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
+  dreaftGroupAssets: { assetParentType?: string; assets?: AssetModel[] }[];
+  registerGroupAssets: { assetParentType?: string; assets?: AssetModel[] }[];
 
   @Input()
   set id(plantId: string) {
     this.plantId = plantId;
     this.isLoading.set(true);
     this.httpService.GetAllAssets({ plantId }).subscribe({
-      next: (response: AssetsResponse) => {
+      next: (response: AssetsResponseModel) => {
         this.store.dispatch(
           UPDATE_PLANT({
             assets: response?.data,
-          })
+          }),
         );
       },
       error: (error: HttpErrorResponse) => {
@@ -127,39 +128,34 @@ export class AssetMappedPage implements OnInit {
 
   ngOnInit() {
     this.store.select("plant").subscribe({
-      next: (plant: PlantsModel) => {
+      next: (plant: SiteModel) => {
         if (plant?.assets) {
           this.assets = plant.assets;
 
-          this.registeredAssets = plant.assets.filter(
-            (asset) => asset?.assetRegisteredStatus?.assetRegistered
-          );
-          this.draftAssets = plant.assets.filter(
-            (asset) => !asset?.assetRegisteredStatus?.assetRegistered
-          );
-          this.assetss = this.registeredAssets;
+          // this.registeredAssets = plant.assets.filter(
+          //   (asset) => asset?.assetRegisteredStatus?.assetRegistered
+          // );
+          // this.draftAssets = plant.assets.filter(
+          //   (asset) => !asset?.assetRegisteredStatus?.assetRegistered
+          // );
+          // this.assetss = this.registeredAssets;
 
-          const parentTypes = new Set(
-            this.assets.map((asset) => asset?.assetInfo?.assetParentType)
-          );
+          // const parentTypes = new Set(
+          //   this.assets.map((asset) => asset?.assetInfo?.assetParentType)
+          // );
 
-          this.groupedAssets = [];
-          parentTypes.forEach((parentType) => {
-            this.groupedAssets.push({
-              assetParentType: parentType,
-              assets: this.registeredAssets.filter(
-                (asset) => asset?.assetInfo?.assetParentType === parentType
-              ),
-            });
-          });
+          // this.groupedAssets = [];
+          // parentTypes.forEach((parentType) => {
+          //   this.groupedAssets.push({
+          //     assetParentType: parentType,
+          //     assets: this.registeredAssets.filter(
+          //       (asset) => asset?.assetInfo?.assetParentType === parentType
+          //     ),
+          //   });
+          // });
         }
       },
     });
-
-    console.log("Assets:", this.assets);
-    console.log("Registered Assets:", this.registeredAssets);
-    console.log("Draft Assets:", this.draftAssets);
-    console.log("Grouped Assets:", this.groupedAssets);
   }
 
   handleErrorModal = (event: any) => {
@@ -173,7 +169,5 @@ export class AssetMappedPage implements OnInit {
     } else {
       this.assetss = this.registeredAssets;
     }
-
-    console.log(this.assets);
   }
 }

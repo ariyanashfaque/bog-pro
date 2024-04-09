@@ -22,10 +22,7 @@ import {
   IonTextarea,
   IonSelectOption,
 } from "@ionic/angular/standalone";
-import {
-  CategoriesModel,
-  AssetCategoryModel,
-} from "src/app/store/models/plant.model";
+import { AssetCategoryModel } from "src/app/store/models/asset.model";
 import { Store } from "@ngrx/store";
 
 @Component({
@@ -53,51 +50,40 @@ import { Store } from "@ngrx/store";
 export class AssetCategorySelectModalComponent implements OnInit {
   store = inject(Store);
   @Input() isMenuOpen: boolean = false;
-  @Input() selectedCategories: CategoriesModel[];
+  @Input() selectedCategories: AssetCategoryModel[];
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
-  @Output() selectedCategoriesEmit = new EventEmitter<CategoriesModel[]>();
+  @Output() selectedCategoriesEmit = new EventEmitter<AssetCategoryModel[]>();
 
-  categories: CategoriesModel[];
   selectedCategoryCount: number;
+  categories: AssetCategoryModel[];
   assetCategory: AssetCategoryModel;
 
   constructor() {
     this.categories = [];
     this.selectedCategories = [];
-    this.assetCategory = {
-      sim: false,
-      quarry: false,
-      insurance: false,
-      electrical: false,
-      environment: false,
-      hotMaterial: false,
-      fireProtection: false,
-      materialManagement: false,
-    };
+
     this.selectedCategoryCount = 0;
   }
 
   ngOnInit() {
     this.store.select("categories").subscribe({
-      next: (categories: CategoriesModel[]) => {
+      next: (categories: AssetCategoryModel[]) => {
         this.categories = categories
           .map((category) => {
             if (
               this.selectedCategories &&
               this.selectedCategories.find(
-                (selectedCategory) =>
-                  selectedCategory.id === category.id &&
-                  selectedCategory.categorySelected,
+                (selectedCategory) => selectedCategory.isSelected,
               )
             ) {
               return {
                 ...category,
-                categorySelected: true,
+                isSelected: true,
               };
             } else {
               return {
                 ...category,
-                categorySelected: false,
+                isSelected: false,
               };
             }
           })
@@ -117,10 +103,10 @@ export class AssetCategorySelectModalComponent implements OnInit {
     this.isMenuToggleOpen.emit(this.isMenuOpen);
   }
 
-  handleCategory = (category: CategoriesModel) => {
-    category.categorySelected = !category.categorySelected;
+  handleCategory = (category: AssetCategoryModel) => {
+    category.isSelected = !category.isSelected;
     this.selectedCategoryCount = this.categories?.filter(
-      (category) => category.categorySelected,
+      (category) => category.isSelected,
     ).length;
   };
 
