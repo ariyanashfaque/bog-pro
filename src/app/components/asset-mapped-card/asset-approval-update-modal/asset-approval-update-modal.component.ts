@@ -83,9 +83,7 @@ import {
     IonSegmentButton,
     ReactiveFormsModule,
   ],
-
   standalone: true,
-
   selector: "app-asset-approval-update-modal",
   templateUrl: "./asset-approval-update-modal.component.html",
   styleUrls: ["./asset-approval-update-modal.component.scss"],
@@ -108,6 +106,7 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
   isFormValid: WritableSignal<boolean> = signal(false);
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
   selectedCategoriesEmit = new EventEmitter<CategoriesModel[]>();
+  // @Input() assetID: string;
 
   @Input()
   set id(plantId: string) {
@@ -115,11 +114,11 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
   }
 
   @Input()
-  set assetId(assetId: string) {
+  set assetID(assetID: string) {
     this.store.select("plant").subscribe({
       next: (plant: PlantsModel) => {
         if (plant.assets) {
-          this.asset = plant.assets.find((asset) => asset.id === assetId) ?? {};
+          this.asset = plant.assets.find((asset) => asset.id === assetID) ?? {};
           this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
         }
       },
@@ -264,7 +263,7 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
         this.selectedCategories.find(
           (selectedCategory) =>
             selectedCategory.id === category.id &&
-            selectedCategory.categorySelected
+            selectedCategory.categorySelected,
         )
       ) {
         return {
@@ -280,7 +279,7 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
     });
 
     this.selectedCategoryCount = this.categories?.filter(
-      (category) => category.categorySelected
+      (category) => category.categorySelected,
     ).length;
 
     console.log(this.selectedCategories);
@@ -318,7 +317,7 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
   handleCategory = (category: CategoriesModel) => {
     category.categorySelected = !category.categorySelected;
     this.selectedCategoryCount = this.categories?.filter(
-      (category) => category.categorySelected
+      (category) => category.categorySelected,
     ).length;
     this.selectedCategoriesEmit.emit(this.categories);
   };

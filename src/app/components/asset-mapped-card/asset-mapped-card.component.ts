@@ -24,6 +24,7 @@ import {
   inject,
   Component,
   EventEmitter,
+  output,
 } from "@angular/core";
 import { AssetsModel } from "src/app/store/models/plant.model";
 
@@ -57,25 +58,28 @@ export class AssetMappedCardComponent implements OnInit {
   @Input() plantId: string;
   isApprover: boolean = true;
   isMenuOpen: boolean = false;
+  assetID?: string;
+  @Output() getAssetId = new EventEmitter<string>();
   @Input() asset: AssetsModel;
   @Input() toggleChecked: boolean;
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
   constructor() {
     this.asset = {};
     this.plantId = "";
+    this.assetID = "";
     this.isMenuOpen = false;
     this.toggleChecked = false;
   }
 
   ngOnInit() {}
-  handleMenuToggle = () => {
+  handleMenuToggle = (assetId?: string) => {
+    this.getAssetId.emit(assetId);
     this.isMenuToggleOpen.emit(!this.isMenuOpen);
   };
 
-
-  handleNavigate = (assetId?: string) => {
-    this.router.navigate([
-      `/asset-register/asset-mapped/${this.plantId}/asset/${assetId}`,
-    ]);
-  };
+  // handleNavigate = (assetId?: string) => {
+  //   this.router.navigate([
+  //     `/asset-register/asset-mapped/${this.plantId}/asset/${assetId}`,
+  //   ]);
+  // };
 }

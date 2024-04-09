@@ -80,6 +80,7 @@ export class AssetMappedPage implements OnInit {
   store = inject(Store);
   assets: AssetsModel[];
   assetss: AssetsModel[];
+  assetId: string;
   toggleChecked: boolean;
   draftAssets: AssetsModel[];
   isApprovalMenuOpen: boolean = false;
@@ -100,7 +101,7 @@ export class AssetMappedPage implements OnInit {
         this.store.dispatch(
           UPDATE_PLANT({
             assets: response?.data,
-          })
+          }),
         );
       },
       error: (error: HttpErrorResponse) => {
@@ -117,6 +118,7 @@ export class AssetMappedPage implements OnInit {
     this.assets = [];
     this.assetss = [];
     this.plantId = "";
+    this.assetId = "";
     this.draftAssets = [];
     this.groupedAssets = [];
     this.registeredAssets = [];
@@ -132,15 +134,15 @@ export class AssetMappedPage implements OnInit {
           this.assets = plant.assets;
 
           this.registeredAssets = plant.assets.filter(
-            (asset) => asset?.assetRegisteredStatus?.assetRegistered
+            (asset) => asset?.assetRegisteredStatus?.assetRegistered,
           );
           this.draftAssets = plant.assets.filter(
-            (asset) => !asset?.assetRegisteredStatus?.assetRegistered
+            (asset) => !asset?.assetRegisteredStatus?.assetRegistered,
           );
           this.assetss = this.registeredAssets;
 
           const parentTypes = new Set(
-            this.assets.map((asset) => asset?.assetInfo?.assetParentType)
+            this.assets.map((asset) => asset?.assetInfo?.assetParentType),
           );
 
           this.groupedAssets = [];
@@ -148,7 +150,7 @@ export class AssetMappedPage implements OnInit {
             this.groupedAssets.push({
               assetParentType: parentType,
               assets: this.registeredAssets.filter(
-                (asset) => asset?.assetInfo?.assetParentType === parentType
+                (asset) => asset?.assetInfo?.assetParentType === parentType,
               ),
             });
           });
@@ -164,6 +166,10 @@ export class AssetMappedPage implements OnInit {
   handleErrorModal = (event: any) => {
     this.isApprovalMenuOpen = event;
   };
+  handleAssetId = (event: any) => {
+    this.assetId = event;
+  };
+
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
 
