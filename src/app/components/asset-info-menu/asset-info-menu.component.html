@@ -3,17 +3,17 @@
   [class]="!isMenuOpen ? '-translate-x-full' : ''"
 >
   <div
-    class="absolute text-black top-9 w-full h-full bg-white overflow-y-scroll"
+    class="absolute text-black top-9 w-full h-full bg-[#f5feff] overflow-y-scroll"
   >
     <!-- Your Content -->
-    <div class="px-5 py-10">
-      <div class="absolute top-9 bottom-32 w-full h-full overflow-x-scroll">
+    <div class="mx-5 mt-10 mb-16 bg-white shadow-[0px_0px_6px_1px_#00000024]">
+      <div class="w-full h-full overflow-x-scroll">
         <ion-grid>
           <ion-row>
             <ion-col size="12">
               <div class="max-w-full mx-auto p-6 border-b-[2px]">
                 <ion-segment
-                  class="p-2"
+                  class=""
                   [value]="segment"
                   [scrollable]="true"
                   (ionChange)="handleChange($event)"
