@@ -66,71 +66,26 @@ interface AssetInfoModel {
   images: AssetImageModel[];
 }
 
-export interface DraftEngineerAssetStatus {
+interface AssetDraftStatus {
+  assetInDraft: boolean;
   assetPendingForApproval: boolean;
   assetRejectedByApprover: boolean;
   assetRegistrationPending: boolean;
 }
-export interface RegisteredEngineerAssetStatus {
-  assetDecommissioned: boolean;
-  assetDemolishRequested: boolean;
-  assetPendingForApproval: boolean;
-  assetDecommissionedRequested: boolean;
-}
-export interface DraftApproverAssetStatus {
-  assetApproved: false;
-  assetRejected: false;
-  assetApprovalPending: true;
-}
-export interface RegisteredApproverAssetStatus {
-  assetDemolishedPending: false;
-  assetDemolitionApproved: false;
-  assetDemolitionRejected: false;
-  assetDecommissionRejected: false;
-  assetDecommissionApproved: false;
-  assetDecommissionedPending: false;
+
+interface AssetRegisteredStatus {
+  assetDemolishedPending: boolean;
+  assetDemolitionApproved: boolean;
+  assetDemolitionRejected: boolean;
+  assetDecommissionRejected: boolean;
+  assetDecommissionApproved: boolean;
+  assetDecommissionedPending: boolean;
 }
 
 export interface AssetStatusModel {
-  role: string;
-  isDraft: boolean;
-  isRegistered: boolean;
-  status: {
-    assetInDraft?: boolean;
-    assetApproved?: boolean;
-    assetRejected?: boolean;
-    assetDecommissioned?: boolean;
-    assetApprovalPending?: boolean;
-    assetDemolishRequested?: boolean;
-    assetDemolishedPending?: boolean;
-    assetPendingForApproval?: boolean;
-    assetDemolitionApproved?: boolean;
-    assetDemolitionRejected?: boolean;
-    assetRejectedByApprover?: boolean;
-    assetRegistrationPending?: boolean;
-    assetDecommissionRejected?: boolean;
-    assetDecommissionApproved?: boolean;
-    assetDecommissionedPending?: boolean;
-    assetDecommissionedRequested?: boolean;
-  };
-}
-export interface AssetMappedStatusModel {
-  assetInDraft?: boolean;
-  assetApproved?: boolean;
-  assetRejected?: boolean;
-  assetDecommissioned?: boolean;
-  assetApprovalPending?: boolean;
-  assetDemolishRequested?: boolean;
-  assetDemolishedPending?: boolean;
-  assetPendingForApproval?: boolean;
-  assetDemolitionApproved?: boolean;
-  assetDemolitionRejected?: boolean;
-  assetRejectedByApprover?: boolean;
-  assetRegistrationPending?: boolean;
-  assetDecommissionRejected?: boolean;
-  assetDecommissionApproved?: boolean;
-  assetDecommissionedPending?: boolean;
-  assetDecommissionedRequested?: boolean;
+  isDraft?: boolean;
+  isRegistered?: boolean;
+  status?: AssetDraftStatus | AssetRegisteredStatus;
 }
 
 // * Asset Model * //
