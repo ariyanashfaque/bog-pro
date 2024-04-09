@@ -215,7 +215,8 @@ export class AssetMapViewPage implements OnInit {
     });
 
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
-      console.log(event?.latLng?.toJSON());
+      // console.log(event?.latLng?.toJSON());
+      this.toggleChildMenu();
     });
   }
 
