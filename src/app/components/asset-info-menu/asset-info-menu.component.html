@@ -37,7 +37,7 @@
                     </div>
                   </ion-segment-button>
                   } @for (assetCategory of asset?.assetCategories; track $index)
-                  { @if (assetCategory?.categorySelected) {
+                  { @if (assetCategory?.isSelected) {
                   <ion-segment-button [value]="assetCategory?.categoryType">
                     <div class="backg">
                       <div
@@ -178,9 +178,11 @@
                       </ion-col>
                     </ion-row>
 
-                    <div class="border-2 w-full">
+                    <div class="bg-[#edf5f5] pt-2 pb-4 w-full">
                       <div class="ml-4 mt-4">
-                        <div class="font-bold text-[12px]">Select Category</div>
+                        <div class="font-bold text-[#3a939e] pb-2">
+                          Select Category
+                        </div>
                       </div>
                       <ion-grid class="w-full ion-no-padding">
                         <ion-row
@@ -365,6 +367,7 @@
                                 >
                                   <ion-icon
                                     color="white"
+                                    class="text-white"
                                     name="checkmark-sharp"
                                   ></ion-icon>
                                 </div>
@@ -497,7 +500,7 @@
         </ion-grid>
       </div>
       <ion-footer class="fixed bottom-[-56px] w-full ion-no-padding">
-        @if (asset.assetRegisteredStatus?.assetDeletionApprovalPending) {
+        <!-- @if (asset.assetRegisteredStatus?.assetDeletionApprovalPending) {
         <div class="w-full h-44 p-2 rejectCard">
           <ion-grid>
             <ion-row>
@@ -574,7 +577,7 @@
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
-        }
+        } -->
       </ion-footer>
       <!-- <ion-text color="primary">
         <h1>

@@ -46,16 +46,17 @@ import {
   LoadingController,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
-import { UPDATE_ASSET } from "src/app/store/actions/plant.action";
+import { UPDATE_ASSET } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import {
-  AssetsModel,
-  PlantsModel,
-  AssetResponse,
-  CategoriesModel,
+  AssetModel,
+  SiteModel,
+  // AssetResponse,
+  AssetResponseModel,
+  // CategoriesModel,
   AssetCategoryModel,
-} from "src/app/store/models/plant.model";
+} from "src/app/store/models/asset.model";
 
 @Component({
   selector: "app-asset-info-menu",
@@ -112,7 +113,7 @@ export class AssetInfoMenuComponent implements OnInit {
   // from other component
   plantId: string;
   segment: string;
-  asset: AssetsModel;
+  asset: AssetModel;
   store = inject(Store);
   router = inject(Router);
   assetRegistrationForm: FormGroup;
@@ -132,7 +133,7 @@ export class AssetInfoMenuComponent implements OnInit {
   @Input()
   set assetId(assetId: string) {
     this.store.select("plant").subscribe({
-      next: (plant: PlantsModel) => {
+      next: (plant: SiteModel) => {
         if (plant.assets) {
           this.asset = plant.assets.find((asset) => asset.id === assetId) ?? {};
           this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
@@ -145,7 +146,7 @@ export class AssetInfoMenuComponent implements OnInit {
     this.asset = {};
     this.plantId = "";
     this.segment = "info";
-    this.assetCategory = {};
+    // this.assetCategory = {};
     this.isApprovalMenuOpen = false;
     this.asset.assetCategories = [];
 
@@ -192,7 +193,7 @@ export class AssetInfoMenuComponent implements OnInit {
   //   this.isMenuToggleOpen.emit(this.isApprovalMenuOpen);
   // }
 
-  handleSelectedCategory(event: CategoriesModel[]) {
+  handleSelectedCategory(event: AssetCategoryModel[]) {
     this.isApprovalMenuOpen = false;
     this.asset = { ...this.asset, assetCategories: event };
   }
@@ -207,7 +208,7 @@ export class AssetInfoMenuComponent implements OnInit {
     this.httpService
       .AssetSendForApproval({ plantId: this.plantId, asset: this.asset })
       .subscribe({
-        next: (response: AssetResponse) => {
+        next: (response: AssetResponseModel) => {
           this.store.dispatch(UPDATE_ASSET(response.data));
         },
         error: (error: HttpErrorResponse) => {
