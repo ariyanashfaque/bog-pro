@@ -42,6 +42,10 @@ import {
 } from "src/app/store/models/plant.model";
 import { MapService } from "src/app/services/map-service/map.service";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
+import { environment } from "src/environments/environment";
+import { Library, Loader } from "@googlemaps/js-api-loader";
+import { MAPBACKGROUND } from "src/app/utils/constant.util";
+
 @Component({
   selector: "app-asset-map-view",
   templateUrl: "./asset-map-view.page.html",
@@ -71,7 +75,15 @@ import { DndDropEvent, DndModule } from "ngx-drag-drop";
 })
 export class AssetMapViewPage implements OnInit {
   mapService = inject(MapService);
-  // mapRef = viewChild.required<ElementRef<HTMLDivElement>>("mapRef");
+  private map: google.maps.Map;
+  private mapMptions: google.maps.MapOptions;
+  private mapCenter: google.maps.LatLngLiteral;
+  private loader = new Loader({
+    region: "US",
+    language: "en",
+    version: "weekly",
+    apiKey: environment.browserMapKey,
+  });
   @ViewChild("mapRef", { static: true }) mapRef: ElementRef<HTMLDivElement>;
   plantId: string;
   store = inject(Store);
@@ -86,6 +98,7 @@ export class AssetMapViewPage implements OnInit {
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetsModel[] }[];
   assetModalActiveIndex = signal<number>(-1);
+  display: any;
 
   @Input()
   set id(plantId: string) {
@@ -110,7 +123,7 @@ export class AssetMapViewPage implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.mapService.initializeMap(this.mapRef);
+    this.initializeMap(this.mapRef);
   }
 
   ngOnInit() {
@@ -140,31 +153,88 @@ export class AssetMapViewPage implements OnInit {
     console.log("Grouped Assets:", this.groupedAssets);
   }
 
-  onDrop(event: DndDropEvent) {
-    this.mapService.isDragging.next(true);
-    this.mapService.addDropedAsset();
-
-    // const bounds = this.mapRef.nativeElement.getBoundingClientRect();
-    // const mouseX = event.event.clientX - bounds.left;
-    // const mouseY = event.event.clientY - bounds.top;
-
-    // const points = this.mapService.calculateBounds(mouseX, mouseY);
-    // console.log(points);
-  }
-
-  // movedMouse(event: MouseEvent){
-  // this.mapService.isDragging.next(true);
-
-  // }
-
   ngOnDestroy(): void {
-    this.mapService.destroyMap();
+    this.loader.deleteScript();
   }
 
   constructor() {
     this.assets = [];
     this.plantId = "";
     this.groupedAssets = [];
+
+    this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
+    this.mapMptions = {
+      zoom: 16,
+      minZoom: 6,
+      maxZoom: 20,
+      mapId: "g-maps",
+      mapTypeId: "roadmap",
+      mapTypeControl: false,
+      center: this.mapCenter,
+      disableDefaultUI: true,
+      streetViewControl: false,
+      keyboardShortcuts: false,
+      disableDoubleClickZoom: true,
+    };
+  }
+
+  public async initializeMap(mapRef: ElementRef) {
+    const { Map } = await this.importMapsLibrary("maps");
+    this.map = new Map(mapRef.nativeElement, this.mapMptions);
+    this.addMapStyles();
+
+    this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
+      const position = event?.latLng?.toJSON()!;
+      console.log(this.isDragging);
+      if (this.isDragging === true && position) {
+        console.log(position);
+        this.addMarker(position);
+        this.isDragging = false;
+      }
+    });
+  }
+
+  async onDrop(event: DndDropEvent) {
+    this.isDragging = true;
+  }
+
+  private async addMapStyles() {
+    const { StyledMapType } = await this.importMapsLibrary("maps");
+    const styledMaps = new StyledMapType(MAPBACKGROUND);
+    this.map.mapTypes.set("styled_map", styledMaps);
+    this.map.setMapTypeId("styled_map");
+  }
+
+  public async addMarker(position: google.maps.LatLngLiteral) {
+    const { AdvancedMarkerElement } = await this.importMarkersLibrary("marker");
+
+    const marker = new AdvancedMarkerElement({
+      map: this.map,
+      position: position,
+      gmpClickable: true,
+    });
+
+    marker.addListener("click", (event: google.maps.MapMouseEvent) => {
+      console.log(event?.latLng?.toJSON());
+    });
+  }
+
+  private async importMapsLibrary(type: Library) {
+    return (await this.loader.importLibrary(type)) as google.maps.MapsLibrary;
+  }
+  private async importCircleLibrary(type: Library) {
+    return (await this.loader.importLibrary(type)) as google.maps.MapsLibrary;
+  }
+  private async importMarkersLibrary(type: Library) {
+    return (await this.loader.importLibrary(type)) as google.maps.MarkerLibrary;
+  }
+
+  private async importPointLibrary(type: Library) {
+    return (await this.loader.importLibrary(type)) as google.maps.CoreLibrary;
+  }
+
+  private async importShapeLibrary(type: Library) {
+    return (await this.loader.importLibrary(type)) as google.maps.MapsLibrary;
   }
 
   closeSubAssetModal() {
