@@ -1,28 +1,16 @@
 import {
-  Component,
-  effect,
-  ElementRef,
-  inject,
   Input,
+  effect,
+  inject,
   OnInit,
   signal,
+  Component,
   ViewChild,
-  viewChild,
+  ElementRef,
   WritableSignal,
 } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { HttpErrorResponse } from "@angular/common/http";
-import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
-import { RoundProgressComponent } from "angular-svg-round-progressbar";
-import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header/header.component";
-import { HttpService } from "src/app/services/http-service/http-client.service";
-import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-sidebar.component";
-import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
-import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
-import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
-import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 import {
+  IonFab,
   IonIcon,
   IonText,
   IonTitle,
@@ -33,24 +21,31 @@ import {
   IonToolbar,
   IonBackdrop,
   IonProgressBar,
-  IonFab,
 } from "@ionic/angular/standalone";
+import { Store } from "@ngrx/store";
 import {
   SiteModel,
   AssetModel,
   AssetsResponseModel,
 } from "src/app/store/models/asset.model";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
+import { HttpErrorResponse } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Library, Loader } from "@googlemaps/js-api-loader";
 import { MAPBACKGROUND } from "src/app/utils/constant.util";
+import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { MapService } from "src/app/services/map-service/map.service";
+import { RoundProgressComponent } from "angular-svg-round-progressbar";
+import { ToastService } from "src/app/services/toast-service/toast.service";
+import { HeaderComponent } from "src/app/components/header/header.component";
+import { HttpService } from "src/app/services/http-service/http-client.service";
+import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
+import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-sidebar.component";
+import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
+import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
+import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
 
 @Component({
-  selector: "app-asset-map-view",
-  templateUrl: "./asset-map-view.page.html",
-  styleUrls: ["./asset-map-view.page.scss"],
-  standalone: true,
   imports: [
     IonFab,
     IonText,
@@ -69,9 +64,13 @@ import { MapService } from "src/app/services/map-service/map.service";
     AssetSidebarComponent,
     RoundProgressComponent,
     AssetInfoMenuComponent,
-    SubAssetSidebarComponent,
     SubAssetModalComponent,
+    SubAssetSidebarComponent,
   ],
+  standalone: true,
+  selector: "app-asset-map-view",
+  templateUrl: "./asset-map-view.page.html",
+  styleUrls: ["./asset-map-view.page.scss"],
 })
 export class AssetMapViewPage implements OnInit {
   mapService = inject(MapService);
