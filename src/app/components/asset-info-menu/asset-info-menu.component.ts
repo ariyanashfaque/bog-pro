@@ -106,7 +106,7 @@ export class AssetInfoMenuComponent implements OnInit {
 
   nextButton() {
     this.subAssetActiveIndex.update(
-      (subAssetActiveIndex) => subAssetActiveIndex + 1
+      (subAssetActiveIndex) => subAssetActiveIndex + 1,
     );
   }
 
@@ -294,9 +294,9 @@ export class AssetInfoMenuComponent implements OnInit {
             ...this.asset,
             id: this.asset?.id,
             assetSource: {
-              sapSync: false,
-              bulkUpload: false,
-              manualCreation: true,
+              assetSapSync: false,
+              assetBulkUpload: false,
+              assetManualCreation: true,
             },
             assetInfo: this.assetRegistrationForm.value,
           };

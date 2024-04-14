@@ -33,17 +33,17 @@ interface LocationModel {
 
 // * Asset Approval Model * //
 interface AssetSourceModel {
-  sapSync: boolean;
-  bulkUpload: boolean;
-  manualCreation: boolean;
+  assetSapSync: boolean;
+  assetBulkUpload: boolean;
+  assetManualCreation: boolean;
 }
 
 // * Asset Category Model * //
 export interface AssetCategoryModel {
   order: number;
-  isSelected?: boolean;
-  categoryType?: string;
-  categoryTitle?: string;
+  isSelected: boolean;
+  categoryType: string;
+  categoryTitle: string;
 }
 
 // * Asset Silo Category Model * //
@@ -55,25 +55,26 @@ interface AssetSimCategoryModel {
 }
 
 // * Asset Info Model * //
-interface AssetInfoModel {
-  name: string;
+export interface AssetInfoModel {
   sapId: string;
-  status: string;
+  assetName: string;
   assetType: string;
-  costCenter: string;
-  zone: AssetZoneModel;
+  assetStatus: string;
   assetParentType: string;
-  images: AssetImageModel[];
+  assetCostCenter: string;
+  assetZone: AssetZoneModel;
+  assetImages: AssetImageModel[];
 }
 
 interface AssetDraftStatus {
   assetInDraft: boolean;
-  assetPendingForApproval: boolean;
-  assetRejectedByApprover: boolean;
-  assetRegistrationPending: boolean;
+  assetRejected: boolean;
+  assetApproved: boolean;
+  assetApprovalPendinng: boolean;
 }
 
 interface AssetRegisteredStatus {
+  assetRegistered: boolean;
   assetDemolishedPending: boolean;
   assetDemolitionApproved: boolean;
   assetDemolitionRejected: boolean;
@@ -93,9 +94,9 @@ export interface AssetModel {
   id?: string;
   assetInfo?: AssetInfoModel;
   assetSource?: AssetSourceModel;
-  assetStatus?: AssetStatusModel[];
-  assetSim?: AssetSimCategoryModel;
+  assetStatus?: AssetStatusModel;
   assetCategories?: AssetCategoryModel[];
+  assetSim?: AssetSimCategoryModel | undefined;
 }
 
 interface AuditTrailModel {}

@@ -66,7 +66,7 @@ export class AssetMappedCardComponent implements OnInit {
   isMenuOpen: boolean = false;
   @Input() toggleChecked: boolean;
   plantId = input.required<string>();
-  asset = model.required<AssetModel>();
+  asset = input.required<AssetModel>();
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
   constructor() {

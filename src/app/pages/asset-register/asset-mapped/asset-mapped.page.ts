@@ -82,16 +82,11 @@ export class AssetMappedPage implements OnInit {
 
   assetId: string;
   plantId: string;
-  assets: AssetModel[];
-  assetss: AssetModel[];
   toggleChecked: boolean;
   draftAssets: AssetModel[];
   registeredAssets: AssetModel[];
   isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
-  groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
-  dreaftGroupAssets: { assetParentType?: string; assets?: AssetModel[] }[];
-  registerGroupAssets: { assetParentType?: string; assets?: AssetModel[] }[];
 
   @Input()
   set id(plantId: string) {
@@ -116,15 +111,11 @@ export class AssetMappedPage implements OnInit {
   }
 
   constructor() {
-    this.assets = [];
-    this.assetss = [];
     this.plantId = "";
     this.assetId = "";
     this.draftAssets = [];
-    this.groupedAssets = [];
+    this.toggleChecked = true;
     this.registeredAssets = [];
-    this.dreaftGroupAssets = [];
-    this.registerGroupAssets = [];
     this.isApprovalMenuOpen = false;
   }
 
@@ -132,29 +123,14 @@ export class AssetMappedPage implements OnInit {
     this.store.select("plant").subscribe({
       next: (plant: SiteModel) => {
         if (plant?.assets) {
-          this.assets = plant.assets;
-
-          // this.registeredAssets = plant.assets.filter(
-          //   (asset) => asset?.assetRegisteredStatus?.assetRegistered
-          // );
-          // this.draftAssets = plant.assets.filter(
-          //   (asset) => !asset?.assetRegisteredStatus?.assetRegistered
-          // );
-          // this.assetss = this.registeredAssets;
-
-          // const parentTypes = new Set(
-          //   this.assets.map((asset) => asset?.assetInfo?.assetParentType)
-          // );
-
-          // this.groupedAssets = [];
-          // parentTypes.forEach((parentType) => {
-          //   this.groupedAssets.push({
-          //     assetParentType: parentType,
-          //     assets: this.registeredAssets.filter(
-          //       (asset) => asset?.assetInfo?.assetParentType === parentType
-          //     ),
-          //   });
-          // });
+          plant.assets?.forEach((asset) => {
+            if (asset?.assetStatus?.isDraft) {
+              this.draftAssets.push(asset);
+            }
+            if (asset?.assetStatus?.isRegistered) {
+              this.registeredAssets.push(asset);
+            }
+          });
         }
       },
     });
@@ -169,11 +145,5 @@ export class AssetMappedPage implements OnInit {
 
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
-
-    if (this.toggleChecked) {
-      this.assetss = this.draftAssets;
-    } else {
-      this.assetss = this.registeredAssets;
-    }
   }
 }

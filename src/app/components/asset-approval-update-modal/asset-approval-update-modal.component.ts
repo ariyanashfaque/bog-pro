@@ -271,9 +271,9 @@ export class AssetApprovalUpdateModalComponent implements OnInit {
             ...this.asset,
             id: this.asset?.id,
             assetSource: {
-              sapSync: false,
-              bulkUpload: false,
-              manualCreation: true,
+              assetSapSync: false,
+              assetBulkUpload: false,
+              assetManualCreation: true,
             },
             assetInfo: this.assetRegistrationForm.value,
           };

@@ -118,7 +118,6 @@ export class AssetRegisterPage implements OnInit {
 
     this.GetAllPlants();
     this.role = this.country_hse_head;
-    console.log(this.role);
   }
 
   handleErrorModal = (event: any) => {

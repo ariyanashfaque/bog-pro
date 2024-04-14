@@ -134,15 +134,13 @@ export class AssetPage implements OnInit {
       assetLocation: new FormControl(""),
       assetParentType: new FormControl(""),
       assetName: new FormControl("", Validators.required),
-      costCenter: new FormControl("", Validators.required),
       assetStatus: new FormControl("", Validators.required),
       assetId: new FormControl({ value: "", disabled: true }),
+      assetCostCenter: new FormControl("", Validators.required),
     });
   }
 
   ngOnInit() {
-    console.log(this.asset.assetCategories);
-
     this.assetRegistrationForm.valueChanges.subscribe({
       next: () => {
         if (this.assetRegistrationForm.valid) {
@@ -151,9 +149,9 @@ export class AssetPage implements OnInit {
             ...this.asset,
             id: this.asset?.id,
             assetSource: {
-              sapSync: false,
-              bulkUpload: false,
-              manualCreation: true,
+              assetSapSync: false,
+              assetBulkUpload: false,
+              assetManualCreation: true,
             },
             assetInfo: this.assetRegistrationForm.value,
           };
