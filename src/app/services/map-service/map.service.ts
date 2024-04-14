@@ -111,25 +111,16 @@ export class MapService {
       strokeWeight: 2,
       fillColor: "#FF0000",
       fillOpacity: 0.35,
-<<<<<<< HEAD
       clickable: true,
     };
 
     rectangleCoordinates.forEach((coords) => {
       const rectangle = new Rectangle({
-=======
-      clickable: false,
-    };
-
-    rectangleCoordinates.forEach((coords) => {
-      const rectangle = new google.maps.Rectangle({
->>>>>>> 9e968c0f3df4c2689a61caa24391fc4d9912400d
         bounds: coords,
         map: this.map,
         ...rectangleOptions,
       });
       this.rectangles.push(rectangle);
-<<<<<<< HEAD
 
       rectangle.addListener("click", () => {
         const centerLat = (coords.north + coords.south) / 2;
@@ -157,8 +148,6 @@ export class MapService {
           }
         });
       }
-=======
->>>>>>> 9e968c0f3df4c2689a61caa24391fc4d9912400d
     });
   }
 
