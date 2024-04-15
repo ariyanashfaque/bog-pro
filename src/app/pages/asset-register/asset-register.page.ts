@@ -38,11 +38,11 @@ import {
   SiteModel,
   SitesResponseModel,
 } from "src/app/store/models/asset.model";
+import { CountryHseHead, Champion } from "src/app/store/models/role.model";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { PlantCardComponent } from "src/app/components/plant-card/plant-card.component";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { PlantCardErrorModalComponent } from "src/app/components/plant-card-error-modal/plant-card-error-modal.component";
-import { CountryHseHead, Champion } from "src/app/store/models/role.model";
 
 @Component({
   imports: [
@@ -77,8 +77,8 @@ import { CountryHseHead, Champion } from "src/app/store/models/role.model";
 export class AssetRegisterPage implements OnInit {
   role: any;
   champion: Champion;
-  store = inject(Store);
   plants: SiteModel[];
+  store = inject(Store);
   isMenuOpen: boolean = false;
   country_hse_head: CountryHseHead;
   httpService = inject(HttpService);

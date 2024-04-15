@@ -27,7 +27,11 @@ import {
   IonCardSubtitle,
 } from "@ionic/angular/standalone";
 import { Router, RouterModule } from "@angular/router";
-import { AssetModel } from "src/app/store/models/asset.model";
+import {
+  AssetDraftStatus,
+  AssetModel,
+  AssetStatusModel,
+} from "src/app/store/models/asset.model";
 
 @Component({
   imports: [
@@ -57,10 +61,9 @@ import { AssetModel } from "src/app/store/models/asset.model";
 export class AssetMappedCardComponent implements OnInit {
   router = inject(Router);
 
-  assetStatus: any;
+  assetStatus: AssetDraftStatus;
   isDraft: boolean = false;
   role: string = "engineer";
-  // role: string = "country_hse_head";
 
   isApprover: boolean = true;
   isMenuOpen: boolean = false;
@@ -73,8 +76,14 @@ export class AssetMappedCardComponent implements OnInit {
     this.isMenuOpen = false;
     this.toggleChecked = false;
   }
+  ngOnInit() {
+    console.log(this.asset());
+    console.log(this.plantId());
 
-  ngOnInit() {}
+    // this.asset().forEach((status) => {});
+
+    // // console.log(this.asset);
+  }
 
   handleMenuToggle = () => {
     this.isMenuToggleOpen.emit(!this.isMenuOpen);

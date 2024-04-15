@@ -134,6 +134,9 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
+
+    console.log("draft:", this.draftAssets);
+    console.log("registered:", this.registeredAssets);
   }
 
   handleErrorModal = (event: any) => {

@@ -66,7 +66,7 @@ export interface AssetInfoModel {
   assetImages: AssetImageModel[];
 }
 
-interface AssetDraftStatus {
+export interface AssetDraftStatus {
   assetInDraft: boolean;
   assetRejected: boolean;
   assetApproved: boolean;
