@@ -26,12 +26,12 @@ import {
   IonCardContent,
   IonCardSubtitle,
 } from "@ionic/angular/standalone";
-import { Router, RouterModule } from "@angular/router";
 import {
-  AssetDraftStatus,
   AssetModel,
-  AssetStatusModel,
+  AssetDraftStatus,
+  AssetRegisteredStatus,
 } from "src/app/store/models/asset.model";
+import { Router, RouterModule } from "@angular/router";
 
 @Component({
   imports: [
@@ -78,11 +78,6 @@ export class AssetMappedCardComponent implements OnInit {
   }
   ngOnInit() {
     console.log(this.asset());
-    console.log(this.plantId());
-
-    // this.asset().forEach((status) => {});
-
-    // // console.log(this.asset);
   }
 
   handleMenuToggle = () => {
