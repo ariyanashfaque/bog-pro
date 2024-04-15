@@ -56,6 +56,14 @@
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
 
+  /** grey **/
+  --ion-color-grey: #00000033;
+  --ion-color-grey-rgb: 0, 0, 51;
+  --ion-color-grey-contrast: #ffffff;
+  --ion-color-grey-contrast-rgb: 255, 255, 255;
+  --ion-color-grey-shade: #00002d;
+  --ion-color-grey-tint: #1a1a47;
+
   /** medium **/
   --ion-color-medium: #92949c;
   --ion-color-medium-tint: #9d9fa6;
@@ -127,6 +135,14 @@
   --ion-color-textwhite-contrast: #000000;
   --ion-color-textwhite-rgb: 255, 255, 255;
   --ion-color-textwhite-contrast-rgb: 0, 0, 0;
+
+  // asset approved
+  --ion-color-assetapproved: #009146;
+  --ion-color-assetapproved-rgb: 0, 145, 70;
+  --ion-color-assetapproved-contrast: #000000;
+  --ion-color-assetapproved-contrast-rgb: 0, 0, 0;
+  --ion-color-assetapproved-shade: #00803e;
+  --ion-color-assetapproved-tint: #1a9c59;
 
   /** Ionic Input Outline **/
   --ion-color-input: #3cb4aa;

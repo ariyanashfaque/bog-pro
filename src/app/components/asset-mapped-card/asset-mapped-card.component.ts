@@ -1,7 +1,6 @@
 import {
   Input,
   input,
-  model,
   OnInit,
   Output,
   inject,
@@ -26,11 +25,7 @@ import {
   IonCardContent,
   IonCardSubtitle,
 } from "@ionic/angular/standalone";
-import {
-  AssetModel,
-  AssetDraftStatus,
-  AssetRegisteredStatus,
-} from "src/app/store/models/asset.model";
+import { AssetModel, AssetDraftStatus } from "src/app/store/models/asset.model";
 import { Router, RouterModule } from "@angular/router";
 
 @Component({
@@ -60,11 +55,6 @@ import { Router, RouterModule } from "@angular/router";
 })
 export class AssetMappedCardComponent implements OnInit {
   router = inject(Router);
-
-  assetStatus: AssetDraftStatus;
-  isDraft: boolean = false;
-  role: string = "engineer";
-
   isApprover: boolean = true;
   isMenuOpen: boolean = false;
   @Input() toggleChecked: boolean;
