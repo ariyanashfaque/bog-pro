@@ -41,9 +41,13 @@ import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
-import { AssetApprovalUpdateModalComponent } from "src/app/components/asset-approval-update-modal/asset-approval-update-modal.component";
+import { AssetApprovalModalComponent } from "../../../components/asset-approval-modal/asset-approval-modal.component";
 
 @Component({
+  standalone: true,
+  selector: "app-asset-mapped",
+  templateUrl: "./asset-mapped.page.html",
+  styleUrls: ["./asset-mapped.page.scss"],
   imports: [
     IonCol,
     IonRow,
@@ -68,12 +72,8 @@ import { AssetApprovalUpdateModalComponent } from "src/app/components/asset-appr
     IonAccordionGroup,
     LoadingSkeletonComponent,
     AssetMappedCardComponent,
-    AssetApprovalUpdateModalComponent,
+    AssetApprovalModalComponent,
   ],
-  standalone: true,
-  selector: "app-asset-mapped",
-  templateUrl: "./asset-mapped.page.html",
-  styleUrls: ["./asset-mapped.page.scss"],
 })
 export class AssetMappedPage implements OnInit {
   store = inject(Store);

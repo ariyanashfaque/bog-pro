@@ -83,11 +83,11 @@ import {
     ReactiveFormsModule,
   ],
   standalone: true,
-  selector: "app-asset-approval-update-modal",
-  templateUrl: "./asset-approval-update-modal.component.html",
-  styleUrls: ["./asset-approval-update-modal.component.scss"],
+  selector: 'app-asset-approval-modal',
+  templateUrl: './asset-approval-modal.component.html',
+  styleUrls: ['./asset-approval-modal.component.scss'],
 })
-export class AssetApprovalUpdateModalComponent implements OnInit {
+export class AssetApprovalModalComponent  implements OnInit {
   plantId: string;
   segment: string;
   asset: AssetModel;
