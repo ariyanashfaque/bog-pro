@@ -1,0 +1,614 @@
+<div
+  class="fixed w-7/12 left-0 top-0 h-full shadow-lg bg-transparent transform transition-transform duration-800 z-10"
+  [class]="!isMenuOpen ? '-translate-x-full' : ''"
+>
+  <div
+    class="absolute text-black top-9 w-full h-full bg-[#f5feff] overflow-y-scroll"
+  >
+    <!-- Your Content -->
+    <div class="mx-5 mt-10 mb-16 bg-white shadow-[0px_0px_6px_1px_#00000024]">
+      <div class="w-full h-full ">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <div class="max-w-full mx-auto py-5 border-b-[2px]">
+                <ion-segment
+                  class="pb-2"
+                  [value]="segment"
+                  [scrollable]="true"
+                  (ionChange)="handleChange($event)"
+                >
+                  @if (categories) {
+                    <ion-segment-button value="info">
+                      <div
+                        class="segment-change ion-justify-content-center rounded-full"
+                      >
+                        <ion-icon
+                          color="primary"
+                          class="p-4 h-[32px] w-[32px] image"
+                          src="../../../../../assets/segment-icons/info1.svg"
+                        ></ion-icon>
+                        <ion-text
+                          color="textwhite"
+                          class="ion-text-center hidden-content"
+                        >
+                          Info
+                        </ion-text>
+                      </div>
+                    </ion-segment-button>
+                  }
+                  @for (assetCategory of categories; track $index) {
+                    @if (assetCategory?.isSelected) {
+                      <ion-segment-button [value]="assetCategory?.categoryType">
+                        <div class="backg">
+                          <div
+                            class="segment-change ion-justify-content-center rounded-full"
+                          >
+                            @switch (true) {
+                              @case (assetCategory?.categoryType === "sim") {
+                                <ion-icon
+                                  class="p-4 h-[32px] w-[32px] image"
+                                  src="../../../../assets/segment-icons/sim.svg"
+                                ></ion-icon>
+                              }
+                              @case (assetCategory?.categoryType === "quarry") {
+                                <ion-icon
+                                  class="p-4 h-[32px] w-[32px] image"
+                                  src="../../../../assets/segment-icons/query.svg"
+                                ></ion-icon>
+                              }
+                              @case (assetCategory?.categoryType === "insurance") {
+                                <ion-icon
+                                  class="p-4 h-[32px] w-[32px] image"
+                                  src="../../../../assets/segment-icons/insurance.svg"
+                                ></ion-icon>
+                              }
+                              @case (assetCategory?.categoryType === "electrical") {
+                                <ion-icon
+                                  class="p-4 h-[32px] w-[32px] image"
+                                  src="../../../../assets/segment-icons/electrical.svg"
+                                ></ion-icon>
+                              }
+                              @case (
+                                assetCategory?.categoryType === "environment"
+                              ) {
+                                <ion-icon
+                                  class="p-4 h-[32px] w-[32px] image"
+                                  src="../../../../assets/segment-icons/environment.svg"
+                                ></ion-icon>
+                              }
+                              @case (
+                                assetCategory?.categoryType === "hotMaterial"
+                              ) {
+                                <ion-icon
+                                  class="p-4 h-[32px] w-[32px] image"
+                                  src="../../../../assets/segment-icons/hotMaterial.svg"
+                                ></ion-icon>
+                              }
+                              @case (
+                                assetCategory?.categoryType === "fireProtection"
+                              ) {
+                                <ion-icon
+                                  class="p-4 h-[32px] w-[32px] image"
+                                  src="../../../../assets/segment-icons/fireProtection.svg"
+                                ></ion-icon>
+                              }
+                              @case (
+                                assetCategory?.categoryType === "materialManagement"
+                              ) {
+                                <ion-icon
+                                  class="p-4 h-[32px] w-[32px] image"
+                                  src="../../../../assets/segment-icons/materialManagement.svg"
+                                ></ion-icon>
+                              }
+                            }
+                            <ion-text
+                              color="textwhite"
+                              class="ion-text-center hidden-content"
+                            >
+                              {{ assetCategory?.categoryTitle }}
+                            </ion-text>
+                          </div>
+                        </div>
+                      </ion-segment-button>
+                    }
+                  }
+                </ion-segment>
+              </div>
+    
+              <div class="max-w-full mx-auto p-4">
+                @switch (segment) {
+                  @case ("info") {
+                    <ion-grid>
+                      <form [formGroup]="assetRegistrationForm" novalidate>
+                        <ion-row class="my-4">
+                          <ion-col size="12">
+                            <ion-input
+                              required
+                              fill="outline"
+                              color="primary"
+                              inputmode="text"
+                              placeholder="Hopper is situated near the walkway"
+                              labelPlacement="floating"
+                              formControlName="assetName"
+                              errorText="Asset name required"
+                            >
+                              <ion-label slot="label">
+                                Enter name
+                                <ion-text color="danger">*</ion-text>
+                              </ion-label>
+                            </ion-input>
+                          </ion-col>
+    
+                          <ion-col size="4">
+                            <ion-input
+                              required
+                              type="text"
+                              fill="outline"
+                              placeholder="Asset ID"
+                              formControlName="assetId"
+                              labelPlacement="floating"
+                            >
+                              <ion-label slot="label">Asset ID</ion-label>
+                            </ion-input>
+                          </ion-col>
+    
+                          <ion-col size="4">
+                            <ion-input
+                              type="text"
+                              fill="outline"
+                              formControlName="sapId"
+                              labelPlacement="floating"
+                              placeholder="125152"
+                            >
+                              <ion-label slot="label">SAP ID</ion-label>
+                            </ion-input>
+                          </ion-col>
+                          <ion-col size="4">
+                            <ion-input
+                              type="text"
+                              fill="outline"
+                              formControlName="hacCode"
+                              labelPlacement="floating"
+                              placeholder="125152"
+                            >
+                              <ion-label slot="label">HAC code</ion-label>
+                            </ion-input>
+                          </ion-col>
+    
+                          <ion-col size="6">
+                            <ion-select
+                              fill="outline"
+                              label="Status"
+                              label-placement="floating"
+                              interface="popover"
+                            >
+                              <ion-select-option value="apple">
+                                asset approved
+                              </ion-select-option>
+                              <ion-select-option value="banana">
+                                asset draft
+                              </ion-select-option>
+                              <ion-select-option value="orange">
+                                asset decomision
+                              </ion-select-option>
+                            </ion-select>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-select
+                              fill="outline"
+                              label="Cost Center"
+                              label-placement="floating"
+                              interface="popover"
+                            >
+                              <ion-select-option value="apple">
+                                asset approved
+                              </ion-select-option>
+                              <ion-select-option value="banana">
+                                asset draft
+                              </ion-select-option>
+                              <ion-select-option value="orange">
+                                asset decomision
+                              </ion-select-option>
+                            </ion-select>
+                          </ion-col>
+                        </ion-row>
+                      </form>
+                      <div
+                        class="categoryBg w-full pt-4 ion-no-padding overflow-x-scroll"
+                      >
+                        <div class="ml-7">
+                          <div class="font-bold text-[14px]">
+                            <ion-text class="font-gotham_medium" color="primary">
+                              Select Category* ({{ selectedCategoryCount }})
+                            </ion-text>
+                          </div>
+                        </div>
+                        <ion-grid class="w-[full]">
+                          <ion-row
+                            scrollX="true"
+                            class="scrollrow md:mx-4 my-2 ion-justify-content-between"
+                          >
+                            @for (category of categories; track $index) {
+                              <ion-col size="2">
+                                <ion-button
+                                  fill="clear"
+                                  class="ion-no-padding w-full"
+                                  (click)="handleCategory(category)"
+                                >
+                                  @switch (true) {
+                                    @case (category?.categoryType === "sim") {
+                                      <ion-icon
+                                        src="../../../../assets/segment-icons/sim.svg"
+                                        [class.active]="category?.isSelected"
+                                        class="border-[3px] rounded-[6px] p-2 w-12 h-12"
+                                      ></ion-icon>
+                                    }
+                                    @case (category?.categoryType === "quarry") {
+                                      <ion-icon
+                                        [class.active]="category?.isSelected"
+                                        class="activeicon border-[3px] rounded-[6px] p-2 w-12 h-12"
+                                        src="../../../../assets/segment-icons/query.svg"
+                                      ></ion-icon>
+                                    }
+                                    @case (
+                                      category?.categoryType === "electrical"
+                                    ) {
+                                      <ion-icon
+                                        [class.active]="category?.isSelected"
+                                        class="activeicon border-[3px] rounded-[6px] p-2 w-12 h-12"
+                                        src="../../../assets/segment-icons/electrical.svg"
+                                      ></ion-icon>
+                                    }
+                                    @case (
+                                      category?.categoryType === "hotMaterial"
+                                    ) {
+                                      <ion-icon
+                                        [class.active]="category?.isSelected"
+                                        class="border-[3px] rounded-[6px] p-2 w-12 h-12"
+                                        src="../../../assets/segment-icons/hotMaterial.svg"
+                                      ></ion-icon>
+                                    }
+                                    @case (
+                                      category?.categoryType === "fireProtection"
+                                    ) {
+                                      <ion-icon
+                                        [class.active]="category?.isSelected"
+                                        class="border-[3px] rounded-[6px] p-2 w-12 h-12"
+                                        src="../../../../assets/segment-icons/fireProtection.svg"
+                                      ></ion-icon>
+                                    }
+                                    @case (
+                                      category?.categoryType === "environment"
+                                    ) {
+                                      <ion-icon
+                                        [class.active]="category?.isSelected"
+                                        class="border-[3px] rounded-[6px] p-2 w-12 h-12"
+                                        src="../../../../assets/segment-icons/environment.svg"
+                                      ></ion-icon>
+                                    }
+                                    @case (
+                                      category?.categoryType ===
+                                      "materialManagement"
+                                    ) {
+                                      <ion-icon
+                                        [class.active]="category?.isSelected"
+                                        class="border-[3px] rounded-[6px] p-2 w-12 h-12"
+                                        src="../../../assets/segment-icons/materialManagement.svg"
+                                      ></ion-icon>
+                                    }
+                                  }
+                                </ion-button>
+                                <ion-text
+                                  color="dark"
+                                  style="text-align: center"
+                                  class="lg:text-[14px] text-[10px]"
+                                >
+                                  <p>
+                                    {{ category.categoryTitle }}
+                                  </p>
+                                </ion-text>
+                              </ion-col>
+                            }
+                          </ion-row>
+                        </ion-grid>
+                      </div>
+                      <ion-row>
+                        <ion-col size="6">
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col size="12">
+                                <ion-text
+                                  class="text-[16px] font-gotham_book"
+                                  color="black"
+                                >
+                                  Add Picture
+                                </ion-text>
+                              </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>
+                                <div class="flex">
+                                  <div
+                                    class="h-[66px] w-[66px] rounded-md iconBg justify-center items-center flex"
+                                  >
+                                    <ion-icon
+                                      color="primary"
+                                      class="h-[44px] w-[44px]"
+                                      name="camera"
+                                    ></ion-icon>
+                                  </div>
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </ion-col>
+                        <ion-col size="6">
+                          <ion-grid class="ion-float-right">
+                            <ion-row>
+                              <ion-col size="12" class="ion-text-end">
+                                <ion-text class="text-[16px] font-gotham_book">
+                                  Add Location
+                                  <span>*</span>
+                                </ion-text>
+                              </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>
+                                <div
+                                  class="flex h-[66px] w-[130px] rounded-md iconBg -ml-[5px] items-center justify-center"
+                                >
+                                  <div>
+                                    <ion-icon
+                                      color="primary"
+                                      size="large"
+                                      name="location-outline"
+                                    ></ion-icon>
+                                  </div>
+                                  <div>
+                                    <ion-text
+                                      color="primary"
+                                      class="text-[16px] font-gotham_medium"
+                                    >
+                                      location
+                                    </ion-text>
+                                  </div>
+                                  <div
+                                    class="absolute cardIcon -mt-14 right-[-2px] w-[20px] h-[20px] rounded-full flex items-center ion-justify-content-center"
+                                  >
+                                    <ion-icon
+                                      color="white"
+                                      name="checkmark-sharp"
+                                    ></ion-icon>
+                                  </div>
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  }
+                  @case ("sim") {
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size="12" sizeMd="6">
+                          <ion-input
+                            required
+                            class="mb-4"
+                            fill="outline"
+                            label="Enter name"
+                            placeholder="Roof-ACC-Cement House"
+                            label-placement="floating"
+                          ></ion-input>
+                        </ion-col>
+    
+                        <ion-col size="12" sizeMd="6">
+                          <ion-input
+                            required
+                            class="mb-4"
+                            fill="outline"
+                            label="Status"
+                            placeholder="Roof-ACC-Cement House"
+                            label-placement="floating"
+                          ></ion-input>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  }
+                  @case ("hotMaterial") {
+                    <ion-grid class="m-5 mt-6">
+                      <ion-row>
+                        <ion-col size="12">
+                          <ion-select
+                            class="mb-4"
+                            fill="outline"
+                            label="Stored Material"
+                            [multiple]="true"
+                            label-placement="floating"
+                          >
+                            <ion-select-option value="apple">
+                              Apple
+                            </ion-select-option>
+                            <ion-select-option value="banana">
+                              Banana
+                            </ion-select-option>
+                            <ion-select-option value="orange">
+                              Orange
+                            </ion-select-option>
+                          </ion-select>
+                        </ion-col>
+                        <ion-col size="12">
+                          <ion-textarea
+                            label="Outline textarea"
+                            labelPlacement="floating"
+                            fill="outline"
+                            placeholder="Enter text"
+                          ></ion-textarea>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  }
+                  @case ("environment") {
+                    <ion-grid class="m-5 mt-6">
+                      <ion-row>
+                        <ion-col size="12">
+                          <ion-select
+                            class="mb-4"
+                            fill="outline"
+                            label="Stored Material"
+                            [multiple]="true"
+                            label-placement="floating"
+                          >
+                            <ion-select-option value="apple">
+                              Apple
+                            </ion-select-option>
+                            <ion-select-option value="banana">
+                              Banana
+                            </ion-select-option>
+                            <ion-select-option value="orange">
+                              Orange
+                            </ion-select-option>
+                          </ion-select>
+                        </ion-col>
+                        <ion-col size="12">
+                          <ion-textarea
+                            label="Outline textarea"
+                            labelPlacement="floating"
+                            fill="outline"
+                            placeholder="Enter text"
+                          ></ion-textarea>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  }
+                  @case ("materialManagement") {
+                    <ion-grid class="m-5 mt-6">
+                      <ion-row>
+                        <ion-col size="12">
+                          <ion-select
+                            class="mb-4"
+                            fill="outline"
+                            label="Stored Material"
+                            [multiple]="true"
+                            label-placement="floating"
+                          >
+                            <ion-select-option value="apple">
+                              Apple
+                            </ion-select-option>
+                            <ion-select-option value="banana">
+                              Banana
+                            </ion-select-option>
+                            <ion-select-option value="orange">
+                              Orange
+                            </ion-select-option>
+                          </ion-select>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  }
+                }
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <ion-footer class="fixed bottom-[-56px] w-full ion-no-padding">
+        <!-- @if (asset.assetRegisteredStatus?.assetDeletionApprovalPending) {
+        <div class="w-full h-44 p-2 rejectCard">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-text class="font-gotham_medium text-[16px]" color="danger">
+                  Reason for decommission
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <div class="RejectSelect">
+                  <ion-select
+                    fill="outline"
+                    color="danger"
+                    label-placement="floating"
+                    interface="popover"
+                  >
+                    <ion-label color="danger" slot="label">
+                      Asset markup is no longer on the map
+                    </ion-label>
+
+                    <ion-select-option value="apple">
+                      asset approved
+                    </ion-select-option>
+                    <ion-select-option value="banana">
+                      asset draft
+                    </ion-select-option>
+                    <ion-select-option value="orange">
+                      asset decomision
+                    </ion-select-option>
+                  </ion-select>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <div class="flex gap-3">
+                  <div>
+                    <button
+                      class="inline-flex items-center bgRejectBtn justify-center w-28 h-10 rounded-full"
+                    >
+                      <ion-text color="danger">Reject</ion-text>
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      class="inline-flex items-center bgacceptBtn justify-center w-28 h-10 rounded-full"
+                    >
+                      <ion-text color="textwhite">Accept</ion-text>
+                    </button>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        } @else {
+        <ion-toolbar color="secondary">
+          <ion-buttons slot="start" class="w-full">
+            <ion-button
+              expand="full"
+              color="textwhite"
+              class="w-full text-[16px] font-gotham_book"
+            >
+              Reject
+            </ion-button>
+            <ion-button
+              expand="full"
+              color="textwhite"
+              class="w-full text-[16px] font-gotham_book"
+            >
+              Approve
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        } -->
+      </ion-footer>
+      <!-- <ion-text color="primary">
+        <h1>
+          Selected Asset:
+          <span class="font-bold text-2xl">{{ assetDummy().name }}</span>
+        </h1>
+      </ion-text>
+
+      <ion-button
+        class="fixed bottom-0 right-0"
+        (click)="nextButton()"
+        expand="block"
+        fill="clear"
+        shape="round"
+      >
+        next
+      </ion-button> -->
+    </div>
+  </div>
+</div>
