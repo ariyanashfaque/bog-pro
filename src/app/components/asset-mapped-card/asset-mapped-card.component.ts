@@ -61,22 +61,29 @@ export class AssetMappedCardComponent implements OnInit {
   plantId = input.required<string>();
   asset = input.required<AssetModel>();
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
-
+  assetID?: string;
+  @Output() getAssetId = new EventEmitter<string>();
   constructor() {
     this.isMenuOpen = false;
     this.toggleChecked = false;
+    this.assetID = "";
   }
   ngOnInit() {
-    console.log(this.asset());
+    // console.log(this.asset());
   }
 
-  handleMenuToggle = () => {
+  // handleMenuToggle = () => {
+  //   this.isMenuToggleOpen.emit(!this.isMenuOpen);
+  // };
+
+  handleMenuToggle = (assetId?: string) => {
+    this.getAssetId.emit(assetId);
     this.isMenuToggleOpen.emit(!this.isMenuOpen);
   };
 
-  handleNavigate = (assetId?: string) => {
-    this.router.navigate([
-      `/asset-register/asset-mapped/${this.plantId()}/asset/${assetId}`,
-    ]);
-  };
+  // handleNavigate = (assetId?: string) => {
+  //   this.router.navigate([
+  //     `/asset-register/asset-mapped/${this.plantId()}/asset/${assetId}`,
+  //   ]);
+  // };
 }

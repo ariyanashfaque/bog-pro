@@ -1,0 +1,127 @@
+.custom {
+  opacity: 1;
+  border: 5px;
+  border-radius: 32px 32px 0 0;
+  box-shadow: 0px 3px 8px #00000029;
+  //   background: transparent 0% 0% no-repeat padding-box;
+}
+
+.scroll-items {
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+}
+
+// .cust {
+//   border-color: #00000029 opacify($color: #000000, $amount: 0);
+// }
+
+// ion-segment-button::part(indicator-background) {
+//   display: none;
+// }
+
+// ion-segment-button::part(native) {
+//   color: transparent;
+// }
+
+// ion-segment-button {
+//   background-color: #edf5f5;
+// }
+
+ion-segment-button {
+  --width: 100%;
+}
+
+ion-segment ion-segment-button.segment-button-checked {
+  ion-segment-button {
+    background-color: red;
+  }
+  .customcolor {
+    background-color: red;
+    color: blue;
+  }
+}
+
+.selected {
+  background-color: rgb(255, 255, 255);
+  font-weight: bold;
+  border-right: none;
+  border-bottom: none;
+}
+
+ion-checkbox {
+  --size: 25px;
+  --checkbox-background-checked: #007382;
+}
+
+ion-checkbox::part(container) {
+  border-radius: 3px;
+  border-color: #007382;
+}
+
+.buttonBg {
+  background-color: #f6fafb;
+}
+.custom {
+  opacity: 1;
+  border: 5px;
+  border-radius: 32px 32px 0 0;
+  box-shadow: 0px 3px 8px #00000029;
+  background: transparent 0% 0% no-repeat padding-box;
+}
+
+.bgcolordiv {
+  background-color: #f5feff;
+  // background-color: #eb1010;
+}
+
+.bgColor {
+  align-items: center;
+  background-color: #edf5f5;
+  border-color: #007382;
+}
+
+.bgstlye {
+  border: 2%;
+  // background-color: #007382;
+}
+
+.customize {
+  margin: 30px;
+}
+.scrollitem {
+  overflow: auto;
+}
+
+.modalInnerCard {
+  border: 2px solid #ffd5d8;
+  opacity: 1;
+}
+.Showerror {
+  color: var(---f00014);
+  text-align: left;
+  letter-spacing: 1.92px;
+  color: #f00014;
+  opacity: 1;
+}
+
+.errorCardBtn {
+  border-color: #f00014;
+  box-shadow: 0px 0px 9px #0000002e;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  color: var(---f00014);
+  text-align: left;
+  font: normal normal normal 15px/20px Gotham;
+  letter-spacing: 0.48px;
+  color: #f00014;
+  opacity: 1;
+}
+.assetName {
+  text-align: left;
+}
+.cardTitle {
+  color: var(---f00014);
+  text-align: left;
+  letter-spacing: 0.19px;
+  color: #f00014;
+  opacity: 1;
+}

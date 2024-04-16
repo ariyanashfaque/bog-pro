@@ -83,11 +83,11 @@ import {
     ReactiveFormsModule,
   ],
   standalone: true,
-  selector: 'app-asset-approval-modal',
-  templateUrl: './asset-approval-modal.component.html',
-  styleUrls: ['./asset-approval-modal.component.scss'],
+  selector: "app-asset-approval-modal",
+  templateUrl: "./asset-approval-modal.component.html",
+  styleUrls: ["./asset-approval-modal.component.scss"],
 })
-export class AssetApprovalModalComponent  implements OnInit {
+export class AssetApprovalModalComponent implements OnInit {
   plantId: string;
   segment: string;
   asset: AssetModel;
@@ -116,6 +116,8 @@ export class AssetApprovalModalComponent  implements OnInit {
     this.store.select("plant").subscribe({
       next: (plant: SiteModel) => {
         if (plant.assets) {
+          console.log(plant.assets);
+          
           this.asset = plant.assets.find((asset) => asset.id === assetID) ?? {};
           this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
         }
@@ -193,7 +195,7 @@ export class AssetApprovalModalComponent  implements OnInit {
       assetLocation: new FormControl(""),
       assetParentType: new FormControl(""),
       assetName: new FormControl("", Validators.required),
-      costCenter: new FormControl("", Validators.required),
+      assetCostCenter: new FormControl("", Validators.required),
       assetStatus: new FormControl("", Validators.required),
     });
   }
@@ -201,7 +203,7 @@ export class AssetApprovalModalComponent  implements OnInit {
   ngOnInit() {
     this.store.select("categories").subscribe({
       next: (categories: AssetCategoryModel[]) => {
-        console.log(categories);
+        // console.log(categories);
       },
     });
 
@@ -286,7 +288,6 @@ export class AssetApprovalModalComponent  implements OnInit {
   handleChange(event: any) {
     this.segment = event?.detail?.value;
     this.asset = { ...this.asset, assetCategories: event };
-    console.log();
   }
   menuToggle() {
     this.isApprovalMenuOpen = !this.isApprovalMenuOpen;
