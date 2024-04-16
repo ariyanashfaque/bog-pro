@@ -8,6 +8,7 @@ import {
   ViewChild,
   ElementRef,
   WritableSignal,
+  model,
 } from "@angular/core";
 import {
   IonFab,
@@ -89,6 +90,7 @@ export class AssetMapViewPage implements OnInit {
   assets: AssetModel[];
   selectedAsset = signal<any>({});
   isDragging: boolean = false;
+  dragRecieved = model<any>({});
   httpService = inject(HttpService);
   toastService = inject(ToastService);
   isChildOpen = signal<boolean>(false);
@@ -164,6 +166,7 @@ export class AssetMapViewPage implements OnInit {
     this.groupedAssets = [];
     effect(() => {
       console.log("subAssetActiveIndex in page: ", this.subAssetActiveIndex());
+      console.log("Dragged asset:", this.dragRecieved());
     });
 
     this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
@@ -212,10 +215,30 @@ export class AssetMapViewPage implements OnInit {
   public async addMarker(position: google.maps.LatLngLiteral) {
     const { AdvancedMarkerElement } = await this.importMarkersLibrary("marker");
 
+    const markerImage = document.createElement("img");
+    markerImage.src = "../assets/check-in/plant.svg";
+    markerImage.width = 60;
+    markerImage.height = 60;
+
+    const mapMarker = document.createElement("div");
+    const counterElement = document.createElement("div");
+    counterElement.textContent = "3";
+    counterElement.style.top = "-10%";
+    counterElement.style.right = "-10%";
+    counterElement.style.color = "white";
+    counterElement.style.padding = "3px 6px";
+    counterElement.style.borderRadius = "50%";
+    counterElement.style.position = "absolute";
+    counterElement.style.backgroundColor = "red";
+
+    mapMarker.appendChild(markerImage);
+    mapMarker.appendChild(counterElement);
+
     const marker = new AdvancedMarkerElement({
       map: this.map,
       position: position,
       gmpClickable: true,
+      content: mapMarker,
     });
 
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {

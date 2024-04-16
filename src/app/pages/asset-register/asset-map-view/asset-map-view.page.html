@@ -1,7 +1,7 @@
 <app-header class="z-20 fixed w-full" headerTitle="Bird eye view"></app-header>
 
 @if (isChildOpen() == true) {
-<ion-backdrop class="z-10" [visible]="true"></ion-backdrop>
+  <ion-backdrop class="z-10" [visible]="true"></ion-backdrop>
 }
 
 <!-- Content -->
@@ -65,12 +65,13 @@
 
 <!-- Sub Asset MODAL -->
 @if (isChildOpen()) {
-<app-sub-asset-modal
-  [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
-  (click)="closeSubAssetModal()"
-  [(childAsset)]="childAsset"
-  [(activeIndex)]="subAssetActiveIndex"
-></app-sub-asset-modal>
+  <app-sub-asset-modal
+    [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
+    (click)="closeSubAssetModal()"
+    [(childAsset)]="childAsset"
+    [(activeIndex)]="subAssetActiveIndex"
+    [(recievedDraggedAsset)]="dragRecieved"
+  ></app-sub-asset-modal>
 }
 
 <!-- Asset info menu -->
@@ -84,6 +85,7 @@
 <app-sub-asset-sidebar
   [(isMenuOpen)]="isSubAssetModalOpen"
   [(selectedAsset)]="selectedAsset"
+  [(draggedAsset)]="dragRecieved"
 ></app-sub-asset-sidebar>
 
 <!-- Asset Sidebar -->

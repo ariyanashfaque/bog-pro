@@ -61,25 +61,25 @@
       class="w-full max-h-[236px] px-2 py-2 flex items-start gap-2 flex-wrap overflow-y-auto"
     >
       <!-- Assets -->
-      @for(subAsset of subAssets; track $index){
-
-      <div class="cursor-pointer" (click)="onAssetClick(subAsset, $index)">
+      @for (subAsset of subAssets; track $index) {
         <div
-          class="h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center overflow-hidden"
-          [class]="
-            activeIndex() == $index ? 'border-[#007382]' : 'border-[#D6EAEB]'
-          "
+          dndDropzone
+          class="cursor-pointer"
+          (click)="onAssetClick(subAsset, $index)"
+          (dndDrop)="onDrop($event, $index)"
         >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/Silo.png"
-            alt="silo"
-          />
+          <div
+            class="h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center overflow-hidden"
+            [class]="
+              activeIndex() == $index ? 'border-[#007382]' : 'border-[#D6EAEB]'
+            "
+          >
+            <img class="object-cover w-full h-full" [src]="imageUrl[$index]" />
+          </div>
+          <div class="w-[70px] text-xs text-center mt-1">
+            <span class="text-[#000000DE]">{{ subAsset.name }}</span>
+          </div>
         </div>
-        <div class="w-[70px] text-xs text-center mt-1">
-          <span class="text-[#000000DE]">{{ subAsset.name }}</span>
-        </div>
-      </div>
       }
     </div>
   </div>

@@ -8,18 +8,21 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
+import { DndDropEvent, DndModule } from "ngx-drag-drop";
 
 @Component({
   selector: "app-sub-asset-modal",
   standalone: true,
   templateUrl: "./sub-asset-modal.component.html",
   styleUrls: ["./sub-asset-modal.component.scss"],
-  imports: [RoundProgressComponent],
+  imports: [RoundProgressComponent, DndModule],
 })
 export class SubAssetModalComponent implements OnInit, OnChanges {
   isAssetInfoMenuOpen = model(false);
   childAsset = model<any>({});
   activeIndex = model<number>(-1);
+  recievedDraggedAsset = model<any>({});
+  imageUrl: any[] = [];
 
   onAssetClick(asset: any, index: number) {
     this.isAssetInfoMenuOpen.update((isAssetInfoMenuOpen) => true);
@@ -36,10 +39,16 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   constructor() {
     effect(() => {
       console.log("Active indexxxxx: ", this.activeIndex());
+      console.log("Recieved dragged asset:", this.recievedDraggedAsset());
     });
   }
 
   ngOnInit() {}
+
+  onDrop(event: DndDropEvent, i: number) {
+    this.imageUrl[i] = event.event.dataTransfer?.getData("text/plain");
+    console.log(i);
+  }
 
   subAssets = [
     {
