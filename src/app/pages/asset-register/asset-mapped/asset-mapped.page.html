@@ -8,7 +8,9 @@
           class="max-w-full flex justify-between mx-auto bg-white border-b-[2px] shadowpart1"
         >
           <div class="font-[24px] font-gotham_medium p-4">Assets (2)</div>
-          <div class="font-[24px] font-gotham_medium p-4 flex gap-3">
+          <div
+            class="font-[24px] font-gotham_medium p-4 flex gap-3 items-center justify-center"
+          >
             <ion-text
               class="font-[32px] font-gotham_medium"
               [class]="toggleChecked ? 'toggleBefore' : 'toggleAfter'"
@@ -16,7 +18,7 @@
               Registered
             </ion-text>
 
-            <div>
+            <div class="flex items-center justify-center">
               <ion-toggle
                 mode="ios"
                 class="customToggle"
@@ -30,6 +32,24 @@
             >
               Drafts
             </ion-text>
+            <ion-button
+              size="small"
+              fill="outline"
+              shape="round"
+              color="primary"
+              (click)="handleFilterModal($event)"
+            >
+              <div class="flex mx-auto">
+                <ion-label class="flex items-center justify-center">
+                  Filter (2)
+                  <ion-icon
+                    class="ml-2"
+                    slot="icon-only"
+                    src="../../../assets/Filter.svg"
+                  ></ion-icon>
+                </ion-label>
+              </div>
+            </ion-button>
           </div>
         </div>
 
@@ -108,11 +128,24 @@
   </ion-grid>
 </ion-content>
 
-<app-asset-approval-update-modal
-  [assetID]="assetId"
-  [isApprovalMenuOpen]="isApprovalMenuOpen"
-  (isMenuToggleOpen)="handleErrorModal($event)"
-></app-asset-approval-update-modal>
+@if (isFilterMenuOpen) {
+  <app-asset-mapped-filter-modal
+    [isFilterMenuOpen]="isFilterMenuOpen"
+    (isFilterToggleOpen)="handleFilterModal($event)"
+  ></app-asset-mapped-filter-modal>
+}
+
+@if (isApprovalMenuOpen) {
+  <app-asset-approval-modal
+    [assetID]="assetId"
+    [isApprovalMenuOpen]="isApprovalMenuOpen"
+    (isMenuToggleOpen)="handleErrorModal($event)"
+  ></app-asset-approval-modal>
+}
+
+@if (isFilterMenuOpen) {
+  <ion-backdrop [visible]="isFilterMenuOpen"></ion-backdrop>
+}
 
 @if (isApprovalMenuOpen) {
   <ion-backdrop [visible]="isApprovalMenuOpen"></ion-backdrop>

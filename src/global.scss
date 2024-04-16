@@ -107,6 +107,15 @@
   --ion-color-contrast-rgb: var(--ion-color-black-contrast-rgb);
 }
 
+.ion-color-grey {
+	--ion-color-base: var(--ion-color-grey);
+	--ion-color-base-rgb: var(--ion-color-grey-rgb);
+	--ion-color-contrast: var(--ion-color-grey-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-grey-contrast-rgb);
+	--ion-color-shade: var(--ion-color-grey-shade);
+	--ion-color-tint: var(--ion-color-grey-tint);
+}
+
 .ion-color-approvalpending {
   --ion-color-base: var(--ion-color-approvalpending);
   --ion-color-tint: var(--ion-color-approvalpending-tint);
@@ -114,6 +123,15 @@
   --ion-color-base-rgb: var(--ion-color-approvalpending-rgb);
   --ion-color-contrast: var(--ion-color-approvalpending-contrast);
   --ion-color-contrast-rgb: var(--ion-color-approvalpending-contrast-rgb);
+}
+
+.ion-color-assetapproved {
+	--ion-color-base: var(--ion-color-assetapproved);
+	--ion-color-base-rgb: var(--ion-color-assetapproved-rgb);
+	--ion-color-contrast: var(--ion-color-assetapproved-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-assetapproved-contrast-rgb);
+	--ion-color-shade: var(--ion-color-assetapproved-shade);
+	--ion-color-tint: var(--ion-color-assetapproved-tint);
 }
 
 .ion-color-registerationpending {
