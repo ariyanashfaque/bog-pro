@@ -32,22 +32,24 @@
             >
               Drafts
             </ion-text>
+
             <ion-button
-              size="small"
               fill="outline"
               shape="round"
               color="primary"
+              class="mr-2 w-32"
+
               (click)="handleFilterModal($event)"
             >
               <div class="flex mx-auto">
-                <ion-label class="flex items-center justify-center">
-                  Filter (2)
-                  <ion-icon
-                    class="ml-2"
-                    slot="icon-only"
-                    src="../../../assets/Filter.svg"
-                  ></ion-icon>
-                </ion-label>
+                <ion-text class="font-gotham_medium text-[12px]" color="primary">
+                  Filter
+                </ion-text>
+                <ion-icon
+                  class="ml-2"
+                  slot="icon-only"
+                  src="../../../assets/Filter.svg"
+                ></ion-icon>
               </div>
             </ion-button>
           </div>

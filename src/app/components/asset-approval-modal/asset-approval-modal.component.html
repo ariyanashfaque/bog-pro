@@ -32,11 +32,11 @@
     <div class="-ml-[88px] h-full w-[20px] bg-white rounded-tr-[10px]"></div>
   </div>
 
-  <div class="absolute top-9 bottom-32 w-full h-full overflow-x-scroll">
+  <div class="absolute top-2 bottom-32 w-full">
     <ion-grid>
       <ion-row>
         <ion-col size="12">
-          <div class="max-w-full mx-auto p-5 border-b-[2px]">
+          <div class="max-w-full mx-auto p-4 border-b-[2px]">
             <ion-segment
               class="p-2"
               [value]="segment"
@@ -141,7 +141,7 @@
             </ion-segment>
           </div>
 
-          <div class="max-w-full mx-auto p-4">
+          <div class="relative h-[550px] mx-auto p-4 overflow-x-scroll">
             @switch (segment) {
               @case ("info") {
                 <ion-grid>
@@ -547,8 +547,7 @@
     </ion-grid>
   </div>
   <ion-footer class="fixed bottom-[-56px] w-full ion-no-padding">
-    @if (asset) {
-      <div class="w-full h-44 p-2 rejectCard">
+    <!-- <div class="w-full h-44 p-2 rejectCard">
         <ion-grid>
           <ion-row>
             <ion-col size="12">
@@ -604,26 +603,24 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-      </div>
-    } @else {
-      <ion-toolbar color="secondary">
-        <ion-buttons slot="start" class="w-full">
-          <ion-button
-            expand="full"
-            color="textwhite"
-            class="w-full text-[16px] font-gotham_book"
-          >
-            Reject
-          </ion-button>
-          <ion-button
-            expand="full"
-            color="textwhite"
-            class="w-full text-[16px] font-gotham_book"
-          >
-            Approve
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    }
+      </div> -->
+    <ion-toolbar color="secondary">
+      <ion-buttons slot="start" class="w-full">
+        <ion-button
+          expand="full"
+          color="textwhite"
+          class="w-full text-[16px] font-gotham_book"
+        >
+          Reject
+        </ion-button>
+        <ion-button
+          expand="full"
+          color="textwhite"
+          class="w-full text-[16px] font-gotham_book"
+        >
+          Approve
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
   </ion-footer>
 </div>
