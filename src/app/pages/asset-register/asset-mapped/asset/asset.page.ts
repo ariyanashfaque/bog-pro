@@ -52,7 +52,6 @@ import { UPDATE_ASSET } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
-import { AssetCategorySelectModalComponent } from "src/app/components/asset-category-select-modal/asset-category-select-modal.component";
 
 @Component({
   standalone: true,
@@ -85,7 +84,6 @@ import { AssetCategorySelectModalComponent } from "src/app/components/asset-cate
     IonSelectOption,
     IonSegmentButton,
     ReactiveFormsModule,
-    AssetCategorySelectModalComponent,
   ],
 })
 export class AssetPage implements OnInit {
