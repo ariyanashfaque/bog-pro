@@ -92,7 +92,7 @@ export class AssetMapViewPage implements OnInit {
   httpService = inject(HttpService);
   toastService = inject(ToastService);
   isChildOpen = signal<boolean>(false);
-  isAssetInfoMenuOpen = signal<boolean>(true);
+  isAssetInfoMenuOpen = signal<boolean>(false);
   isSubAssetModalOpen = signal<boolean>(false);
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
