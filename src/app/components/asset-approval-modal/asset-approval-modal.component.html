@@ -146,8 +146,8 @@
               @case ("info") {
                 <ion-grid>
                   <form [formGroup]="assetRegistrationForm">
-                    <ion-row class="my-4">
-                      <ion-col size="12">
+                    <ion-row class="my-2">
+                      <ion-col size="12" class="mt-2">
                         <ion-input
                           required
                           fill="outline"
@@ -165,7 +165,7 @@
                         </ion-input>
                       </ion-col>
 
-                      <ion-col size="4">
+                      <ion-col size="4" class="mt-2">
                         <ion-input
                           required
                           type="text"
@@ -178,7 +178,7 @@
                         </ion-input>
                       </ion-col>
 
-                      <ion-col size="4">
+                      <ion-col size="4" class="mt-2">
                         <ion-input
                           type="text"
                           fill="outline"
@@ -189,7 +189,7 @@
                           <ion-label slot="label">SAP ID</ion-label>
                         </ion-input>
                       </ion-col>
-                      <ion-col size="4">
+                      <ion-col size="4" class="mt-2">
                         <ion-input
                           type="text"
                           fill="outline"
@@ -201,39 +201,47 @@
                         </ion-input>
                       </ion-col>
 
-                      <ion-col size="6">
+                      <ion-col size="6" class="mt-4">
                         <ion-select
                           fill="outline"
                           label="Status"
                           label-placement="floating"
+                          formControlName="assetStatus"
                           interface="popover"
                         >
-                          <ion-select-option value="apple">
-                            asset approved
+                          <ion-select-option value="Mothballed">
+                            Mothballed
                           </ion-select-option>
-                          <ion-select-option value="banana">
-                            asset draft
+                          <ion-select-option value="Operational">
+                            Operational
                           </ion-select-option>
-                          <ion-select-option value="orange">
-                            asset decomision
+                          <ion-select-option value="Demolished">
+                            Demolished
+                          </ion-select-option>
+                          <ion-select-option value="Decommissioned">
+                            Decommissioned
                           </ion-select-option>
                         </ion-select>
                       </ion-col>
-                      <ion-col size="6">
+                      <ion-col size="6" class="mt-4">
                         <ion-select
                           fill="outline"
                           label="Cost Center"
                           label-placement="floating"
+                          formControlName="assetCostCenter"
                           interface="popover"
                         >
-                          <ion-select-option value="apple">
-                            asset approved
+                          <ion-select-option value="Raw Material Extraction">
+                            Raw Material Extraction
                           </ion-select-option>
-                          <ion-select-option value="banana">
-                            asset draft
+                          <ion-select-option value="readymix">
+                            readymix
                           </ion-select-option>
-                          <ion-select-option value="orange">
-                            asset decomision
+                          <ion-select-option value="Demolished">
+                            Demolished
+                          </ion-select-option>
+                          <ion-select-option value="Decommissioned">
+                            Decommissioned
                           </ion-select-option>
                         </ion-select>
                       </ion-col>

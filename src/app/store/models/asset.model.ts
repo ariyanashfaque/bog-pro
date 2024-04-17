@@ -66,15 +66,29 @@ export interface AssetInfoModel {
   assetImages: AssetImageModel[];
 }
 
-interface AssetDraftStatus {
+export interface AssetDraftStatus {
   assetInDraft: boolean;
   assetRejected: boolean;
   assetApproved: boolean;
   assetApprovalPendinng: boolean;
 }
 
-interface AssetRegisteredStatus {
+export interface AssetRegisteredStatus {
   assetRegistered: boolean;
+  assetDemolishedPending: boolean;
+  assetDemolitionApproved: boolean;
+  assetDemolitionRejected: boolean;
+  assetDecommissionApproved: boolean;
+  assetDecommissionRejected: boolean;
+  assetDecommissionedPending: boolean;
+}
+
+interface AssetDraftRegisteredStatusModel {
+  assetInDraft: boolean;
+  assetRejected: boolean;
+  assetApproved: boolean;
+  assetRegistered: boolean;
+  assetApprovalPendinng: boolean;
   assetDemolishedPending: boolean;
   assetDemolitionApproved: boolean;
   assetDemolitionRejected: boolean;
@@ -86,7 +100,7 @@ interface AssetRegisteredStatus {
 export interface AssetStatusModel {
   isDraft?: boolean;
   isRegistered?: boolean;
-  status?: AssetDraftStatus | AssetRegisteredStatus;
+  status?: AssetDraftRegisteredStatusModel;
 }
 
 // * Asset Model * //

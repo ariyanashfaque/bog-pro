@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AssetApprovalUpdateModalComponent } from './asset-approval-update-modal.component';
+import { AssetMappedFilterModalComponent } from './asset-mapped-filter-modal.component';
 
-describe('AssetApprovalUpdateModalComponent', () => {
-  let component: AssetApprovalUpdateModalComponent;
-  let fixture: ComponentFixture<AssetApprovalUpdateModalComponent>;
+describe('AssetMappedFilterModalComponent', () => {
+  let component: AssetMappedFilterModalComponent;
+  let fixture: ComponentFixture<AssetMappedFilterModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssetApprovalUpdateModalComponent ],
+      declarations: [ AssetMappedFilterModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AssetApprovalUpdateModalComponent);
+    fixture = TestBed.createComponent(AssetMappedFilterModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

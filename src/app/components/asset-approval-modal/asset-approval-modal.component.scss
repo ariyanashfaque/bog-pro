@@ -98,3 +98,6 @@ ion-icon.active {
   overflow-x: scroll !important;
   overflow-y: hidden;
 }
+::-webkit-scrollbar {
+  display: none;
+}

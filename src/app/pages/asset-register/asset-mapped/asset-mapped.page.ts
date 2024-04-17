@@ -5,6 +5,8 @@ import {
   signal,
   Component,
   WritableSignal,
+  Output,
+  EventEmitter,
 } from "@angular/core";
 import {
   IonRow,
@@ -27,6 +29,7 @@ import {
   IonCardHeader,
   IonSegmentButton,
   IonAccordionGroup,
+  IonButton,
 } from "@ionic/angular/standalone";
 import {
   AssetModel,
@@ -41,10 +44,16 @@ import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
-import { AssetApprovalUpdateModalComponent } from "src/app/components/asset-approval-update-modal/asset-approval-update-modal.component";
+import { AssetApprovalModalComponent } from "../../../components/asset-approval-modal/asset-approval-modal.component";
+import { AssetMappedFilterModalComponent } from "../../../components/asset-mapped-filter-modal/asset-mapped-filter-modal.component";
 
 @Component({
+  standalone: true,
+  selector: "app-asset-mapped",
+  templateUrl: "./asset-mapped.page.html",
+  styleUrls: ["./asset-mapped.page.scss"],
   imports: [
+    IonButton,
     IonCol,
     IonRow,
     IonText,
@@ -68,18 +77,15 @@ import { AssetApprovalUpdateModalComponent } from "src/app/components/asset-appr
     IonAccordionGroup,
     LoadingSkeletonComponent,
     AssetMappedCardComponent,
-    AssetApprovalUpdateModalComponent,
+    AssetApprovalModalComponent,
+    AssetMappedFilterModalComponent,
   ],
-  standalone: true,
-  selector: "app-asset-mapped",
-  templateUrl: "./asset-mapped.page.html",
-  styleUrls: ["./asset-mapped.page.scss"],
 })
 export class AssetMappedPage implements OnInit {
   store = inject(Store);
   httpService = inject(HttpService);
   toastService = inject(ToastService);
-
+  isFilterMenuOpen: boolean = false;
   assetId: string;
   plantId: string;
   toggleChecked: boolean;
@@ -87,6 +93,7 @@ export class AssetMappedPage implements OnInit {
   registeredAssets: AssetModel[];
   isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
+  @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
 
   @Input()
   set id(plantId: string) {
@@ -134,10 +141,18 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
+
+    // console.log("draft:", this.draftAssets);
+    // console.log("registered:", this.registeredAssets);
   }
 
   handleErrorModal = (event: any) => {
     this.isApprovalMenuOpen = event;
+  };
+
+  handleFilterModal = (event: any) => {
+    this.isFilterMenuOpen = event;
+    this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   };
   handleAssetId = (event: any) => {
     this.assetId = event;
