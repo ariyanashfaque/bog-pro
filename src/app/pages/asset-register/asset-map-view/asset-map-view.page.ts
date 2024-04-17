@@ -94,7 +94,7 @@ export class AssetMapViewPage implements OnInit {
   httpService = inject(HttpService);
   toastService = inject(ToastService);
   isChildOpen = signal<boolean>(false);
-  isAssetInfoMenuOpen = signal<boolean>(true);
+  isAssetInfoMenuOpen = signal<boolean>(false);
   isSubAssetModalOpen = signal<boolean>(false);
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
@@ -156,6 +156,10 @@ export class AssetMapViewPage implements OnInit {
     console.log("Grouped Assets:", this.groupedAssets);
   }
 
+  deleteOnDrop(e: DndDropEvent) {
+    console.log(e.event.dataTransfer?.getData("text/plain"));
+  }
+
   ngOnDestroy(): void {
     this.loader.deleteScript();
   }
@@ -192,7 +196,6 @@ export class AssetMapViewPage implements OnInit {
 
     this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
       const position = event?.latLng?.toJSON()!;
-      console.log(this.isDragging);
       if (this.isDragging === true && position) {
         console.log(position);
         this.addMarker(position);

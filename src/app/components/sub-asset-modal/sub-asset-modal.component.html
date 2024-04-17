@@ -64,6 +64,7 @@
       @for (subAsset of subAssets; track $index) {
         <div
           dndDropzone
+          dndDraggable
           class="cursor-pointer"
           (click)="onAssetClick(subAsset, $index)"
           (dndDrop)="onDrop($event, $index)"
