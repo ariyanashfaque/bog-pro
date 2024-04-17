@@ -7,21 +7,26 @@
   <div
     class="w-full max-h-[412px] flex flex-col space-y-3 items-center overflow-y-scroll bg-white my-5"
   >
-    @for(asset of selectedAsset().assets; track $index){
-    <div class="cursor-pointer">
+    @for (asset of selectedAsset().assets; track $index) {
       <div
-        class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+        dndDraggable
+        (dndEnd)="draggedAssetRecieved(asset)"
+        class="cursor-pointer"
+        (click)="showDetails(asset)"
       >
-        <img
-          class="object-cover w-full h-full"
-          src="../../../assets/Silo.png"
-          alt="silo"
-        />
+        <div
+          class="h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+        >
+          <img
+            class="object-cover w-full h-full"
+            src="../../../assets/Silo.png"
+            alt="silo"
+          />
+        </div>
+        <div class="w-[70px] text-xs text-center mt-1">
+          <span class="text-[#000000DE]">{{ asset.assetInfo.assetName }}</span>
+        </div>
       </div>
-      <div class="w-[70px] text-xs text-center mt-1">
-        <span class="text-[#000000DE]">{{ asset.assetInfo.assetName }}</span>
-      </div>
-    </div>
     }
   </div>
 </div>
