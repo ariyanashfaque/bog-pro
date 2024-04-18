@@ -25,7 +25,9 @@ import { HeaderComponent } from "src/app/components/header/header.component";
   styleUrls: ["./dashboard.page.scss"],
 })
 export class DashboardPage implements OnInit {
-  constructor() {}
+  constructor() {
+    console.log('test working!!!')
+  }
 
   ngOnInit() {}
 }
