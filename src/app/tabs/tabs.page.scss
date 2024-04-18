@@ -5,11 +5,32 @@
 
 ion-tab-bar:last-child {
   overflow: hidden;
-  border-top-left-radius: 12px !important;
-  border-top-right-radius: 12px !important;
 }
 
 ion-icon.active {
-  filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%)
-    hue-rotate(298deg) brightness(102%) contrast(102%);
+  // filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%)
+  //   hue-rotate(298deg) brightness(102%) contrast(102%);
+  fill: #007382;
+  padding: 15px;
+  margin-left: 18px;
+  color: #007382;
+  border-top-left-radius: 100%;
+  border-bottom-left-radius: 100%;
+  background-color: white;
+}
+
+ion-tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+ion-tab-bar {
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 6%;
+  margin: 15px;
+  border-radius: 50px;
 }
