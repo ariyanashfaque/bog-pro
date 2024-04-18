@@ -92,6 +92,8 @@ export class AssetMappedPage implements OnInit {
   draftAssets: AssetModel[];
   filterasset: AssetModel[];
   assetType: String = "";
+  getassetTypes: any[];
+  tempassets: any;
 
   registeredAssets: AssetModel[];
   isApprovalMenuOpen: boolean = false;
@@ -127,6 +129,8 @@ export class AssetMappedPage implements OnInit {
     this.assetId = "";
     this.draftAssets = [];
     this.assetType = "";
+    this.getassetTypes = [];
+    this.tempassets = {};
 
     this.toggleChecked = true;
     this.registeredAssets = [];
@@ -178,18 +182,19 @@ export class AssetMappedPage implements OnInit {
   handleFilterModal = (event: any) => {
     this.isFilterMenuOpen = event;
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
-    console.log(this.groupedAssets);
   };
 
   handlefilterby = (event: any) => {
+    this.getassetTypes = event;
     this.isFilterMenuOpen = false;
 
-    this.assetType = event;
-    this.draftAssets = this.draftAssets.filter(
-      (asset) => asset?.assetInfo?.assetParentType === event,
-    );
+    this.getassetTypes.forEach((type: String) => {
+      this.tempassets = this.draftAssets.filter(
+        (asset) => asset?.assetInfo?.assetParentType === type,
+      );
+    });
 
-    console.log(this.draftAssets);
+    this.draftAssets = this.tempassets;
   };
 
   handleAssetId = (event: any) => {

@@ -76,13 +76,13 @@
               <div>
                 <ion-grid>
                   <ion-row class="mt-5">
-                    @for (source of filterBySource; track $index) {
+                    @for (source of assetTypes; track $index) {
                       <ion-col
                         size="12"
                         class="left-32 text-xl mb-5 scroll-items"
                       >
                         <ion-checkbox
-                          (ionChange)="handleFilerBySource($event, source)"
+                          (ionChange)="handlefilterbytype($event, source)"
                           labelPlacement="end"
                         >
                           {{ source }}

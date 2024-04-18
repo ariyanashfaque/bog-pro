@@ -74,16 +74,28 @@ import { AssetModel } from "src/app/store/models/asset.model";
 export class AssetMappedFilterModalComponent implements OnInit {
   @Input() isFilterMenuOpen: boolean = false;
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
-  @Output() filterClick = new EventEmitter<string>();
+  @Output() filterClick = new EventEmitter<any>();
 
   assets = input.required<AssetModel[]>();
+  assetTypes: any[];
+  selectedType: any[];
 
   filterName: string = "Asset type";
 
-  constructor() {}
+  constructor() {
+    this.assetTypes = [];
+    this.selectedType = [];
+  }
 
   ngOnInit() {
-    // console.log(this.filterClick);
+    const parentTypes = new Set(
+      this.assets().map((asset) => asset?.assetInfo?.assetParentType),
+    );
+
+    this.assetTypes = [];
+    parentTypes.forEach((parentType) => {
+      this.assetTypes.push(parentType);
+    });
   }
 
   menuToggle() {
@@ -93,36 +105,14 @@ export class AssetMappedFilterModalComponent implements OnInit {
 
   filterCategory: any[] = ["Asset type", "Area", "Status", "Source"];
 
-  filterBySource: any[] = [
-    "Silo",
-    "Bin",
-    "Tank",
-    "Hopper",
-    "Conveyor",
-    "Truss Gantry",
-    "Stacker",
-    "Reclaimer",
-    "Support Structure",
-    "tunnel",
-    "Basement",
-    "Retaining Wall",
-    "drainage system",
-    "Pit",
-    "water",
-    "Steam",
-    "Gas",
-  ];
-
   handleFilterCategory(categoryName: string) {
     this.filterName = categoryName;
   }
 
-  handleFilerBySource(event: any, sourceName: string) {
-    // console.log(event);
-    // console.log(sourceName);
+  handlefilterbytype(event: any, assetType: any) {
+    this.selectedType.push(assetType);
   }
   FilterByType(event: any) {
-    this.filterClick.emit("silo");
-    console.log(event);
+    this.filterClick.emit(this.selectedType);
   }
 }
