@@ -96,6 +96,9 @@ export class AssetMappedFilterModalComponent implements OnInit {
     parentTypes.forEach((parentType) => {
       this.assetTypes.push(parentType);
     });
+    console.log(this.assets());
+
+    console.log(this.assetTypes);
   }
 
   menuToggle() {

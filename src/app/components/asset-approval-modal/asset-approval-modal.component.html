@@ -548,7 +548,8 @@
     </ion-grid>
   </div>
   <ion-footer class="fixed bottom-[-56px] w-full ion-no-padding">
-    <!-- <div class="w-full h-44 p-2 rejectCard">
+    @if (isReject) {
+      <div class="w-full h-44 p-2 rejectCard">
         <ion-grid>
           <ion-row>
             <ion-col size="12">
@@ -604,24 +605,27 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-      </div> -->
-    <ion-toolbar color="secondary">
-      <ion-buttons slot="start" class="w-full">
-        <ion-button
-          expand="full"
-          color="textwhite"
-          class="w-full text-[16px] font-gotham_book"
-        >
-          Reject
-        </ion-button>
-        <ion-button
-          expand="full"
-          color="textwhite"
-          class="w-full text-[16px] font-gotham_book"
-        >
-          Approve
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
+      </div>
+    } @else {
+      <ion-toolbar color="secondary">
+        <ion-buttons slot="start" class="w-full">
+          <ion-button
+            expand="full"
+            color="textwhite"
+            class="w-full text-[16px] font-gotham_book"
+            (click)="reject()"
+          >
+            Reject
+          </ion-button>
+          <ion-button
+            expand="full"
+            color="textwhite"
+            class="w-full text-[16px] font-gotham_book"
+          >
+            Approve
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    }
   </ion-footer>
 </div>

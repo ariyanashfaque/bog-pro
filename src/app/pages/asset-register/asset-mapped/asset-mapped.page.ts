@@ -144,7 +144,6 @@ export class AssetMappedPage implements OnInit {
       next: (plant: SiteModel) => {
         if (plant?.assets) {
           this.assets = plant.assets;
-
           const parentTypes = new Set(
             this.assets.map((asset) => asset?.assetInfo?.assetParentType),
           );
@@ -195,6 +194,9 @@ export class AssetMappedPage implements OnInit {
     });
 
     this.draftAssets = this.tempassets;
+    console.log(this.getassetTypes);
+    console.log(this.draftAssets);
+    console.log(this.tempassets);
   };
 
   handleAssetId = (event: any) => {
