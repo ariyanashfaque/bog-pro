@@ -1,5 +1,12 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Input, OnInit, Output, Component, EventEmitter } from "@angular/core";
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  EventEmitter,
+  input,
+} from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
   IonImg,
@@ -28,6 +35,7 @@ import {
   LoadingController,
   IonCheckbox,
 } from "@ionic/angular/standalone";
+import { AssetModel } from "src/app/store/models/asset.model";
 
 @Component({
   imports: [
@@ -66,18 +74,24 @@ import {
 export class AssetMappedFilterModalComponent implements OnInit {
   @Input() isFilterMenuOpen: boolean = false;
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
-  filterName: string = "Asset type (1)";
+  @Output() filterClick = new EventEmitter<string>();
+
+  assets = input.required<AssetModel[]>();
+
+  filterName: string = "Asset type";
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // console.log(this.filterClick);
+  }
 
   menuToggle() {
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   }
 
-  filterCategory: any[] = ["Asset type (1)", "Area", "Status", "Source"];
+  filterCategory: any[] = ["Asset type", "Area", "Status", "Source"];
 
   filterBySource: any[] = [
     "Silo",
@@ -104,7 +118,11 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
 
   handleFilerBySource(event: any, sourceName: string) {
+    // console.log(event);
+    // console.log(sourceName);
+  }
+  FilterByType(event: any) {
+    this.filterClick.emit("silo");
     console.log(event);
-    console.log(sourceName);
   }
 }

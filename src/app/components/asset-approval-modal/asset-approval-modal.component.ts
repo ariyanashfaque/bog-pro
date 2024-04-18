@@ -106,6 +106,7 @@ export class AssetApprovalModalComponent implements OnInit {
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
   selectedCategoriesEmit = new EventEmitter<AssetCategoryModel[]>();
 
+
   @Input()
   set id(plantId: string) {
     this.plantId = plantId;

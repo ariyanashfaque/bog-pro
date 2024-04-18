@@ -38,11 +38,13 @@
               shape="round"
               color="primary"
               class="mr-2 w-32"
-
               (click)="handleFilterModal($event)"
             >
               <div class="flex mx-auto">
-                <ion-text class="font-gotham_medium text-[12px]" color="primary">
+                <ion-text
+                  class="font-gotham_medium text-[12px]"
+                  color="primary"
+                >
                   Filter
                 </ion-text>
                 <ion-icon
@@ -132,8 +134,10 @@
 
 @if (isFilterMenuOpen) {
   <app-asset-mapped-filter-modal
+    [assets]="assets"
     [isFilterMenuOpen]="isFilterMenuOpen"
     (isFilterToggleOpen)="handleFilterModal($event)"
+    (filterClick)="handlefilterby($event)"
   ></app-asset-mapped-filter-modal>
 }
 
