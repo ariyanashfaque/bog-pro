@@ -1,6 +1,7 @@
 import {
   Component,
   effect,
+  Injector,
   input,
   model,
   OnChanges,
@@ -22,7 +23,31 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   childAsset = model<any>({});
   activeIndex = model<number>(-1);
   recievedDraggedAsset = model<any>({});
-  imageUrl: any[] = [];
+  recievedAssetFromSidebar: any;
+  subAssets: any[] = [
+    {
+      assetIndex: 1,
+    },
+    {
+      assetIndex: 2,
+    },
+    {
+      assetIndex: 3,
+    },
+    {
+      assetIndex: 4,
+    },
+    {
+      assetIndex: 5,
+    },
+    {
+      assetIndex: 6,
+    },
+    {
+      assetIndex: 7,
+    },
+  ];
+  imageUrl: any;
 
   onAssetClick(asset: any, index: number) {
     this.isAssetInfoMenuOpen.update((isAssetInfoMenuOpen) => true);
@@ -36,41 +61,35 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor() {
+  constructor(private injector: Injector) {
     effect(() => {
       console.log("Active indexxxxx: ", this.activeIndex());
       console.log("Recieved dragged asset:", this.recievedDraggedAsset());
+      this.recievedAssetFromSidebar = this.recievedDraggedAsset();
     });
   }
 
   ngOnInit() {}
 
   onDrop(event: DndDropEvent, i: number) {
-    this.imageUrl[i] = event.event.dataTransfer?.getData("text/plain");
+    this.imageUrl = event.event.dataTransfer?.getData("text/plain");
     console.log(i);
-  }
+    // Find the index of the subAsset with the matching assetIndex
+    const index = this.subAssets.findIndex((item) => item.assetIndex === i);
+    if (index !== -1) {
+      // Create the childAssets object
 
-  subAssets = [
-    {
-      name: "Sub Asset 1",
-    },
-    {
-      name: "Sub Asset 2",
-    },
-    {
-      name: "Sub Asset 3",
-    },
-    {
-      name: "Sub Asset 4",
-    },
-    {
-      name: "Sub Asset 5",
-    },
-    {
-      name: "Sub Asset 6",
-    },
-    {
-      name: "Sub Asset 7",
-    },
-  ];
+      this.recievedDraggedAsset.set(this.recievedAssetFromSidebar);
+      console.log(this.recievedAssetFromSidebar);
+
+      const childAssets = {
+        subAsset: this.recievedDraggedAsset(),
+        assetImage: this.imageUrl,
+        assetIndex: i,
+      };
+      // Insert childAssets at the found index
+      this.subAssets.splice(index + 1, 0, childAssets);
+    }
+    console.log(this.subAssets);
+  }
 }

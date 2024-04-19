@@ -75,11 +75,13 @@
               activeIndex() == $index ? 'border-[#007382]' : 'border-[#D6EAEB]'
             "
           >
-            <img class="object-cover w-full h-full" [src]="imageUrl[$index]" />
+            <img class="object-cover w-full h-full" [src]="imageUrl" />
           </div>
-          <div class="w-[70px] text-xs text-center mt-1">
-            <span class="text-[#000000DE]">{{ subAsset.name }}</span>
-          </div>
+          @if (imageUrl) {
+            <div class="w-[70px] text-xs text-center mt-1">
+              <span class="text-[#000000DE]">{{ subAsset.name }}</span>
+            </div>
+          }
         </div>
       }
     </div>
