@@ -1,26 +1,40 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     @if (isDefaultHref) {
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/"></ion-back-button>
       </ion-buttons>
     }
     @if (headerTitle) {
-      <ion-title>{{ headerTitle }}</ion-title>
+      <ion-title class="ml-24 text-2xl font-bold" color="secondary">
+        {{ headerTitle }}
+      </ion-title>
     }
     @if (showIcons) {
       <ion-buttons slot="end">
         <ion-button>
-          <ion-icon slot="icon-only" name="help-circle-outline"></ion-icon>
+          <ion-icon
+            class="text-[#007382]"
+            slot="icon-only"
+            name="help-circle-outline"
+          ></ion-icon>
         </ion-button>
         <ion-button>
-          <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+          <ion-icon
+            class="text-[#007382]"
+            slot="icon-only"
+            name="notifications-outline"
+          ></ion-icon>
           <div
             class="w-3 h-3 bg-red-600 rounded-full absolute top-0 right-0 display-none"
           ></div>
         </ion-button>
         <ion-button>
-          <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+          <ion-icon
+            class="text-[#007382]"
+            slot="icon-only"
+            name="person-circle-outline"
+          ></ion-icon>
         </ion-button>
       </ion-buttons>
     }

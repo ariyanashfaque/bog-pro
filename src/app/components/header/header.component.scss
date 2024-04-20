@@ -1,6 +1,5 @@
 ion-header,
 ion-header ion-toolbar:last-child {
   overflow: hidden;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  box-shadow: none;
 }

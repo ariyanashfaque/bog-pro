@@ -52,11 +52,10 @@ import { HttpService } from "src/app/services/http-service/http-client.service";
 import {
   AssetModel,
   SiteModel,
-  // AssetResponse,
   AssetResponseModel,
-  // CategoriesModel,
   AssetCategoryModel,
 } from "src/app/store/models/asset.model";
+import { StorageService } from "src/app/services/storage/storage.service";
 
 @Component({
   selector: "app-asset-info-menu",
@@ -146,7 +145,7 @@ export class AssetInfoMenuComponent implements OnInit {
     });
   }
 
-  constructor() {
+  constructor(private storage: StorageService) {
     this.categories = [
       {
         order: 1,
@@ -222,6 +221,7 @@ export class AssetInfoMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    const storedData = this.storage.get("assetInfo");
     this.store.select("categories").subscribe({
       next: (categories: AssetCategoryModel[]) => {
         console.log(categories);
