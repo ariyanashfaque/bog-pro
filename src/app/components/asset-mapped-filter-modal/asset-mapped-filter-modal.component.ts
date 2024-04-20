@@ -1,5 +1,12 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Input, OnInit, Output, Component, EventEmitter } from "@angular/core";
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  EventEmitter,
+  input,
+} from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
   IonImg,
@@ -28,6 +35,7 @@ import {
   LoadingController,
   IonCheckbox,
 } from "@ionic/angular/standalone";
+import { AssetModel } from "src/app/store/models/asset.model";
 
 @Component({
   imports: [
@@ -66,45 +74,48 @@ import {
 export class AssetMappedFilterModalComponent implements OnInit {
   @Input() isFilterMenuOpen: boolean = false;
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
-  filterName: string = "Asset type (1)";
+  @Output() filterClick = new EventEmitter<any>();
 
-  constructor() {}
+  assets = input.required<AssetModel[]>();
+  assetTypes: any[];
+  selectedType: any[];
 
-  ngOnInit() {}
+  filterName: string = "Asset type";
+
+  constructor() {
+    this.assetTypes = [];
+    this.selectedType = [];
+  }
+
+  ngOnInit() {
+    const parentTypes = new Set(
+      this.assets().map((asset) => asset?.assetInfo?.assetParentType),
+    );
+
+    this.assetTypes = [];
+    parentTypes.forEach((parentType) => {
+      this.assetTypes.push(parentType);
+    });
+    console.log(this.assets());
+
+    console.log(this.assetTypes);
+  }
 
   menuToggle() {
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   }
 
-  filterCategory: any[] = ["Asset type (1)", "Area", "Status", "Source"];
-
-  filterBySource: any[] = [
-    "Silo",
-    "Bin",
-    "Tank",
-    "Hopper",
-    "Conveyor",
-    "Truss Gantry",
-    "Stacker",
-    "Reclaimer",
-    "Support Structure",
-    "tunnel",
-    "Basement",
-    "Retaining Wall",
-    "drainage system",
-    "Pit",
-    "water",
-    "Steam",
-    "Gas",
-  ];
+  filterCategory: any[] = ["Asset type", "Area", "Status", "Source"];
 
   handleFilterCategory(categoryName: string) {
     this.filterName = categoryName;
   }
 
-  handleFilerBySource(event: any, sourceName: string) {
-    console.log(event);
-    console.log(sourceName);
+  handlefilterbytype(event: any, assetType: any) {
+    this.selectedType.push(assetType);
+  }
+  FilterByType(event: any) {
+    this.filterClick.emit(this.selectedType);
   }
 }

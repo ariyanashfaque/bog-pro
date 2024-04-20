@@ -106,6 +106,7 @@ export class AssetApprovalModalComponent implements OnInit {
   @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
   selectedCategoriesEmit = new EventEmitter<AssetCategoryModel[]>();
 
+  isReject: boolean = false;
   @Input()
   set id(plantId: string) {
     this.plantId = plantId;
@@ -117,7 +118,7 @@ export class AssetApprovalModalComponent implements OnInit {
       next: (plant: SiteModel) => {
         if (plant.assets) {
           console.log(plant.assets);
-          
+
           this.asset = plant.assets.find((asset) => asset.id === assetID) ?? {};
           this.assetRegistrationForm.patchValue({ ...this.asset?.assetInfo });
         }
@@ -126,10 +127,11 @@ export class AssetApprovalModalComponent implements OnInit {
   }
 
   constructor() {
+    this.isReject = false;
     this.categories = [
       {
         order: 1,
-        isSelected: false,
+        isSelected: true,
         categoryType: "sim",
         categoryTitle: "Sim",
       },
@@ -141,7 +143,7 @@ export class AssetApprovalModalComponent implements OnInit {
       },
       {
         order: 4,
-        isSelected: false,
+        isSelected: true,
         categoryType: "electrical",
         categoryTitle: "Electrical",
       },
@@ -292,6 +294,10 @@ export class AssetApprovalModalComponent implements OnInit {
   menuToggle() {
     this.isApprovalMenuOpen = !this.isApprovalMenuOpen;
     this.isMenuToggleOpen.emit(this.isApprovalMenuOpen);
+  }
+
+  reject() {
+    this.isReject = !this.isReject;
   }
 
   handleCategory = (category: AssetCategoryModel) => {

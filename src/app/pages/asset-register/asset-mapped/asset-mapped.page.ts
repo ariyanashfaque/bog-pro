@@ -90,10 +90,17 @@ export class AssetMappedPage implements OnInit {
   plantId: string;
   toggleChecked: boolean;
   draftAssets: AssetModel[];
+  filterasset: AssetModel[];
+  assetType: String = "";
+  getassetTypes: any[];
+  tempassets: any;
+
   registeredAssets: AssetModel[];
   isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
+  assets: AssetModel[];
+  groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
 
   @Input()
   set id(plantId: string) {
@@ -121,15 +128,36 @@ export class AssetMappedPage implements OnInit {
     this.plantId = "";
     this.assetId = "";
     this.draftAssets = [];
+    this.assetType = "";
+    this.getassetTypes = [];
+    this.tempassets = {};
+
     this.toggleChecked = true;
     this.registeredAssets = [];
     this.isApprovalMenuOpen = false;
+    this.assets = [];
+    this.groupedAssets = [];
   }
 
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: SiteModel) => {
         if (plant?.assets) {
+          this.assets = plant.assets;
+          const parentTypes = new Set(
+            this.assets.map((asset) => asset?.assetInfo?.assetParentType),
+          );
+
+          this.groupedAssets = [];
+          parentTypes.forEach((parentType) => {
+            this.groupedAssets.push({
+              assetParentType: parentType,
+              assets: this.draftAssets.filter(
+                (asset) => asset?.assetInfo?.assetParentType === parentType,
+              ),
+            });
+          });
+
           plant.assets?.forEach((asset) => {
             if (asset?.assetStatus?.isDraft) {
               this.draftAssets.push(asset);
@@ -154,6 +182,23 @@ export class AssetMappedPage implements OnInit {
     this.isFilterMenuOpen = event;
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   };
+
+  handlefilterby = (event: any) => {
+    this.getassetTypes = event;
+    this.isFilterMenuOpen = false;
+
+    this.getassetTypes.forEach((type: String) => {
+      this.tempassets = this.draftAssets.filter(
+        (asset) => asset?.assetInfo?.assetParentType === type,
+      );
+    });
+
+    this.draftAssets = this.tempassets;
+    console.log(this.getassetTypes);
+    console.log(this.draftAssets);
+    console.log(this.tempassets);
+  };
+
   handleAssetId = (event: any) => {
     this.assetId = event;
   };
