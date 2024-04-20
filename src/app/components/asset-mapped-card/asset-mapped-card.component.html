@@ -107,7 +107,7 @@
           ></div>
 
           <ion-row class="">
-            <ion-col [size]="isApprover ? '10' : '8'" class="flex gap-6">
+            <ion-col size="8" class="flex gap-6">
               @if (toggleChecked) {
                 <div class="">
                   <div class="">
@@ -302,11 +302,8 @@
                 </div>
               </div>
             </ion-col>
-            <ion-col
-              [size]="isApprover ? '2' : '4'"
-              class="flex items-center justify-center mt-2"
-            >
-              @if (isApprover) {
+            <ion-col size="4" class="flex items-center justify-center mt-2">
+              @if (!isApprover) {
                 <div>
                   <button
                     (click)="handleMenuToggle(asset.id)"

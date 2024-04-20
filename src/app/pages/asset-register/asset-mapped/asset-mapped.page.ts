@@ -3,10 +3,10 @@ import {
   OnInit,
   inject,
   signal,
-  Component,
-  WritableSignal,
   Output,
+  Component,
   EventEmitter,
+  WritableSignal,
 } from "@angular/core";
 import {
   IonRow,
@@ -20,6 +20,7 @@ import {
   IonTitle,
   IonHeader,
   IonToggle,
+  IonButton,
   IonContent,
   IonToolbar,
   IonSegment,
@@ -29,11 +30,10 @@ import {
   IonCardHeader,
   IonSegmentButton,
   IonAccordionGroup,
-  IonButton,
 } from "@ionic/angular/standalone";
 import {
-  AssetModel,
   SiteModel,
+  AssetModel,
   AssetsResponseModel,
 } from "src/app/store/models/asset.model";
 import { Store } from "@ngrx/store";
@@ -53,7 +53,6 @@ import { AssetMappedFilterModalComponent } from "../../../components/asset-mappe
   templateUrl: "./asset-mapped.page.html",
   styleUrls: ["./asset-mapped.page.scss"],
   imports: [
-    IonButton,
     IonCol,
     IonRow,
     IonText,
@@ -63,6 +62,7 @@ import { AssetMappedFilterModalComponent } from "../../../components/asset-mappe
     IonGrid,
     IonTitle,
     IonLabel,
+    IonButton,
     IonToggle,
     IonHeader,
     IonSegment,
@@ -82,25 +82,20 @@ import { AssetMappedFilterModalComponent } from "../../../components/asset-mappe
   ],
 })
 export class AssetMappedPage implements OnInit {
-  store = inject(Store);
-  httpService = inject(HttpService);
-  toastService = inject(ToastService);
-  isFilterMenuOpen: boolean = false;
   assetId: string;
   plantId: string;
+  assets: AssetModel[];
+  store = inject(Store);
   toggleChecked: boolean;
   draftAssets: AssetModel[];
-  filterasset: AssetModel[];
-  assetType: String = "";
-  getassetTypes: any[];
-  tempassets: any;
-
   registeredAssets: AssetModel[];
+  FilterByTypeAssets: AssetModel[];
+  httpService = inject(HttpService);
+  isFilterMenuOpen: boolean = false;
+  toastService = inject(ToastService);
   isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
-  assets: AssetModel[];
-  groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
 
   @Input()
   set id(plantId: string) {
@@ -125,18 +120,14 @@ export class AssetMappedPage implements OnInit {
   }
 
   constructor() {
+    this.assets = [];
     this.plantId = "";
     this.assetId = "";
     this.draftAssets = [];
-    this.assetType = "";
-    this.getassetTypes = [];
-    this.tempassets = {};
-
+    this.FilterByTypeAssets = [];
     this.toggleChecked = true;
     this.registeredAssets = [];
     this.isApprovalMenuOpen = false;
-    this.assets = [];
-    this.groupedAssets = [];
   }
 
   ngOnInit() {
@@ -144,20 +135,6 @@ export class AssetMappedPage implements OnInit {
       next: (plant: SiteModel) => {
         if (plant?.assets) {
           this.assets = plant.assets;
-          const parentTypes = new Set(
-            this.assets.map((asset) => asset?.assetInfo?.assetParentType),
-          );
-
-          this.groupedAssets = [];
-          parentTypes.forEach((parentType) => {
-            this.groupedAssets.push({
-              assetParentType: parentType,
-              assets: this.draftAssets.filter(
-                (asset) => asset?.assetInfo?.assetParentType === parentType,
-              ),
-            });
-          });
-
           plant.assets?.forEach((asset) => {
             if (asset?.assetStatus?.isDraft) {
               this.draftAssets.push(asset);
@@ -166,12 +143,10 @@ export class AssetMappedPage implements OnInit {
               this.registeredAssets.push(asset);
             }
           });
+          // console.log(this.draftAssets);
         }
       },
     });
-
-    // console.log("draft:", this.draftAssets);
-    // console.log("registered:", this.registeredAssets);
   }
 
   handleErrorModal = (event: any) => {
@@ -184,19 +159,18 @@ export class AssetMappedPage implements OnInit {
   };
 
   handlefilterby = (event: any) => {
-    this.getassetTypes = event;
+    this.draftAssets = [];
     this.isFilterMenuOpen = false;
-
-    this.getassetTypes.forEach((type: String) => {
-      this.tempassets = this.draftAssets.filter(
-        (asset) => asset?.assetInfo?.assetParentType === type,
-      );
+    this.FilterByTypeAssets = event;
+    this.FilterByTypeAssets.forEach((assets: any) => {
+      assets.forEach((asset: any) => {
+        if (asset?.assetStatus?.isDraft) {
+          this.draftAssets.push(asset);
+        }
+      });
     });
 
-    this.draftAssets = this.tempassets;
-    console.log(this.getassetTypes);
-    console.log(this.draftAssets);
-    console.log(this.tempassets);
+    // console.log(this.draftAssets);
   };
 
   handleAssetId = (event: any) => {

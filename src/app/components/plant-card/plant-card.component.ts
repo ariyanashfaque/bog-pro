@@ -43,7 +43,7 @@ export class PlantCardComponent implements OnInit {
   }
   ngOnInit() {
     console.log(this.plant);
-    console.log(this.role);
+    // console.log(this.role);
   }
 
   handleMenuToggle = () => {
