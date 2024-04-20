@@ -1,4 +1,8 @@
-<app-header headerTitle="Asset Mapped" [isDefaultHref]="true"></app-header>
+<app-header
+  headerTitle="Asset Mapped"
+  [isDefaultHref]="true"
+  [isBackgroundTransparent]="false"
+></app-header>
 
 <ion-content [fullscreen]="true" color="background">
   <ion-grid>
@@ -38,11 +42,13 @@
               shape="round"
               color="primary"
               class="mr-2 w-32"
-
               (click)="handleFilterModal($event)"
             >
               <div class="flex mx-auto">
-                <ion-text class="font-gotham_medium text-[12px]" color="primary">
+                <ion-text
+                  class="font-gotham_medium text-[12px]"
+                  color="primary"
+                >
                   Filter
                 </ion-text>
                 <ion-icon

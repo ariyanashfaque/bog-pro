@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
   @Input() headerTitle: string = "";
   @Input() showIcons: boolean = true;
   @Input() isDefaultHref: boolean = false;
+  @Input() isBackgroundTransparent: boolean = true;
 
   constructor() {}
 
