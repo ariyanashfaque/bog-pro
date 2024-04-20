@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import {
   Input,
   OnInit,
@@ -72,19 +71,25 @@ import { AssetModel } from "src/app/store/models/asset.model";
   styleUrls: ["./asset-mapped-filter-modal.component.scss"],
 })
 export class AssetMappedFilterModalComponent implements OnInit {
-  @Input() isFilterMenuOpen: boolean = false;
-  @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
-  @Output() filterClick = new EventEmitter<any>();
-
-  assets = input.required<AssetModel[]>();
+  SelectedAssets: any;
+  typesAssets: any;
   assetTypes: any[];
-  selectedType: any[];
-
+  selectedType: any;
+  filteredAsset: any;
+  selectedTypeCount: string;
   filterName: string = "Asset type";
+  assets = input.required<AssetModel[]>();
+  @Input() isFilterMenuOpen: boolean = false;
+  @Output() filterByTypes = new EventEmitter<any>();
+  @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
 
   constructor() {
     this.assetTypes = [];
     this.selectedType = [];
+    this.SelectedAssets = [];
+    this.typesAssets = [];
+    this.filteredAsset = [];
+    this.selectedTypeCount = "";
   }
 
   ngOnInit() {
@@ -96,9 +101,6 @@ export class AssetMappedFilterModalComponent implements OnInit {
     parentTypes.forEach((parentType) => {
       this.assetTypes.push(parentType);
     });
-    console.log(this.assets());
-
-    console.log(this.assetTypes);
   }
 
   menuToggle() {
@@ -113,9 +115,12 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
 
   handlefilterbytype(event: any, assetType: any) {
-    this.selectedType.push(assetType);
+    this.SelectedAssets = this.assets().filter(
+      (asset) => asset?.assetInfo?.assetType === assetType,
+    );
+    this.typesAssets.push(this.SelectedAssets);
   }
   FilterByType(event: any) {
-    this.filterClick.emit(this.selectedType);
+    this.filterByTypes.emit(this.typesAssets);
   }
 }
