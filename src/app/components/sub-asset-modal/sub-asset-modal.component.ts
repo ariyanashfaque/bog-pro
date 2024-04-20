@@ -1,6 +1,10 @@
 import {
   Component,
+  computed,
   effect,
+  EventEmitter,
+  Injector,
+  Input,
   input,
   model,
   OnChanges,
@@ -22,7 +26,34 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   childAsset = model<any>({});
   activeIndex = model<number>(-1);
   recievedDraggedAsset = model<any>({});
-  imageUrl: any[] = [];
+  draggedAssets = computed(() => this.recievedDraggedAsset());
+  // @Input() recievedDraggedAsset = new EventEmitter<string>();
+
+  recievedAssetFromSidebar: any;
+  subAssets: any[] = [
+    {
+      assetIndex: 0,
+    },
+    {
+      assetIndex: 1,
+    },
+    {
+      assetIndex: 2,
+    },
+    {
+      assetIndex: 3,
+    },
+    {
+      assetIndex: 4,
+    },
+    {
+      assetIndex: 5,
+    },
+    {
+      assetIndex: 6,
+    },
+  ];
+  imageUrl: any;
 
   onAssetClick(asset: any, index: number) {
     this.isAssetInfoMenuOpen.update((isAssetInfoMenuOpen) => true);
@@ -36,7 +67,7 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor() {
+  constructor(private injector: Injector) {
     effect(() => {
       console.log("Active indexxxxx: ", this.activeIndex());
       console.log("Recieved dragged asset:", this.recievedDraggedAsset());
@@ -46,31 +77,27 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   onDrop(event: DndDropEvent, i: number) {
-    this.imageUrl[i] = event.event.dataTransfer?.getData("text/plain");
-    console.log(i);
-  }
+    // console.log(this.recievedDraggedAsset());
+    console.log(this.draggedAssets());
 
-  subAssets = [
-    {
-      name: "Sub Asset 1",
-    },
-    {
-      name: "Sub Asset 2",
-    },
-    {
-      name: "Sub Asset 3",
-    },
-    {
-      name: "Sub Asset 4",
-    },
-    {
-      name: "Sub Asset 5",
-    },
-    {
-      name: "Sub Asset 6",
-    },
-    {
-      name: "Sub Asset 7",
-    },
-  ];
+    this.imageUrl = event.event.dataTransfer?.getData("text/plain");
+    // Find the index of the subAsset with the matching assetIndex
+    const index = this.subAssets.findIndex((item) => item.assetIndex === i);
+    if (index !== -1) {
+      // If an object with the same assetIndex exists, update it
+      this.subAssets[index] = {
+        subAsset: this.recievedDraggedAsset,
+        assetImage: this.imageUrl,
+        assetIndex: i,
+      };
+    } else {
+      // If not found, insert a new object at the specified index
+      this.subAssets.splice(i, 0, {
+        subAsset: this.recievedDraggedAsset,
+        assetImage: this.imageUrl,
+        assetIndex: i,
+      });
+    }
+    console.log(this.subAssets);
+  }
 }
