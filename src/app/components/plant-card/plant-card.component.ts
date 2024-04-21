@@ -29,14 +29,14 @@ import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
   styleUrls: ["./plant-card.component.scss"],
 })
 export class PlantCardComponent implements OnInit {
-  @Input() plant: SiteModel;
-  @Input() role: AccessModel;
-  @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
   isError: boolean = true;
+  @Input() plant: SiteModel;
+  @Input() role: AccessModel;
   isMenuOpen: boolean = false;
   isApprover: boolean = false;
   totalAssetMapped: number = 5;
+  @Output() isMenuToggleOpen = new EventEmitter<boolean>(false);
 
   constructor() {
     this.plant = {};

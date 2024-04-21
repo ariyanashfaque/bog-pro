@@ -25,9 +25,9 @@ import {
   IonContent,
   IonLoading,
   IonToolbar,
+  IonBackdrop,
   IonSelectOption,
   IonSkeletonText,
-  IonBackdrop,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
 import { RouterModule } from "@angular/router";

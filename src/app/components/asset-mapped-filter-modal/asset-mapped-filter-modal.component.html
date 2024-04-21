@@ -65,8 +65,11 @@
                   class="bg-[#edf5f5] border-b-2 border-r-2 border-[#00738233] h-14 p-3"
                 >
                   <ion-label class="text-xl ml-5">
-                    {{ filter }} 
+                    {{ filter }}
                   </ion-label>
+                  @if (filter === filterName) {
+                    <ion-label>({{ selectedTypesCount }})</ion-label>
+                  }
                 </ion-col>
               }
             </ion-row>
@@ -78,16 +81,16 @@
               <div>
                 <ion-grid>
                   <ion-row class="mt-5">
-                    @for (source of assetTypes; track $index) {
+                    @for (type of SelectedassetTypes; track $index) {
                       <ion-col
                         size="12"
                         class="left-32 text-xl mb-5 scroll-items"
                       >
                         <ion-checkbox
-                          (ionChange)="handlefilterbytype($event, source)"
+                          (ionChange)="handlefilterbytype($event, type)"
                           labelPlacement="end"
                         >
-                          {{ source }}
+                          {{ type.assetType }}
                         </ion-checkbox>
                       </ion-col>
                     }
@@ -104,18 +107,32 @@
               <div>
                 <ion-grid>
                   <ion-row class="mt-5">
-                    <ion-col
+                    @for (source of SelectedassetSource; track $index) {
+                      <ion-col
+                        size="12"
+                        class="left-32 text-xl mb-5 scroll-items"
+                      >
+                        <ion-checkbox
+                          (ionChange)="handlefilterbySource($event, source)"
+                          labelPlacement="end"
+                        >
+                          {{ source.assetSource }}
+                        </ion-checkbox>
+                      </ion-col>
+                    }
+                    <!-- <ion-col
                       size="12"
                       class="left-32 text-xl mb-5 scroll-items"
                     >
-                      <ion-checkbox labelPlacement="end">Sap</ion-checkbox>
-                    </ion-col>
-                    <ion-col
-                      size="12"
-                      class="left-32 text-xl mb-5 scroll-items"
-                    >
-                      <ion-checkbox labelPlacement="end">Manual</ion-checkbox>
-                    </ion-col>
+                      <ion-checkbox
+                        (ionChange)="
+                          handlefilterbySource($event, 'assetBulkUpload')
+                        "
+                        labelPlacement="end"
+                      >
+                        Manual
+                      </ion-checkbox>
+                    </ion-col> -->
                   </ion-row>
                 </ion-grid>
               </div>
