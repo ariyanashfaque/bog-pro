@@ -52,6 +52,7 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
     },
   ];
   imageUrl: any;
+  _recievedDraggedAsset: any;
 
   onAssetClick(asset: any, index: number) {
     this.isAssetInfoMenuOpen.update((isAssetInfoMenuOpen) => true);
@@ -63,6 +64,12 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
     if (changes["activeIndex"] && this.activeIndex() !== -1) {
       this.childAsset.update(() => this.subAssets[this.activeIndex()]);
     }
+
+    if (changes["recievedDraggedAsset"]) {
+      this._recievedDraggedAsset = changes["recievedDraggedAsset"].currentValue;
+    }
+
+    console.log(this._recievedDraggedAsset);
   }
 
   constructor(private injector: Injector) {
@@ -74,31 +81,24 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   onDrop(event: DndDropEvent, i: number) {
-    effect(
-      () => {
-        this.imageUrl = event.event.dataTransfer?.getData("text/plain");
-        // Find the index of the subAsset with the matching assetIndex
-        const index = this.subAssets.findIndex((item) => item.assetIndex === i);
-        if (index !== -1) {
-          // If an object with the same assetIndex exists, update it
-          this.subAssets[index] = {
-            subAsset: this.recievedDraggedAsset(),
-            assetImage: this.imageUrl,
-            assetIndex: i,
-          };
-        } else {
-          // If not found, insert a new object at the specified index
-          this.subAssets.splice(i, 0, {
-            subAsset: this.recievedDraggedAsset(),
-            assetImage: this.imageUrl,
-            assetIndex: i,
-          });
-        }
-        console.log(this.subAssets);
-      },
-      {
-        injector: this.injector,
-      },
-    );
+    this.imageUrl = event.event.dataTransfer?.getData("text/plain");
+    // Find the index of the subAsset with the matching assetIndex
+    const index = this.subAssets.findIndex((item) => item.assetIndex === i);
+    if (index !== -1) {
+      // If an object with the same assetIndex exists, update it
+      this.subAssets[index] = {
+        subAsset: this._recievedDraggedAsset,
+        assetImage: this.imageUrl,
+        assetIndex: i,
+      };
+    } else {
+      // If not found, insert a new object at the specified index
+      this.subAssets.splice(i, 0, {
+        subAsset: this._recievedDraggedAsset,
+        assetImage: this.imageUrl,
+        assetIndex: i,
+      });
+    }
+    console.log(this.subAssets);
   }
 }
