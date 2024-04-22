@@ -1,33 +1,31 @@
 import {
-  Component,
-  computed,
-  effect,
-  EventEmitter,
-  Injector,
   Input,
   input,
   model,
-  OnChanges,
+  effect,
   OnInit,
+  computed,
+  Injector,
+  Component,
+  OnChanges,
+  EventEmitter,
   SimpleChanges,
 } from "@angular/core";
-import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
+import { RoundProgressComponent } from "angular-svg-round-progressbar";
 
 @Component({
-  selector: "app-sub-asset-modal",
   standalone: true,
+  selector: "app-sub-asset-modal",
+  imports: [RoundProgressComponent, DndModule],
   templateUrl: "./sub-asset-modal.component.html",
   styleUrls: ["./sub-asset-modal.component.scss"],
-  imports: [RoundProgressComponent, DndModule],
 })
 export class SubAssetModalComponent implements OnInit, OnChanges {
-  isAssetInfoMenuOpen = model(false);
   childAsset = model<any>({});
   activeIndex = model<number>(-1);
-  recievedDraggedAsset = model<any>({});
-  draggedAssets = computed(() => this.recievedDraggedAsset());
-  // @Input() recievedDraggedAsset = new EventEmitter<string>();
+  isAssetInfoMenuOpen = model(false);
+  recievedDraggedAsset = input.required<any>();
 
   recievedAssetFromSidebar: any;
   subAssets: any[] = [
@@ -54,6 +52,7 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
     },
   ];
   imageUrl: any;
+  _recievedDraggedAsset: any;
 
   onAssetClick(asset: any, index: number) {
     this.isAssetInfoMenuOpen.update((isAssetInfoMenuOpen) => true);
@@ -65,39 +64,40 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
     if (changes["activeIndex"] && this.activeIndex() !== -1) {
       this.childAsset.update(() => this.subAssets[this.activeIndex()]);
     }
+
+    if (changes["recievedDraggedAsset"]) {
+      this._recievedDraggedAsset = changes["recievedDraggedAsset"].currentValue;
+    }
+
+    console.log(this._recievedDraggedAsset);
   }
 
   constructor(private injector: Injector) {
     effect(() => {
-      console.log("Active indexxxxx: ", this.activeIndex());
-      console.log("Recieved dragged asset:", this.recievedDraggedAsset());
+      // console.log("Received Dragged Asset: ", this.draggedAsset());
     });
   }
 
   ngOnInit() {}
 
   onDrop(event: DndDropEvent, i: number) {
-    // console.log(this.recievedDraggedAsset());
-    console.log(this.draggedAssets());
-
     this.imageUrl = event.event.dataTransfer?.getData("text/plain");
-    // Find the index of the subAsset with the matching assetIndex
-    const index = this.subAssets.findIndex((item) => item.assetIndex === i);
-    if (index !== -1) {
-      // If an object with the same assetIndex exists, update it
-      this.subAssets[index] = {
-        subAsset: this.recievedDraggedAsset,
-        assetImage: this.imageUrl,
-        assetIndex: i,
-      };
-    } else {
-      // If not found, insert a new object at the specified index
-      this.subAssets.splice(i, 0, {
-        subAsset: this.recievedDraggedAsset,
-        assetImage: this.imageUrl,
-        assetIndex: i,
+    const allIndexesExceptLastFilled = this.subAssets
+      .slice(0, -1)
+      .every((item) => !!item.subAsset);
+
+    if (allIndexesExceptLastFilled) {
+      const nextIndex = this.subAssets.length;
+      this.subAssets.push({
+        assetIndex: nextIndex,
       });
     }
+    const nextIndex = this.subAssets.findIndex((item) => !item.subAsset);
+    this.subAssets[nextIndex] = {
+      subAsset: this._recievedDraggedAsset,
+      assetImage: this.imageUrl,
+      assetIndex: nextIndex,
+    };
     console.log(this.subAssets);
   }
 }

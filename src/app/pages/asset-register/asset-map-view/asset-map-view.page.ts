@@ -85,23 +85,23 @@ export class AssetMapViewPage implements OnInit {
     apiKey: environment.browserMapKey,
   });
   @ViewChild("mapRef", { static: true }) mapRef: ElementRef<HTMLDivElement>;
+  display: any;
   plantId: string;
-  store = inject(Store);
   assets: AssetModel[];
-  selectedAsset = signal<any>({});
+  store = inject(Store);
   isDragging: boolean = false;
-  dragRecieved = model<any>({});
+  childAsset = signal<any>({});
+  selectedAsset = signal<any>({});
   httpService = inject(HttpService);
   toastService = inject(ToastService);
   isChildOpen = signal<boolean>(false);
+  subAssetActiveIndex = signal<number>(-1);
+  assetModalActiveIndex = signal<number>(-1);
   isAssetInfoMenuOpen = signal<boolean>(false);
   isSubAssetModalOpen = signal<boolean>(false);
+  dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
-  assetModalActiveIndex = signal<number>(-1);
-  childAsset = signal<any>({});
-  subAssetActiveIndex = signal<number>(-1);
-  display: any;
 
   @Input()
   set id(plantId: string) {
@@ -129,6 +129,10 @@ export class AssetMapViewPage implements OnInit {
     this.initializeMap(this.mapRef);
   }
 
+  sendDraggedSubAsset(data: any) {
+    this.dragRecieved.set(data);
+  }
+
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: SiteModel) => {
@@ -151,9 +155,6 @@ export class AssetMapViewPage implements OnInit {
         }
       },
     });
-
-    console.log("Assets:", this.assets);
-    console.log("Grouped Assets:", this.groupedAssets);
   }
 
   deleteOnDrop(e: DndDropEvent) {
@@ -168,10 +169,7 @@ export class AssetMapViewPage implements OnInit {
     this.assets = [];
     this.plantId = "";
     this.groupedAssets = [];
-    effect(() => {
-      console.log("subAssetActiveIndex in page: ", this.subAssetActiveIndex());
-      console.log("Dragged asset:", this.dragRecieved());
-    });
+    console.log(this.dragRecieved);
 
     this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
     this.mapMptions = {

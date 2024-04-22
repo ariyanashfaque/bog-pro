@@ -10,7 +10,7 @@
     @for (asset of selectedAsset().assets; track $index) {
       <div
         dndDraggable
-        (dndEnd)="draggedAssetRecieved(asset)"
+        (dndStart)="draggedAssetRecieved(asset)"
         class="cursor-pointer"
         (click)="showDetails(asset)"
       >

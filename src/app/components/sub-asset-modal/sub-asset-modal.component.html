@@ -75,10 +75,12 @@
               activeIndex() == $index ? 'border-[#007382]' : 'border-[#D6EAEB]'
             "
           >
-            <img
-              class="object-cover w-full h-full"
-              [src]="subAsset?.assetImage"
-            />
+            @if (subAsset?.assetImage) {
+              <img
+                class="object-cover w-full h-full"
+                [src]="subAsset?.assetImage"
+              />
+            }
           </div>
 
           <div class="w-[70px] text-xs text-center mt-1">
