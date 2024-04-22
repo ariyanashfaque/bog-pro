@@ -38,7 +38,7 @@ import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { MapService } from "src/app/services/map-service/map.service";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header/header.component";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-sidebar.component";

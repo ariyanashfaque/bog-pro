@@ -3,28 +3,40 @@ import { Routes } from "@angular/router";
 export const routes: Routes = [
   {
     path: "",
-    loadChildren: () =>
-      import("./tabs/tabs.routes").then((route) => route.routes),
+    pathMatch: "full",
+    redirectTo: "dashboard",
   },
   {
-    path: "findings",
+    path: "dashboard",
     loadComponent: () =>
-      import("./pages/assessment/findings/findings.page").then(
-        (m) => m.FindingsPage,
+      import("./pages/dashboard/dashboard.page").then(
+        (page) => page.DashboardPage,
       ),
   },
   {
-    path: "asset-map-view",
+    path: "assessment",
     loadComponent: () =>
-      import("./pages/asset-register/asset-map-view/asset-map-view.page").then(
-        (m) => m.AssetMapViewPage,
+      import("./pages/assessment/assessment.page").then(
+        (page) => page.AssessmentPage,
       ),
   },
   {
-    path: "asset-approval",
+    path: "asset-register",
     loadComponent: () =>
-      import("./pages/asset-register/asset-approval/asset-approval.page").then(
-        (m) => m.AssetApprovalPage,
+      import("./pages/asset-register/asset-register.page").then(
+        (page) => page.AssetRegisterPage,
       ),
+  },
+  {
+    path: "action-management",
+    loadComponent: () =>
+      import("./pages/action-management/action-management.page").then(
+        (page) => page.ActionManagementPage,
+      ),
+  },
+  {
+    path: "map-view",
+    loadComponent: () =>
+      import("./pages/map-view/map-view.page").then((page) => page.MapViewPage),
   },
 ];

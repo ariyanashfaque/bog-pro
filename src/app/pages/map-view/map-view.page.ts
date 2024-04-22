@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { IonContent } from "@ionic/angular/standalone";
-import { HeaderComponent } from "src/app/components/header/header.component";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 
 @Component({

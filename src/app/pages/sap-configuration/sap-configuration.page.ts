@@ -11,7 +11,7 @@ import { FormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 
 import { RouterModule } from "@angular/router";
-import { HeaderComponent } from "src/app/components/header/header.component";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { SapConfigarationLogComponent } from "src/app/components/sap-configaration-log/sap-configaration-log.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";

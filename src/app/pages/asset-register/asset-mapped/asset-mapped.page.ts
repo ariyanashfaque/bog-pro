@@ -40,7 +40,7 @@ import { Store } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
 import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header/header.component";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";

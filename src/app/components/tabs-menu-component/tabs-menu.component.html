@@ -1,0 +1,121 @@
+<ion-split-pane [when]="showTabsMenu" contentId="main">
+  <ion-menu contentId="main">
+    <ion-content
+      scrollX="false"
+      scrollY="false"
+      color="background"
+      class="ion-padding"
+    >
+      <ion-list class="flex flex-col h-full gap-10 pt-10" lines="none">
+        <button
+          fill="clear"
+          shape="round"
+          expand="block"
+          class="w-full text-2xl"
+          routerLink="/dashboard"
+          (click)="setCurrentTab('dashboard')"
+        >
+          <ion-icon
+            [src]="
+              selectedTab === 'dashboard'
+                ? '../../assets/tab-icons/dashboard-active.svg'
+                : '../../assets/tab-icons/dashboard.svg'
+            "
+            [class]="selectedTab === 'dashboard' ? '' : 'py-[15px]'"
+            [class.active]="selectedTab === 'dashboard' ? 'active' : ''"
+          ></ion-icon>
+        </button>
+
+        <button
+          fill="clear"
+          shape="round"
+          expand="block"
+          routerLink="/map-view"
+          class="w-full text-2xl"
+          (click)="setCurrentTab('map-view')"
+        >
+          <ion-icon
+            [src]="
+              selectedTab === 'map-view'
+                ? '../../assets/tab-icons/map-view-active.svg'
+                : '../../assets/tab-icons/map-view.svg'
+            "
+            [class]="selectedTab === 'map-view' ? '' : 'py-[15px]'"
+            [class.active]="selectedTab === 'map-view' ? 'active' : ''"
+          ></ion-icon>
+        </button>
+
+        <button
+          fill="clear"
+          shape="round"
+          expand="block"
+          routerLink="/asset-register"
+          (click)="setCurrentTab('asset-register')"
+          class="w-full text-2xl flex justify-center items-center"
+        >
+          <ion-icon
+            [src]="
+              selectedTab === 'asset-register'
+                ? '../../assets/tab-icons/asset-register-active.svg'
+                : '../../assets/tab-icons/asset-register.svg'
+            "
+            [class]="selectedTab === 'asset-register' ? '' : 'py-[15px]'"
+            [class.active]="selectedTab === 'asset-register' ? 'active' : ''"
+          ></ion-icon>
+          <div
+            [class]="selectedTab === 'asset-register' ? 'ml-[15px]' : ''"
+            class="w-4 h-4 bg-red-600 rounded-full absolute translate-x-2.5 -translate-y-2.5 text-white text-center text-[10px] flex justify-center items-center"
+          >
+            4
+          </div>
+        </button>
+
+        <button
+          fill="clear"
+          shape="round"
+          expand="block"
+          class="w-full text-2xl"
+          routerLink="/assessment"
+          (click)="setCurrentTab('assessment')"
+        >
+          <ion-icon
+            [src]="
+              selectedTab === 'assessment'
+                ? '../../assets/tab-icons/assessment-active.svg'
+                : '../../assets/tab-icons/assessment.svg'
+            "
+            [class.active]="selectedTab === 'assessment' ? 'active' : ''"
+            [class]="selectedTab === 'assessment' ? '' : 'py-[15px]'"
+          ></ion-icon>
+        </button>
+
+        <button
+          fill="clear"
+          shape="round"
+          expand="block"
+          class="w-full text-2xl"
+          routerLink="/action-management"
+          (click)="setCurrentTab('action-management')"
+        >
+          <ion-icon
+            [src]="
+              selectedTab === 'action-management'
+                ? '../../assets/tab-icons/action-management-active.svg'
+                : '../../assets/tab-icons/action-management.svg'
+            "
+            [class]="selectedTab === 'action-management' ? '' : 'py-[15px]'"
+            [class.active]="selectedTab === 'action-management' ? 'active' : ''"
+          ></ion-icon>
+        </button>
+
+        <button class="absolute bottom-10 left-1/2 -translate-x-1/2">
+          <ion-icon class="text-2xl text-white" name="exit-outline"></ion-icon>
+        </button>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="main">
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </div>
+</ion-split-pane>

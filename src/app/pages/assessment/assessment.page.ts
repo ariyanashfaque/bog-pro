@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { HeaderComponent } from "src/app/components/header/header.component";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { AssessmentModalComponent } from "src/app/components/assessment-modal/assessment-modal.component";
 import {
   IonRow,
