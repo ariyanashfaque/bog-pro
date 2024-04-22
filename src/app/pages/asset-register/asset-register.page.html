@@ -1,4 +1,4 @@
-<app-header headerTitle="Asset Register" [isDefaultHref]="true"></app-header>
+<app-header headerTitle="Asset Register" [isDefaultHref]="false"></app-header>
 
 <ion-content [fullscreen]="true" color="background">
   <ion-grid class="ion-padding">
@@ -50,32 +50,32 @@
         <div class="max-w-full mx-auto bg-white p-4 shadowpart2">
           <ion-grid>
             <ion-row>
-              @defer (when !isLoading()) { @for (plant of plants; track $index)
-              {
-              <ion-col size="12" sizeMd="6" sizeLg="6">
-                <app-plant-card
-                  [plant]="plant"
-                  [role]="role"
-                  (click)="handlePlantStore(plant)"
-                  (isMenuToggleOpen)="handleErrorModal($event)"
-                >
-                </app-plant-card>
-              </ion-col>
-              } @empty {
-              <ion-col size="12">
-                <div
-                  class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
-                >
-                  <h3 class="text-center">No plants found</h3>
-                </div>
-              </ion-col>
-              } } @placeholder {
-              <ion-col size="12" sizeMd="6" sizeLg="6">
-                <app-loading-skeleton></app-loading-skeleton>
-              </ion-col>
-              <ion-col size="12" sizeMd="6" sizeLg="6">
-                <app-loading-skeleton></app-loading-skeleton>
-              </ion-col>
+              @defer (when !isLoading()) {
+                @for (plant of plants; track $index) {
+                  <ion-col size="12" sizeMd="6" sizeLg="6">
+                    <app-plant-card
+                      [plant]="plant"
+                      [role]="role"
+                      (click)="handlePlantStore(plant)"
+                      (isMenuToggleOpen)="handleErrorModal($event)"
+                    ></app-plant-card>
+                  </ion-col>
+                } @empty {
+                  <ion-col size="12">
+                    <div
+                      class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+                    >
+                      <h3 class="text-center">No plants found</h3>
+                    </div>
+                  </ion-col>
+                }
+              } @placeholder {
+                <ion-col size="12" sizeMd="6" sizeLg="6">
+                  <app-loading-skeleton></app-loading-skeleton>
+                </ion-col>
+                <ion-col size="12" sizeMd="6" sizeLg="6">
+                  <app-loading-skeleton></app-loading-skeleton>
+                </ion-col>
               }
             </ion-row>
           </ion-grid>
@@ -86,12 +86,11 @@
 </ion-content>
 
 @if (isMenuOpen) {
-<app-plant-card-error-modal
-  [isMenuOpen]="isMenuOpen"
-  (isMenuToggleOpen)="handleErrorModal($event)"
->
-</app-plant-card-error-modal>
-} @if (isMenuOpen) {
-
-<ion-backdrop [visible]="isMenuOpen"> </ion-backdrop>
+  <app-plant-card-error-modal
+    [isMenuOpen]="isMenuOpen"
+    (isMenuToggleOpen)="handleErrorModal($event)"
+  ></app-plant-card-error-modal>
+}
+@if (isMenuOpen) {
+  <ion-backdrop [visible]="isMenuOpen"></ion-backdrop>
 }

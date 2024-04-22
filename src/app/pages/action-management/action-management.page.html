@@ -1,7 +1,10 @@
 @if (isMenuOpen) {
-  <ion-backdrop [visible]="true"> </ion-backdrop>
+  <ion-backdrop [visible]="true"></ion-backdrop>
 }
-<app-header headerTitle="Action management" [isDefaultHref]="true"></app-header>
+<app-header
+  headerTitle="Action management"
+  [isDefaultHref]="false"
+></app-header>
 
 <ion-content [fullscreen]="true" color="background">
   <ion-grid>
@@ -25,8 +28,7 @@
                   <ion-icon
                     class="p-4 h-[32px] w-[32px] image"
                     src="../../../../../assets/segment-icons/sim.svg"
-                  >
-                  </ion-icon>
+                  ></ion-icon>
                   <ion-text
                     color="textwhite"
                     class="ion-text-center hidden-content"
@@ -44,8 +46,7 @@
                     <ion-icon
                       class="p-4 h-[32px] w-[32px] image"
                       src="../../../../../assets/segment-icons/sim.svg"
-                    >
-                    </ion-icon>
+                    ></ion-icon>
                     <ion-text
                       color="textwhite"
                       class="ion-text-center hidden-content"
@@ -259,5 +260,4 @@
 <app-action-management-modal
   [isMenuOpen]="isMenuOpen"
   (isMenuToggleOpen)="filterFindings($event)"
->
-</app-action-management-modal>
+></app-action-management-modal>

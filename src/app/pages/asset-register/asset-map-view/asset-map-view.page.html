@@ -1,4 +1,9 @@
-<app-header class="z-20 fixed w-full" headerTitle="Bird eye view"></app-header>
+<app-header
+  class="z-20 fixed w-full"
+  headerTitle="Bird eye view"
+  [isDefaultHref]="true"
+  [isBackgroundTransparent]="false"
+></app-header>
 
 @if (isChildOpen() == true) {
   <ion-backdrop class="z-10" [visible]="true"></ion-backdrop>
