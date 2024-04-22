@@ -13,147 +13,166 @@
 
   <!-- Parent Assets -->
   @if (!isChildOpen()) {
-  <div
-    class="w-full max-h-[calc(100vh-170px)] bg-transparent flex flex-col items-center overflow-y-scroll"
-  >
-    @for (asset of assetData(); track $index) {
-    <div class="">
-      <div dndDraggable (dndStart)="onDragStart($event,asset)"  class="cursor-pointer mx-auto" (click)="onAssetClick(asset, $index)">
-        <div
-          class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center"
-          [class]="
-            activeIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
-          "
-        >
-          <img
-            class="object-cover w-full h-full rounded-md"
-            src="../../../assets/{{ asset.assetParentType }}.png"
-            alt="silo"
-          />
+    <div
+      class="w-full max-h-[calc(100vh-170px)] bg-transparent flex flex-col items-center overflow-y-scroll"
+    >
+      @for (asset of assetData(); track $index) {
+        <div class="">
           <div
-            class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
-            [class]="
-              activeIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
-            "
+            dndDraggable
+            (dndStart)="onDragStart($event, asset)"
+            class="cursor-pointer mx-auto"
+            (click)="onAssetClick(asset, $index)"
           >
-            {{ asset.assets.length }}
+            <div
+              class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center"
+              [class]="
+                activeIndex() == $index
+                  ? 'border-[#3CB4AA]'
+                  : 'border-[#b9dee4]'
+              "
+            >
+              <img
+                class="object-cover w-full h-full rounded-md"
+                src="../../../assets/{{ asset.assetParentType }}.png"
+                alt="silo"
+              />
+              <div
+                class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
+                [class]="
+                  activeIndex() == $index
+                    ? 'border-[#3CB4AA]'
+                    : 'border-[#b9dee4]'
+                "
+              >
+                {{ asset.assets.length }}
+              </div>
+            </div>
+            <div class="w-full text-xs text-center mt-1">
+              <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
+            </div>
           </div>
         </div>
-        <div class="w-full text-xs text-center mt-1">
-          <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
-        </div>
-      </div>
+      }
     </div>
-    }
-  </div>
   } @else {
-  <!-- Child Assets -->
+    <!-- Child Assets -->
 
-  <!-- Recommended Head -->
-  <div
-    (click)="toggleVisibility('recommended')"
-    class="flex cursor-pointer w-full items-center justify-center px-2 pt-2 pb-1 duration-300"
-    [class]="
-      activeAccordion == 'recommended'
-        ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
-        : 'bg-[#edf5f5] text-[#007382] border-b-2 border-[#00738233]'
-    "
-  >
-    <div class="flex flex-col items-center justify-center">
-      <ion-text class="text-xs font-bold">Recommended</ion-text>
-      <ion-icon
-        class="text-xl transition-all duration-200"
-        name="chevron-down-outline"
-        [class]="activeAccordion == 'recommended' ? 'rotate-180' : ''"
-      ></ion-icon>
+    <!-- Recommended Head -->
+    <div
+      (click)="toggleVisibility('recommended')"
+      class="flex cursor-pointer w-full items-center justify-center px-2 pt-2 pb-1 duration-300"
+      [class]="
+        activeAccordion == 'recommended'
+          ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
+          : 'bg-[#edf5f5] text-[#007382] border-b-2 border-[#00738233]'
+      "
+    >
+      <div class="flex flex-col items-center justify-center">
+        <ion-text class="text-xs font-bold">Recommended</ion-text>
+        <ion-icon
+          class="text-xl transition-all duration-200"
+          name="chevron-down-outline"
+          [class]="activeAccordion == 'recommended' ? 'rotate-180' : ''"
+        ></ion-icon>
+      </div>
     </div>
-  </div>
 
-  <!-- Recommended Body -->
-  <div
-    class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
-    [class]="
-      activeAccordion == 'recommended'
-        ? ' max-h-[calc(100vh-270px)]  '
-        : 'max-h-0'
-    "
-  >
-    @for (asset of assetData(); track $index) {
-    <div class="">
-      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset, $index)">
-        <div
-          class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center"
-          [class]="
-            activeIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
-          "
-        >
-          <img
-            class="object-cover w-full h-full rounded-md"
-            src="../../../assets/{{ asset.assetParentType }}.png"
-            alt="silo"
-          />
+    <!-- Recommended Body -->
+    <div
+      class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
+      [class]="
+        activeAccordion == 'recommended'
+          ? ' max-h-[calc(100vh-270px)]  '
+          : 'max-h-0'
+      "
+    >
+      @for (asset of assetData(); track $index) {
+        <div class="">
           <div
-            class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
-            [class]="
-              activeIndex() == $index ? 'border-[#3CB4AA]' : 'border-[#b9dee4]'
-            "
+            class="cursor-pointer mx-auto"
+            (click)="onAssetClick(asset, $index)"
           >
-            {{ asset.assets.length }}
+            <div
+              class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center"
+              [class]="
+                activeIndex() == $index
+                  ? 'border-[#3CB4AA]'
+                  : 'border-[#b9dee4]'
+              "
+            >
+              <img
+                class="object-cover w-full h-full rounded-md"
+                src="../../../assets/{{ asset.assetParentType }}.png"
+                alt="silo"
+              />
+              <div
+                class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
+                [class]="
+                  activeIndex() == $index
+                    ? 'border-[#3CB4AA]'
+                    : 'border-[#b9dee4]'
+                "
+              >
+                {{ asset.assets.length }}
+              </div>
+            </div>
+            <div class="w-full text-xs text-center mt-1">
+              <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
+            </div>
           </div>
         </div>
-        <div class="w-full text-xs text-center mt-1">
-          <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
-        </div>
+      }
+    </div>
+
+    <!-- Others Head  -->
+    <div
+      (click)="toggleVisibility('others')"
+      class="flex cursor-pointer w-full items-center justify-center px-3 pt-2 pb-1 duration-300"
+      [class]="
+        activeAccordion == 'others'
+          ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
+          : 'bg-[#EDF5F5] text-[#007382] border-b-2 border-[#00738233]'
+      "
+    >
+      <div class="flex flex-col items-center justify-center">
+        <ion-text class="text-xs font-bold">Others</ion-text>
+        <ion-icon
+          class="text-xl transition-all duration-200"
+          name="chevron-down-outline"
+          [class]="activeAccordion == 'others' ? 'rotate-180' : ''"
+        ></ion-icon>
       </div>
     </div>
-    }
-  </div>
 
-  <!-- Others Head  -->
-  <div
-    (click)="toggleVisibility('others')"
-    class="flex cursor-pointer w-full items-center justify-center px-3 pt-2 pb-1 duration-300"
-    [class]="
-      activeAccordion == 'others'
-        ? 'bg-[#3CB4AA] text-white border-b-2 border-[#3CB4AA]'
-        : 'bg-[#EDF5F5] text-[#007382] border-b-2 border-[#00738233]'
-    "
-  >
-    <div class="flex flex-col items-center justify-center">
-      <ion-text class="text-xs font-bold">Others</ion-text>
-      <ion-icon
-        class="text-xl transition-all duration-200"
-        name="chevron-down-outline"
-        [class]="activeAccordion == 'others' ? 'rotate-180' : ''"
-      ></ion-icon>
-    </div>
-  </div>
-
-  <!-- Others Body -->
-  <div
-    class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
-    [class]="
-      activeAccordion == 'others' ? ' max-h-[calc(100vh-270px)]  ' : 'max-h-0'
-    "
-  >
-    @for (asset of assetData(); track $index) {
-    <div class="">
-      <div class="cursor-pointer mx-auto" (click)="onAssetClick(asset, $index)">
-        <div
-          class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="../../../assets/{{ asset.assetParentType }}.png"
-            alt="silo"
-          />
+    <!-- Others Body -->
+    <div
+      class="w-full bg-transparent flex flex-col items-center overflow-y-scroll duration-300"
+      [class]="
+        activeAccordion == 'others' ? ' max-h-[calc(100vh-270px)]  ' : 'max-h-0'
+      "
+    >
+      @for (asset of assetData(); track $index) {
+        <div class="">
+          <div
+            class="cursor-pointer mx-auto"
+            (click)="onAssetClick(asset, $index)"
+          >
+            <div
+              class="mx-auto mt-3 text-3xl h-[70px] w-[70px] border-2 border-[#D6EAEB] rounded-md flex justify-center items-center overflow-hidden"
+            >
+              <img
+                class="object-cover w-full h-full"
+                src="../../../assets/{{ asset.assetParentType }}.png"
+                alt="silo"
+              />
+            </div>
+            <div class="w-full text-xs text-center mt-1">
+              <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
+            </div>
+          </div>
         </div>
-        <div class="w-full text-xs text-center mt-1">
-          <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
-        </div>
-      </div>
+      }
     </div>
-    }
-  </div>
   }
 </div>

@@ -82,23 +82,22 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
 
   onDrop(event: DndDropEvent, i: number) {
     this.imageUrl = event.event.dataTransfer?.getData("text/plain");
-    // Find the index of the subAsset with the matching assetIndex
-    const index = this.subAssets.findIndex((item) => item.assetIndex === i);
-    if (index !== -1) {
-      // If an object with the same assetIndex exists, update it
-      this.subAssets[index] = {
-        subAsset: this._recievedDraggedAsset,
-        assetImage: this.imageUrl,
-        assetIndex: i,
-      };
-    } else {
-      // If not found, insert a new object at the specified index
-      this.subAssets.splice(i, 0, {
-        subAsset: this._recievedDraggedAsset,
-        assetImage: this.imageUrl,
-        assetIndex: i,
+    const allIndexesExceptLastFilled = this.subAssets
+      .slice(0, -1)
+      .every((item) => !!item.subAsset);
+
+    if (allIndexesExceptLastFilled) {
+      const nextIndex = this.subAssets.length;
+      this.subAssets.push({
+        assetIndex: nextIndex,
       });
     }
+    const nextIndex = this.subAssets.findIndex((item) => !item.subAsset);
+    this.subAssets[nextIndex] = {
+      subAsset: this._recievedDraggedAsset,
+      assetImage: this.imageUrl,
+      assetIndex: nextIndex,
+    };
     console.log(this.subAssets);
   }
 }
