@@ -1,4 +1,11 @@
-import { Component, OnInit, model, effect, signal } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  model,
+  effect,
+  signal,
+  output,
+} from "@angular/core";
 import {
   IonRow,
   IonCol,
@@ -48,7 +55,7 @@ import { DndEvent } from "ngx-drag-drop/lib/dnd-utils";
 export class SubAssetSidebarComponent implements OnInit {
   isMenuOpen = model(false);
   selectedAsset = model<any>({});
-  draggedAsset = model<any>({});
+  draggedAsset = output<any>();
 
   constructor() {
     effect(() => {
@@ -59,7 +66,7 @@ export class SubAssetSidebarComponent implements OnInit {
   ngOnInit() {}
 
   draggedAssetRecieved(recievedAsset: any) {
-    this.draggedAsset.set(recievedAsset);
+    this.draggedAsset.emit(recievedAsset);
   }
 
   showDetails(recievedAsset: any) {

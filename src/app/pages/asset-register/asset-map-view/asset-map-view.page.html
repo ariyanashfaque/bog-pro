@@ -53,9 +53,9 @@
   class="fixed bottom-[35px] left-[50px] z-50"
 >
   <ion-icon
-    class="bg-white border-2 border-[#007382] text-[#007382] text-xl p-[15.4px] rounded-full"
-    [class]="isAssetInfoMenuOpen() ? 'invisible' : 'visible'"
     name="trash-bin-outline"
+    [class]="isAssetInfoMenuOpen() ? 'invisible' : 'visible'"
+    class="bg-white border-2 border-[#007382] text-[#007382] text-xl p-[15.4px] rounded-full"
   ></ion-icon>
 </button>
 
@@ -70,33 +70,33 @@
 <!-- Sub Asset MODAL -->
 @if (isChildOpen()) {
   <app-sub-asset-modal
-    [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
-    (click)="closeSubAssetModal()"
     [(childAsset)]="childAsset"
+    (click)="closeSubAssetModal()"
     [(activeIndex)]="subAssetActiveIndex"
-    [(recievedDraggedAsset)]="dragRecieved"
+    [recievedDraggedAsset]="dragRecieved()"
+    [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
   ></app-sub-asset-modal>
 }
 
 <!-- Asset info menu -->
 <app-asset-info-menu
-  [(isMenuOpen)]="isAssetInfoMenuOpen"
   [(assetDummy)]="childAsset"
+  [(isMenuOpen)]="isAssetInfoMenuOpen"
   [(subAssetActiveIndex)]="subAssetActiveIndex"
 ></app-asset-info-menu>
 
 <!-- Sub-Assets sidebar -->
 <app-sub-asset-sidebar
-  [(isMenuOpen)]="isSubAssetModalOpen"
   [(selectedAsset)]="selectedAsset"
-  [(draggedAsset)]="dragRecieved"
+  [(isMenuOpen)]="isSubAssetModalOpen"
+  (draggedAsset)="sendDraggedSubAsset($event)"
 ></app-sub-asset-sidebar>
 
 <!-- Asset Sidebar -->
 <app-asset-sidebar
-  [(isMenuOpen)]="isAssetInfoMenuOpen"
-  [(isChildOpen)]="isChildOpen"
   [assetData]="groupedAssets"
-  (selectedAsset)="onAssetReceived($event)"
+  [(isChildOpen)]="isChildOpen"
+  [(isMenuOpen)]="isAssetInfoMenuOpen"
   [(activeIndex)]="assetModalActiveIndex"
+  (selectedAsset)="onAssetReceived($event)"
 ></app-asset-sidebar>
