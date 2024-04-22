@@ -57,93 +57,50 @@
         <ion-col size="4" style="height: 100vh" class="ion-no-padding">
           <ion-grid class="ion-no-padding">
             <ion-row>
-              @for (filter of filterCategory; track $index) {
+              @for (filter of assetFilter; track $index) {
                 <ion-col
-                  (click)="handleFilterCategory(filter)"
+                  (click)="handleFilterCategory(filter.filterType)"
                   size="12"
-                  [class.selected]="filter === filterName"
+                  [class.selected]="filter.filterType === filterName"
                   class="bg-[#edf5f5] border-b-2 border-r-2 border-[#00738233] h-14 p-3"
                 >
                   <ion-label class="text-xl ml-5">
-                    {{ filter }}
+                    {{ filter.filterTitle }}
                   </ion-label>
-                  @if (filter === filterName) {
+                  <ion-label>({{ filter.filterSelected }})</ion-label>
+
+                  <!-- @if (filter === filterName) {
                     <ion-label>({{ selectedTypesCount }})</ion-label>
-                  }
+                  } -->
                 </ion-col>
               }
             </ion-row>
           </ion-grid>
         </ion-col>
         <ion-col size="8" class="h-[400px] scroll-items">
-          @switch (filterName) {
-            @case ("Asset type") {
-              <div>
-                <ion-grid>
-                  <ion-row class="mt-5">
-                    @for (type of SelectedassetTypes; track $index) {
-                      <ion-col
-                        size="12"
-                        class="left-32 text-xl mb-5 scroll-items"
-                      >
-                        <ion-checkbox
-                          (ionChange)="handlefilterbytype($event, type)"
-                          labelPlacement="end"
-                          [checked]="type.selected"
+          @for (filter of assetFilter; track $index) {
+            @switch (filterName) {
+              @case (filter.filterType) {
+                <div>
+                  <ion-grid>
+                    <ion-row class="mt-5">
+                      @for (filter of filter.filters; track $index) {
+                        <ion-col
+                          size="12"
+                          class="left-32 text-xl mb-5 scroll-items"
                         >
-                          {{ type.assetType }}
-                        </ion-checkbox>
-                      </ion-col>
-                    }
-                  </ion-row>
-                </ion-grid>
-              </div>
-            }
-
-            @case ("Status") {
-              <div>
-                <ion-grid>
-                  <ion-row class="mt-5">
-                    @for (status of assetStatus; track $index) {
-                      <ion-col
-                        size="12"
-                        class="left-32 text-xl mb-5 scroll-items"
-                      >
-                        <ion-checkbox
-                          labelPlacement="end"
-                          (ionChange)="handlefilterbyStatus(status)"
-                          [checked]="status.selected"
-                        >
-                          {{ status.title }}
-                        </ion-checkbox>
-                      </ion-col>
-                    }
-                  </ion-row>
-                </ion-grid>
-              </div>
-            }
-
-            @case ("Source") {
-              <div>
-                <ion-grid>
-                  <ion-row class="mt-5">
-                    @for (source of assetSources; track $index) {
-                      <ion-col
-                        size="12"
-                        class="left-32 text-xl mb-5 scroll-items"
-                      >
-                        <ion-checkbox
-                          labelPlacement="end"
-                          (ionChange)="handlefilterbySource(source)"
-                          [checked]="source.selected"
-                        >
-                          {{ source.title }}
-                        </ion-checkbox>
-                      </ion-col>
-                    }
-                  </ion-row>
-                </ion-grid>
-              </div>
+                          <ion-checkbox
+                            (ionChange)="handlefilterbytype($event, filter)"
+                            labelPlacement="end"
+                          >
+                            {{ filter.title }}
+                          </ion-checkbox>
+                        </ion-col>
+                      }
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              }
             }
           }
         </ion-col>
