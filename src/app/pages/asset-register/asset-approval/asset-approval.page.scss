@@ -5,16 +5,16 @@
   background-color: #edf5f5;
 }
 .shadowpart1 {
-  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
   border-radius: 8px 8px 0px 0px;
   box-shadow: 0px 4px 6px 0px #0000002e;
-  opacity: 1;
+  background: #ffffff 0% 0% no-repeat padding-box;
 }
 .shadowpart2 {
-  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
   border-radius: 0px 0px 8px 8px;
   box-shadow: 0px 4px 6px 0px #0000002e;
-  opacity: 1;
+  background: #ffffff 0% 0% no-repeat padding-box;
 }
 .imagebox {
   background-color: #fff;
@@ -24,15 +24,14 @@
 ion-radio::part(container) {
   width: 40px;
   height: 40px;
-
   border-radius: 8px;
   border: 2px solid #ddd;
 }
 
 ion-radio::part(mark) {
+  transform: none;
   background: none;
   transition: none;
-  transform: none;
   border-radius: 0;
 }
 
@@ -45,11 +44,10 @@ ion-radio.radio-checked::part(mark) {
   width: 10px;
   height: 15px;
   margin-bottom: 5px;
-  border-width: 0px 2px 2px 0px;
-  border-style: solid;
   border-color: #fff;
-
+  border-style: solid;
   transform: rotate(45deg);
+  border-width: 0px 2px 2px 0px;
 }
 .bgEditBtn {
   background-color: #007382;

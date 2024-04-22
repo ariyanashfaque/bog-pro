@@ -70,7 +70,7 @@
         </ion-grid>
       </div>
 
-      @if (!role.l1Aproval) {
+      @if (role.l1Aproval) {
         <div class="flex justify-between">
           <ion-grid>
             <ion-row>
@@ -162,6 +162,32 @@
           </ion-grid>
         </div>
       }
+
+      <div class="flex justify-between">
+        <ion-grid>
+          <ion-row>
+            <ion-col class="flex items-center gap-1" size="12">
+              <div class="flex items-center">
+                <ion-icon
+                  size="large"
+                  class="customtext"
+                  name="alert-circle-outline"
+                ></ion-icon>
+              </div>
+              <div>
+                <ion-text
+                [routerLink]="['/asset-register/asset-approval', plant.id]"
+
+                  class="mx-1 text-[14px] customtext font-gotham_medium"
+                >
+                  Asset approval pending (10)
+                </ion-text>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
       @if (role.l1Aproval) {
         <div class="flex justify-between">
           <ion-grid>

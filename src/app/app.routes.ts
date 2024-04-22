@@ -10,21 +10,21 @@ export const routes: Routes = [
     path: "findings",
     loadComponent: () =>
       import("./pages/assessment/findings/findings.page").then(
-        (m) => m.FindingsPage
+        (m) => m.FindingsPage,
       ),
   },
   {
     path: "asset-map-view",
     loadComponent: () =>
       import("./pages/asset-register/asset-map-view/asset-map-view.page").then(
-        (m) => m.AssetMapViewPage
+        (m) => m.AssetMapViewPage,
       ),
   },
   {
-    path: "bulk-upload",
+    path: "asset-approval",
     loadComponent: () =>
-      import("./pages/asset-register/bulk-upload/bulk-upload.page").then(
-        (m) => m.BulkUploadPage
+      import("./pages/asset-register/asset-approval/asset-approval.page").then(
+        (m) => m.AssetApprovalPage,
       ),
   },
 ];
