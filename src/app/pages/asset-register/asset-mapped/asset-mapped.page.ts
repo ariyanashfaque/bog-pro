@@ -168,7 +168,7 @@ export class AssetMappedPage implements OnInit {
         }
       });
     });
-    console.log(this.draftAssets);
+    // console.log(this.draftAssets);
   };
 
   handleAssetId = (event: any) => {

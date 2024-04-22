@@ -113,6 +113,36 @@ export interface AssetModel {
   assetSim?: AssetSimCategoryModel | undefined;
 }
 
+export interface AssetSourceFilterModel {
+  title: string;
+  source: string;
+  selected: boolean;
+}
+
+export interface AssetStatusFilterModel {
+  title: string;
+  status: string;
+  selected: boolean;
+}
+export interface AssetTypeFilterModel {
+  title: string;
+  type: string;
+  selected: boolean;
+}
+export interface AssetAreaFilterModel {
+  title: string;
+  type: string;
+  selected: boolean;
+}
+
+export interface AssetFilterModel {
+  IsSelected: boolean;
+  assetType: AssetTypeFilterModel;
+  assetArea: AssetAreaFilterModel;
+  assetStatus: AssetStatusFilterModel;
+  assetSource: AssetSourceFilterModel;
+}
+
 interface AuditTrailModel {}
 
 // * Site Model * //
