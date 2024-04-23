@@ -70,7 +70,7 @@ export class AssetApprovalPage implements OnInit {
   plantId: string;
   assets: AssetModel[];
   store = inject(Store);
-  sendForApprovaL: any[] = [];
+  sendForApproval: any[] = [];
   radioChecked = model();
   httpService = inject(HttpService);
   toastService = inject(ToastService);
@@ -118,20 +118,17 @@ export class AssetApprovalPage implements OnInit {
     this.radioChecked.set(event.detail.checked);
 
     if (event.detail.checked === true) {
-      this.sendForApprovaL = this.assets;
+      this.sendForApproval = this.assets;
     } else {
-      this.sendForApprovaL = [];
+      this.sendForApproval = [];
     }
-    console.log(this.sendForApprovaL);
   }
 
   assetChecked(event: any, asset: any) {
     if (event.detail.checked === true) {
-      this.sendForApprovaL.push(asset);
+      this.sendForApproval.push(asset);
     } else {
-      this.sendForApprovaL.pop();
+      this.sendForApproval.pop();
     }
-
-    console.log(this.sendForApprovaL);
   }
 }

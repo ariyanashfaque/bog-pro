@@ -10,9 +10,11 @@ import {
   OnChanges,
   EventEmitter,
   SimpleChanges,
+  output,
 } from "@angular/core";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
+import { DndEvent } from "ngx-drag-drop/lib/dnd-utils";
 
 @Component({
   standalone: true,
@@ -26,6 +28,7 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   activeIndex = model<number>(-1);
   isAssetInfoMenuOpen = model(false);
   recievedDraggedAsset = input.required<any>();
+  sendForDeleteAsset = output<any>();
 
   recievedAssetFromSidebar: any;
   subAssets: any[] = [
@@ -55,6 +58,8 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   _recievedDraggedAsset: any;
 
   onAssetClick(asset: any, index: number) {
+    console.log(asset);
+
     this.isAssetInfoMenuOpen.update((isAssetInfoMenuOpen) => true);
     this.activeIndex.update(() => index);
     this.childAsset.update(() => this.subAssets[this.activeIndex()]);
@@ -68,8 +73,6 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
     if (changes["recievedDraggedAsset"]) {
       this._recievedDraggedAsset = changes["recievedDraggedAsset"].currentValue;
     }
-
-    console.log(this._recievedDraggedAsset);
   }
 
   constructor(private injector: Injector) {
@@ -79,6 +82,11 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {}
+
+  onDragStart(event: DndEvent, subAsset: any) {
+    console.log("Sending to delete:", subAsset);
+    this.sendForDeleteAsset.emit(subAsset);
+  }
 
   onDrop(event: DndDropEvent, i: number) {
     this.imageUrl = event.event.dataTransfer?.getData("text/plain");
