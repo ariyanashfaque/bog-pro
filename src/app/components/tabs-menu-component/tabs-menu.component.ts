@@ -62,8 +62,8 @@ export class TabsMenuComponent implements OnInit {
   showTabsMenu: boolean;
 
   constructor() {
-    this.selectedTab = "";
     this.showTabsMenu = true;
+    this.selectedTab = "dashboard";
   }
 
   ngOnInit() {
@@ -72,25 +72,28 @@ export class TabsMenuComponent implements OnInit {
         switch (true) {
           case event.url === "/dashboard":
             this.showTabsMenu = true;
+            this.selectedTab = "dashboard";
             break;
           case event.url === "/map-view":
             this.showTabsMenu = true;
+            this.selectedTab = "map-view";
             break;
           case event.url === "/assessment":
             this.showTabsMenu = true;
+            this.selectedTab = "assessment";
             break;
           case event.url === "/asset-register":
             this.showTabsMenu = true;
+            this.selectedTab = "asset-register";
             break;
           case event.url === "/action-management":
             this.showTabsMenu = true;
-            break;
-          case event.url === "/action-management":
-            this.showTabsMenu = true;
+            this.selectedTab = "action-management";
             break;
 
           default:
             this.showTabsMenu = false;
+            this.selectedTab = "dashboard";
             break;
         }
 
