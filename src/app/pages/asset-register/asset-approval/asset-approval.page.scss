@@ -52,3 +52,18 @@ ion-radio.radio-checked::part(mark) {
 .bgEditBtn {
   background-color: #007382;
 }
+
+ion-checkbox {
+  --size: 35px;
+  --checkbox-background-checked: #007382;
+  --checkbox-background: #edf5f5;
+}
+
+ion-checkbox::part(container) {
+  border-radius: 6px;
+  border: 2px solid #007382;
+}
+
+.selectAll {
+  --checkbox-background: #ffffff;
+}

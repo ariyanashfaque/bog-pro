@@ -5,6 +5,7 @@ import {
   signal,
   Component,
   WritableSignal,
+  model,
 } from "@angular/core";
 import {
   IonCol,
@@ -20,6 +21,10 @@ import {
   IonButton,
   IonContent,
   IonRadioGroup,
+  IonCheckbox,
+  IonFooter,
+  IonToolbar,
+  IonTitle,
 } from "@ionic/angular/standalone";
 import {
   SiteModel,
@@ -40,6 +45,10 @@ import { HttpService } from "src/app/services/http-service/http-client.service";
   templateUrl: "./asset-approval.page.html",
   styleUrls: ["./asset-approval.page.scss"],
   imports: [
+    IonTitle,
+    IonToolbar,
+    IonFooter,
+    IonCheckbox,
     IonImg,
     IonRow,
     IonCol,
@@ -61,6 +70,8 @@ export class AssetApprovalPage implements OnInit {
   plantId: string;
   assets: AssetModel[];
   store = inject(Store);
+  sendForApprovaL: any[] = [];
+  radioChecked = model();
   httpService = inject(HttpService);
   toastService = inject(ToastService);
   isLoading: WritableSignal<boolean> = signal(false);
@@ -98,7 +109,29 @@ export class AssetApprovalPage implements OnInit {
         }
       },
     });
+    console.log(this.assets);
 
     console.log("assets:", this.assets);
+  }
+
+  selectAllAsset(event: CustomEvent) {
+    this.radioChecked.set(event.detail.checked);
+
+    if (event.detail.checked === true) {
+      this.sendForApprovaL = this.assets;
+    } else {
+      this.sendForApprovaL = [];
+    }
+    console.log(this.sendForApprovaL);
+  }
+
+  assetChecked(event: any, asset: any) {
+    if (event.detail.checked === true) {
+      this.sendForApprovaL.push(asset);
+    } else {
+      this.sendForApprovaL.pop();
+    }
+
+    console.log(this.sendForApprovaL);
   }
 }

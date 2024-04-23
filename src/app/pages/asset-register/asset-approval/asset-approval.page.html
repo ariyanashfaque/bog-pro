@@ -10,6 +10,13 @@
           <div
             class="font-[24px] font-gotham_medium p-4 flex gap-3 items-center justify-center"
           >
+            <ion-checkbox
+              (ionChange)="selectAllAsset($event)"
+              class="selectAll"
+            >
+              Select All
+            </ion-checkbox>
+
             <ion-button
               fill="outline"
               shape="round"
@@ -312,12 +319,10 @@
                                   name="eye-outline"
                                 ></ion-icon>
                               </div>
-                              <ion-radio-group value="custom-checked">
-                                <ion-radio
-                                  value="custom-checked"
-                                  aria-label="Custom checkbox that is checked"
-                                ></ion-radio>
-                              </ion-radio-group>
+                              <ion-checkbox
+                                [checked]="radioChecked()"
+                                (ionChange)="assetChecked($event, asset)"
+                              ></ion-checkbox>
                             </div>
                           </ion-col>
                         </ion-row>
@@ -333,3 +338,25 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+@if (sendForApprovaL.length) {
+  <ion-footer>
+    <ion-toolbar color="secondary">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="flex ion-justify-content-center">
+            <ion-button fill="clear">
+              <ion-text color="textwhite">Cancel</ion-text>
+            </ion-button>
+          </ion-col>
+          <ion-col class="flex ion-justify-content-center">
+            <ion-button fill="clear">
+              <ion-text color="textwhite">
+                Approve({{ sendForApprovaL.length }})
+              </ion-text>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
+}
