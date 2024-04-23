@@ -33,14 +33,7 @@ import {
   IonSelectOption,
   IonSegmentButton,
 } from "@ionic/angular/standalone";
-import {
-  AssetAreaFilterModel,
-  AssetFilterModel,
-  AssetModel,
-  AssetSourceFilterModel,
-  AssetStatusFilterModel,
-  AssetTypeFilterModel,
-} from "src/app/store/models/asset.model";
+import { AssetModel, FilterModel } from "src/app/store/models/asset.model";
 import { AssetFilter } from "src/app/utils/asset.util";
 
 @Component({
@@ -80,7 +73,7 @@ import { AssetFilter } from "src/app/utils/asset.util";
 export class AssetMappedFilterModalComponent implements OnInit {
   typesAssets: any;
   assetTypes: any[];
-  SelectedAssets: any;
+  SelectedAssets: FilterModel[];
   selectedTypes: any[];
   assetFilter = AssetFilter;
   totalAssetFilter = AssetFilter;
@@ -92,27 +85,20 @@ export class AssetMappedFilterModalComponent implements OnInit {
   filteredStatusAssets: AssetModel[];
   filteredAssets: AssetModel[];
   // assetStatus: AssetStatusFilterModel[];
-  assetSources: AssetSourceFilterModel[];
   assets = input.required<AssetModel[]>();
-  selectedSoures: AssetSourceFilterModel[];
-  selectedStatus: AssetStatusFilterModel[];
   @Input() isFilterMenuOpen: boolean = false;
   @Output() filterByTypes = new EventEmitter<any>();
   SelectedassetTypes: { isSelected?: boolean; assetType?: any }[];
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
 
-  TotalFilteredAssets: AssetFilterModel;
   // assetArea: AssetAreaFilterModel[];
   // assetType: AssetTypeFilterModel[];
   // assetSource: AssetSourceFilterModel[];
-  assetStatus: AssetStatusFilterModel[];
 
   constructor() {
     this.assetTypes = [];
     this.typesAssets = [];
     this.selectedTypes = [];
-    this.SelectedAssets = [];
-    this.selectedSoures = [];
     this.selectedTypesCount = 0;
     this.filteredTypeAssets = [];
     this.SelectedassetTypes = [];
@@ -120,14 +106,29 @@ export class AssetMappedFilterModalComponent implements OnInit {
     this.filteredStatusAssets = [];
     this.SelectedBySourceAssets = [];
     this.filteredAssets = [];
-    // this.assetArea = [];
-    this.assetStatus = [];
-    // this.assetType = [];
-    // this.assetSource = [];
+    this.SelectedAssets = [
+      {
+        assetSoruce: {
+          assetSapSync: false,
+          assetBulkUpload: false,
+          assetManualCreation: false,
+        },
+
+        assetStatus: {
+          assetInDraft: false,
+          assetRejected: false,
+          assetApproved: false,
+          assetApprovalPendinng: false,
+        },
+
+        assetArea: [],
+        assetType: [],
+      },
+    ];
   }
 
   ngOnInit() {
-    console.log("Filter", this.assetFilter);
+    console.log("Filter", this.SelectedAssets);
 
     // AssetTypes
     // const parentTypes = new Set(
@@ -157,8 +158,6 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
   //  by Asset type
   handlefilterbytype(event: any, type: any) {
-    console.log(type);
-
     type.isSelected = !type.isSelected;
 
     this.assetFilter.filter((filter) => {
@@ -173,15 +172,10 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
 
   // Filter by asset source
-  handlefilterbySource(source: AssetSourceFilterModel) {
-    // source.isSelected = !source.isSelected;
-    // this.TotalFilteredAssets.assetSource = this.assetFilter.assetSource?.filter(
-    //   (source) => source.isSelected,
-    // );
-  }
+  handlefilterbySource(source: any) {}
 
   // filter by status
-  handlefilterbyStatus(status: AssetStatusFilterModel) {
+  handlefilterbyStatus(status: any) {
     // status.isSelected = !status.isSelected;
     // this.TotalFilteredAssets.assetStatus = this.assetFilter.assetSource?.filter(
     //   (source) => source.isSelected,
@@ -189,7 +183,21 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
 
   Filter(event: any) {
+    this.assetFilter.forEach((filter) => {
+      if (filter.filterType === "assetType") {
+        filter.filters.forEach((element) => {
+          if (element.isSelected) {
+            console.log(element.type);
+
+            this.SelectedAssets.forEach(asset=>{
+              asset.assetType
+            })
+          }
+        });
+      }
+    });
     console.log(this.assetFilter);
+    console.log(this.SelectedAssets);
 
     this.filterByTypes.emit(this.assetFilter);
   }

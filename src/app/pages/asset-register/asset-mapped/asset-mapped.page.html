@@ -70,15 +70,17 @@
                     <ion-row>
                       @if (toggleChecked && draftAssets) {
                         @for (asset of draftAssets; track asset.id) {
-                          <ion-col size="6">
-                            <app-asset-mapped-card
-                              [asset]="asset"
-                              [plantId]="plantId"
-                              [toggleChecked]="toggleChecked"
-                              (getAssetId)="handleAssetId($event)"
-                              (isMenuToggleOpen)="handleErrorModal($event)"
-                            ></app-asset-mapped-card>
-                          </ion-col>
+                          @if(handleApplyFilter(asset)){
+                            <ion-col size="6">
+                              <app-asset-mapped-card
+                                [asset]="asset"
+                                [plantId]="plantId"
+                                [toggleChecked]="toggleChecked"
+                                (getAssetId)="handleAssetId($event)"
+                                (isMenuToggleOpen)="handleErrorModal($event)"
+                              ></app-asset-mapped-card>
+                            </ion-col>
+                          }
                         } @empty {
                           <ion-col size="12">
                             <div
