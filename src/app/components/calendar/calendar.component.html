@@ -69,14 +69,20 @@
       @for (date of dates; track $index) {
         <div
           class="flex justify-center items-center p-2 font-semibold relative"
-          [class]="
+          [class]="isDifferentMonth(date) ? 'text-slate-100' : ''"
+        >
+          <span
+            [class]="
+              isToday(date) ? 'p-2 bg-cyan-700 rounded-full text-white' : 'p-2'
+            "
+          >
+            {{ date }}
+          </span>
+          <!-- [class]="
             isToday(date)
               ? 'bg-cyan-700 rounded-full text-white'
               : 'text-gray-600'
-          "
-          [class]="isDifferentMonth(date) ? 'text-slate-100' : ''"
-        >
-          <span>{{ date }}</span>
+          " -->
           @if (hasNotes(date)) {
             <span
               class="absolute bottom-2 left-1/2 transform -translate-x-1/2 translate-y-2"
