@@ -1,3 +1,91 @@
-<app-header headerTitle="Dashboard"></app-header>
+<app-header headerTitle="DASHBOARD"></app-header>
 
-<ion-content [fullscreen]="true" color="background"> </ion-content>
+<ion-content [fullscreen]="true" color="background">
+  <ion-grid class="p-0 pr-3 pb-2 h-full flex flex-col justify-between">
+    <ion-row class="">
+      <ion-col class="p-0 flex flex-col h-full" size="7">
+        <ion-row>
+          <ion-col class="p-0" size="12">
+            <ion-card class="card shadow-[-2px_2px_3px_0px_#00000024] relative">
+              <ion-card-content>
+                <div class="flex gap-3 items-center">
+                  <ion-icon
+                    src="../../../assets/check-in/loaction-icon.svg"
+                    class="w-12 h-12"
+                  ></ion-icon>
+                  <div>
+                    <header class="text-[#363636]">Check-in</header>
+                    <span class="text-black text-xl font-bold">
+                      5701 Mt Keith Debottlenecking Co...
+                    </span>
+                  </div>
+                </div>
+              </ion-card-content>
+              <div
+                class="absolute top-0 right-0 translate-x-2 -translate-y-2 w-16 h-16 bg-[#F5FEFF] shadow-[inset_1px_-1px_4px_0px_#00000024] rounded-full flex items-center justify-center"
+              >
+                <div
+                  class="w-12 h-12 bg-[#007382] rounded-full flex justify-center items-center"
+                >
+                  <ion-icon
+                    src="../../../assets/check-in/loacation-button.svg"
+                    class="w-7 h-7"
+                  ></ion-icon>
+                </div>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row class="">
+          <ion-col class="p-0" size="12">
+            <ion-card class="card shadow-[0px_0px_5px_1px_#00000024]">
+              <ion-card-header>
+                <ion-card-title>Statistics</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                Keep close to Nature's heart... and break clear away, once in
+                awhile, and climb a mountain or spend a week in the woods. Wash
+                your spirit clean.
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col class="p-0" size="5">
+        <ion-row>
+          <ion-col class="p-0" size="12">
+            <ion-card class="card shadow-[0px_0px_5px_1px_#00000024]">
+              <ion-card-header>
+                <ion-card-title>Calendar</ion-card-title>
+              </ion-card-header>
+              <ion-card-content class="p-0">
+                <app-calendar></app-calendar>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="p-0" size="12">
+        <ion-card class="card shadow-[0px_0px_5px_1px_#00000024]">
+          <ion-card-content>
+            <div class="flex gap-3 items-center">
+              <ion-icon
+                src="../../../assets/tip-of-the-day/tip-of-the-day-icon.svg"
+                class="w-12 h-12 bg-[#EDF5F5] p-2 rounded-sm"
+              ></ion-icon>
+              <div>
+                <header class="text-[#363636]">Tip of the day</header>
+                <span class="text-black text-xl font-bold">
+                  Practice good posture when sitting or lifting and take regular
+                  break intervals
+                </span>
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
