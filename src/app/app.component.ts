@@ -23,6 +23,7 @@ import {
   caretForward,
   closeOutline,
   brushOutline,
+  expandOutline,
   pencilOutline,
   createOutline,
   searchOutline,
@@ -50,6 +51,7 @@ import { Component, inject } from "@angular/core";
 import { ScreenOrientation } from "@capacitor/screen-orientation";
 import { IonApp, IonRouterOutlet, Platform } from "@ionic/angular/standalone";
 import { TabsMenuComponent } from "./components/tabs-menu-component/tabs-menu.component";
+import { expand } from "rxjs";
 
 @Component({
   standalone: true,
@@ -85,6 +87,7 @@ export class AppComponent {
       trashOutline,
       closeOutline,
       brushOutline,
+      expandOutline,
       caretForward,
       pencilOutline,
       createOutline,
