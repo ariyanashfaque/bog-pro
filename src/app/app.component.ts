@@ -18,14 +18,19 @@ import {
   chevronBack,
   codeWorking,
   copyOutline,
+  exitOutline,
   trashOutline,
   caretForward,
+  closeOutline,
+  brushOutline,
+  expandOutline,
   pencilOutline,
   createOutline,
   searchOutline,
   checkmarkSharp,
   chevronForward,
   locationOutline,
+  trashBinOutline,
   clipboardOutline,
   chevronUpOutline,
   checkmarkOutline,
@@ -33,27 +38,26 @@ import {
   listCircleOutline,
   syncCircleOutline,
   chevronDownOutline,
+  alertCircleOutline,
   documentTextOutline,
   personCircleOutline,
   notificationsOutline,
   chevronForwardOutline,
-  closeOutline,
-  brushOutline,
-  trashBinOutline,
   documentAttachOutline,
   chevronDownCircleOutline,
-  alertCircleOutline,
 } from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { Component, inject } from "@angular/core";
 import { ScreenOrientation } from "@capacitor/screen-orientation";
 import { IonApp, IonRouterOutlet, Platform } from "@ionic/angular/standalone";
+import { TabsMenuComponent } from "./components/tabs-menu-component/tabs-menu.component";
+import { expand } from "rxjs";
 
 @Component({
   standalone: true,
   selector: "app-root",
   templateUrl: "app.component.html",
-  imports: [IonApp, IonRouterOutlet],
+  imports: [IonApp, IonRouterOutlet, TabsMenuComponent],
 })
 export class AppComponent {
   private platform = inject(Platform);
@@ -76,20 +80,22 @@ export class AppComponent {
       cashOutline,
       starOutline,
       saveOutline,
-      trashOutline,
-      closeOutline,
-      brushOutline,
+      exitOutline,
       chevronBack,
       codeWorking,
       copyOutline,
+      trashOutline,
+      closeOutline,
+      brushOutline,
+      expandOutline,
       caretForward,
       pencilOutline,
       createOutline,
       searchOutline,
       checkmarkSharp,
+      chevronForward,
       locationOutline,
       trashBinOutline,
-      chevronForward,
       checkmarkOutline,
       clipboardOutline,
       chevronUpOutline,

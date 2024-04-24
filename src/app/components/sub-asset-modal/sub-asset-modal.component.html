@@ -65,9 +65,13 @@
         <div
           dndDropzone
           dndDraggable
+          [dndDisableDragIf]="
+            subAsset?.subAsset?.assetRegisteredStatus?.assetRegistered
+          "
           class="cursor-pointer"
           (click)="onAssetClick(subAsset, $index)"
           (dndDrop)="onDrop($event, $index)"
+          (dndStart)="onDragStart($event, subAsset)"
         >
           <div
             class="h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center overflow-hidden"

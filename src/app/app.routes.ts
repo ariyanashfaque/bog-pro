@@ -3,28 +3,90 @@ import { Routes } from "@angular/router";
 export const routes: Routes = [
   {
     path: "",
-    loadChildren: () =>
-      import("./tabs/tabs.routes").then((route) => route.routes),
+    pathMatch: "full",
+    redirectTo: "dashboard",
   },
   {
-    path: "findings",
+    path: "dashboard",
     loadComponent: () =>
-      import("./pages/assessment/findings/findings.page").then(
-        (m) => m.FindingsPage,
+      import("./pages/dashboard/dashboard.page").then(
+        (page) => page.DashboardPage,
       ),
   },
   {
-    path: "asset-map-view",
+    path: "assessment",
+    children: [
+      {
+        path: "",
+        loadComponent: () =>
+          import("./pages/assessment/assessment.page").then(
+            (page) => page.AssessmentPage,
+          ),
+      },
+      {
+        path: ":id",
+        loadChildren: () =>
+          import("./pages/assessment/findings/findings.routes").then(
+            (routes) => routes.routes,
+          ),
+      },
+    ],
+  },
+  {
+    path: "asset-register",
+    children: [
+      {
+        path: "",
+        loadComponent: () =>
+          import("./pages/asset-register/asset-register.page").then(
+            (page) => page.AssetRegisterPage,
+          ),
+      },
+      {
+        path: "asset-mapped/:id",
+        loadChildren: () =>
+          import(
+            "./pages/asset-register/asset-mapped/asset-mapped.routes"
+          ).then((routes) => routes.routes),
+      },
+      {
+        path: "asset-approval/:id",
+        loadChildren: () =>
+          import(
+            "./pages/asset-register/asset-approval/asset-approval.routes"
+          ).then((routes) => routes.routes),
+      },
+      {
+        path: "asset-map-view/:id",
+        loadChildren: () =>
+          import(
+            "./pages/asset-register/asset-map-view/asset-map-view.routes"
+          ).then((routes) => routes.routes),
+      },
+    ],
+  },
+  {
+    path: "action-management",
     loadComponent: () =>
-      import("./pages/asset-register/asset-map-view/asset-map-view.page").then(
-        (m) => m.AssetMapViewPage,
+      import("./pages/action-management/action-management.page").then(
+        (page) => page.ActionManagementPage,
       ),
   },
   {
-    path: "asset-approval",
+    path: "map-view",
     loadComponent: () =>
-      import("./pages/asset-register/asset-approval/asset-approval.page").then(
-        (m) => m.AssetApprovalPage,
-      ),
+      import("./pages/map-view/map-view.page").then((page) => page.MapViewPage),
+  },
+  {
+    path: "sap-configuration",
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./pages/sap-configuration/sap-configuration.routes").then(
+            (routes) => routes.routes,
+          ),
+      },
+    ],
   },
 ];

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar [color]="isBackgroundTransparent ? 'background' : 'primary'">
     @if (isDefaultHref) {
-      <ion-buttons class="" slot="start">
+      <ion-buttons slot="start">
         <ion-back-button defaultHref="/"></ion-back-button>
       </ion-buttons>
     }
@@ -9,7 +9,6 @@
       <ion-title
         class="text-2xl font-bold"
         [color]="isBackgroundTransparent ? 'secondary' : 'light'"
-        [class]="isDefaultHref ? 'ml-0' : 'ml-24'"
       >
         {{ headerTitle }}
       </ion-title>
@@ -18,16 +17,16 @@
       <ion-buttons slot="end">
         <ion-button>
           <ion-icon
-            [class]="isBackgroundTransparent ? 'text-[#007382]' : 'text-white'"
             slot="icon-only"
             name="help-circle-outline"
+            [class]="isBackgroundTransparent ? 'text-[#007382]' : 'text-white'"
           ></ion-icon>
         </ion-button>
         <ion-button>
           <ion-icon
-            [class]="isBackgroundTransparent ? 'text-[#007382]' : 'text-white'"
             slot="icon-only"
             name="notifications-outline"
+            [class]="isBackgroundTransparent ? 'text-[#007382]' : 'text-white'"
           ></ion-icon>
           <div
             class="w-3 h-3 bg-red-600 rounded-full absolute top-0 right-0 display-none"
@@ -35,9 +34,9 @@
         </ion-button>
         <ion-button>
           <ion-icon
-            [class]="isBackgroundTransparent ? 'text-[#007382]' : 'text-white'"
             slot="icon-only"
             name="person-circle-outline"
+            [class]="isBackgroundTransparent ? 'text-[#007382]' : 'text-white'"
           ></ion-icon>
         </ion-button>
       </ion-buttons>

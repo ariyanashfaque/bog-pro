@@ -14,11 +14,11 @@
   <div class="h-full w-full overflow-scroll bg-gray-200">
     <!-- Content Body -->
     <div
-      (dndDrop)="onDrop($event)"
-      dndDropzone
       #mapRef
-      class="maps"
       id="map"
+      dndDropzone
+      class="maps"
+      (dndDrop)="onDrop($event)"
     ></div>
   </div>
 </ion-content>
@@ -79,6 +79,7 @@
     (click)="closeSubAssetModal()"
     [(activeIndex)]="subAssetActiveIndex"
     [recievedDraggedAsset]="dragRecieved()"
+    (sendForDeleteAsset)="deleteSubAsset($event)"
     [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
   ></app-sub-asset-modal>
 }
@@ -91,11 +92,11 @@
 ></app-asset-info-menu>
 
 <!-- Sub-Assets sidebar -->
-<app-sub-asset-sidebar
+<!-- <app-sub-asset-sidebar
   [(selectedAsset)]="selectedAsset"
   [(isMenuOpen)]="isSubAssetModalOpen"
   (draggedAsset)="sendDraggedSubAsset($event)"
-></app-sub-asset-sidebar>
+></app-sub-asset-sidebar> -->
 
 <!-- Asset Sidebar -->
 <app-asset-sidebar

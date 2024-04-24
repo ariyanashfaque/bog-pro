@@ -16,7 +16,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
-import { HeaderComponent } from "src/app/components/header/header.component";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { Store } from "@ngrx/store";
 import { Router } from "@angular/router";
 import { HttpService } from "src/app/services/http-service/http-client.service";
@@ -145,7 +145,7 @@ export class AddSapConfigurationPage implements OnInit {
     const selectedGRU = event?.detail?.value?.toLowerCase();
     this.sapService.get.subscribe((data: SAPconfigurationModel[]) => {
       const isAvailable = data?.filter(
-        (item) => item.gruName?.toLocaleLowerCase() === selectedGRU
+        (item) => item.gruName?.toLocaleLowerCase() === selectedGRU,
       );
       if (isAvailable?.length > 0) this.isGRUActive?.set(true);
       else this.isGRUActive?.set(false);
@@ -171,19 +171,19 @@ export class AddSapConfigurationPage implements OnInit {
       locationCode: this.sapRegistrationForm.get("locationCode")?.value,
       location: this.sapRegistrationForm.get("location")?.value,
       functionalLocationCode: this.sapRegistrationForm.get(
-        "functionalLocationCode"
+        "functionalLocationCode",
       )?.value,
       functionalLocationDescription: this.sapRegistrationForm.get(
-        "functionalLocationDescription"
+        "functionalLocationDescription",
       )?.value,
       costCenterCode: this.sapRegistrationForm.get("costCenterCode")?.value,
       costCenterDescription: this.sapRegistrationForm.get(
-        "costCenterDescription"
+        "costCenterDescription",
       )?.value,
       hierarchyAreaCode:
         this.sapRegistrationForm.get("hierarchyAreaCode")?.value,
       hierarchyAreaDescription: this.sapRegistrationForm.get(
-        "hierarchyAreaDescription"
+        "hierarchyAreaDescription",
       )?.value,
       name: this.sapRegistrationForm.get("name")?.value,
       status: this.sapRegistrationForm.get("status")?.value,
@@ -211,7 +211,7 @@ export class AddSapConfigurationPage implements OnInit {
       },
       complete: () => {
         this.toastService.toastSuccess(
-          this.sapId ? `Successfully updated!` : `Successfully created!`
+          this.sapId ? `Successfully updated!` : `Successfully created!`,
         );
         loading.dismiss();
         this.router.navigate([`sap-configuration`]);

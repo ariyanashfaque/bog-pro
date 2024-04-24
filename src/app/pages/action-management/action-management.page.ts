@@ -2,7 +2,7 @@ import { FormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, OnInit } from "@angular/core";
-import { HeaderComponent } from "src/app/components/header/header.component";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { FindingsCardComponent } from "src/app/components/findings-card/findings-card.component";
 import { ActionManagementModalComponent } from "src/app/components/action-management-modal/action-management-modal.component";
 import { ActionCardComponent } from "src/app/components/action-card/action-card.component";

@@ -1,7 +1,12 @@
 // * Asset Zone Model * //
 interface AssetZoneModel {
   id: string;
-  area: string;
+  area: MarkerModel;
+}
+
+export class MarkerModel {
+  lng: number;
+  lat: number;
 }
 
 // * Image Model * //
@@ -57,6 +62,7 @@ interface AssetSimCategoryModel {
 // * Asset Info Model * //
 export interface AssetInfoModel {
   sapId: string;
+  iconPath: string;
   assetName: string;
   assetType: string;
   assetStatus: string;

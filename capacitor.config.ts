@@ -1,12 +1,10 @@
 import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "io.ionic.starter",
-  appName: "bog-pro",
   webDir: "www",
-  server: {
-    androidScheme: "https",
-  },
+  appName: "bog-pro",
+  appId: "io.ionic.starter",
+  server: { androidScheme: "https" },
 };
 
 export default config;

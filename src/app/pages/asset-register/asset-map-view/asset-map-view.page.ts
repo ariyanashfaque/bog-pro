@@ -1,6 +1,5 @@
 import {
   Input,
-  effect,
   inject,
   OnInit,
   signal,
@@ -8,7 +7,6 @@ import {
   ViewChild,
   ElementRef,
   WritableSignal,
-  model,
 } from "@angular/core";
 import {
   IonFab,
@@ -23,12 +21,12 @@ import {
   IonBackdrop,
   IonProgressBar,
 } from "@ionic/angular/standalone";
-import { Store } from "@ngrx/store";
 import {
   SiteModel,
   AssetModel,
   AssetsResponseModel,
 } from "src/app/store/models/asset.model";
+import { Store } from "@ngrx/store";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { HttpErrorResponse } from "@angular/common/http";
 import { environment } from "src/environments/environment";
@@ -38,8 +36,8 @@ import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { MapService } from "src/app/services/map-service/map.service";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-sidebar.component";
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
@@ -102,6 +100,7 @@ export class AssetMapViewPage implements OnInit {
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
+  recievedAssetForDelete: any;
 
   @Input()
   set id(plantId: string) {
@@ -133,6 +132,10 @@ export class AssetMapViewPage implements OnInit {
     this.dragRecieved.set(data);
   }
 
+  deleteSubAsset(data: any) {
+    this.recievedAssetForDelete = data;
+  }
+
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: SiteModel) => {
@@ -158,6 +161,12 @@ export class AssetMapViewPage implements OnInit {
   }
 
   deleteOnDrop(e: DndDropEvent) {
+    if (this.recievedAssetForDelete?.subAsset) {
+      if (this.recievedAssetForDelete?.subAsset?.assetStatus?.isDraft) {
+        console.log("Draft asset");
+      }
+    }
+
     console.log(e.event.dataTransfer?.getData("text/plain"));
   }
 
@@ -169,7 +178,6 @@ export class AssetMapViewPage implements OnInit {
     this.assets = [];
     this.plantId = "";
     this.groupedAssets = [];
-    console.log(this.dragRecieved);
 
     this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
     this.mapMptions = {
@@ -192,18 +200,44 @@ export class AssetMapViewPage implements OnInit {
     this.map = new Map(mapRef.nativeElement, this.mapMptions);
     this.addMapStyles();
 
-    this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
-      const position = event?.latLng?.toJSON()!;
-      if (this.isDragging === true && position) {
-        console.log(position);
-        this.addMarker(position);
-        this.isDragging = false;
-      }
-    });
+    // this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
+    //   const position = event?.latLng?.toJSON()!;
+    //   if (this.isDragging === true && position) {
+    //     this.addMarker(position);
+    //     this.isDragging = false;
+
+    //     console.log("primary", position);
+    //   }
+    // });
   }
 
   async onDrop(event: DndDropEvent) {
     this.isDragging = true;
+
+    const x = event.event.clientX;
+    const y = event.event.clientY;
+    const point = new google.maps.Point(x, y);
+    const latLng = this.pointToLatLng(point, this.map);
+
+    this.isDragging = false;
+    this.addMarker(latLng.toJSON());
+
+    // console.log("secondary", latLng?.toJSON());
+  }
+
+  pointToLatLng(point: any, map: any) {
+    var topRight = map
+      .getProjection()
+      .fromLatLngToPoint(map.getBounds().getNorthEast());
+    var bottomLeft = map
+      .getProjection()
+      .fromLatLngToPoint(map.getBounds().getSouthWest());
+    var scale = Math.pow(2, map.getZoom());
+    var worldPoint = new google.maps.Point(
+      point.x / scale + bottomLeft.x,
+      point.y / scale + topRight.y,
+    );
+    return map.getProjection().fromPointToLatLng(worldPoint);
   }
 
   private async addMapStyles() {
