@@ -3,7 +3,7 @@
 <ion-content [fullscreen]="true" color="background">
   <ion-grid class="p-0 pr-3 pb-2 h-full flex flex-col justify-between">
     <ion-row class="">
-      <ion-col class="p-0 flex flex-col h-full" size="7">
+      <ion-col class="p-0 flex flex-col h-full" size="6.5">
         <ion-row>
           <ion-col class="p-0" size="12">
             <ion-card class="card shadow-[-2px_2px_3px_0px_#00000024] relative">
@@ -51,7 +51,7 @@
           </ion-col>
         </ion-row>
       </ion-col>
-      <ion-col class="p-0" size="5">
+      <ion-col class="p-0" size="5.5">
         <ion-row>
           <ion-col class="p-0" size="12">
             <ion-card
@@ -61,19 +61,29 @@
                 <app-calendar></app-calendar>
                 <!-- Legends Layer -->
                 <div class="m-4 font-semibold flex justify-between mb-3">
-                  <h5 class="text-gray-600 py-1">LEGENDS:</h5>
-                  <h5 class="bg-[#009146] text-white p-1 rounded-sm">
+                  <label class="text-[#363636] text-xs font-bold py-1">
+                    LEGENDS:
+                  </label>
+                  <ion-badge
+                    class="my-auto bg-[#009146] text-xs font-thin rounded-sm"
+                  >
                     ASSESSMENT
-                  </h5>
-                  <h5 class="bg-orange-100 text-orange-500 p-1 rounded-sm">
+                  </ion-badge>
+                  <ion-badge
+                    class="my-auto bg-[#FF6E00] text-xs font-thin rounded-sm"
+                  >
                     FINDING
-                  </h5>
-                  <h5 class="bg-blue-100 text-blue-800 p-1 rounded-sm">
-                    ACTION
-                  </h5>
-                  <h5 class="bg-red-100 text-red-500 p-1 rounded-sm">
+                  </ion-badge>
+                  <ion-badge
+                    class="my-auto bg-[#1D4370] text-xs font-thin rounded-sm"
+                  >
+                    ACTIONS
+                  </ion-badge>
+                  <ion-badge
+                    class="my-auto bg-[#F00014] text-xs font-thin rounded-sm"
+                  >
                     OVERDUE
-                  </h5>
+                  </ion-badge>
                 </div>
               </ion-card-content>
             </ion-card>

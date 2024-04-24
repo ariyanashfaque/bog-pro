@@ -9,6 +9,7 @@ import {
   IonCardTitle,
   IonIcon,
   IonText,
+  IonBadge,
 } from "@ionic/angular/standalone";
 import { Component, OnInit } from "@angular/core";
 import { HeaderComponent } from "src/app/components/header-component/header.component";
@@ -16,6 +17,7 @@ import { CalendarComponent } from "src/app/components/calendar/calendar.componen
 
 @Component({
   imports: [
+    IonBadge,
     IonText,
     IonIcon,
     IonCardTitle,
