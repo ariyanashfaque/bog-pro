@@ -54,12 +54,27 @@
       <ion-col class="p-0" size="5">
         <ion-row>
           <ion-col class="p-0" size="12">
-            <ion-card class="card shadow-[0px_0px_5px_1px_#00000024]">
-              <ion-card-header>
-                <ion-card-title>Calendar</ion-card-title>
-              </ion-card-header>
+            <ion-card
+              class="card rounded-tr-2xl shadow-[0px_0px_5px_1px_#00000024]"
+            >
               <ion-card-content class="p-0">
                 <app-calendar></app-calendar>
+                <!-- Legends Layer -->
+                <div class="m-4 font-semibold flex justify-between mb-3">
+                  <h5 class="text-gray-600 py-1">LEGENDS:</h5>
+                  <h5 class="bg-[#009146] text-white p-1 rounded-sm">
+                    ASSESSMENT
+                  </h5>
+                  <h5 class="bg-orange-100 text-orange-500 p-1 rounded-sm">
+                    FINDING
+                  </h5>
+                  <h5 class="bg-blue-100 text-blue-800 p-1 rounded-sm">
+                    ACTION
+                  </h5>
+                  <h5 class="bg-red-100 text-red-500 p-1 rounded-sm">
+                    OVERDUE
+                  </h5>
+                </div>
               </ion-card-content>
             </ion-card>
           </ion-col>
