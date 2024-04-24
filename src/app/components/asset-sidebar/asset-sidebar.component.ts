@@ -13,6 +13,7 @@ import {
 } from "@angular/core";
 import { IonIcon, IonText } from "@ionic/angular/standalone";
 import { DndModule } from "ngx-drag-drop";
+import { MasterAsset } from "src/app/store/models/asset.model";
 
 @Component({
   selector: "app-asset-sidebar",
@@ -26,7 +27,7 @@ export class AssetSidebarComponent implements OnInit {
   isChildOpen = model<boolean>();
   isSubAssetModalOpen = model<boolean>(false);
   activeAccordion: string = "recommended";
-  assetData = input<any[]>();
+  assetData = input<MasterAsset[]>();
   selectedAsset = output<any>();
   activeIndex = model<number>(-1);
 
@@ -60,11 +61,10 @@ export class AssetSidebarComponent implements OnInit {
     console.log("Index: ", this.activeIndex());
   }
 
-  onDragStart(event: MouseEvent,asset: any){
+  onDragStart(event: MouseEvent, asset: any) {
     console.log(asset);
     this.selectedAsset.emit(asset);
     event.stopPropagation();
-
   }
 
   constructor() {

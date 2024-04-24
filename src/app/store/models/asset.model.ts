@@ -180,3 +180,28 @@ export interface SitesResponseModel {
   status: boolean;
   data: { sites: SiteModel[]; categories: AssetCategoryModel[] };
 }
+
+export interface AssetInformation {
+  id?: string;
+  type?: string;
+  title?: string;
+  icon?: string;
+  onlyParent?: boolean;
+  onlyChild?: boolean;
+  auto?: boolean;
+}
+
+export interface MasterAsset {
+  id?: string;
+  assetInformation?: AssetInformation;
+  recommended?: AssetInformation[];
+  others?: AssetInformation[];
+  total_others?: number;
+  total_recommended?: number;
+}
+
+export interface MasterAssetResponseModel {
+  message: string;
+  status: boolean;
+  data: MasterAsset[];
+}

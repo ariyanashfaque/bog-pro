@@ -28,6 +28,9 @@ import {
   SiteModel,
   AssetModel,
   AssetsResponseModel,
+  SitesResponseModel,
+  MasterAsset,
+  MasterAssetResponseModel,
 } from "src/app/store/models/asset.model";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -102,6 +105,7 @@ export class AssetMapViewPage implements OnInit {
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
+  masterAssets: MasterAsset[];
   recievedAssetForDelete: any;
 
   @Input()
@@ -131,6 +135,7 @@ export class AssetMapViewPage implements OnInit {
   }
 
   sendDraggedSubAsset(data: any) {
+    console.log("dragged: ", data);
     this.dragRecieved.set(data);
   }
 
@@ -162,7 +167,30 @@ export class AssetMapViewPage implements OnInit {
         }
       },
     });
+
+    this.GetAllMasterAsset();
   }
+
+  GetAllMasterAsset = async () => {
+    this.isLoading.set(true);
+    this.httpService.GetAllMasterAsset().subscribe({
+      next: (response: MasterAssetResponseModel) => {
+        // this.store.dispatch(ADD_PLANTS(response?.data?.sites));
+        // this.store.dispatch(ADD_CATEGORIES(response?.data?.categories));
+        if (response?.status) {
+          console.log("fetched data: ", response);
+          this.masterAssets = response?.data;
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        this.isLoading.set(false);
+        this.toastService.toastFailed(error.error.message);
+      },
+      complete: () => {
+        this.isLoading.set(false);
+      },
+    });
+  };
 
   deleteOnDrop(e: DndDropEvent) {
     if (this.recievedAssetForDelete?.subAsset) {
@@ -208,7 +236,7 @@ export class AssetMapViewPage implements OnInit {
     this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
       const position = event?.latLng?.toJSON()!;
       if (this.isDragging === true && position) {
-        console.log(position);
+        console.log("postion: ", position);
         this.addMarker(position);
         this.isDragging = false;
       }
@@ -257,6 +285,7 @@ export class AssetMapViewPage implements OnInit {
 
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
       // console.log(event?.latLng?.toJSON());
+      console.log("clicked");
       this.toggleChildMenu();
     });
   }
@@ -299,9 +328,10 @@ export class AssetMapViewPage implements OnInit {
   };
 
   onAssetReceived(asset: any) {
+    console.log("onAssetReceived: ", asset);
     if (
       this.selectedAsset() === null ||
-      (this.selectedAsset() != asset && asset.assets.length > 0)
+      (this.selectedAsset() != asset && asset?.assets?.length > 0)
     ) {
       this.isSubAssetModalOpen.set(true);
       this.selectedAsset.set(asset);

@@ -34,8 +34,8 @@
             >
               <img
                 class="object-cover w-full h-full rounded-md"
-                src="../../../assets/{{ asset.assetParentType }}.png"
-                alt="silo"
+                src="../../../assets/{{ asset?.assetInformation?.icon }}"
+                alt="{{ asset?.assetInformation?.title }}"
               />
               <div
                 class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
@@ -45,11 +45,13 @@
                     : 'border-[#b9dee4]'
                 "
               >
-                {{ asset.assets.length }}
+                {{ asset?.total_others ?? 0 }}
               </div>
             </div>
             <div class="w-full text-xs text-center mt-1">
-              <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
+              <span class="text-[#000000DE]">
+                {{ asset?.assetInformation?.title }}
+              </span>
             </div>
           </div>
         </div>
@@ -103,8 +105,8 @@
             >
               <img
                 class="object-cover w-full h-full rounded-md"
-                src="../../../assets/{{ asset.assetParentType }}.png"
-                alt="silo"
+                src="../../../assets/{{ asset?.assetInformation?.icon }}"
+                alt="{{ asset?.assetInformation?.title }}"
               />
               <div
                 class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
@@ -114,11 +116,13 @@
                     : 'border-[#b9dee4]'
                 "
               >
-                {{ asset.assets.length }}
+                {{ asset?.total_others ?? 0 }}
               </div>
             </div>
             <div class="w-full text-xs text-center mt-1">
-              <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
+              <span class="text-[#000000DE]">
+                {{ asset?.assetInformation?.title }}
+              </span>
             </div>
           </div>
         </div>
@@ -163,12 +167,14 @@
             >
               <img
                 class="object-cover w-full h-full"
-                src="../../../assets/{{ asset.assetParentType }}.png"
-                alt="silo"
+                src="../../../assets/{{ asset?.assetInformation?.icon }}"
+                alt="{{ asset?.assetInformation?.title }}"
               />
             </div>
             <div class="w-full text-xs text-center mt-1">
-              <span class="text-[#000000DE]">{{ asset.assetParentType }}</span>
+              <span class="text-[#000000DE]">
+                {{ asset?.assetInformation?.title }}
+              </span>
             </div>
           </div>
         </div>
