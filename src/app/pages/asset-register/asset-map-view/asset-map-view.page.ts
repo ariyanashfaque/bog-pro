@@ -1,6 +1,5 @@
 import {
   Input,
-  effect,
   inject,
   OnInit,
   signal,
@@ -8,7 +7,6 @@ import {
   ViewChild,
   ElementRef,
   WritableSignal,
-  model,
 } from "@angular/core";
 import {
   IonFab,
@@ -23,12 +21,12 @@ import {
   IonBackdrop,
   IonProgressBar,
 } from "@ionic/angular/standalone";
-import { Store } from "@ngrx/store";
 import {
   SiteModel,
   AssetModel,
   AssetsResponseModel,
 } from "src/app/store/models/asset.model";
+import { Store } from "@ngrx/store";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { HttpErrorResponse } from "@angular/common/http";
 import { environment } from "src/environments/environment";
@@ -38,8 +36,8 @@ import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { MapService } from "src/app/services/map-service/map.service";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-sidebar.component";
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
@@ -135,8 +133,6 @@ export class AssetMapViewPage implements OnInit {
   }
 
   deleteSubAsset(data: any) {
-    console.log(data);
-
     this.recievedAssetForDelete = data;
   }
 
@@ -208,15 +204,59 @@ export class AssetMapViewPage implements OnInit {
     this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
       const position = event?.latLng?.toJSON()!;
       if (this.isDragging === true && position) {
-        console.log(position);
-        this.addMarker(position);
+        // this.addMarker(position);
         this.isDragging = false;
+
+        console.log("primary", position);
       }
     });
   }
 
   async onDrop(event: DndDropEvent) {
     this.isDragging = true;
+
+    // const latLng = this.pixelOffsetToLatLng(
+    //   event?.event?.offsetX,
+    //   event?.event?.offsetY,
+    // );
+
+    // this.addMarker(latLng.toJSON());
+    // console.log("secondary", latLng.toJSON());
+
+    const x = event.event.clientX;
+    const y = event.event.clientY;
+    const point = new google.maps.Point(x, y);
+    const latLng = this.map.getProjection()?.fromPointToLatLng(point);
+
+    console.log("secondary", latLng?.toJSON());
+  }
+
+  pixelOffsetToLatLng(offsetx: any, offsety: any) {
+    var latlng = this.map.getCenter();
+    var scale = Math.pow(2, this.map.getZoom()!);
+    var nw = new google.maps.LatLng(
+      this.map?.getBounds()?.getNorthEast()?.lat()!,
+      this.map?.getBounds()?.getSouthWest()?.lng()!,
+    );
+
+    var worldCoordinateCenter = this.map
+      ?.getProjection()
+      ?.fromLatLngToPoint(latlng!)!;
+    var pixelOffset = new google.maps.Point(
+      offsetx / scale || 0,
+      offsety / scale || 0,
+    );
+
+    var worldCoordinateNewCenter = new google.maps.Point(
+      worldCoordinateCenter?.x - pixelOffset.x,
+      worldCoordinateCenter?.y + pixelOffset.y,
+    );
+
+    var latLngPosition = this.map
+      ?.getProjection()
+      ?.fromPointToLatLng(worldCoordinateNewCenter)!;
+
+    return latLngPosition;
   }
 
   private async addMapStyles() {

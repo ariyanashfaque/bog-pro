@@ -1,78 +1,40 @@
-import { on } from "@ngrx/store";
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  Input,
-  model,
-  OnInit,
-  output,
-  signal,
-  WritableSignal,
-} from "@angular/core";
-import { IonIcon, IonText } from "@ionic/angular/standalone";
 import { DndModule } from "ngx-drag-drop";
+import { polyfill } from "mobile-drag-drop";
+import { IonIcon, IonText } from "@ionic/angular/standalone";
+import { AssetModel } from "src/app/store/models/asset.model";
+import { Component, input, model, OnInit, output } from "@angular/core";
+import { scrollBehaviourDragImageTranslateOverride } from "mobile-drag-drop/scroll-behaviour";
+
+polyfill({
+  dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride,
+});
 
 @Component({
+  standalone: true,
   selector: "app-asset-sidebar",
+  imports: [IonText, IonIcon, DndModule],
   templateUrl: "./asset-sidebar.component.html",
   styleUrls: ["./asset-sidebar.component.scss"],
-  standalone: true,
-  imports: [IonText, IonIcon, DndModule],
 })
 export class AssetSidebarComponent implements OnInit {
-  isMenuOpen = model<boolean>();
-  isChildOpen = model<boolean>();
-  isSubAssetModalOpen = model<boolean>(false);
-  activeAccordion: string = "recommended";
+  isDraggable: boolean;
   assetData = input<any[]>();
+  isMenuOpen = model<boolean>();
   selectedAsset = output<any>();
+  isChildOpen = model<boolean>();
   activeIndex = model<number>(-1);
+  activeAccordion: string = "recommended";
+  isSubAssetModalOpen = model<boolean>(false);
 
-  toggleVisibility(buttonId: string) {
-    if (this.activeAccordion === buttonId) {
-      this.activeAccordion = "";
-    } else {
-      this.activeAccordion = buttonId;
-    }
-    this.structures.forEach((structure) => {
-      structure.child = false;
-    });
-  }
-
-  menuToggle() {
-    this.isMenuOpen.update((isMenuOpen) => !isMenuOpen);
-    this.structures.forEach((structure) => {
-      structure.child = false;
-    });
-    this.activeAccordion = "";
-    this.activeIndex.update(() => -1);
-  }
-
-  onAssetClick(asset: any, index: number) {
-    this.selectedAsset.emit(asset);
-    if (this.activeIndex() === index) {
-      this.activeIndex.update(() => -1);
-    } else {
-      this.activeIndex.update(() => index);
-    }
-    console.log("Index: ", this.activeIndex());
-  }
-
-  onDragStart(event: MouseEvent,asset: any){
-    console.log(asset);
-    this.selectedAsset.emit(asset);
-    event.stopPropagation();
-
-  }
+  draggable = {
+    handle: false,
+    disable: false,
+    data: "myDragData",
+    effectAllowed: "all",
+  };
 
   constructor() {
-    effect(() => {
-      console.log("assetData", this.assetData);
-    });
-
-    console.log("assetData", this.assetData);
+    this.isDraggable = false;
   }
 
   ngOnInit() {}
@@ -115,4 +77,39 @@ export class AssetSidebarComponent implements OnInit {
       child: false,
     },
   ];
+
+  toggleVisibility(buttonId: string) {
+    if (this.activeAccordion === buttonId) {
+      this.activeAccordion = "";
+    } else {
+      this.activeAccordion = buttonId;
+    }
+    this.structures.forEach((structure) => {
+      structure.child = false;
+    });
+  }
+
+  menuToggle() {
+    this.isMenuOpen.update((isMenuOpen) => !isMenuOpen);
+    this.structures.forEach((structure) => {
+      structure.child = false;
+    });
+    this.activeAccordion = "";
+    this.activeIndex.update(() => -1);
+  }
+
+  onAssetClick(asset: any, index: number) {
+    this.selectedAsset.emit(asset);
+    if (this.activeIndex() === index) {
+      this.activeIndex.update(() => -1);
+    } else {
+      this.activeIndex.update(() => index);
+    }
+  }
+
+  onDragStart(event: MouseEvent, asset: any) {
+    event.stopPropagation();
+
+    this.selectedAsset.emit(asset);
+  }
 }
