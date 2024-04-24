@@ -104,10 +104,10 @@ export interface AssetStatusModel {
 }
 // * Asset Filter Model * //
 export interface FilterModel {
-  assetType?: [];
-  assetArea?: [];
-  assetSoruce?: SourceFilterModel;
-  assetStatus?: StatusFilterModel;
+  assetType: string[];
+  assetArea: string[];
+  assetSoruce: SourceFilterModel;
+  assetStatus: StatusFilterModel;
 }
 export interface SourceFilterModel {
   assetSapSync?: boolean;
