@@ -33,14 +33,7 @@ import {
   IonSelectOption,
   IonSegmentButton,
 } from "@ionic/angular/standalone";
-import {
-  AssetAreaFilterModel,
-  AssetFilterModel,
-  AssetModel,
-  AssetSourceFilterModel,
-  AssetStatusFilterModel,
-  AssetTypeFilterModel,
-} from "src/app/store/models/asset.model";
+import { AssetModel, FilterModel } from "src/app/store/models/asset.model";
 import { AssetFilter } from "src/app/utils/asset.util";
 
 @Component({
@@ -80,7 +73,7 @@ import { AssetFilter } from "src/app/utils/asset.util";
 export class AssetMappedFilterModalComponent implements OnInit {
   typesAssets: any;
   assetTypes: any[];
-  SelectedAssets: any;
+  SelectedAssets: FilterModel;
   selectedTypes: any[];
   assetFilter = AssetFilter;
   totalAssetFilter = AssetFilter;
@@ -92,27 +85,20 @@ export class AssetMappedFilterModalComponent implements OnInit {
   filteredStatusAssets: AssetModel[];
   filteredAssets: AssetModel[];
   // assetStatus: AssetStatusFilterModel[];
-  assetSources: AssetSourceFilterModel[];
   assets = input.required<AssetModel[]>();
-  selectedSoures: AssetSourceFilterModel[];
-  selectedStatus: AssetStatusFilterModel[];
   @Input() isFilterMenuOpen: boolean = false;
   @Output() filterByTypes = new EventEmitter<any>();
   SelectedassetTypes: { isSelected?: boolean; assetType?: any }[];
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
 
-  TotalFilteredAssets: AssetFilterModel;
   // assetArea: AssetAreaFilterModel[];
   // assetType: AssetTypeFilterModel[];
   // assetSource: AssetSourceFilterModel[];
-  assetStatus: AssetStatusFilterModel[];
 
   constructor() {
     this.assetTypes = [];
     this.typesAssets = [];
     this.selectedTypes = [];
-    this.SelectedAssets = [];
-    this.selectedSoures = [];
     this.selectedTypesCount = 0;
     this.filteredTypeAssets = [];
     this.SelectedassetTypes = [];
@@ -120,14 +106,27 @@ export class AssetMappedFilterModalComponent implements OnInit {
     this.filteredStatusAssets = [];
     this.SelectedBySourceAssets = [];
     this.filteredAssets = [];
-    // this.assetArea = [];
-    this.assetStatus = [];
-    // this.assetType = [];
-    // this.assetSource = [];
+    this.SelectedAssets = {
+      assetSoruce: {
+        assetSapSync: false,
+        assetBulkUpload: false,
+        assetManualCreation: false,
+      },
+
+      assetStatus: {
+        assetInDraft: false,
+        assetRejected: false,
+        assetApproved: false,
+        assetApprovalPendinng: false,
+      },
+
+      assetArea: [],
+      assetType: [],
+    };
   }
 
   ngOnInit() {
-    console.log("Filter", this.assetFilter);
+    console.log("Filter", this.SelectedAssets);
 
     // AssetTypes
     // const parentTypes = new Set(
@@ -156,16 +155,57 @@ export class AssetMappedFilterModalComponent implements OnInit {
     this.filterName = categoryName;
   }
   //  by Asset type
-  handlefilterbytype(event: any, type: any) {
-    console.log(type);
-
+  handlefilterbytype(fieldType: any, type: any) {
     type.isSelected = !type.isSelected;
 
-    this.assetFilter.filter((filter) => {
-      filter.filters.filter((selectedFilter) => {
-        selectedFilter.isSelected;
-      });
-    });
+    this.selectedTypes.push(type.type);
+
+    // if (type.isSelected && type.type === "silo") {
+    //   this.SelectedAssets.assetSoruce.assetSapSync = true;
+    // }
+    // if (type.isSelected && type.type === "hopper") {
+    //   this.SelectedAssets.assetSoruce.assetBulkUpload = true;
+    // }
+    // if (type.isSelected && type.type === "bridge") {
+    //   this.SelectedAssets.assetSoruce.assetManualCreation = true;
+    // }
+    // if (type.isSelected && type.type === "bin") {
+    //   this.SelectedAssets.assetSoruce.assetManualCreation = true;
+    // }
+    console.log(this.selectedTypes);
+
+    if (type.isSelected && type.type === "assetSapSync") {
+      this.SelectedAssets.assetSoruce.assetSapSync = true;
+    }
+    if (type.isSelected && type.type === "assetBulkUpload") {
+      this.SelectedAssets.assetSoruce.assetBulkUpload = true;
+    }
+    if (type.isSelected && type.type === "assetManualCreation") {
+      this.SelectedAssets.assetSoruce.assetManualCreation = true;
+    }
+
+    if (type.isSelected && type.type === "assetApprovalPending") {
+      this.SelectedAssets.assetStatus.assetApprovalPendinng = true;
+    }
+    if (type.isSelected && type.type === "assetApproved") {
+      this.SelectedAssets.assetStatus.assetApproved = true;
+    }
+    if (type.isSelected && type.type === "assetRejected") {
+      this.SelectedAssets.assetStatus.assetRejected = true;
+    }
+    if (type.isSelected && type.type === "assetInDraft") {
+      this.SelectedAssets.assetStatus.assetInDraft = true;
+    }
+    // console.log(this.SelectedAssets.assetSoruce);
+
+    console.log(fieldType);
+    console.log(type);
+
+    // this.assetFilter.filter((filter) => {
+    //   filter.filters.filter((selectedFilter) => {
+    //     selectedFilter.isSelected;
+    //   });
+    // });
 
     // this.totalAssetFilter. = this.assetFilter?.filter(
     //   (source) => source.isSelected,
@@ -173,15 +213,10 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
 
   // Filter by asset source
-  handlefilterbySource(source: AssetSourceFilterModel) {
-    // source.isSelected = !source.isSelected;
-    // this.TotalFilteredAssets.assetSource = this.assetFilter.assetSource?.filter(
-    //   (source) => source.isSelected,
-    // );
-  }
+  handlefilterbySource(source: any) {}
 
   // filter by status
-  handlefilterbyStatus(status: AssetStatusFilterModel) {
+  handlefilterbyStatus(status: any) {
     // status.isSelected = !status.isSelected;
     // this.TotalFilteredAssets.assetStatus = this.assetFilter.assetSource?.filter(
     //   (source) => source.isSelected,
@@ -189,7 +224,8 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
 
   Filter(event: any) {
-    console.log(this.assetFilter);
+    this.assetFilter.forEach((filter) => {});
+    console.log(this.SelectedAssets);
 
     this.filterByTypes.emit(this.assetFilter);
   }

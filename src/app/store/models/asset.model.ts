@@ -32,7 +32,7 @@ interface LocationModel {
 }
 
 // * Asset Approval Model * //
-interface AssetSourceModel {
+export interface AssetSourceModel {
   assetSapSync: boolean;
   assetBulkUpload: boolean;
   assetManualCreation: boolean;
@@ -102,6 +102,24 @@ export interface AssetStatusModel {
   isRegistered?: boolean;
   status?: AssetDraftRegisteredStatusModel;
 }
+// * Asset Filter Model * //
+export interface FilterModel {
+  assetType: string[];
+  assetArea: string[];
+  assetSoruce: SourceFilterModel;
+  assetStatus: StatusFilterModel;
+}
+export interface SourceFilterModel {
+  assetSapSync?: boolean;
+  assetBulkUpload?: boolean;
+  assetManualCreation?: boolean;
+}
+export interface StatusFilterModel {
+  assetInDraft?: boolean;
+  assetRejected?: boolean;
+  assetApproved?: boolean;
+  assetApprovalPendinng?: boolean;
+}
 
 // * Asset Model * //
 export interface AssetModel {
@@ -111,36 +129,6 @@ export interface AssetModel {
   assetStatus?: AssetStatusModel;
   assetCategories?: AssetCategoryModel[];
   assetSim?: AssetSimCategoryModel | undefined;
-}
-
-export interface AssetSourceFilterModel {
-  title: string;
-  source: string;
-  selected: boolean;
-}
-
-export interface AssetStatusFilterModel {
-  title: string;
-  status: string;
-  selected: boolean;
-}
-export interface AssetTypeFilterModel {
-  title: string;
-  type: string;
-  selected: boolean;
-}
-export interface AssetAreaFilterModel {
-  title: string;
-  type: string;
-  selected: boolean;
-}
-
-export interface AssetFilterModel {
-  IsSelected: boolean;
-  assetType: AssetTypeFilterModel;
-  assetArea: AssetAreaFilterModel;
-  assetStatus: AssetStatusFilterModel;
-  assetSource: AssetSourceFilterModel;
 }
 
 interface AuditTrailModel {}

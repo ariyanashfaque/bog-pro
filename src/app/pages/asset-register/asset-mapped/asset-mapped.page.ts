@@ -84,10 +84,12 @@ import { AssetMappedFilterModalComponent } from "../../../components/asset-mappe
 export class AssetMappedPage implements OnInit {
   assetId: string;
   plantId: string;
+  assetFilter: any;
   assets: AssetModel[];
   store = inject(Store);
   toggleChecked: boolean;
   draftAssets: AssetModel[];
+  filteredAsset: AssetModel[];
   registeredAssets: AssetModel[];
   FilterByTypeAssets: AssetModel[];
   httpService = inject(HttpService);
@@ -124,10 +126,28 @@ export class AssetMappedPage implements OnInit {
     this.plantId = "";
     this.assetId = "";
     this.draftAssets = [];
+    this.filteredAsset = [];
     this.FilterByTypeAssets = [];
     this.toggleChecked = true;
     this.registeredAssets = [];
     this.isApprovalMenuOpen = false;
+
+    this.assetFilter = {
+      assetType: ["silo", "roof"],
+      assetArea: ["zone1", "zone2"],
+
+      assetSoruce: {
+        assetSapSync: true,
+        assetBulkUpload: false,
+        assetManualCreation: false,
+      },
+      assetStatus: {
+        assetInDraft: false,
+        assetRejected: false,
+        assetApproved: false,
+        assetApprovalPendinng: true,
+      },
+    };
   }
 
   ngOnInit() {
@@ -138,6 +158,7 @@ export class AssetMappedPage implements OnInit {
           plant.assets?.forEach((asset) => {
             if (asset?.assetStatus?.isDraft) {
               this.draftAssets.push(asset);
+              console.log(asset);
             }
             if (asset?.assetStatus?.isRegistered) {
               this.registeredAssets.push(asset);
@@ -158,17 +179,35 @@ export class AssetMappedPage implements OnInit {
   };
 
   handlefilterby = (event: any) => {
-    this.draftAssets = [];
-    this.isFilterMenuOpen = false;
-    this.FilterByTypeAssets = event;
-    this.FilterByTypeAssets.forEach((assets: any) => {
-      assets.forEach((asset: any) => {
-        if (asset?.assetStatus?.isDraft) {
-          this.draftAssets.push(asset);
-        }
-      });
-    });
-    // console.log(this.draftAssets);
+    // this.filteredAsset = this.draftAssets.filter((assets: any) => {
+    //   const selectedAssetTypes = this.FilterByTypeAssets.forEach(
+    //     (item: any) => {
+    //       item.filterType === assets.assetInfo.assetType;
+    //     },
+    //   );
+    //   console.log(selectedAssetTypes);
+    // });
+    // this.draftAssets.filter(item=>{
+    //   this.FilterByTypeAssets.forEach(type=>{
+    //     typeof item
+    //   })
+    // })
+    // this.FilterByTypeAssets.map((asset: any) => {
+    //   console.log(asset);
+    // asset.filters.forEach((a: any) => {
+    //   console.log(a);
+    // });
+    // asset.forEach(element => {
+    // });
+    // this.draftAssets = [];
+    // this.isFilterMenuOpen = false;
+    // this.FilterByTypeAssets.forEach((assets: any) => {
+    //   assets.forEach((asset: any) => {
+    //     if (asset?.assetStatus?.isDraft) {
+    //       this.draftAssets.push(asset);
+    //     }
+    //   });
+    // });
   };
 
   handleAssetId = (event: any) => {
@@ -177,5 +216,22 @@ export class AssetMappedPage implements OnInit {
 
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
+  }
+
+  handleApplyFilter(asset: any): boolean {
+    const assetTypeMatch = this.assetFilter.assetType.includes(
+      asset.assetInfo.assetType,
+    );
+
+    const assetSourceMatch = Object.keys(this.assetFilter.assetSoruce).every(
+      (key) => this.assetFilter.assetSoruce[key] === asset.assetSource[key],
+    );
+
+    const assetStatusMatch = Object.keys(this.assetFilter.assetStatus).every(
+      (key) =>
+        this.assetFilter.assetStatus[key] === asset.assetStatus.status[key],
+    );
+
+    return assetStatusMatch && assetTypeMatch && assetSourceMatch;
   }
 }
