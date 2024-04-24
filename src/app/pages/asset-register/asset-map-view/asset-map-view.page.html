@@ -79,6 +79,7 @@
     (click)="closeSubAssetModal()"
     [(activeIndex)]="subAssetActiveIndex"
     [recievedDraggedAsset]="dragRecieved()"
+    (sendForDeleteAsset)="deleteSubAsset($event)"
     [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
   ></app-sub-asset-modal>
 }

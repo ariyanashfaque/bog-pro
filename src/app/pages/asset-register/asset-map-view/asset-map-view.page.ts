@@ -102,6 +102,7 @@ export class AssetMapViewPage implements OnInit {
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
+  recievedAssetForDelete: any;
 
   @Input()
   set id(plantId: string) {
@@ -133,6 +134,12 @@ export class AssetMapViewPage implements OnInit {
     this.dragRecieved.set(data);
   }
 
+  deleteSubAsset(data: any) {
+    console.log(data);
+
+    this.recievedAssetForDelete = data;
+  }
+
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: SiteModel) => {
@@ -158,6 +165,12 @@ export class AssetMapViewPage implements OnInit {
   }
 
   deleteOnDrop(e: DndDropEvent) {
+    if (this.recievedAssetForDelete?.subAsset) {
+      if (this.recievedAssetForDelete?.subAsset?.assetStatus?.isDraft) {
+        console.log("Draft asset");
+      }
+    }
+
     console.log(e.event.dataTransfer?.getData("text/plain"));
   }
 
