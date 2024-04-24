@@ -131,13 +131,14 @@ export class AssetMappedPage implements OnInit {
     this.toggleChecked = true;
     this.registeredAssets = [];
     this.isApprovalMenuOpen = false;
+    // this.assetFilter = {};
 
     this.assetFilter = {
       assetType: ["silo", "roof"],
       assetArea: ["zone1", "zone2"],
 
       assetSoruce: {
-        assetSapSync: true,
+        assetSapSync: false,
         assetBulkUpload: false,
         assetManualCreation: false,
       },
@@ -145,7 +146,7 @@ export class AssetMappedPage implements OnInit {
         assetInDraft: false,
         assetRejected: false,
         assetApproved: false,
-        assetApprovalPendinng: true,
+        assetApprovalPendinng: false,
       },
     };
   }
@@ -179,6 +180,13 @@ export class AssetMappedPage implements OnInit {
   };
 
   handlefilterby = (event: any) => {
+    this.assetFilter = event;
+    console.log(this.assetFilter);
+
+    // this.isFilterMenuOpen = !this.isFilterMenuOpen;
+
+    // console.log(this.assetFilter);
+
     // this.filteredAsset = this.draftAssets.filter((assets: any) => {
     //   const selectedAssetTypes = this.FilterByTypeAssets.forEach(
     //     (item: any) => {

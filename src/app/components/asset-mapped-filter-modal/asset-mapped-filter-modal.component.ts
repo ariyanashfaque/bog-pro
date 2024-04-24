@@ -126,19 +126,17 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Filter", this.SelectedAssets);
+    console.log("Filter", this.assetFilter);
 
     // AssetTypes
-    // const parentTypes = new Set(
-    //   this.assets().map((asset) => asset?.assetInfo?.assetParentType),
-    // );
-    // parentTypes.forEach((parentType) => {
-    //   this.SelectedassetTypes.push({
-    //     isSelected: false,
-    //     assetType: parentType,
-    //   });
-    //   this.assetTypes.push(parentType);
-    // });
+    const parentTypes = new Set(
+      this.assets().map((asset) => asset?.assetInfo?.assetType),
+    );
+    parentTypes.forEach((assetType) => {
+      this.assetTypes.push(assetType);
+    });
+
+    // console.log(this.assetTypes);
   }
 
   menuToggle() {
@@ -158,7 +156,19 @@ export class AssetMappedFilterModalComponent implements OnInit {
   handlefilterbytype(fieldType: any, type: any) {
     type.isSelected = !type.isSelected;
 
-    this.selectedTypes.push(type.type);
+    this.selectedTypes = this.assetFilter?.filter((type) => {
+      if (type.filterType === "assetType") {
+        type.filters.filter((typ) => {
+          typ.isSelected;
+        });
+      }
+    });
+
+    // this.assetTypes = this.assetTypes?.filter((type) => type.isSelected);
+
+    // console.log(this.selectedTypes);
+
+    // this.selectedTypes.push(type.type);
 
     // if (type.isSelected && type.type === "silo") {
     //   this.SelectedAssets.assetSoruce.assetSapSync = true;
@@ -172,7 +182,7 @@ export class AssetMappedFilterModalComponent implements OnInit {
     // if (type.isSelected && type.type === "bin") {
     //   this.SelectedAssets.assetSoruce.assetManualCreation = true;
     // }
-    console.log(this.selectedTypes);
+    // console.log(this.selectedTypes);
 
     if (type.isSelected && type.type === "assetSapSync") {
       this.SelectedAssets.assetSoruce.assetSapSync = true;
@@ -198,8 +208,8 @@ export class AssetMappedFilterModalComponent implements OnInit {
     }
     // console.log(this.SelectedAssets.assetSoruce);
 
-    console.log(fieldType);
-    console.log(type);
+    // console.log(fieldType);
+    // console.log(type);
 
     // this.assetFilter.filter((filter) => {
     //   filter.filters.filter((selectedFilter) => {
@@ -225,8 +235,8 @@ export class AssetMappedFilterModalComponent implements OnInit {
 
   Filter(event: any) {
     this.assetFilter.forEach((filter) => {});
-    console.log(this.SelectedAssets);
+    // console.log(this.SelectedAssets);
 
-    this.filterByTypes.emit(this.assetFilter);
+    this.filterByTypes.emit(this.SelectedAssets);
   }
 }
