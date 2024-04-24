@@ -34,6 +34,7 @@ import {
 import {
   SiteModel,
   AssetModel,
+  AssetFilterModel,
   AssetsResponseModel,
 } from "src/app/store/models/asset.model";
 import { Store } from "@ngrx/store";
@@ -82,19 +83,21 @@ import { AssetMappedFilterModalComponent } from "../../../components/asset-mappe
   ],
 })
 export class AssetMappedPage implements OnInit {
+  store = inject(Store);
+  httpService = inject(HttpService);
+  toastService = inject(ToastService);
+
   assetId: string;
   plantId: string;
   assetFilter: any;
   assets: AssetModel[];
-  store = inject(Store);
   toggleChecked: boolean;
   draftAssets: AssetModel[];
   filteredAsset: AssetModel[];
   registeredAssets: AssetModel[];
   FilterByTypeAssets: AssetModel[];
-  httpService = inject(HttpService);
+  draftFilteredAssets: AssetModel[];
   isFilterMenuOpen: boolean = false;
-  toastService = inject(ToastService);
   isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
@@ -127,26 +130,27 @@ export class AssetMappedPage implements OnInit {
     this.assetId = "";
     this.draftAssets = [];
     this.filteredAsset = [];
-    this.FilterByTypeAssets = [];
     this.toggleChecked = true;
     this.registeredAssets = [];
+    this.FilterByTypeAssets = [];
+    this.draftFilteredAssets = [];
     this.isApprovalMenuOpen = false;
     // this.assetFilter = {};
 
     this.assetFilter = {
-      assetType: ["silo", "roof"],
+      assetType: ["roof"],
       assetArea: ["zone1", "zone2"],
 
       assetSoruce: {
         assetSapSync: false,
         assetBulkUpload: false,
-        assetManualCreation: false,
+        assetManualCreation: true,
       },
       assetStatus: {
         assetInDraft: false,
         assetRejected: false,
         assetApproved: false,
-        assetApprovalPendinng: false,
+        assetApprovalPendinng: true,
       },
     };
   }
@@ -159,7 +163,6 @@ export class AssetMappedPage implements OnInit {
           plant.assets?.forEach((asset) => {
             if (asset?.assetStatus?.isDraft) {
               this.draftAssets.push(asset);
-              console.log(asset);
             }
             if (asset?.assetStatus?.isRegistered) {
               this.registeredAssets.push(asset);
@@ -179,43 +182,16 @@ export class AssetMappedPage implements OnInit {
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   };
 
-  handlefilterby = (event: any) => {
-    this.assetFilter = event;
-    console.log(this.assetFilter);
+  handlefilterby = (assetFilter: AssetFilterModel) => {
+    this.isFilterMenuOpen = !this.isFilterMenuOpen;
 
-    // this.isFilterMenuOpen = !this.isFilterMenuOpen;
+    this.draftAssets.forEach((draftAsset) => {
+      if (assetFilter.assetType.includes(draftAsset?.assetInfo?.assetType!)) {
+        this.draftFilteredAssets.push(draftAsset);
+      }
+    });
 
-    // console.log(this.assetFilter);
-
-    // this.filteredAsset = this.draftAssets.filter((assets: any) => {
-    //   const selectedAssetTypes = this.FilterByTypeAssets.forEach(
-    //     (item: any) => {
-    //       item.filterType === assets.assetInfo.assetType;
-    //     },
-    //   );
-    //   console.log(selectedAssetTypes);
-    // });
-    // this.draftAssets.filter(item=>{
-    //   this.FilterByTypeAssets.forEach(type=>{
-    //     typeof item
-    //   })
-    // })
-    // this.FilterByTypeAssets.map((asset: any) => {
-    //   console.log(asset);
-    // asset.filters.forEach((a: any) => {
-    //   console.log(a);
-    // });
-    // asset.forEach(element => {
-    // });
-    // this.draftAssets = [];
-    // this.isFilterMenuOpen = false;
-    // this.FilterByTypeAssets.forEach((assets: any) => {
-    //   assets.forEach((asset: any) => {
-    //     if (asset?.assetStatus?.isDraft) {
-    //       this.draftAssets.push(asset);
-    //     }
-    //   });
-    // });
+    console.log("Filter:", this.draftFilteredAssets);
   };
 
   handleAssetId = (event: any) => {
@@ -224,22 +200,5 @@ export class AssetMappedPage implements OnInit {
 
   handleToggle(event: any) {
     this.toggleChecked = event.detail.checked;
-  }
-
-  handleApplyFilter(asset: any): boolean {
-    const assetTypeMatch = this.assetFilter.assetType.includes(
-      asset.assetInfo.assetType,
-    );
-
-    const assetSourceMatch = Object.keys(this.assetFilter.assetSoruce).every(
-      (key) => this.assetFilter.assetSoruce[key] === asset.assetSource[key],
-    );
-
-    const assetStatusMatch = Object.keys(this.assetFilter.assetStatus).every(
-      (key) =>
-        this.assetFilter.assetStatus[key] === asset.assetStatus.status[key],
-    );
-
-    return assetStatusMatch && assetTypeMatch && assetSourceMatch;
   }
 }

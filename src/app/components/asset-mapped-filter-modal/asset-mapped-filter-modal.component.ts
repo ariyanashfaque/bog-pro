@@ -33,8 +33,8 @@ import {
   IonSelectOption,
   IonSegmentButton,
 } from "@ionic/angular/standalone";
-import { AssetModel, FilterModel } from "src/app/store/models/asset.model";
 import { AssetFilter } from "src/app/utils/asset.util";
+import { AssetModel, AssetFilterModel } from "src/app/store/models/asset.model";
 
 @Component({
   imports: [
@@ -73,27 +73,23 @@ import { AssetFilter } from "src/app/utils/asset.util";
 export class AssetMappedFilterModalComponent implements OnInit {
   typesAssets: any;
   assetTypes: any[];
-  SelectedAssets: FilterModel;
   selectedTypes: any[];
   assetFilter = AssetFilter;
-  totalAssetFilter = AssetFilter;
   selectedTypesCount: number;
+  filteredAssets: AssetModel[];
   SelectedBySourceAssets: any[];
+  totalAssetFilter = AssetFilter;
   filteredTypeAssets: AssetModel[];
+  SelectedAssets: AssetFilterModel;
   filterName: string = "Asset type";
   filteredSourceAssets: AssetModel[];
   filteredStatusAssets: AssetModel[];
-  filteredAssets: AssetModel[];
-  // assetStatus: AssetStatusFilterModel[];
   assets = input.required<AssetModel[]>();
+  // assetStatus: AssetStatusFilterModel[];
   @Input() isFilterMenuOpen: boolean = false;
   @Output() filterByTypes = new EventEmitter<any>();
   SelectedassetTypes: { isSelected?: boolean; assetType?: any }[];
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
-
-  // assetArea: AssetAreaFilterModel[];
-  // assetType: AssetTypeFilterModel[];
-  // assetSource: AssetSourceFilterModel[];
 
   constructor() {
     this.assetTypes = [];
@@ -107,7 +103,7 @@ export class AssetMappedFilterModalComponent implements OnInit {
     this.SelectedBySourceAssets = [];
     this.filteredAssets = [];
     this.SelectedAssets = {
-      assetSoruce: {
+      assetSource: {
         assetSapSync: false,
         assetBulkUpload: false,
         assetManualCreation: false,
@@ -121,19 +117,17 @@ export class AssetMappedFilterModalComponent implements OnInit {
       },
 
       assetArea: [],
-      assetType: [],
+      assetType: ["silo"],
     };
   }
 
   ngOnInit() {
-    console.log("Filter", this.assetFilter);
-
     // AssetTypes
     const parentTypes = new Set(
       this.assets().map((asset) => asset?.assetInfo?.assetType),
     );
     parentTypes.forEach((assetType) => {
-      this.assetTypes.push(assetType);
+      // this.assetTypes.push(assetType);
     });
 
     // console.log(this.assetTypes);
@@ -156,42 +150,31 @@ export class AssetMappedFilterModalComponent implements OnInit {
   handlefilterbytype(fieldType: any, type: any) {
     type.isSelected = !type.isSelected;
 
-    this.selectedTypes = this.assetFilter?.filter((type) => {
-      if (type.filterType === "assetType") {
-        type.filters.filter((typ) => {
-          typ.isSelected;
-        });
-      }
-    });
-
-    // this.assetTypes = this.assetTypes?.filter((type) => type.isSelected);
-
-    // console.log(this.selectedTypes);
-
-    // this.selectedTypes.push(type.type);
+    if (fieldType.filterType === "assetType") {
+      this.selectedTypes.push(type);
+    }
 
     // if (type.isSelected && type.type === "silo") {
-    //   this.SelectedAssets.assetSoruce.assetSapSync = true;
+    //   this.selectedTypes.push(type.type);
     // }
     // if (type.isSelected && type.type === "hopper") {
-    //   this.SelectedAssets.assetSoruce.assetBulkUpload = true;
+    //   this.selectedTypes.push(type.type);
     // }
     // if (type.isSelected && type.type === "bridge") {
-    //   this.SelectedAssets.assetSoruce.assetManualCreation = true;
+    //   this.selectedTypes.push(type.type);
     // }
     // if (type.isSelected && type.type === "bin") {
-    //   this.SelectedAssets.assetSoruce.assetManualCreation = true;
+    //   this.selectedTypes.push(type.type);
     // }
-    // console.log(this.selectedTypes);
 
     if (type.isSelected && type.type === "assetSapSync") {
-      this.SelectedAssets.assetSoruce.assetSapSync = true;
+      this.SelectedAssets.assetSource.assetSapSync = true;
     }
     if (type.isSelected && type.type === "assetBulkUpload") {
-      this.SelectedAssets.assetSoruce.assetBulkUpload = true;
+      this.SelectedAssets.assetSource.assetBulkUpload = true;
     }
     if (type.isSelected && type.type === "assetManualCreation") {
-      this.SelectedAssets.assetSoruce.assetManualCreation = true;
+      this.SelectedAssets.assetSource.assetManualCreation = true;
     }
 
     if (type.isSelected && type.type === "assetApprovalPending") {
@@ -234,9 +217,12 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
 
   Filter(event: any) {
-    this.assetFilter.forEach((filter) => {});
-    // console.log(this.SelectedAssets);
+    this.selectedTypes.forEach((aset) => {
+      this.assetTypes.push(aset.type);
+    });
+    this.SelectedAssets.assetType = this.assetTypes;
 
+    // console.log(this.SelectedAssets);
     this.filterByTypes.emit(this.SelectedAssets);
   }
 }

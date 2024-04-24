@@ -103,10 +103,10 @@ export interface AssetStatusModel {
   status?: AssetDraftRegisteredStatusModel;
 }
 // * Asset Filter Model * //
-export interface FilterModel {
+export interface AssetFilterModel {
   assetType: string[];
   assetArea: string[];
-  assetSoruce: SourceFilterModel;
+  assetSource: SourceFilterModel;
   assetStatus: StatusFilterModel;
 }
 export interface SourceFilterModel {
