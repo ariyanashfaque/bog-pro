@@ -22,7 +22,11 @@
 
         <div>
           <ion-title class="text-[16px] text-black font-bold pl-0 pb-2">
-            {{ data.title }}
+            @if (data.title) {
+              {{ data.title }}
+            } @else {
+              2023-SIM-Black lane quarry
+            }
           </ion-title>
         </div>
         <div class="my-2 border-t-[1.5px] border-dashed border-[#007382]"></div>
@@ -40,9 +44,9 @@
                 <div class="border-l-[2px] border-[#CDE2E2]"></div>
                 <div class="">
                   <p class="text-xs">Assign to</p>
-                  <span class="font-bold text-xs"
-                    >joyce.smith&#64;holcim.com</span
-                  >
+                  <span class="font-bold text-xs">
+                    joyce.smith&#64;holcim.com
+                  </span>
                 </div>
               </div>
             </ion-col>
@@ -66,7 +70,11 @@
           <div clsss="">
             <p class="text-xs">Assessment</p>
             <span class="font-bold text-xs">
-              1<sup>st</sup> Jan - 30<sup>th</sup> Sep
+              1
+              <sup>st</sup>
+              Jan - 30
+              <sup>th</sup>
+              Sep
             </span>
             <ion-progress-bar
               class="my-1 rounded-full h-[5px]"
@@ -78,21 +86,32 @@
           <div class="flex flex-col">
             <p class="text-xs">Approval</p>
             <span class="font-bold text-xs">
-              1<sup>st</sup> Oct - 31<sup>st</sup> Dec
+              1
+              <sup>st</sup>
+              Oct - 31
+              <sup>st</sup>
+              Dec
             </span>
             <ion-badge
               class="text-white rounded-sm text-xs font-normal my-2 pt-1"
               [class]="
-                data.assessmentStatus == 'PENDING'
-                  ? 'bg-[#F00014]'
-                  : data.assessmentStatus == 'ESCALATED'
-                    ? 'bg-[#FF6E00]'
-                    : data.assessmentStatus == 'APPROVED ON 20th OCT'
-                      ? 'bg-[#94C12E]'
-                      : 'bg-[#FFD000]'
+                data
+                  ? data.assessmentStatus == 'PENDING'
+                    ? 'bg-[#F00014]'
+                    : data.assessmentStatus == 'ESCALATED'
+                      ? 'bg-[#FF6E00]'
+                      : data.assessmentStatus == 'APPROVED ON 20th OCT'
+                        ? 'bg-[#94C12E]'
+                        : 'bg-[#FFD000]'
+                  : 'bg-[#FFD000]'
               "
-              >{{ data.assessmentStatus }}</ion-badge
             >
+              @if (data.assessmentStatus) {
+                {{ data.assessmentStatus }}
+              } @else {
+                PENDING
+              }
+            </ion-badge>
           </div>
           <div class="">
             <p class="text-xs mb-1">Closed</p>
@@ -100,9 +119,11 @@
               class="text-xl rounded-full p-[6px]"
               name="checkmark-outline"
               [class]="
-                data.status[3].status == 'Open'
-                  ? ' text-gray-500 bg-gray-300'
-                  : 'text-white bg-[#009146]'
+                data.status
+                  ? data.status[3].status == 'Open'
+                    ? ' text-gray-500 bg-gray-300'
+                    : 'text-white bg-[#009146]'
+                  : ' text-gray-500 bg-gray-300'
               "
             ></ion-icon>
           </div>
