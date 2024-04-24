@@ -178,7 +178,6 @@ export class AssetMapViewPage implements OnInit {
     this.assets = [];
     this.plantId = "";
     this.groupedAssets = [];
-    console.log(this.dragRecieved);
 
     this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
     this.mapMptions = {
@@ -201,62 +200,44 @@ export class AssetMapViewPage implements OnInit {
     this.map = new Map(mapRef.nativeElement, this.mapMptions);
     this.addMapStyles();
 
-    this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
-      const position = event?.latLng?.toJSON()!;
-      if (this.isDragging === true && position) {
-        // this.addMarker(position);
-        this.isDragging = false;
+    // this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
+    //   const position = event?.latLng?.toJSON()!;
+    //   if (this.isDragging === true && position) {
+    //     this.addMarker(position);
+    //     this.isDragging = false;
 
-        console.log("primary", position);
-      }
-    });
+    //     console.log("primary", position);
+    //   }
+    // });
   }
 
   async onDrop(event: DndDropEvent) {
     this.isDragging = true;
 
-    // const latLng = this.pixelOffsetToLatLng(
-    //   event?.event?.offsetX,
-    //   event?.event?.offsetY,
-    // );
-
-    // this.addMarker(latLng.toJSON());
-    // console.log("secondary", latLng.toJSON());
-
     const x = event.event.clientX;
     const y = event.event.clientY;
     const point = new google.maps.Point(x, y);
-    const latLng = this.map.getProjection()?.fromPointToLatLng(point);
+    const latLng = this.pointToLatLng(point, this.map);
 
-    console.log("secondary", latLng?.toJSON());
+    this.isDragging = false;
+    this.addMarker(latLng.toJSON());
+
+    // console.log("secondary", latLng?.toJSON());
   }
 
-  pixelOffsetToLatLng(offsetx: any, offsety: any) {
-    var latlng = this.map.getCenter();
-    var scale = Math.pow(2, this.map.getZoom()!);
-    var nw = new google.maps.LatLng(
-      this.map?.getBounds()?.getNorthEast()?.lat()!,
-      this.map?.getBounds()?.getSouthWest()?.lng()!,
+  pointToLatLng(point: any, map: any) {
+    var topRight = map
+      .getProjection()
+      .fromLatLngToPoint(map.getBounds().getNorthEast());
+    var bottomLeft = map
+      .getProjection()
+      .fromLatLngToPoint(map.getBounds().getSouthWest());
+    var scale = Math.pow(2, map.getZoom());
+    var worldPoint = new google.maps.Point(
+      point.x / scale + bottomLeft.x,
+      point.y / scale + topRight.y,
     );
-
-    var worldCoordinateCenter = this.map
-      ?.getProjection()
-      ?.fromLatLngToPoint(latlng!)!;
-    var pixelOffset = new google.maps.Point(
-      offsetx / scale || 0,
-      offsety / scale || 0,
-    );
-
-    var worldCoordinateNewCenter = new google.maps.Point(
-      worldCoordinateCenter?.x - pixelOffset.x,
-      worldCoordinateCenter?.y + pixelOffset.y,
-    );
-
-    var latLngPosition = this.map
-      ?.getProjection()
-      ?.fromPointToLatLng(worldCoordinateNewCenter)!;
-
-    return latLngPosition;
+    return map.getProjection().fromPointToLatLng(worldPoint);
   }
 
   private async addMapStyles() {
