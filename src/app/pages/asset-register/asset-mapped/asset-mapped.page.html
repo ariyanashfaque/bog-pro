@@ -159,12 +159,21 @@
 </ion-content>
 
 @if (isFilterMenuOpen) {
-  <app-asset-mapped-filter-modal
-    [assets]="assets"
-    [isFilterMenuOpen]="isFilterMenuOpen"
-    (isFilterToggleOpen)="handleFilterModal($event)"
-    (filterByTypes)="handlefilterby($event)"
-  ></app-asset-mapped-filter-modal>
+  @if (toggleChecked && draftAssets) {
+    <app-asset-mapped-filter-modal
+      [assets]="draftAssets"
+      [isFilterMenuOpen]="isFilterMenuOpen"
+      (isFilterToggleOpen)="handleFilterModal($event)"
+      (filterByTypes)="handlefilterby($event)"
+    ></app-asset-mapped-filter-modal>
+  } @else {
+    <app-asset-mapped-filter-modal
+      [assets]="registeredAssets"
+      [isFilterMenuOpen]="isFilterMenuOpen"
+      (isFilterToggleOpen)="handleFilterModal($event)"
+      (filterByTypes)="handlefilterby($event)"
+    ></app-asset-mapped-filter-modal>
+  }
 }
 
 @if (isApprovalMenuOpen) {

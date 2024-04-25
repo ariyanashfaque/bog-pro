@@ -36,6 +36,13 @@ interface LocationModel {
   work_group_status: string;
 }
 
+export interface Filter {
+  assetType: { type?: string; title?: string; isSelected: boolean }[];
+  assetArea: { type?: string; title?: string; isSelected: boolean }[];
+  assetSource: { isSelected: boolean; type: string; title: string }[];
+  assetStatus: { isSelected: boolean; type: string; title: string }[];
+}
+
 // * Asset Approval Model * //
 export interface AssetSourceModel {
   assetSapSync: boolean;

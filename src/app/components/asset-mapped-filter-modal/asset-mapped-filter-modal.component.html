@@ -57,17 +57,17 @@
         <ion-col size="4" style="height: 100vh" class="ion-no-padding">
           <ion-grid class="ion-no-padding">
             <ion-row>
-              @for (filter of assetFilter; track $index) {
+              @for (filter of selectedTypes; track $index) {
                 <ion-col
-                  (click)="handleFilterCategory(filter.filterType)"
+                  (click)="handleFilterCategory(filter.key)"
                   size="12"
-                  [class.selected]="filter.filterType === filterName"
+                  [class.selected]="filter.key === filterName"
                   class="bg-[#edf5f5] border-b-2 border-r-2 border-[#00738233] h-14 p-3"
                 >
                   <ion-label class="text-xl ml-5">
-                    {{ filter.filterTitle }}
+                    {{ filter.key }}
                   </ion-label>
-                  <ion-label>({{ filter.filterSelected }})</ion-label>
+                  <ion-label></ion-label>
 
                   <!-- @if (filter === filterName) {
                     <ion-label>({{ selectedTypesCount }})</ion-label>
@@ -78,22 +78,22 @@
           </ion-grid>
         </ion-col>
         <ion-col size="8" class="h-[400px] scroll-items">
-          @for (filters of assetFilter; track $index) {
+          @for (filters of selectedTypes; track $index) {
             @switch (filterName) {
-              @case (filters.filterType) {
+              @case (filters.key) {
                 <div>
                   <ion-grid>
                     <ion-row class="mt-5">
-                      @for (filter of filters.filters; track $index) {
+                      @for (filter of filters.value; track $index) {
                         <ion-col
                           size="12"
                           class="left-32 text-xl mb-5 scroll-items"
                         >
                           <ion-checkbox
-                            (ionChange)="handlefilterbytype(filters,filter)"
+                            (ionChange)="handlefilterbytype(filters, filter)"
                             labelPlacement="end"
                           >
-                            {{ filter.title }}
+                            {{ filter.type }}
                           </ion-checkbox>
                         </ion-col>
                       }
