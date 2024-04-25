@@ -188,34 +188,25 @@ export class AssetMappedPage implements OnInit {
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
     this.assetFilters = assetFilter;
 
-    const filteredAssets = this.draftAssets.filter((asset) => {
-      const isAssetSourceMatched = this.assetFilters.assetSource.some(
-        (criteria: any) => {
-          // return criteria.isSelected && asset.assetSource[criteria.type];
-        },
+    const filteredAssets = this.draftAssets.filter((asset: any) => {
+      const isSourceSelected = assetFilter.assetSource.some(
+        (source: any) => source.isSelected && asset.assetSource[source.type],
       );
 
-      const isAssetStatusMatched = this.assetFilters.assetStatus.some(
-        (criteria: any) => {
-          // return criteria.isSelected && asset.assetStatus.status[criteria.type];
-        },
+      const isTypeSelected = assetFilter.assetType.some(
+        (type: any) =>
+          type.isSelected && type.type === asset.assetInfo.assetType,
       );
 
-      const isAssetTypeMatched = this.assetFilters.assetType.some(
-        (criteria: any) => {
-          return (
-            criteria.isSelected && criteria.type === asset.assetInfo?.assetType
-          );
-        },
+      const isStatusSelected = assetFilter.assetStatus.some(
+        (status: any) =>
+          status.isSelected && asset.assetStatus.status[status.type],
       );
 
-      if (isAssetTypeMatched && isAssetSourceMatched && isAssetStatusMatched)
-        return (
-          isAssetTypeMatched && isAssetSourceMatched && isAssetStatusMatched
-        );
-
-      return isAssetTypeMatched || isAssetSourceMatched || isAssetStatusMatched;
+      return isTypeSelected && isSourceSelected && isStatusSelected;
     });
+
+    this.draftFilteredAssets = filteredAssets;
 
     console.log(filteredAssets);
     // this.draftAssets.forEach((draftAsset) => {
@@ -224,6 +215,26 @@ export class AssetMappedPage implements OnInit {
     //   }
     // });
   };
+
+  // handleApplyFilter(asset: any): boolean {
+  //   const isSourceSelected = this.assetFilters.assetSource.some(
+  //     (source: any) => source.isSelected && asset.assetSource[source.type],
+  //   );
+  //   console.log(isSourceSelected);
+
+  //   const isTypeSelected = this.assetFilters.assetType.some(
+  //     (type: any) => type.isSelected && type.type === asset.assetInfo.assetType,
+  //   );
+
+  //   const isStatusSelected = this.assetFilters.assetStatus.some(
+  //     (status: any) =>
+  //       status.isSelected && asset.assetStatus.status[status.type],
+  //   );
+
+  //   return isTypeSelected && isSourceSelected && isStatusSelected;
+
+  //   // console.log(filteredAssets);
+  // }
 
   handleAssetId = (event: any) => {
     this.assetId = event;

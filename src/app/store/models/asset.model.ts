@@ -4,6 +4,31 @@ interface AssetZoneModel {
   area: MarkerModel;
 }
 
+interface Keyable {
+  [key: string]: boolean | undefined;
+}
+
+// * Asset Approval Model * //
+export interface AssetSourceModel extends Keyable {
+  assetSapSync: boolean;
+  assetBulkUpload: boolean;
+  assetManualCreation: boolean;
+}
+
+interface AssetDraftRegisteredStatusModel extends Keyable {
+  assetInDraft?: boolean;
+  assetRejected?: boolean;
+  assetApproved?: boolean;
+  assetRegistered?: boolean;
+  assetApprovalPending?: boolean;
+  assetDemolishedPending?: boolean;
+  assetDemolitionApproved?: boolean;
+  assetDemolitionRejected?: boolean;
+  assetDecommissionRejected?: boolean;
+  assetDecommissionApproved?: boolean;
+  assetDecommissionedPending?: boolean;
+}
+
 export class MarkerModel {
   lng: number;
   lat: number;
@@ -96,24 +121,24 @@ export interface AssetRegisteredStatus {
   assetDecommissionedPending: boolean;
 }
 
-interface AssetDraftRegisteredStatusModel {
-  assetInDraft: boolean;
-  assetRejected: boolean;
-  assetApproved: boolean;
-  assetRegistered: boolean;
-  assetApprovalPending: boolean;
-  assetDemolishedPending: boolean;
-  assetDemolitionApproved: boolean;
-  assetDemolitionRejected: boolean;
-  assetDecommissionRejected: boolean;
-  assetDecommissionApproved: boolean;
-  assetDecommissionedPending: boolean;
-}
+// interface AssetDraftRegisteredStatusModel {
+//   assetInDraft: boolean;
+//   assetRejected: boolean;
+//   assetApproved: boolean;
+//   assetRegistered: boolean;
+//   assetApprovalPending: boolean;
+//   assetDemolishedPending: boolean;
+//   assetDemolitionApproved: boolean;
+//   assetDemolitionRejected: boolean;
+//   assetDecommissionRejected: boolean;
+//   assetDecommissionApproved: boolean;
+//   assetDecommissionedPending: boolean;
+// }
 
 export interface AssetStatusModel {
   isDraft?: boolean;
   isRegistered?: boolean;
-  status?: AssetDraftRegisteredStatusModel;
+  status: AssetDraftRegisteredStatusModel;
 }
 // * Asset Filter Model * //
 export interface AssetFilterModel {
