@@ -186,9 +186,8 @@ export class AssetMappedPage implements OnInit {
 
   handlefilterby = (assetFilter: any) => {
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
-    this.assetFilters = assetFilter;
 
-    const filteredAssets = this.draftAssets.filter((asset: any) => {
+    this.draftFilteredAssets = this.draftAssets.filter((asset: any) => {
       const isSourceSelected = assetFilter.assetSource.some(
         (source: any) => source.isSelected && asset.assetSource[source.type],
       );
@@ -203,17 +202,15 @@ export class AssetMappedPage implements OnInit {
           status.isSelected && asset.assetStatus.status[status.type],
       );
 
-      return isTypeSelected && isSourceSelected && isStatusSelected;
+      if (isTypeSelected && isSourceSelected && isStatusSelected)
+        return isTypeSelected && isSourceSelected && isStatusSelected;
+
+      // if (isTypeSelected) return isTypeSelected;
+      // if (isSourceSelected) return isSourceSelected;
+      // if (isStatusSelected) return isStatusSelected;
     });
 
-    this.draftFilteredAssets = filteredAssets;
-
-    console.log(filteredAssets);
-    // this.draftAssets.forEach((draftAsset) => {
-    //   if (assetFilter.assetType.includes(draftAsset?.assetInfo?.assetType!)) {
-    //     this.draftFilteredAssets.push(draftAsset);
-    //   }
-    // });
+    console.log(this.draftFilteredAssets);
   };
 
   // handleApplyFilter(asset: any): boolean {
