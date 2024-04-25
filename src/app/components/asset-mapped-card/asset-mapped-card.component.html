@@ -119,9 +119,7 @@
                   <!-- asset status  -->
                   <div class="">
                     @switch (true) {
-                      @case (
-                        asset?.assetStatus?.status?.assetApprovalPendinng
-                      ) {
+                      @case (asset?.assetStatus?.status?.assetApprovalPending) {
                         <!-- asset approval pending  -->
                         <ion-badge color="approvalpending" class="p-2">
                           <ion-text

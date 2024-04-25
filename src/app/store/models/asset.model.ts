@@ -83,7 +83,7 @@ export interface AssetDraftStatus {
   assetInDraft: boolean;
   assetRejected: boolean;
   assetApproved: boolean;
-  assetApprovalPendinng: boolean;
+  assetApprovalPending: boolean;
 }
 
 export interface AssetRegisteredStatus {
@@ -101,7 +101,7 @@ interface AssetDraftRegisteredStatusModel {
   assetRejected: boolean;
   assetApproved: boolean;
   assetRegistered: boolean;
-  assetApprovalPendinng: boolean;
+  assetApprovalPending: boolean;
   assetDemolishedPending: boolean;
   assetDemolitionApproved: boolean;
   assetDemolitionRejected: boolean;
