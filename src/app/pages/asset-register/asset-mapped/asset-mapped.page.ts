@@ -89,7 +89,7 @@ export class AssetMappedPage implements OnInit {
 
   assetId: string;
   plantId: string;
-  assetFilter: any;
+  assetFilters: any;
   assets: AssetModel[];
   toggleChecked: boolean;
   draftAssets: AssetModel[];
@@ -135,29 +135,31 @@ export class AssetMappedPage implements OnInit {
     this.FilterByTypeAssets = [];
     this.draftFilteredAssets = [];
     this.isApprovalMenuOpen = false;
+    this.assetFilters = {};
     // this.assetFilter = {};
 
-    this.assetFilter = {
-      assetType: ["roof"],
-      assetArea: ["zone1", "zone2"],
+    // this.assetFilter = {
+    //   assetType: ["roof"],
+    //   assetArea: ["zone1", "zone2"],
 
-      assetSoruce: {
-        assetSapSync: false,
-        assetBulkUpload: false,
-        assetManualCreation: true,
-      },
-      assetStatus: {
-        assetInDraft: false,
-        assetRejected: false,
-        assetApproved: false,
-        assetApprovalPendinng: true,
-      },
-    };
+    //   assetSoruce: {
+    //     assetSapSync: false,
+    //     assetBulkUpload: false,
+    //     assetManualCreation: true,
+    //   },
+    //   assetStatus: {
+    //     assetInDraft: false,
+    //     assetRejected: false,
+    //     assetApproved: false,
+    //     assetApprovalPendinng: true,
+    //   },
+    // };
   }
 
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: SiteModel) => {
+        console.log(plant.assets);
         if (plant?.assets) {
           this.assets = plant.assets;
           plant.assets?.forEach((asset) => {
@@ -182,16 +184,45 @@ export class AssetMappedPage implements OnInit {
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   };
 
-  handlefilterby = (assetFilter: AssetFilterModel) => {
+  handlefilterby = (assetFilter: any) => {
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
+    this.assetFilters = assetFilter;
 
-    this.draftAssets.forEach((draftAsset) => {
-      if (assetFilter.assetType.includes(draftAsset?.assetInfo?.assetType!)) {
-        this.draftFilteredAssets.push(draftAsset);
-      }
+    const filteredAssets = this.draftAssets.filter((asset) => {
+      const isAssetSourceMatched = this.assetFilters.assetSource.some(
+        (criteria: any) => {
+          // return criteria.isSelected && asset.assetSource[criteria.type];
+        },
+      );
+
+      const isAssetStatusMatched = this.assetFilters.assetStatus.some(
+        (criteria: any) => {
+          // return criteria.isSelected && asset.assetStatus.status[criteria.type];
+        },
+      );
+
+      const isAssetTypeMatched = this.assetFilters.assetType.some(
+        (criteria: any) => {
+          return (
+            criteria.isSelected && criteria.type === asset.assetInfo?.assetType
+          );
+        },
+      );
+
+      if (isAssetTypeMatched && isAssetSourceMatched && isAssetStatusMatched)
+        return (
+          isAssetTypeMatched && isAssetSourceMatched && isAssetStatusMatched
+        );
+
+      return isAssetTypeMatched || isAssetSourceMatched || isAssetStatusMatched;
     });
 
-    console.log("Filter:", this.draftFilteredAssets);
+    console.log(filteredAssets);
+    // this.draftAssets.forEach((draftAsset) => {
+    //   if (assetFilter.assetType.includes(draftAsset?.assetInfo?.assetType!)) {
+    //     this.draftFilteredAssets.push(draftAsset);
+    //   }
+    // });
   };
 
   handleAssetId = (event: any) => {
