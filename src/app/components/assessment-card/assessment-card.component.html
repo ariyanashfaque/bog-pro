@@ -1,21 +1,53 @@
 <div class="">
   <div class="max-w-full mx-auto relative rounded-md">
     <div
-      class="bg-[#EDF5F5] rounded-md px-3 pt-3 pb-1 text-sm relative"
-      [class]="isOpen ? 'bg-[#F4F4F4]' : 'bg-[#EDF5F5] '"
+      class="absolute -top-1 right-2 w-16 h-16 rounded-full bg-white flex transform translate-x-3 -translate-y-3 z-10"
     >
       <div
-        class="absolute -top-2 right-1 w-[55px] h-[55px] rounded-full bg-white flex transform translate-x-2.5 -translate-y-2.5"
+        class="mx-auto my-auto w-12 h-12 rounded-full shadow-md flex"
+        [class]="
+          forDashboard
+            ? 'bg-[#009146]'
+            : isOpen
+              ? '  bg-[#3CB4AA]'
+              : 'bg-[#007382]'
+        "
       >
-        <div
-          class="mx-auto my-auto w-10 h-10 rounded-full shadow-md flex"
-          [class]="isOpen ? '  bg-[#3CB4AA]' : 'bg-[#007382]'"
+        <ion-icon
+          class="text-2xl mx-auto my-auto text-white"
+          name="location-outline"
+        ></ion-icon>
+      </div>
+    </div>
+    <div
+      class="rounded-md px-3 pt-3 pb-1 text-sm relative overflow-hidden"
+      [class]="
+        forDashboard
+          ? 'bg-white border-2 border-[#009146]'
+          : isOpen
+            ? 'bg-[#F4F4F4]'
+            : 'bg-[#EDF5F5] '
+      "
+    >
+      <div
+        class="absolute -top-2 right-1 w-16 h-16 rounded-full bg-white flex transform translate-x-2.5 -translate-y-2.5"
+        [class]="forDashboard ? 'border-2 border-[#009146]' : ''"
+      >
+        <!-- <div
+          class="mx-auto my-auto w-12 h-12 rounded-full shadow-md flex"
+          [class]="
+            forDashboard
+              ? 'bg-[#009146]'
+              : isOpen
+                ? '  bg-[#3CB4AA]'
+                : 'bg-[#007382]'
+          "
         >
           <ion-icon
             class="text-2xl mx-auto my-auto text-white"
             name="location-outline"
           ></ion-icon>
-        </div>
+        </div> -->
       </div>
       <div>
         <!-- top part -->
@@ -29,7 +61,10 @@
             }
           </ion-title>
         </div>
-        <div class="my-2 border-t-[1.5px] border-dashed border-[#007382]"></div>
+        <div
+          class="my-2 border-t-[1.5px] border-dashed"
+          [class]="forDashboard ? 'border-[#009146]' : 'border-[#007382]'"
+        ></div>
         <!-- middle part -->
         <ion-grid fixed>
           <ion-row>
@@ -41,7 +76,12 @@
             </ion-col>
             <ion-col size="6">
               <div class="flex gap-5">
-                <div class="border-l-[2px] border-[#CDE2E2]"></div>
+                <div
+                  class="border-l-[2px]"
+                  [class]="
+                    forDashboard ? 'border-[#009146]' : 'border-[#CDE2E2]'
+                  "
+                ></div>
                 <div class="">
                   <p class="text-xs">Assign to</p>
                   <span class="font-bold text-xs">
@@ -63,7 +103,10 @@
             <span class="font-bold text-xs">joyce.smith&#64;holcim.com</span>
           </div>
         </div> -->
-        <div class="my-2 border-t-[1.5px] border-dashed border-[#007382]"></div>
+        <div
+          class="my-2 border-t-[1.5px] border-dashed"
+          [class]="forDashboard ? 'border-[#009146]' : 'border-[#007382]'"
+        ></div>
 
         <!-- bottom part -->
         <div class="flex justify-between mt-2 text-black">
@@ -79,7 +122,7 @@
             <ion-progress-bar
               class="my-1 rounded-full h-[5px]"
               value="0.50"
-              color="secondary"
+              [color]="forDashboard ? 'success' : 'secondary'"
             ></ion-progress-bar>
             <p class="text-xs">10/20</p>
           </div>

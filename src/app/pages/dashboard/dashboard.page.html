@@ -2,7 +2,8 @@
 
 <ion-content [fullscreen]="true" color="background">
   <ion-grid
-    class="p-0 pr-3 pb-2 h-full bg-white flex flex-col justify-between overflow-hidden"
+    class="p-0 pr-3 pb-2 h-full flex flex-col justify-between overflow-hidden"
+    color="background"
   >
     <ion-row class="flex-grow">
       <ion-col class="p-0 flex flex-col h-full" size="6.5">
@@ -57,7 +58,7 @@
       </ion-col>
       <ion-col class="p-0 px-2 pb-2 h-full" size="5.5">
         <div
-          class="w-full h-full flex flex-col justify-start rounded-md overflow-hidden shadow-[0px_0px_5px_1px_#00000024]"
+          class="w-full h-full flex flex-col justify-start rounded-md bg-white overflow-hidden shadow-[0px_0px_5px_1px_#00000024]"
         >
           <app-calendar></app-calendar>
           <div class="m-4 font-semibold flex justify-between mb-3">
@@ -86,11 +87,12 @@
             </ion-badge>
           </div>
           <div
-            class="w-full h-[calc(100vh-640px)] my-3 py-4 px-4 bg-white flex flex-col gap-5 overflow-y-scroll"
+            class="w-full h-[calc(100vh-650px)] my-3 py-4 px-4 bg-white flex flex-col gap-5 overflow-y-scroll"
           >
             <app-assessment-card [isOpen]="false"></app-assessment-card>
-            <app-assessment-card [isOpen]="false"></app-assessment-card>
-            <app-assessment-card [isOpen]="false"></app-assessment-card>
+            <app-findings-card></app-findings-card>
+            <app-action-card></app-action-card>
+            <app-action-card [isOverdue]="true"></app-action-card>
           </div>
         </div>
         <!-- <ion-row>

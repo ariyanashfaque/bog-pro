@@ -33,6 +33,7 @@ import {
 export class AssessmentCardComponent implements OnInit {
   @Input() isOpen: boolean = false;
   @Input() data: any = {};
+  @Input() forDashboard: boolean = true;
 
   constructor() {}
 
