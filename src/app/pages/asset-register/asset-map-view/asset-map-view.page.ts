@@ -48,6 +48,7 @@ import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-si
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
+import { AssetZoneModel } from "src/app/store/models/map.model";
 
 @Component({
   imports: [
@@ -107,6 +108,7 @@ export class AssetMapViewPage implements OnInit {
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
   masterAssets: MasterAsset[];
   recievedAssetForDelete: any;
+  mappedAssets = signal<AssetZoneModel[]>([]);
 
   @Input()
   set id(plantId: string) {
@@ -237,8 +239,18 @@ export class AssetMapViewPage implements OnInit {
       const position = event?.latLng?.toJSON()!;
       if (this.isDragging === true && position) {
         console.log("postion: ", position);
-        this.addMarker(position);
+        this.mappedAssets.set([
+          ...this.mappedAssets(),
+          {
+            selectedAsset: this.selectedAsset(),
+            area: position,
+          },
+        ]);
+        const icon = `../assets/${this.selectedAsset()?.assetInformation?.icon ?? "check-in/plant.svg"}`;
+        this.addMarker(position, icon);
         this.isDragging = false;
+        console.log("mapped: ", this.mappedAssets());
+        this.selectedAsset.set({});
       }
     });
   }
@@ -254,11 +266,11 @@ export class AssetMapViewPage implements OnInit {
     this.map.setMapTypeId("styled_map");
   }
 
-  public async addMarker(position: google.maps.LatLngLiteral) {
+  public async addMarker(position: google.maps.LatLngLiteral, icon: string) {
     const { AdvancedMarkerElement } = await this.importMarkersLibrary("marker");
 
     const markerImage = document.createElement("img");
-    markerImage.src = "../assets/check-in/plant.svg";
+    markerImage.src = icon;
     markerImage.width = 60;
     markerImage.height = 60;
 
@@ -285,7 +297,8 @@ export class AssetMapViewPage implements OnInit {
 
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
       // console.log(event?.latLng?.toJSON());
-      console.log("clicked");
+      console.log("clicked", event);
+      console.log("marker", marker);
       this.toggleChildMenu();
     });
   }
@@ -331,7 +344,8 @@ export class AssetMapViewPage implements OnInit {
     console.log("onAssetReceived: ", asset);
     if (
       this.selectedAsset() === null ||
-      (this.selectedAsset() != asset && asset?.assets?.length > 0)
+      this.selectedAsset()
+      // (this.selectedAsset() != asset && asset?.assets?.length > 0) // this condition will be used after sap
     ) {
       this.isSubAssetModalOpen.set(true);
       this.selectedAsset.set(asset);
