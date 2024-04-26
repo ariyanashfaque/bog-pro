@@ -85,9 +85,11 @@ export class AssetMapViewPage implements OnInit {
   @ViewChild("mapRef", { static: true }) mapRef: ElementRef<HTMLDivElement>;
   display: any;
   plantId: string;
+  pressed: number;
   assets: AssetModel[];
   store = inject(Store);
   isDragging: boolean = false;
+  recievedAssetForDelete: any;
   childAsset = signal<any>({});
   selectedAsset = signal<any>({});
   httpService = inject(HttpService);
@@ -100,7 +102,6 @@ export class AssetMapViewPage implements OnInit {
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
-  recievedAssetForDelete: any;
 
   @Input()
   set id(plantId: string) {
@@ -166,8 +167,6 @@ export class AssetMapViewPage implements OnInit {
         console.log("Draft asset");
       }
     }
-
-    console.log(e.event.dataTransfer?.getData("text/plain"));
   }
 
   ngOnDestroy(): void {
@@ -176,6 +175,7 @@ export class AssetMapViewPage implements OnInit {
 
   constructor() {
     this.assets = [];
+    this.pressed = 0;
     this.plantId = "";
     this.groupedAssets = [];
 
@@ -277,8 +277,22 @@ export class AssetMapViewPage implements OnInit {
     });
 
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
-      // console.log(event?.latLng?.toJSON());
-      this.toggleChildMenu();
+      console.log("Single Clicked");
+
+      this.pressed++;
+
+      // Set a timeout to increment pressed variable every 1000ms (1 second)
+      setInterval(() => {
+        this.pressed++;
+      }, 1000);
+      // this.toggleChildMenu();
+
+      console.log(this.pressed);
+    });
+    marker.addListener("dblclick", (event: google.maps.MapMouseEvent) => {
+      console.log("Double Clicked");
+
+      // this.toggleInfoMenu();
     });
   }
 
