@@ -48,7 +48,7 @@ import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-si
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
-import { AssetZoneModel } from "src/app/store/models/map.model";
+import { AssetZoneModel, MarkerModel } from "src/app/store/models/map.model";
 
 @Component({
   imports: [
@@ -109,6 +109,8 @@ export class AssetMapViewPage implements OnInit {
   masterAssets: MasterAsset[];
   recievedAssetForDelete: any;
   mappedAssets = signal<AssetZoneModel[]>([]);
+  selectedMappedAsset = signal<AssetZoneModel>({});
+  markers: any[] = [];
 
   @Input()
   set id(plantId: string) {
@@ -247,7 +249,7 @@ export class AssetMapViewPage implements OnInit {
           },
         ]);
         const icon = `../assets/${this.selectedAsset()?.assetInformation?.icon ?? "check-in/plant.svg"}`;
-        this.addMarker(position, icon);
+        this.addMarker(position, icon, this.mappedAssets());
         this.isDragging = false;
         console.log("mapped: ", this.mappedAssets());
         this.selectedAsset.set({});
@@ -266,8 +268,13 @@ export class AssetMapViewPage implements OnInit {
     this.map.setMapTypeId("styled_map");
   }
 
-  public async addMarker(position: google.maps.LatLngLiteral, icon: string) {
+  public async addMarker(
+    position: google.maps.LatLngLiteral,
+    icon: string,
+    droppedAsset: any,
+  ) {
     const { AdvancedMarkerElement } = await this.importMarkersLibrary("marker");
+    let markerData = droppedAsset;
 
     const markerImage = document.createElement("img");
     markerImage.src = icon;
@@ -295,11 +302,21 @@ export class AssetMapViewPage implements OnInit {
       content: mapMarker,
     });
 
+    this.markers.push(marker, ...markerData);
+
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
       // console.log(event?.latLng?.toJSON());
-      console.log("clicked", event);
-      console.log("marker", marker);
+      console.log("clicked");
       this.toggleChildMenu();
+
+      if (event?.latLng?.toJSON()) {
+        const data = this.findSelectedAsset(
+          this.markers,
+          event?.latLng?.toJSON(),
+        );
+        console.log("data: ", data);
+        this.selectedMappedAsset.set(data);
+      }
     });
   }
 
@@ -355,4 +372,10 @@ export class AssetMapViewPage implements OnInit {
     }
     console.log("Selected Asset: ", this.selectedAsset());
   }
+
+  findSelectedAsset = (assets: AssetZoneModel[], area: MarkerModel) =>
+    assets?.filter(
+      (asset) =>
+        asset?.area?.lat === area?.lat && asset?.area?.lng === area?.lng,
+    )[0];
 }

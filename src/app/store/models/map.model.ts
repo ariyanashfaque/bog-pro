@@ -3,7 +3,7 @@ import { MasterAsset } from "./asset.model";
 export interface AssetZoneModel {
   id?: string;
   area?: MarkerModel;
-  selectedAsset?: string | MasterAsset;
+  selectedAsset?: MasterAsset;
 }
 
 export class MarkerModel {

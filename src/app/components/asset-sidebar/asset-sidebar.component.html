@@ -10,7 +10,7 @@
       name="close-outline"
     ></ion-icon>
   </div>
-
+  <!-- <h4 style="color: red">isChildOpen(): {{ isChildOpen() }}</h4> -->
   <!-- Parent Assets -->
   @if (!isChildOpen()) {
     <div
@@ -89,7 +89,10 @@
           : 'max-h-0'
       "
     >
-      @for (asset of assetData(); track $index) {
+      @for (
+        asset of selectedMappedAsset()?.selectedAsset?.recommended;
+        track $index
+      ) {
         <div class="">
           <div
             class="cursor-pointer mx-auto"
@@ -105,8 +108,8 @@
             >
               <img
                 class="object-cover w-full h-full rounded-md"
-                src="../../../assets/{{ asset?.assetInformation?.icon }}"
-                alt="{{ asset?.assetInformation?.title }}"
+                src="../../../assets/{{ asset?.icon }}"
+                alt="{{ asset?.title }}"
               />
               <div
                 class="absolute top-0 right-0 translate-x-2 -translate-y-2 h-5 w-5 bg-white rounded-full border-2 text-xs font-bold text-[#228693] flex items-center justify-center"
@@ -116,12 +119,12 @@
                     : 'border-[#b9dee4]'
                 "
               >
-                {{ asset?.total_others ?? 0 }}
+                {{ 0 }}
               </div>
             </div>
             <div class="w-full text-xs text-center mt-1">
               <span class="text-[#000000DE]">
-                {{ asset?.assetInformation?.title }}
+                {{ asset?.title }}
               </span>
             </div>
           </div>
@@ -156,7 +159,10 @@
         activeAccordion == 'others' ? ' max-h-[calc(100vh-270px)]  ' : 'max-h-0'
       "
     >
-      @for (asset of assetData(); track $index) {
+      @for (
+        asset of selectedMappedAsset()?.selectedAsset?.others;
+        track $index
+      ) {
         <div class="">
           <div
             class="cursor-pointer mx-auto"
@@ -167,13 +173,13 @@
             >
               <img
                 class="object-cover w-full h-full"
-                src="../../../assets/{{ asset?.assetInformation?.icon }}"
-                alt="{{ asset?.assetInformation?.title }}"
+                src="../../../assets/{{ asset?.icon }}"
+                alt="{{ asset?.title }}"
               />
             </div>
             <div class="w-full text-xs text-center mt-1">
               <span class="text-[#000000DE]">
-                {{ asset?.assetInformation?.title }}
+                {{ asset?.title }}
               </span>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { on } from "@ngrx/store";
 import {
   Component,
+  computed,
   effect,
   inject,
   input,
@@ -14,6 +15,7 @@ import {
 import { IonIcon, IonText } from "@ionic/angular/standalone";
 import { DndModule } from "ngx-drag-drop";
 import { MasterAsset } from "src/app/store/models/asset.model";
+import { AssetZoneModel } from "src/app/store/models/map.model";
 
 @Component({
   selector: "app-asset-sidebar",
@@ -28,6 +30,7 @@ export class AssetSidebarComponent implements OnInit {
   isSubAssetModalOpen = model<boolean>(false);
   activeAccordion: string = "recommended";
   assetData = input<MasterAsset[]>();
+  selectedMappedAsset = input<AssetZoneModel>();
   selectedAsset = output<any>();
   activeIndex = model<number>(-1);
 
