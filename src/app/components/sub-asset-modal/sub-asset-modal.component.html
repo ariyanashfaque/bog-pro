@@ -45,11 +45,17 @@
     >
       <img
         class="w-auto h-1/2 mx-auto rounded-full"
-        src="../../../assets/Silo.png"
-        alt="silo"
+        src="../../../assets/{{
+          selectedMappedAsset()?.selectedAsset?.assetInformation?.icon
+        }}"
+        alt="{{
+          selectedMappedAsset()?.selectedAsset?.assetInformation?.title
+        }}"
       />
       <div class="w-full text-xs text-center">
-        <span class="text-[#000000DE]">Silo</span>
+        <span class="text-[#000000DE]">
+          {{ selectedMappedAsset()?.selectedAsset?.assetInformation?.title }}
+        </span>
       </div>
       <div class="w-full text-xs text-center">
         <span class="text-[#000000DE] font-bold">09/09</span>
