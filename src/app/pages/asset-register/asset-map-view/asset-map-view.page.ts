@@ -7,6 +7,8 @@ import {
   ViewChild,
   ElementRef,
   WritableSignal,
+  model,
+  output,
 } from "@angular/core";
 import {
   IonFab,
@@ -20,6 +22,7 @@ import {
   IonToolbar,
   IonBackdrop,
   IonProgressBar,
+  AlertController,
 } from "@ionic/angular/standalone";
 import {
   SiteModel,
@@ -43,7 +46,6 @@ import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-si
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
-
 @Component({
   imports: [
     IonFab,
@@ -85,9 +87,11 @@ export class AssetMapViewPage implements OnInit {
   @ViewChild("mapRef", { static: true }) mapRef: ElementRef<HTMLDivElement>;
   display: any;
   plantId: string;
+  pressed: number;
   assets: AssetModel[];
   store = inject(Store);
   isDragging: boolean = false;
+  recievedAssetForDelete: any;
   childAsset = signal<any>({});
   selectedAsset = signal<any>({});
   httpService = inject(HttpService);
@@ -100,7 +104,7 @@ export class AssetMapViewPage implements OnInit {
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
-  recievedAssetForDelete: any;
+  assetSentForDelete: any;
 
   @Input()
   set id(plantId: string) {
@@ -160,22 +164,44 @@ export class AssetMapViewPage implements OnInit {
     });
   }
 
-  deleteOnDrop(e: DndDropEvent) {
+  async deleteOnDrop(e: DndDropEvent) {
     if (this.recievedAssetForDelete?.subAsset) {
-      if (this.recievedAssetForDelete?.subAsset?.assetStatus?.isDraft) {
-        console.log("Draft asset");
-      }
-    }
+      if (this.recievedAssetForDelete?.subAsset?.assetStatus) {
+        const alert = await this.alertController.create({
+          header: "Cannot delete asset !!",
+          message: "This asset is in registered state",
+          buttons: [
+            {
+              text: "Understood",
+              role: "confirm",
+              handler: () => {
+                console.log("Alert confirmed");
+                this.assetSentForDelete = this.recievedAssetForDelete;
+              },
+            },
+          ],
+        });
 
-    console.log(e.event.dataTransfer?.getData("text/plain"));
+        await alert.present();
+      }
+    } else {
+      // this.assetSentForDelete.emit(this.recievedAssetForDelete);
+      // const alert = await this.alertController.create({
+      //   header: "Nothing to remove",
+      //   message: "Please drag boxes that have assets",
+      //   buttons: ["Understood"],
+      // });
+      // await alert.present();
+    }
   }
 
   ngOnDestroy(): void {
     this.loader.deleteScript();
   }
 
-  constructor() {
+  constructor(private alertController: AlertController) {
     this.assets = [];
+    this.pressed = 0;
     this.plantId = "";
     this.groupedAssets = [];
 
@@ -277,8 +303,22 @@ export class AssetMapViewPage implements OnInit {
     });
 
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
-      // console.log(event?.latLng?.toJSON());
-      this.toggleChildMenu();
+      console.log("Single Clicked");
+
+      this.pressed++;
+
+      // Set a timeout to increment pressed variable every 1000ms (1 second)
+      setInterval(() => {
+        this.pressed++;
+      }, 1000);
+      // this.toggleChildMenu();
+
+      console.log(this.pressed);
+    });
+    marker.addListener("dblclick", (event: google.maps.MapMouseEvent) => {
+      console.log("Double Clicked");
+
+      // this.toggleInfoMenu();
     });
   }
 
