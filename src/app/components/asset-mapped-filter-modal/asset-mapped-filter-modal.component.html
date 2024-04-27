@@ -21,13 +21,6 @@
         />
       </svg>
     </div>
-
-    <!-- <div class="h-full w-full">
-      <ion-img
-        class="-ml-12 -mt-[16.5px]"
-        src="../../../../assets/curvenew.png"
-      ></ion-img>
-    </div> -->
     <div class="w-auto h-full relative">
       <div
         (click)="menuToggle()"
@@ -66,22 +59,17 @@
                 >
                   <ion-label class="text-xl ml-5">
                     @if (filter.key === "assetType") {
-                      Asset Type
+                      Asset Type ({{ selectedTypeCount.assetType || 0 }})
                     } @else if (filter.key === "assetArea") {
-                      Area
+                      Area ({{ selectedTypeCount.assetArea || 0 }})
                     } @else if (filter.key === "assetSource") {
-                      Source
+                      Source ({{ selectedTypeCount.assetSource || 0 }})
                     } @else if (filter.key === "assetStatus") {
-                      Status
+                      Status ({{ selectedTypeCount.assetStatus || 0 }})
                     } @else {
                       {{ filter.key }}
                     }
                   </ion-label>
-                  <ion-label></ion-label>
-
-                  <!-- @if (filter === filterName) {
-                    <ion-label>({{ selectedTypesCount }})</ion-label>
-                  } -->
                 </ion-col>
               }
             </ion-row>
@@ -113,15 +101,23 @@
                             } @else if (filter.title === "assetBulkUpload") {
                               Bulk
                             } @else if (
-                              filter.title === "assetApprovalPending"
+                              filter.type === "assetApprovalPending"
                             ) {
                               Asset Approval Pending
-                            } @else if (filter.title === "assetApproved") {
+                            } @else if (filter.type === "assetApproved") {
                               Asset Approved
-                            } @else if (filter.title === "assetRejected") {
+                            } @else if (filter.type === "assetRejected") {
                               Asset Rejected
-                            } @else if (filter.title === "assetInDraft") {
+                            } @else if (filter.type === "assetInDraft") {
                               Asset in Draft
+                            } @else if (filter.type === "silo") {
+                              Silo
+                            } @else if (filter.title === "hopper") {
+                              Hopper
+                            } @else if (filter.title === "bin") {
+                              Bin
+                            } @else if (filter.title === "bridge") {
+                              Bridge
                             } @else {
                               {{ filter.title }}
                             }

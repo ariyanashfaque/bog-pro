@@ -32,9 +32,9 @@ import {
   IonAccordionGroup,
 } from "@ionic/angular/standalone";
 import {
+  Filter,
   SiteModel,
   AssetModel,
-  AssetFilterModel,
   AssetsResponseModel,
 } from "src/app/store/models/asset.model";
 import { Store } from "@ngrx/store";
@@ -87,21 +87,18 @@ export class AssetMappedPage implements OnInit {
   httpService = inject(HttpService);
   toastService = inject(ToastService);
 
+  filter: Filter;
   assetId: string;
   plantId: string;
-  assetFilters: any;
   assets: AssetModel[];
   toggleChecked: boolean;
   draftAssets: AssetModel[];
-  filteredAsset: AssetModel[];
   registeredAssets: AssetModel[];
-  FilterByTypeAssets: AssetModel[];
   draftFilteredAssets: AssetModel[];
   isFilterMenuOpen: boolean = false;
   isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
-
   @Input()
   set id(plantId: string) {
     this.plantId = plantId;
@@ -129,11 +126,8 @@ export class AssetMappedPage implements OnInit {
     this.plantId = "";
     this.assetId = "";
     this.draftAssets = [];
-    this.assetFilters = {};
-    this.filteredAsset = [];
     this.toggleChecked = true;
     this.registeredAssets = [];
-    this.FilterByTypeAssets = [];
     this.draftFilteredAssets = [];
     this.isApprovalMenuOpen = false;
   }
@@ -161,29 +155,25 @@ export class AssetMappedPage implements OnInit {
     this.isApprovalMenuOpen = event;
   };
 
-  handleFilterModal = (event: any) => {
+  handleFilterModal = (event: any, filter: any) => {
+    console.log(this.filter);
     this.isFilterMenuOpen = event;
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   };
 
   handlefilterby = (assetFilter: any) => {
-    console.log(assetFilter);
-
+    this.filter = assetFilter;
+    console.log(this.filter);
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
-    console.log(assetFilter);
 
     this.draftFilteredAssets = this.draftAssets.filter((asset: any) => {
       const isSourceSelected = assetFilter.assetSource.some(
         (source: any) => source.isSelected && asset.assetSource[source.type],
       );
 
-      let selectedCount = 1;
       const isTypeSelected = assetFilter.assetType.some(
         (type: any) =>
           type.isSelected && type.type === asset.assetInfo.assetType,
-        // if (type.isSelected) {
-        //   selectedCount++;
-        // }
       );
 
       const isStatusSelected = assetFilter.assetStatus.some(
@@ -193,14 +183,6 @@ export class AssetMappedPage implements OnInit {
 
       if (isTypeSelected && isSourceSelected && isStatusSelected)
         return isTypeSelected && isSourceSelected && isStatusSelected;
-
-      // if (selectedCount <= 1) return isTypeSelected;
-      // else if(selectedCount <= 1) return isSourceSelected;
-      // else if (selectedCount <= 1) return isStatusSelected;
-
-      // if (isTypeSelected) return isTypeSelected;
-      // if (isSourceSelected) return isSourceSelected;
-      // if (isStatusSelected) return isStatusSelected;
     });
 
     console.log(this.draftFilteredAssets);

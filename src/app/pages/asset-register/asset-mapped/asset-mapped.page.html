@@ -42,7 +42,7 @@
               shape="round"
               color="primary"
               class="mr-2 w-32"
-              (click)="handleFilterModal($event)"
+              (click)="handleFilterModal($event, filter)"
             >
               <div class="flex mx-auto">
                 <ion-text
@@ -162,15 +162,17 @@
   @if (toggleChecked && draftAssets) {
     <app-asset-mapped-filter-modal
       [assets]="draftAssets"
+      [savedFilter]="filter"
       [isFilterMenuOpen]="isFilterMenuOpen"
-      (isFilterToggleOpen)="handleFilterModal($event)"
+      (isFilterToggleOpen)="handleFilterModal($event, filter)"
       (filterByTypes)="handlefilterby($event)"
     ></app-asset-mapped-filter-modal>
   } @else {
     <app-asset-mapped-filter-modal
       [assets]="registeredAssets"
+      [savedFilter]="filter"
       [isFilterMenuOpen]="isFilterMenuOpen"
-      (isFilterToggleOpen)="handleFilterModal($event)"
+      (isFilterToggleOpen)="handleFilterModal($event, filter)"
       (filterByTypes)="handlefilterby($event)"
     ></app-asset-mapped-filter-modal>
   }

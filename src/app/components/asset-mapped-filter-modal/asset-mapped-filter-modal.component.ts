@@ -5,8 +5,6 @@ import {
   Output,
   Component,
   EventEmitter,
-  WritableSignal,
-  signal,
 } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
@@ -74,45 +72,64 @@ import { Filter, AssetModel } from "src/app/store/models/asset.model";
 export class AssetMappedFilterModalComponent implements OnInit {
   filter: Filter;
   selectedTypes: any;
+  selectedTypeCount: any;
   selectedTypesCount: number;
   filterName: string = "assetType";
+  savedFilter = input.required<Filter>();
   assets = input.required<AssetModel[]>();
   @Input() isFilterMenuOpen: boolean = false;
   keyValuePairs: { key: string; value: any }[] = [];
   @Output() filterByTypes = new EventEmitter<any>();
-  isFilterToggleOpen: WritableSignal<boolean> = signal(false);
+  @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
 
   constructor() {
     this.selectedTypes = [];
-    this.filter = {
-      assetType: [],
-      assetArea: [],
-      assetSource: [],
-      assetStatus: [],
-    };
+    this.selectedTypeCount = {};
   }
 
   ngOnInit() {
-    console.log(this.assets());
+    if (this.savedFilter()) {
+      this.filter = this.savedFilter();
+    } else {
+      this.filter = {
+        assetType: [],
+        assetArea: [],
+        assetSource: [],
+        assetStatus: [],
+      };
+    }
+    const countSelectedItems = (category: any) => {
+      return category.reduce((count: any, item: any) => {
+        return count + (item.isSelected ? 1 : 0);
+      }, 0);
+    };
+
+    // Count selected items for each Type
+    this.selectedTypeCount = {
+      assetType: countSelectedItems(this.filter.assetType),
+      assetArea: countSelectedItems(this.filter.assetArea),
+      assetSource: countSelectedItems(this.filter.assetSource),
+      assetStatus: countSelectedItems(this.filter.assetStatus),
+    };
 
     const keyValuePairs: { key: string; value: any }[] = [];
     for (const [key, value] of Object.entries(this.filter)) {
       keyValuePairs.push({ key, value });
     }
     this.selectedTypes = keyValuePairs;
-    console.log(this.selectedTypes);
 
     // Populate assetType
     this.assets().forEach((asset: any) => {
       const assetType = asset.assetInfo?.assetType;
-      const assetTitle = asset.assetInfo?.assetName;
       const existingType = this.filter.assetType?.find(
         (type: any) => type.type === assetType,
       );
+      console.log(this.filter.assetSource);
+
       if (!existingType) {
         this.filter.assetType?.push({
           type: assetType,
-          title: assetTitle,
+          title: assetType,
           isSelected: false,
         });
       }
@@ -133,7 +150,7 @@ export class AssetMappedFilterModalComponent implements OnInit {
           }
         });
       }
-      // Populate assetStatus if it is defined
+      // Populate assetStatus
       if (asset.assetStatus) {
         Object.keys(asset.assetStatus.status).forEach((statusKey: string) => {
           const statusType = statusKey;
@@ -154,17 +171,29 @@ export class AssetMappedFilterModalComponent implements OnInit {
 
   menuToggle() {
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
-    this.isFilterToggleOpen.set(this.isFilterMenuOpen);
+    this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   }
 
   handleFilterCategory(categoryName: string) {
-    this.selectedTypesCount = 0;
-
     this.filterName = categoryName;
   }
   //  by Asset filter type
   handlefilterbytype(fieldType: any, type: any) {
     type.isSelected = !type.isSelected;
+
+    const countSelectedItems = (category: any) => {
+      return category.reduce((count: any, item: any) => {
+        return count + (item.isSelected ? 1 : 0);
+      }, 0);
+    };
+
+    // Count selected items for each Type
+    this.selectedTypeCount = {
+      assetType: countSelectedItems(this.filter.assetType),
+      assetArea: countSelectedItems(this.filter.assetArea),
+      assetSource: countSelectedItems(this.filter.assetSource),
+      assetStatus: countSelectedItems(this.filter.assetStatus),
+    };
   }
 
   // Save button

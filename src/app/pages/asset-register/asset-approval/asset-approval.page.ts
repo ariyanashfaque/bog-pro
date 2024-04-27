@@ -74,6 +74,11 @@ export class AssetApprovalPage implements OnInit {
   radioChecked = model();
   httpService = inject(HttpService);
   toastService = inject(ToastService);
+  isFilterMenuOpen: boolean = false;
+  isApprovalMenuOpen: boolean = false;
+  // isFilterToggleOpen: WritableSignal<boolean> = signal(false);
+  draftFilteredAssets: AssetModel[];
+
   isLoading: WritableSignal<boolean> = signal(false);
   @Input()
   set id(plantId: string) {
@@ -131,4 +136,46 @@ export class AssetApprovalPage implements OnInit {
       this.sendForApproval.pop();
     }
   }
+
+  handleErrorModal = (event: any) => {
+    this.isApprovalMenuOpen = event;
+  };
+
+  handleFilterModal = (event: any) => {
+    this.isFilterMenuOpen = event;
+    // this.isFilterToggleOpen.set(this.isFilterMenuOpen);
+    console.log(this.isFilterMenuOpen);
+  };
+
+  handlefilterby = (assetFilter: any) => {
+    // console.log(assetFilter);
+    // this.isFilterMenuOpen = !this.isFilterMenuOpen;
+    // console.log(assetFilter);
+    // this.draftFilteredAssets = this.assets.filter((asset: any) => {
+    //   const isSourceSelected = assetFilter.assetSource.some(
+    //     (source: any) => source.isSelected && asset.assetSource[source.type],
+    //   );
+    //   let selectedCount = 1;
+    //   const isTypeSelected = assetFilter.assetType.some(
+    //     (type: any) =>
+    //       type.isSelected && type.type === asset.assetInfo.assetType,
+    //     // if (type.isSelected) {
+    //     //   selectedCount++;
+    //     // }
+    //   );
+    //   const isStatusSelected = assetFilter.assetStatus.some(
+    //     (status: any) =>
+    //       status.isSelected && asset.assetStatus.status[status.type],
+    //   );
+    //   if (isTypeSelected && isSourceSelected && isStatusSelected)
+    //     return isTypeSelected && isSourceSelected && isStatusSelected;
+    //   // if (selectedCount <= 1) return isTypeSelected;
+    //   // else if(selectedCount <= 1) return isSourceSelected;
+    //   // else if (selectedCount <= 1) return isStatusSelected;
+    //   // if (isTypeSelected) return isTypeSelected;
+    //   // if (isSourceSelected) return isSourceSelected;
+    //   // if (isStatusSelected) return isStatusSelected;
+    // });
+    // console.log(this.draftFilteredAssets);
+  };
 }

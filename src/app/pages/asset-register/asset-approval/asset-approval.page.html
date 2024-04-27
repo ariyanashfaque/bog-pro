@@ -22,6 +22,7 @@
               shape="round"
               color="primary"
               class="mr-2 w-32"
+              (click)="handleFilterModal($event)"
             >
               <div class="flex mx-auto">
                 <ion-text
@@ -338,6 +339,7 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
 @if (sendForApproval.length) {
   <ion-footer>
     <ion-toolbar color="secondary">
@@ -360,3 +362,11 @@
     </ion-toolbar>
   </ion-footer>
 }
+<!-- @if (isFilterMenuOpen) {
+  <app-approval-asset-filter-modal
+    [assets]="assets"
+    [isFilterMenuOpen]="isFilterMenuOpen"
+    (isFilterToggleOpen)="handleFilterModal($event)"
+    (filterByTypes)="handlefilterby($event)"
+  ></app-approval-asset-filter-modal>
+} -->
