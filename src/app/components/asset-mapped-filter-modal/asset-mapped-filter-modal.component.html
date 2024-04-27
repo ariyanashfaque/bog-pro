@@ -65,7 +65,17 @@
                   class="bg-[#edf5f5] border-b-2 border-r-2 border-[#00738233] h-14 p-3"
                 >
                   <ion-label class="text-xl ml-5">
-                    {{ filter.key }}
+                    @if (filter.key === "assetType") {
+                      Asset Type
+                    } @else if (filter.key === "assetArea") {
+                      Area
+                    } @else if (filter.key === "assetSource") {
+                      Source
+                    } @else if (filter.key === "assetStatus") {
+                      Status
+                    } @else {
+                      {{ filter.key }}
+                    }
                   </ion-label>
                   <ion-label></ion-label>
 
@@ -92,8 +102,29 @@
                           <ion-checkbox
                             (ionChange)="handlefilterbytype(filters, filter)"
                             labelPlacement="end"
+                            [checked]="filter.isSelected"
                           >
-                            {{ filter.type }}
+                            @if (filter.title === "assetSapSync") {
+                              Sap
+                            } @else if (
+                              filter.title === "assetManualCreation"
+                            ) {
+                              Manual
+                            } @else if (filter.title === "assetBulkUpload") {
+                              Bulk
+                            } @else if (
+                              filter.title === "assetApprovalPending"
+                            ) {
+                              Asset Approval Pending
+                            } @else if (filter.title === "assetApproved") {
+                              Asset Approved
+                            } @else if (filter.title === "assetRejected") {
+                              Asset Rejected
+                            } @else if (filter.title === "assetInDraft") {
+                              Asset in Draft
+                            } @else {
+                              {{ filter.title }}
+                            }
                           </ion-checkbox>
                         </ion-col>
                       }

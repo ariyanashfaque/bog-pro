@@ -41,8 +41,8 @@ import { Store } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
 import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
 import { AssetApprovalModalComponent } from "../../../components/asset-approval-modal/asset-approval-modal.component";
@@ -129,31 +129,13 @@ export class AssetMappedPage implements OnInit {
     this.plantId = "";
     this.assetId = "";
     this.draftAssets = [];
+    this.assetFilters = {};
     this.filteredAsset = [];
     this.toggleChecked = true;
     this.registeredAssets = [];
     this.FilterByTypeAssets = [];
     this.draftFilteredAssets = [];
     this.isApprovalMenuOpen = false;
-    this.assetFilters = {};
-    // this.assetFilter = {};
-
-    // this.assetFilter = {
-    //   assetType: ["roof"],
-    //   assetArea: ["zone1", "zone2"],
-
-    //   assetSoruce: {
-    //     assetSapSync: false,
-    //     assetBulkUpload: false,
-    //     assetManualCreation: true,
-    //   },
-    //   assetStatus: {
-    //     assetInDraft: false,
-    //     assetRejected: false,
-    //     assetApproved: false,
-    //     assetApprovalPendinng: true,
-    //   },
-    // };
   }
 
   ngOnInit() {
@@ -185,16 +167,23 @@ export class AssetMappedPage implements OnInit {
   };
 
   handlefilterby = (assetFilter: any) => {
+    console.log(assetFilter);
+
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
+    console.log(assetFilter);
 
     this.draftFilteredAssets = this.draftAssets.filter((asset: any) => {
       const isSourceSelected = assetFilter.assetSource.some(
         (source: any) => source.isSelected && asset.assetSource[source.type],
       );
 
+      let selectedCount = 1;
       const isTypeSelected = assetFilter.assetType.some(
         (type: any) =>
           type.isSelected && type.type === asset.assetInfo.assetType,
+        // if (type.isSelected) {
+        //   selectedCount++;
+        // }
       );
 
       const isStatusSelected = assetFilter.assetStatus.some(
@@ -205,6 +194,10 @@ export class AssetMappedPage implements OnInit {
       if (isTypeSelected && isSourceSelected && isStatusSelected)
         return isTypeSelected && isSourceSelected && isStatusSelected;
 
+      // if (selectedCount <= 1) return isTypeSelected;
+      // else if(selectedCount <= 1) return isSourceSelected;
+      // else if (selectedCount <= 1) return isStatusSelected;
+
       // if (isTypeSelected) return isTypeSelected;
       // if (isSourceSelected) return isSourceSelected;
       // if (isStatusSelected) return isStatusSelected;
@@ -212,26 +205,6 @@ export class AssetMappedPage implements OnInit {
 
     console.log(this.draftFilteredAssets);
   };
-
-  // handleApplyFilter(asset: any): boolean {
-  //   const isSourceSelected = this.assetFilters.assetSource.some(
-  //     (source: any) => source.isSelected && asset.assetSource[source.type],
-  //   );
-  //   console.log(isSourceSelected);
-
-  //   const isTypeSelected = this.assetFilters.assetType.some(
-  //     (type: any) => type.isSelected && type.type === asset.assetInfo.assetType,
-  //   );
-
-  //   const isStatusSelected = this.assetFilters.assetStatus.some(
-  //     (status: any) =>
-  //       status.isSelected && asset.assetStatus.status[status.type],
-  //   );
-
-  //   return isTypeSelected && isSourceSelected && isStatusSelected;
-
-  //   // console.log(filteredAssets);
-  // }
 
   handleAssetId = (event: any) => {
     this.assetId = event;
