@@ -7,6 +7,8 @@ import {
   ViewChild,
   ElementRef,
   WritableSignal,
+  model,
+  output,
 } from "@angular/core";
 import {
   IonFab,
@@ -20,6 +22,7 @@ import {
   IonToolbar,
   IonBackdrop,
   IonProgressBar,
+  AlertController,
 } from "@ionic/angular/standalone";
 import {
   SiteModel,
@@ -43,7 +46,6 @@ import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-si
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
-
 @Component({
   imports: [
     IonFab,
@@ -102,6 +104,7 @@ export class AssetMapViewPage implements OnInit {
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
+  assetSentForDelete: any;
 
   @Input()
   set id(plantId: string) {
@@ -161,11 +164,34 @@ export class AssetMapViewPage implements OnInit {
     });
   }
 
-  deleteOnDrop(e: DndDropEvent) {
+  async deleteOnDrop(e: DndDropEvent) {
     if (this.recievedAssetForDelete?.subAsset) {
-      if (this.recievedAssetForDelete?.subAsset?.assetStatus?.isDraft) {
-        console.log("Draft asset");
+      if (this.recievedAssetForDelete?.subAsset?.assetStatus) {
+        const alert = await this.alertController.create({
+          header: "Cannot delete asset !!",
+          message: "This asset is in registered state",
+          buttons: [
+            {
+              text: "Understood",
+              role: "confirm",
+              handler: () => {
+                console.log("Alert confirmed");
+                this.assetSentForDelete = this.recievedAssetForDelete;
+              },
+            },
+          ],
+        });
+
+        await alert.present();
       }
+    } else {
+      // this.assetSentForDelete.emit(this.recievedAssetForDelete);
+      // const alert = await this.alertController.create({
+      //   header: "Nothing to remove",
+      //   message: "Please drag boxes that have assets",
+      //   buttons: ["Understood"],
+      // });
+      // await alert.present();
     }
   }
 
@@ -173,7 +199,7 @@ export class AssetMapViewPage implements OnInit {
     this.loader.deleteScript();
   }
 
-  constructor() {
+  constructor(private alertController: AlertController) {
     this.assets = [];
     this.pressed = 0;
     this.plantId = "";

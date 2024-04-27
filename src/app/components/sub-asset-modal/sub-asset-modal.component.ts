@@ -29,6 +29,7 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   isAssetInfoMenuOpen = model(false);
   recievedDraggedAsset = input.required<any>();
   sendForDeleteAsset = output<any>();
+  confirmDeleteAsset = input<any>();
 
   recievedAssetFromSidebar: any;
   subAssets: any[] = [
@@ -77,7 +78,8 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
 
   constructor(private injector: Injector) {
     effect(() => {
-      // console.log("Received Dragged Asset: ", this.draggedAsset());
+      this.deleteDropzoneBox(this.confirmDeleteAsset());
+      // console.log("Confirm delete: ", this.confirmDeleteAsset());
     });
   }
 
@@ -107,5 +109,22 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
       assetIndex: nextIndex,
     };
     console.log(this.subAssets);
+  }
+
+  deleteDropzoneBox(data: any) {
+    console.log("Got data:", data);
+
+    // Find the index of the item in subAssets array that matches the received data
+    const indexToDelete = this.subAssets.findIndex(
+      (item) => item.assetIndex === data.assetIndex,
+    );
+
+    // If the item exists in the array, remove its content while keeping the assetIndex intact
+    if (indexToDelete !== -1) {
+      // Clear the content of the object at the index
+      this.subAssets[indexToDelete] = { assetIndex: data.assetIndex };
+    }
+
+    console.log("Updated array:", this.subAssets);
   }
 }
