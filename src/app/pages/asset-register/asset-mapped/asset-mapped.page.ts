@@ -99,6 +99,9 @@ export class AssetMappedPage implements OnInit {
   isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
+  filteredByType: AssetModel[];
+  filteredBySource: AssetModel[];
+  filteredByStatus: AssetModel[];
   @Input()
   set id(plantId: string) {
     this.plantId = plantId;
@@ -149,6 +152,8 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
+
+    this.draftAssets = this.draftFilteredAssets;
   }
 
   handleErrorModal = (event: any) => {
@@ -161,29 +166,100 @@ export class AssetMappedPage implements OnInit {
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   };
 
+  // handlefilterby = (assetFilter: any) => {
+  //   this.filter = assetFilter;
+  //   this.isFilterMenuOpen = !this.isFilterMenuOpen;
+
+  //   this.draftFilteredAssets = this.draftAssets.filter((asset: any) => {
+  //     const isSourceSelected = assetFilter.assetSource.some(
+  //       (source: any) => source.isSelected && asset.assetSource[source.type],
+  //     );
+
+  //     const isTypeSelected = assetFilter.assetType.some(
+  //       (type: any) =>
+  //         type.isSelected && type.type === asset.assetInfo.assetType,
+  //     );
+
+  //     const isStatusSelected = assetFilter.assetStatus.some(
+  //       (status: any) =>
+  //         status.isSelected && asset.assetStatus.status[status.type],
+  //     );
+
+  //     if (isTypeSelected && isSourceSelected && isStatusSelected)
+  //       return isTypeSelected && isSourceSelected && isStatusSelected;
+  //     // else if (isTypeSelected || isSourceSelected || isStatusSelected) {
+  //     //   return isTypeSelected || isSourceSelected || isStatusSelected;
+  //     // }
+  //     else if (isSourceSelected && isStatusSelected && !isTypeSelected) {
+  //       return isSourceSelected && isStatusSelected && !isTypeSelected;
+  //     } else if (isSourceSelected && isTypeSelected) {
+  //       return isSourceSelected && isTypeSelected;
+  //     } else if (isTypeSelected && isStatusSelected) {
+  //       return isTypeSelected && isStatusSelected;
+  //     }
+  //   });
+  //   console.log(this.draftFilteredAssets);
+  // };
+
+  //Single
   handlefilterby = (assetFilter: any) => {
     this.filter = assetFilter;
     console.log(this.filter);
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
 
-    this.draftFilteredAssets = this.draftAssets.filter((asset: any) => {
-      const isSourceSelected = assetFilter.assetSource.some(
-        (source: any) => source.isSelected && asset.assetSource[source.type],
-      );
+    const filteredByType =
+      assetFilter.assetType.length === 0
+        ? this.draftAssets
+        : this.draftAssets.filter((asset: any) => {
+            return assetFilter.assetType.some(
+              (type: any) =>
+                type.isSelected && type.type === asset.assetInfo.assetType,
+            );
+          });
 
-      const isTypeSelected = assetFilter.assetType.some(
-        (type: any) =>
-          type.isSelected && type.type === asset.assetInfo.assetType,
-      );
+    const filteredBySource =
+      assetFilter.assetSource.length === 0
+        ? this.draftAssets
+        : this.draftAssets.filter((asset: any) => {
+            return assetFilter.assetSource.some(
+              (source: any) =>
+                source.isSelected && asset.assetSource[source.type],
+            );
+          });
 
-      const isStatusSelected = assetFilter.assetStatus.some(
-        (status: any) =>
-          status.isSelected && asset.assetStatus.status[status.type],
-      );
+    const filteredByStatus =
+      assetFilter.assetStatus.length === 0
+        ? this.draftAssets
+        : this.draftAssets.filter((asset: any) => {
+            return assetFilter.assetStatus.some(
+              (status: any) =>
+                status.isSelected && asset.assetStatus.status[status.type],
+            );
+          });
 
-      if (isTypeSelected && isSourceSelected && isStatusSelected)
-        return isTypeSelected && isSourceSelected && isStatusSelected;
-    });
+    const filteredAssets: AssetModel[] = this.draftAssets.filter(
+      (asset: any) => {
+        const passesTypeFilter = filteredByType.includes(asset);
+        const passesSourceFilter = filteredBySource.includes(asset);
+        const passesStatusFilter = filteredByStatus.includes(asset);
+
+        return (
+          passesTypeFilter && passesSourceFilter && passesStatusFilter
+          // ||
+          // (passesSourceFilter && passesStatusFilter) ||
+          // (passesTypeFilter && passesSourceFilter) ||
+          // (passesTypeFilter && passesStatusFilter) ||
+          // (!passesTypeFilter && !passesStatusFilter && passesSourceFilter) ||
+          // (!passesTypeFilter && passesStatusFilter && !passesSourceFilter) ||
+          // (passesTypeFilter && !passesStatusFilter && !passesSourceFilter)
+        );
+      },
+    );
+
+    this.filteredByType = filteredByType;
+    this.filteredBySource = filteredBySource;
+    this.filteredByStatus = filteredByStatus;
+    this.draftFilteredAssets = filteredAssets;
 
     console.log(this.draftFilteredAssets);
   };

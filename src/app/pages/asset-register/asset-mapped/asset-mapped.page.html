@@ -90,7 +90,14 @@
                             </ion-col>
                           }
                         } @else {
-                          @for (asset of draftAssets; track asset.id) {
+                          <ion-col size="12">
+                            <div
+                              class="max-w-full mx-auto rounded-md bg-white p-4 shadow-[0px_0px_6px_0px_#0000002E]"
+                            >
+                              <h3 class="text-center">No assets found</h3>
+                            </div>
+                          </ion-col>
+                          <!-- @for (asset of draftAssets; track asset.id) {
                             <ion-col size="6">
                               <app-asset-mapped-card
                                 [asset]="asset"
@@ -108,7 +115,7 @@
                                 <h3 class="text-center">No assets found</h3>
                               </div>
                             </ion-col>
-                          }
+                          } -->
                         }
                       } @else if (!toggleChecked && registeredAssets) {
                         @for (asset of registeredAssets; track asset.id) {

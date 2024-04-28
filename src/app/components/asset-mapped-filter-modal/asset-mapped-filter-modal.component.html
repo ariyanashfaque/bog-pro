@@ -57,7 +57,14 @@
                   [class.selected]="filter.key === filterName"
                   class="bg-[#edf5f5] border-b-2 border-r-2 border-[#00738233] h-14 p-3"
                 >
-                  <ion-label class="text-xl ml-5">
+                  <ion-label
+                    class="text-xl ml-5 text-[28px]"
+                    [class]="
+                      filter.key === filterName
+                        ? 'font-gotham_medium'
+                        : 'font-gotham_book'
+                    "
+                  >
                     @if (filter.key === "assetType") {
                       Asset Type ({{ selectedTypeCount.assetType || 0 }})
                     } @else if (filter.key === "assetArea") {
@@ -91,6 +98,7 @@
                             (ionChange)="handlefilterbytype(filters, filter)"
                             labelPlacement="end"
                             [checked]="filter.isSelected"
+                            class="font-gotham_book text-[22px]"
                           >
                             @if (filter.title === "assetSapSync") {
                               Sap
@@ -142,6 +150,7 @@
           expand="full"
           color="textwhite"
           class="w-full text-[16px] font-gotham_book"
+          (click)="Reset()"
         >
           Reset
         </ion-button>
@@ -149,7 +158,7 @@
           expand="full"
           color="textwhite"
           class="w-full text-[16px] font-gotham_book"
-          (click)="Filter($event)"
+          (click)="Filter()"
         >
           Apply
         </ion-button>

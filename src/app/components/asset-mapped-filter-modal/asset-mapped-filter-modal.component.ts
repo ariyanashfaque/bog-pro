@@ -124,7 +124,6 @@ export class AssetMappedFilterModalComponent implements OnInit {
       const existingType = this.filter.assetType?.find(
         (type: any) => type.type === assetType,
       );
-      console.log(this.filter.assetSource);
 
       if (!existingType) {
         this.filter.assetType?.push({
@@ -197,7 +196,30 @@ export class AssetMappedFilterModalComponent implements OnInit {
   }
 
   // Save button
-  Filter(event: any) {
+  Filter() {
     this.filterByTypes.emit(this.filter);
+  }
+
+  // Reset Selected
+  Reset() {
+    for (const categoryKey in this.filter) {
+      if (Object.prototype.hasOwnProperty.call(this.filter, categoryKey)) {
+        const category = this.filter[categoryKey as keyof Filter];
+        category.forEach((item: any) => {
+          item.isSelected = false;
+        });
+      }
+    }
+    const countSelectedItems = (category: any) => {
+      return category.reduce((count: any, item: any) => {
+        return count + (item.isSelected ? 0 : 0);
+      }, 0);
+    };
+    this.selectedTypeCount = {
+      assetType: countSelectedItems(this.filter.assetType),
+      assetArea: countSelectedItems(this.filter.assetArea),
+      assetSource: countSelectedItems(this.filter.assetSource),
+      assetStatus: countSelectedItems(this.filter.assetStatus),
+    };
   }
 }
