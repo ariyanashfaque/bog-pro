@@ -100,13 +100,11 @@
                             [checked]="filter.isSelected"
                             class="font-gotham_book text-[22px]"
                           >
-                            @if (filter.title === "assetSapSync") {
+                            @if (filter.type === "assetSapSync") {
                               Sap
-                            } @else if (
-                              filter.title === "assetManualCreation"
-                            ) {
+                            } @else if (filter.type === "assetManualCreation") {
                               Manual
-                            } @else if (filter.title === "assetBulkUpload") {
+                            } @else if (filter.type === "assetBulkUpload") {
                               Bulk
                             } @else if (
                               filter.type === "assetApprovalPending"
@@ -118,6 +116,32 @@
                               Asset Rejected
                             } @else if (filter.type === "assetInDraft") {
                               Asset in Draft
+                            } @else if (filter.type === "assetRegistered") {
+                              Asset Registered
+                            } @else if (
+                              filter.type === "assetDemolishedPending"
+                            ) {
+                              Asset Demolished Pending
+                            } @else if (
+                              filter.type === "assetDemolitionApproved"
+                            ) {
+                              Asset Demolition Approved
+                            } @else if (
+                              filter.type === "assetDemolitionRejected"
+                            ) {
+                              Asset DemolitionRejected
+                            } @else if (
+                              filter.type === "assetDecommissionRejected"
+                            ) {
+                              Asset Decommission Rejected
+                            } @else if (
+                              filter.type === "assetDemolitionRejected"
+                            ) {
+                              Asset Decommission Approved
+                            } @else if (
+                              filter.type === "assetDecommissionedPending"
+                            ) {
+                              Asset Decommissioned Pending
                             } @else if (filter.type === "silo") {
                               Silo
                             } @else if (filter.title === "hopper") {

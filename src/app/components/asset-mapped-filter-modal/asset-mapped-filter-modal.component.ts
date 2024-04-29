@@ -77,17 +77,20 @@ export class AssetMappedFilterModalComponent implements OnInit {
   filterName: string = "assetType";
   savedFilter = input.required<Filter>();
   assets = input.required<AssetModel[]>();
+  filterCounts = input.required<number>();
   @Input() isFilterMenuOpen: boolean = false;
   keyValuePairs: { key: string; value: any }[] = [];
   @Output() filterByTypes = new EventEmitter<any>();
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
 
+  filterCount: number;
   constructor() {
     this.selectedTypes = [];
     this.selectedTypeCount = {};
   }
 
   ngOnInit() {
+    this.filterCount = this.filterCounts();
     if (this.savedFilter()) {
       this.filter = this.savedFilter();
     } else {
@@ -120,11 +123,21 @@ export class AssetMappedFilterModalComponent implements OnInit {
 
     // Populate assetType
     this.assets().forEach((asset: any) => {
+      // status pending work
+
+      // const filterStatusTypes = (status: any) => {
+      //   const statusKeys = Object.keys(status);
+      //   const trueStatusTypes = statusKeys.filter(
+      //     (key) => status[key] === true,
+      //   );
+      //   return trueStatusTypes;
+      // };
+      // console.log(filterStatusTypes(asset.assetStatus.status));
+
       const assetType = asset.assetInfo?.assetType;
       const existingType = this.filter.assetType?.find(
         (type: any) => type.type === assetType,
       );
-
       if (!existingType) {
         this.filter.assetType?.push({
           type: assetType,
@@ -202,6 +215,7 @@ export class AssetMappedFilterModalComponent implements OnInit {
 
   // Reset Selected
   Reset() {
+    this.filterCount = 0;
     for (const categoryKey in this.filter) {
       if (Object.prototype.hasOwnProperty.call(this.filter, categoryKey)) {
         const category = this.filter[categoryKey as keyof Filter];

@@ -91,17 +91,19 @@ export class AssetMappedPage implements OnInit {
   assetId: string;
   plantId: string;
   assets: AssetModel[];
+  filterCounts: number;
   toggleChecked: boolean;
   draftAssets: AssetModel[];
+  filteredByType: AssetModel[];
+  filteredAssets: AssetModel[];
   registeredAssets: AssetModel[];
+  filteredBySource: AssetModel[];
+  filteredByStatus: AssetModel[];
   draftFilteredAssets: AssetModel[];
   isFilterMenuOpen: boolean = false;
   isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
-  filteredByType: AssetModel[];
-  filteredBySource: AssetModel[];
-  filteredByStatus: AssetModel[];
   @Input()
   set id(plantId: string) {
     this.plantId = plantId;
@@ -129,6 +131,8 @@ export class AssetMappedPage implements OnInit {
     this.plantId = "";
     this.assetId = "";
     this.draftAssets = [];
+    this.filterCounts = 0;
+    this.filteredAssets = [];
     this.toggleChecked = true;
     this.registeredAssets = [];
     this.draftFilteredAssets = [];
@@ -152,8 +156,7 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
-
-    this.draftAssets = this.draftFilteredAssets;
+    this.draftFilteredAssets = this.draftAssets;
   }
 
   handleErrorModal = (event: any) => {
@@ -161,107 +164,215 @@ export class AssetMappedPage implements OnInit {
   };
 
   handleFilterModal = (event: any, filter: any) => {
-    console.log(this.filter);
     this.isFilterMenuOpen = event;
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   };
 
-  // handlefilterby = (assetFilter: any) => {
-  //   this.filter = assetFilter;
-  //   this.isFilterMenuOpen = !this.isFilterMenuOpen;
-
-  //   this.draftFilteredAssets = this.draftAssets.filter((asset: any) => {
-  //     const isSourceSelected = assetFilter.assetSource.some(
-  //       (source: any) => source.isSelected && asset.assetSource[source.type],
-  //     );
-
-  //     const isTypeSelected = assetFilter.assetType.some(
-  //       (type: any) =>
-  //         type.isSelected && type.type === asset.assetInfo.assetType,
-  //     );
-
-  //     const isStatusSelected = assetFilter.assetStatus.some(
-  //       (status: any) =>
-  //         status.isSelected && asset.assetStatus.status[status.type],
-  //     );
-
-  //     if (isTypeSelected && isSourceSelected && isStatusSelected)
-  //       return isTypeSelected && isSourceSelected && isStatusSelected;
-  //     // else if (isTypeSelected || isSourceSelected || isStatusSelected) {
-  //     //   return isTypeSelected || isSourceSelected || isStatusSelected;
-  //     // }
-  //     else if (isSourceSelected && isStatusSelected && !isTypeSelected) {
-  //       return isSourceSelected && isStatusSelected && !isTypeSelected;
-  //     } else if (isSourceSelected && isTypeSelected) {
-  //       return isSourceSelected && isTypeSelected;
-  //     } else if (isTypeSelected && isStatusSelected) {
-  //       return isTypeSelected && isStatusSelected;
-  //     }
-  //   });
-  //   console.log(this.draftFilteredAssets);
-  // };
-
-  //Single
   handlefilterby = (assetFilter: any) => {
     this.filter = assetFilter;
     console.log(this.filter);
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
+    const getSelectedCount = (array: any) => {
+      return array.reduce((count: any, item: any) => {
+        return count + (item.isSelected ? 1 : 0);
+      }, 0);
+    };
 
-    const filteredByType =
-      assetFilter.assetType.length === 0
-        ? this.draftAssets
-        : this.draftAssets.filter((asset: any) => {
-            return assetFilter.assetType.some(
-              (type: any) =>
-                type.isSelected && type.type === asset.assetInfo.assetType,
-            );
-          });
+    const countSelectedItems = (filter: any) => {
+      let totalCount = 0;
+      for (const categoryKey in filter) {
+        if (filter.hasOwnProperty(categoryKey)) {
+          totalCount += filter[categoryKey].reduce((acc: any, item: any) => {
+            return acc + (item.isSelected ? 1 : 0);
+          }, 0);
+        }
+      }
+      return totalCount;
+    };
 
-    const filteredBySource =
-      assetFilter.assetSource.length === 0
-        ? this.draftAssets
-        : this.draftAssets.filter((asset: any) => {
-            return assetFilter.assetSource.some(
-              (source: any) =>
-                source.isSelected && asset.assetSource[source.type],
-            );
-          });
+    this.filterCounts = countSelectedItems(assetFilter);
 
-    const filteredByStatus =
-      assetFilter.assetStatus.length === 0
-        ? this.draftAssets
-        : this.draftAssets.filter((asset: any) => {
-            return assetFilter.assetStatus.some(
-              (status: any) =>
-                status.isSelected && asset.assetStatus.status[status.type],
-            );
-          });
+    // Get the count of selected items in each category
+    const counts = {
+      assetType: getSelectedCount(assetFilter.assetType),
+      assetArea: getSelectedCount(assetFilter.assetArea),
+      assetSource: getSelectedCount(assetFilter.assetSource),
+      assetStatus: getSelectedCount(assetFilter.assetStatus),
+    };
 
-    const filteredAssets: AssetModel[] = this.draftAssets.filter(
-      (asset: any) => {
+    // draft aseets
+    if (this.toggleChecked) {
+      // assetType filter type
+      const filteredByType =
+        assetFilter.assetType.length === 0
+          ? this.draftAssets
+          : this.draftAssets.filter((asset: any) => {
+              return assetFilter.assetType.some(
+                (type: any) =>
+                  type.isSelected && type.type === asset.assetInfo.assetType,
+              );
+            });
+
+      // source filter type
+      const filteredBySource =
+        assetFilter.assetSource.length === 0
+          ? this.draftAssets
+          : this.draftAssets.filter((asset: any) => {
+              return assetFilter.assetSource.some(
+                (source: any) =>
+                  source.isSelected && asset.assetSource[source.type],
+              );
+            });
+
+      // status filter type
+      const filteredByStatus =
+        assetFilter.assetStatus.length === 0
+          ? this.draftAssets
+          : this.draftAssets.filter((asset: any) => {
+              return assetFilter.assetStatus.some(
+                (status: any) =>
+                  status.isSelected && asset.assetStatus.status[status.type],
+              );
+            });
+
+      this.filteredAssets = this.draftAssets.filter((asset: any) => {
         const passesTypeFilter = filteredByType.includes(asset);
         const passesSourceFilter = filteredBySource.includes(asset);
         const passesStatusFilter = filteredByStatus.includes(asset);
 
-        return (
-          passesTypeFilter && passesSourceFilter && passesStatusFilter
-          // ||
-          // (passesSourceFilter && passesStatusFilter) ||
-          // (passesTypeFilter && passesSourceFilter) ||
-          // (passesTypeFilter && passesStatusFilter) ||
-          // (!passesTypeFilter && !passesStatusFilter && passesSourceFilter) ||
-          // (!passesTypeFilter && passesStatusFilter && !passesSourceFilter) ||
-          // (passesTypeFilter && !passesStatusFilter && !passesSourceFilter)
-        );
-      },
-    );
+        // single filter 
+        if (
+          counts.assetType !== 0 &&
+          counts.assetSource === 0 &&
+          counts.assetStatus === 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesTypeFilter;
+        } else if (
+          counts.assetType === 0 &&
+          counts.assetSource !== 0 &&
+          counts.assetStatus === 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesSourceFilter;
+        } else if (
+          counts.assetType === 0 &&
+          counts.assetSource === 0 &&
+          counts.assetStatus !== 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesStatusFilter;
+        } 
+        // multiple filter 
+        else if (
+          counts.assetType !== 0 &&
+          counts.assetSource !== 0 &&
+          counts.assetStatus === 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesTypeFilter && passesSourceFilter;
+        } else if (
+          counts.assetType !== 0 &&
+          counts.assetSource === 0 &&
+          counts.assetStatus !== 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesStatusFilter && passesTypeFilter;
+        } else if (
+          counts.assetType === 0 &&
+          counts.assetSource !== 0 &&
+          counts.assetStatus !== 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesStatusFilter && passesSourceFilter;
+        } else
+          return passesTypeFilter && passesSourceFilter && passesStatusFilter;
+      });
+    }
+    // register assets
+    else {
+      const filteredByType =
+        assetFilter.assetType.length === 0
+          ? this.registeredAssets
+          : this.registeredAssets.filter((asset: any) => {
+              return assetFilter.assetType.some(
+                (type: any) =>
+                  type.isSelected && type.type === asset.assetInfo.assetType,
+              );
+            });
 
-    this.filteredByType = filteredByType;
-    this.filteredBySource = filteredBySource;
-    this.filteredByStatus = filteredByStatus;
-    this.draftFilteredAssets = filteredAssets;
+      const filteredBySource =
+        assetFilter.assetSource.length === 0
+          ? this.registeredAssets
+          : this.registeredAssets.filter((asset: any) => {
+              return assetFilter.assetSource.some(
+                (source: any) =>
+                  source.isSelected && asset.assetSource[source.type],
+              );
+            });
 
-    console.log(this.draftFilteredAssets);
+      const filteredByStatus =
+        assetFilter.assetStatus.length === 0
+          ? this.registeredAssets
+          : this.registeredAssets.filter((asset: any) => {
+              return assetFilter.assetStatus.some(
+                (status: any) =>
+                  status.isSelected && asset.assetStatus.status[status.type],
+              );
+            });
+
+      this.filteredAssets = this.registeredAssets.filter((asset: any) => {
+        const passesTypeFilter = filteredByType.includes(asset);
+        const passesSourceFilter = filteredBySource.includes(asset);
+        const passesStatusFilter = filteredByStatus.includes(asset);
+
+        if (
+          counts.assetType !== 0 &&
+          counts.assetSource === 0 &&
+          counts.assetStatus === 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesTypeFilter;
+        } else if (
+          counts.assetType === 0 &&
+          counts.assetSource !== 0 &&
+          counts.assetStatus === 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesSourceFilter;
+        } else if (
+          counts.assetType === 0 &&
+          counts.assetSource === 0 &&
+          counts.assetStatus !== 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesStatusFilter;
+        } else if (
+          counts.assetType !== 0 &&
+          counts.assetSource !== 0 &&
+          counts.assetStatus === 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesTypeFilter && passesSourceFilter;
+        } else if (
+          counts.assetType !== 0 &&
+          counts.assetSource === 0 &&
+          counts.assetStatus !== 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesStatusFilter && passesTypeFilter;
+        } else if (
+          counts.assetType === 0 &&
+          counts.assetSource !== 0 &&
+          counts.assetStatus !== 0 &&
+          counts.assetArea === 0
+        ) {
+          return passesStatusFilter && passesSourceFilter;
+        } else
+          return passesTypeFilter && passesSourceFilter && passesStatusFilter;
+      });
+    }
+    this.draftFilteredAssets = this.filteredAssets;
   };
 
   handleAssetId = (event: any) => {
@@ -269,6 +380,22 @@ export class AssetMappedPage implements OnInit {
   };
 
   handleToggle(event: any) {
+    this.filterCounts = 0;
+    this.filter = {
+      assetType: [],
+      assetArea: [],
+      assetSource: [],
+      assetStatus: [],
+    };
+    if (event.detail.checked) {
+      this.draftFilteredAssets = [];
+      this.draftFilteredAssets = this.draftAssets;
+    } else {
+      this.draftFilteredAssets = [];
+      this.draftFilteredAssets = this.registeredAssets;
+    }
+    console.log(this.draftFilteredAssets);
+
     this.toggleChecked = event.detail.checked;
   }
 }
