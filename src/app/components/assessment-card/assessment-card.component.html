@@ -1,13 +1,15 @@
 <div class="">
   <div class="max-w-full mx-auto relative rounded-md">
     <div
-      class="absolute -top-1 right-2 w-16 h-16 rounded-full bg-white flex transform translate-x-3 -translate-y-3 z-10"
+      class="absolute -top-1 right-[8.5px] w-[60px] h-[60px] rounded-full bg-white flex transform translate-x-3 -translate-y-3 z-10"
     >
       <div
         class="mx-auto my-auto w-12 h-12 rounded-full shadow-md flex"
         [class]="
           forDashboard
-            ? 'bg-[#009146]'
+            ? isOverdue
+              ? 'bg-[#F00014]'
+              : 'bg-[#009146]'
             : isOpen
               ? '  bg-[#3CB4AA]'
               : 'bg-[#007382]'
@@ -23,7 +25,9 @@
       class="rounded-md px-3 pt-3 pb-1 text-sm relative overflow-hidden"
       [class]="
         forDashboard
-          ? 'bg-white border-2 border-[#009146]'
+          ? isOverdue
+            ? 'bg-white border-2 border-[#F00014]'
+            : 'bg-white border-2 border-[#009146]'
           : isOpen
             ? 'bg-[#F4F4F4]'
             : 'bg-[#EDF5F5] '
@@ -31,7 +35,13 @@
     >
       <div
         class="absolute -top-2 right-1 w-16 h-16 rounded-full bg-white flex transform translate-x-2.5 -translate-y-2.5"
-        [class]="forDashboard ? 'border-2 border-[#009146]' : ''"
+        [class]="
+          forDashboard
+            ? isOverdue
+              ? 'border-2 border-[#F00014]'
+              : 'border-2 border-[#009146]'
+            : ''
+        "
       >
         <!-- <div
           class="mx-auto my-auto w-12 h-12 rounded-full shadow-md flex"
@@ -63,7 +73,13 @@
         </div>
         <div
           class="my-2 border-t-[1.5px] border-dashed"
-          [class]="forDashboard ? 'border-[#009146]' : 'border-[#007382]'"
+          [class]="
+            forDashboard
+              ? isOverdue
+                ? 'border-[#F00014]'
+                : 'border-[#009146]'
+              : 'border-[#007382]'
+          "
         ></div>
         <!-- middle part -->
         <ion-grid fixed>
@@ -79,7 +95,11 @@
                 <div
                   class="border-l-[2px]"
                   [class]="
-                    forDashboard ? 'border-[#009146]' : 'border-[#CDE2E2]'
+                    forDashboard
+                      ? isOverdue
+                        ? 'border-[#F00014]'
+                        : 'border-[#009146]'
+                      : 'border-[#CDE2E2]'
                   "
                 ></div>
                 <div class="">
@@ -105,7 +125,13 @@
         </div> -->
         <div
           class="my-2 border-t-[1.5px] border-dashed"
-          [class]="forDashboard ? 'border-[#009146]' : 'border-[#007382]'"
+          [class]="
+            forDashboard
+              ? isOverdue
+                ? 'border-[#F00014]'
+                : 'border-[#009146]'
+              : 'border-[#007382]'
+          "
         ></div>
 
         <!-- bottom part -->

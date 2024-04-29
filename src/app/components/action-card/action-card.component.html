@@ -2,8 +2,14 @@
   <div class="rounded-md">
     <div class="">
       <div
-        class="bg-[#EDF5F5] rounded-md p-2.5 text-sm"
-        [class]="isOverdue ? 'border-red-600' : 'border-blue-900'"
+        class="rounded-md p-2.5 text-sm"
+        [class]="
+          forDashboard
+            ? isOverdue
+              ? 'bg-white border-2 border-red-600'
+              : 'bg-white border-2 border-blue-900'
+            : 'bg-[#EDF5F5]'
+        "
       >
         <div>
           <!-- top part -->

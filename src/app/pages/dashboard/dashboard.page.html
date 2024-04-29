@@ -89,10 +89,16 @@
           <div
             class="w-full h-[calc(100vh-650px)] my-3 py-4 px-4 bg-white flex flex-col gap-5 overflow-y-scroll"
           >
-            <app-assessment-card [isOpen]="false"></app-assessment-card>
-            <app-findings-card></app-findings-card>
-            <app-action-card></app-action-card>
-            <app-action-card [isOverdue]="true"></app-action-card>
+            <app-assessment-card
+              [isOpen]="false"
+              [forDashboard]="true"
+            ></app-assessment-card>
+            <app-findings-card [forDashboard]="true"></app-findings-card>
+            <app-action-card [forDashboard]="true"></app-action-card>
+            <app-action-card
+              [forDashboard]="true"
+              [isOverdue]="true"
+            ></app-action-card>
           </div>
         </div>
         <!-- <ion-row>
