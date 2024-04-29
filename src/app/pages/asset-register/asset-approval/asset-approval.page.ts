@@ -17,27 +17,29 @@ import {
   IonBadge,
   IonRadio,
   IonLabel,
+  IonTitle,
   IonToggle,
   IonButton,
-  IonContent,
-  IonRadioGroup,
-  IonCheckbox,
   IonFooter,
+  IonContent,
   IonToolbar,
-  IonTitle,
+  IonCheckbox,
+  IonThumbnail,
+  IonRadioGroup,
+  IonSkeletonText,
 } from "@ionic/angular/standalone";
 import {
   SiteModel,
   AssetModel,
   AssetsResponseModel,
 } from "src/app/store/models/asset.model";
-
 import { Store } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
 import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
+import { LoadingSkeletonComponent } from "../../../components/loading-skeleton/loading-skeleton.component";
 
 @Component({
   standalone: true,
@@ -45,47 +47,48 @@ import { HttpService } from "src/app/services/http-service/http-client.service";
   templateUrl: "./asset-approval.page.html",
   styleUrls: ["./asset-approval.page.scss"],
   imports: [
-    IonTitle,
-    IonToolbar,
-    IonFooter,
-    IonCheckbox,
     IonImg,
     IonRow,
     IonCol,
     IonIcon,
     IonText,
     IonGrid,
+    IonTitle,
     IonLabel,
     IonRadio,
     IonBadge,
+    IonFooter,
     IonButton,
     IonToggle,
+    IonToolbar,
     IonContent,
+    IonCheckbox,
+    IonThumbnail,
     IonRadioGroup,
+    IonSkeletonText,
     HeaderComponent,
+    LoadingSkeletonComponent,
   ],
 })
 export class AssetApprovalPage implements OnInit {
+  siteId: string;
   assetId: string;
-  plantId: string;
   assets: AssetModel[];
   store = inject(Store);
-  sendForApproval: any[] = [];
   radioChecked = model();
+  sendForApproval: any[] = [];
+  requestedAssets: AssetModel[];
   httpService = inject(HttpService);
   toastService = inject(ToastService);
   isLoading: WritableSignal<boolean> = signal(false);
+
   @Input()
-  set id(plantId: string) {
-    this.plantId = plantId;
+  set id(siteId: string) {
+    this.siteId = siteId;
     this.isLoading.set(true);
-    this.httpService.GetAllAssets({ plantId }).subscribe({
+    this.httpService.GetRequestedAssets({ siteId }).subscribe({
       next: (response: AssetsResponseModel) => {
-        this.store.dispatch(
-          UPDATE_PLANT({
-            assets: response?.data,
-          }),
-        );
+        this.assets = response.data;
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);
@@ -101,18 +104,7 @@ export class AssetApprovalPage implements OnInit {
     this.assets = [];
   }
 
-  ngOnInit() {
-    this.store.select("plant").subscribe({
-      next: (plant: SiteModel) => {
-        if (plant?.assets) {
-          this.assets = plant.assets;
-        }
-      },
-    });
-    console.log(this.assets);
-
-    console.log("assets:", this.assets);
-  }
+  ngOnInit() {}
 
   selectAllAsset(event: CustomEvent) {
     this.radioChecked.set(event.detail.checked);
