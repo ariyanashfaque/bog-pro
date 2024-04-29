@@ -1,7 +1,37 @@
 // * Asset Zone Model * //
 interface AssetZoneModel {
   id: string;
-  area: string;
+  area: MarkerModel;
+}
+
+interface Keyable {
+  [key: string]: boolean | undefined;
+}
+
+// * Asset Approval Model * //
+export interface AssetSourceModel extends Keyable {
+  assetSapSync: boolean;
+  assetBulkUpload: boolean;
+  assetManualCreation: boolean;
+}
+
+interface AssetDraftRegisteredStatusModel extends Keyable {
+  assetInDraft?: boolean;
+  assetRejected?: boolean;
+  assetApproved?: boolean;
+  assetRegistered?: boolean;
+  assetApprovalPending?: boolean;
+  assetDemolishedPending?: boolean;
+  assetDemolitionApproved?: boolean;
+  assetDemolitionRejected?: boolean;
+  assetDecommissionRejected?: boolean;
+  assetDecommissionApproved?: boolean;
+  assetDecommissionedPending?: boolean;
+}
+
+export class MarkerModel {
+  lng: number;
+  lat: number;
 }
 
 // * Image Model * //
@@ -31,6 +61,13 @@ interface LocationModel {
   work_group_status: string;
 }
 
+export interface Filter {
+  assetType: { type?: string; title?: string; isSelected: boolean }[];
+  assetArea: { type?: string; title?: string; isSelected: boolean }[];
+  assetSource: { isSelected: boolean; type: string; title: string }[];
+  assetStatus: { isSelected: boolean; type: string; title: string }[];
+}
+
 // * Asset Approval Model * //
 export interface AssetSourceModel {
   assetSapSync: boolean;
@@ -57,6 +94,7 @@ interface AssetSimCategoryModel {
 // * Asset Info Model * //
 export interface AssetInfoModel {
   sapId: string;
+  iconPath: string;
   assetName: string;
   assetType: string;
   assetStatus: string;
@@ -70,7 +108,7 @@ export interface AssetDraftStatus {
   assetInDraft: boolean;
   assetRejected: boolean;
   assetApproved: boolean;
-  assetApprovalPendinng: boolean;
+  assetApprovalPending: boolean;
 }
 
 export interface AssetRegisteredStatus {
@@ -83,30 +121,30 @@ export interface AssetRegisteredStatus {
   assetDecommissionedPending: boolean;
 }
 
-interface AssetDraftRegisteredStatusModel {
-  assetInDraft: boolean;
-  assetRejected: boolean;
-  assetApproved: boolean;
-  assetRegistered: boolean;
-  assetApprovalPendinng: boolean;
-  assetDemolishedPending: boolean;
-  assetDemolitionApproved: boolean;
-  assetDemolitionRejected: boolean;
-  assetDecommissionRejected: boolean;
-  assetDecommissionApproved: boolean;
-  assetDecommissionedPending: boolean;
-}
+// interface AssetDraftRegisteredStatusModel {
+//   assetInDraft: boolean;
+//   assetRejected: boolean;
+//   assetApproved: boolean;
+//   assetRegistered: boolean;
+//   assetApprovalPending: boolean;
+//   assetDemolishedPending: boolean;
+//   assetDemolitionApproved: boolean;
+//   assetDemolitionRejected: boolean;
+//   assetDecommissionRejected: boolean;
+//   assetDecommissionApproved: boolean;
+//   assetDecommissionedPending: boolean;
+// }
 
 export interface AssetStatusModel {
   isDraft?: boolean;
   isRegistered?: boolean;
-  status?: AssetDraftRegisteredStatusModel;
+  status: AssetDraftRegisteredStatusModel;
 }
 // * Asset Filter Model * //
-export interface FilterModel {
+export interface AssetFilterModel {
   assetType: string[];
   assetArea: string[];
-  assetSoruce: SourceFilterModel;
+  assetSource: SourceFilterModel;
   assetStatus: StatusFilterModel;
 }
 export interface SourceFilterModel {

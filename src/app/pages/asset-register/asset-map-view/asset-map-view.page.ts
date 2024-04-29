@@ -1,6 +1,5 @@
 import {
   Input,
-  effect,
   inject,
   OnInit,
   signal,
@@ -9,6 +8,7 @@ import {
   ElementRef,
   WritableSignal,
   model,
+  output,
 } from "@angular/core";
 import {
   IonFab,
@@ -22,13 +22,14 @@ import {
   IonToolbar,
   IonBackdrop,
   IonProgressBar,
+  AlertController,
 } from "@ionic/angular/standalone";
-import { Store } from "@ngrx/store";
 import {
   SiteModel,
   AssetModel,
   AssetsResponseModel,
 } from "src/app/store/models/asset.model";
+import { Store } from "@ngrx/store";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { HttpErrorResponse } from "@angular/common/http";
 import { environment } from "src/environments/environment";
@@ -38,14 +39,13 @@ import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { MapService } from "src/app/services/map-service/map.service";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-sidebar.component";
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
-
 @Component({
   imports: [
     IonFab,
@@ -87,9 +87,11 @@ export class AssetMapViewPage implements OnInit {
   @ViewChild("mapRef", { static: true }) mapRef: ElementRef<HTMLDivElement>;
   display: any;
   plantId: string;
+  pressed: number;
   assets: AssetModel[];
   store = inject(Store);
   isDragging: boolean = false;
+  recievedAssetForDelete: any;
   childAsset = signal<any>({});
   selectedAsset = signal<any>({});
   httpService = inject(HttpService);
@@ -102,7 +104,7 @@ export class AssetMapViewPage implements OnInit {
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
-  recievedAssetForDelete: any;
+  assetSentForDelete: any;
 
   @Input()
   set id(plantId: string) {
@@ -135,8 +137,6 @@ export class AssetMapViewPage implements OnInit {
   }
 
   deleteSubAsset(data: any) {
-    console.log(data);
-
     this.recievedAssetForDelete = data;
   }
 
@@ -164,25 +164,46 @@ export class AssetMapViewPage implements OnInit {
     });
   }
 
-  deleteOnDrop(e: DndDropEvent) {
+  async deleteOnDrop(e: DndDropEvent) {
     if (this.recievedAssetForDelete?.subAsset) {
-      if (this.recievedAssetForDelete?.subAsset?.assetStatus?.isDraft) {
-        console.log("Draft asset");
-      }
-    }
+      if (this.recievedAssetForDelete?.subAsset?.assetStatus) {
+        const alert = await this.alertController.create({
+          header: "Cannot delete asset !!",
+          message: "This asset is in registered state",
+          buttons: [
+            {
+              text: "Understood",
+              role: "confirm",
+              handler: () => {
+                console.log("Alert confirmed");
+                this.assetSentForDelete = this.recievedAssetForDelete;
+              },
+            },
+          ],
+        });
 
-    console.log(e.event.dataTransfer?.getData("text/plain"));
+        await alert.present();
+      }
+    } else {
+      // this.assetSentForDelete.emit(this.recievedAssetForDelete);
+      // const alert = await this.alertController.create({
+      //   header: "Nothing to remove",
+      //   message: "Please drag boxes that have assets",
+      //   buttons: ["Understood"],
+      // });
+      // await alert.present();
+    }
   }
 
   ngOnDestroy(): void {
     this.loader.deleteScript();
   }
 
-  constructor() {
+  constructor(private alertController: AlertController) {
     this.assets = [];
+    this.pressed = 0;
     this.plantId = "";
     this.groupedAssets = [];
-    console.log(this.dragRecieved);
 
     this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
     this.mapMptions = {
@@ -205,18 +226,44 @@ export class AssetMapViewPage implements OnInit {
     this.map = new Map(mapRef.nativeElement, this.mapMptions);
     this.addMapStyles();
 
-    this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
-      const position = event?.latLng?.toJSON()!;
-      if (this.isDragging === true && position) {
-        console.log(position);
-        this.addMarker(position);
-        this.isDragging = false;
-      }
-    });
+    // this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
+    //   const position = event?.latLng?.toJSON()!;
+    //   if (this.isDragging === true && position) {
+    //     this.addMarker(position);
+    //     this.isDragging = false;
+
+    //     console.log("primary", position);
+    //   }
+    // });
   }
 
   async onDrop(event: DndDropEvent) {
     this.isDragging = true;
+
+    const x = event.event.clientX;
+    const y = event.event.clientY;
+    const point = new google.maps.Point(x, y);
+    const latLng = this.pointToLatLng(point, this.map);
+
+    this.isDragging = false;
+    this.addMarker(latLng.toJSON());
+
+    // console.log("secondary", latLng?.toJSON());
+  }
+
+  pointToLatLng(point: any, map: any) {
+    var topRight = map
+      .getProjection()
+      .fromLatLngToPoint(map.getBounds().getNorthEast());
+    var bottomLeft = map
+      .getProjection()
+      .fromLatLngToPoint(map.getBounds().getSouthWest());
+    var scale = Math.pow(2, map.getZoom());
+    var worldPoint = new google.maps.Point(
+      point.x / scale + bottomLeft.x,
+      point.y / scale + topRight.y,
+    );
+    return map.getProjection().fromPointToLatLng(worldPoint);
   }
 
   private async addMapStyles() {
@@ -256,8 +303,22 @@ export class AssetMapViewPage implements OnInit {
     });
 
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
-      // console.log(event?.latLng?.toJSON());
-      this.toggleChildMenu();
+      console.log("Single Clicked");
+
+      this.pressed++;
+
+      // Set a timeout to increment pressed variable every 1000ms (1 second)
+      setInterval(() => {
+        this.pressed++;
+      }, 1000);
+      // this.toggleChildMenu();
+
+      console.log(this.pressed);
+    });
+    marker.addListener("dblclick", (event: google.maps.MapMouseEvent) => {
+      console.log("Double Clicked");
+
+      // this.toggleInfoMenu();
     });
   }
 
