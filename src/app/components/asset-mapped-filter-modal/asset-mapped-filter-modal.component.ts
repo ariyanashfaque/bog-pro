@@ -121,19 +121,19 @@ export class AssetMappedFilterModalComponent implements OnInit {
     }
     this.selectedTypes = keyValuePairs;
 
-    // Populate assetType
+    console.log(this.selectedTypes);
+
     this.assets().forEach((asset: any) => {
-      // status pending work
+      // function to filter existing types
+      const filterStatusTypes = (status: any) => {
+        const statusKeys = Object.keys(status);
+        const trueStatusTypes = statusKeys.filter(
+          (key) => status[key] === true,
+        );
+        return trueStatusTypes;
+      };
 
-      // const filterStatusTypes = (status: any) => {
-      //   const statusKeys = Object.keys(status);
-      //   const trueStatusTypes = statusKeys.filter(
-      //     (key) => status[key] === true,
-      //   );
-      //   return trueStatusTypes;
-      // };
-      // console.log(filterStatusTypes(asset.assetStatus.status));
-
+      // Populate assetType
       const assetType = asset.assetInfo?.assetType;
       const existingType = this.filter.assetType?.find(
         (type: any) => type.type === assetType,
@@ -147,8 +147,11 @@ export class AssetMappedFilterModalComponent implements OnInit {
       }
 
       // Populate assetSource
-      if (asset.assetSource) {
-        Object.keys(asset.assetSource).forEach((sourceKey) => {
+
+      // selected source separetion
+      const sourceArray = filterStatusTypes(asset.assetSource);
+      if (sourceArray) {
+        sourceArray.forEach((sourceKey: string) => {
           const sourceType = sourceKey;
           const existingSource = this.filter.assetSource.find(
             (source: any) => source.type === sourceType,
@@ -162,9 +165,13 @@ export class AssetMappedFilterModalComponent implements OnInit {
           }
         });
       }
+
       // Populate assetStatus
-      if (asset.assetStatus) {
-        Object.keys(asset.assetStatus.status).forEach((statusKey: string) => {
+
+      // selected status separetion
+      const statusArray = filterStatusTypes(asset.assetStatus.status);
+      if (statusArray) {
+        statusArray.forEach((statusKey: string) => {
           const statusType = statusKey;
           const existingStatus = this.filter.assetStatus.find(
             (status: any) => status.type === statusType,
