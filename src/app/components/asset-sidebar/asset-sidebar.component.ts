@@ -1,7 +1,13 @@
 import { DndModule } from "ngx-drag-drop";
+import { polyfill } from "mobile-drag-drop";
 import { IonIcon, IonText } from "@ionic/angular/standalone";
 import { AssetModel } from "src/app/store/models/asset.model";
 import { Component, input, model, OnInit, output } from "@angular/core";
+import { scrollBehaviourDragImageTranslateOverride } from "mobile-drag-drop/scroll-behaviour";
+
+polyfill({
+  dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride,
+});
 
 @Component({
   standalone: true,
