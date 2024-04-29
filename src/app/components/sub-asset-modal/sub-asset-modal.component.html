@@ -46,15 +46,13 @@
       <img
         class="w-auto h-1/2 mx-auto rounded-full"
         src="../../../assets/{{
-          selectedMappedAsset()?.selectedAsset?.assetInformation?.icon
+          selectedMappedAsset()?.assetInformation?.icon
         }}"
-        alt="{{
-          selectedMappedAsset()?.selectedAsset?.assetInformation?.title
-        }}"
+        alt="{{ selectedMappedAsset()?.assetInformation?.title }}"
       />
       <div class="w-full text-xs text-center">
         <span class="text-[#000000DE]">
-          {{ selectedMappedAsset()?.selectedAsset?.assetInformation?.title }}
+          {{ selectedMappedAsset()?.assetInformation?.title }}
         </span>
       </div>
       <div class="w-full text-xs text-center">

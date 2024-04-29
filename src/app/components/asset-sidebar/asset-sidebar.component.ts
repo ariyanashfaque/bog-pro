@@ -15,7 +15,7 @@ import {
 import { IonIcon, IonText } from "@ionic/angular/standalone";
 import { DndModule } from "ngx-drag-drop";
 import { MasterAsset } from "src/app/store/models/asset.model";
-import { AssetZoneModel } from "src/app/store/models/map.model";
+// import { AssetZoneModel } from "src/app/store/models/map.model";
 
 @Component({
   selector: "app-asset-sidebar",
@@ -30,7 +30,7 @@ export class AssetSidebarComponent implements OnInit {
   isSubAssetModalOpen = model<boolean>(false);
   activeAccordion: string = "recommended";
   assetData = input<MasterAsset[]>();
-  selectedMappedAsset = input<AssetZoneModel>();
+  selectedMappedAsset = input<MasterAsset>();
   selectedAsset = output<any>();
   activeIndex = model<number>(-1);
 
@@ -65,14 +65,17 @@ export class AssetSidebarComponent implements OnInit {
   }
 
   onDragStart(event: MouseEvent, asset: any) {
-    console.log(asset);
-    this.selectedAsset.emit(asset);
+    // console.log(asset);
     event.stopPropagation();
+    this.selectedAsset.emit(asset);
   }
 
   constructor() {
     effect(() => {
       console.log("assetData", this.assetData);
+    });
+    effect(() => {
+      console.log("selectedMappedAsset->", this.selectedMappedAsset());
     });
 
     console.log("assetData", this.assetData);

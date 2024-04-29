@@ -31,6 +31,7 @@ import {
   SitesResponseModel,
   MasterAsset,
   MasterAssetResponseModel,
+  AssetInfoModel,
 } from "src/app/store/models/asset.model";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -48,7 +49,6 @@ import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-si
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
-import { AssetZoneModel, MarkerModel } from "src/app/store/models/map.model";
 
 @Component({
   imports: [
@@ -108,8 +108,8 @@ export class AssetMapViewPage implements OnInit {
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
   masterAssets: MasterAsset[];
   recievedAssetForDelete: any;
-  mappedAssets = signal<AssetZoneModel[]>([]);
-  selectedMappedAsset = signal<AssetZoneModel>({});
+  mappedAssets = signal<AssetModel[]>([]);
+  selectedMappedAsset = signal<MasterAsset>({});
   markers: any[] = [];
 
   @Input()
@@ -241,11 +241,21 @@ export class AssetMapViewPage implements OnInit {
       const position = event?.latLng?.toJSON()!;
       if (this.isDragging === true && position) {
         console.log("postion: ", position);
+
+        console.log("this.selectedAsset(): ", this.selectedAsset());
+
         this.mappedAssets.set([
           ...this.mappedAssets(),
           {
-            selectedAsset: this.selectedAsset(),
-            area: position,
+            assetInfo: {
+              assetName: this.selectedAsset()?.assetInformation?.title,
+              assetType: this.selectedAsset()?.assetInformation?.type,
+              assetParentType: this.selectedAsset()?.assetInformation?.type,
+              iconPath: this.selectedAsset()?.assetInformation?.icon,
+              assetZone: {
+                coordinates: position,
+              },
+            },
           },
         ]);
         const icon = `../assets/${this.selectedAsset()?.assetInformation?.icon ?? "check-in/plant.svg"}`;
@@ -373,9 +383,19 @@ export class AssetMapViewPage implements OnInit {
     console.log("Selected Asset: ", this.selectedAsset());
   }
 
-  findSelectedAsset = (assets: AssetZoneModel[], area: MarkerModel) =>
-    assets?.filter(
+  findSelectedAsset = (
+    assets: AssetModel[],
+    area: { lng: number; lat: number },
+  ) => {
+    const asset = assets?.filter(
       (asset) =>
-        asset?.area?.lat === area?.lat && asset?.area?.lng === area?.lng,
+        asset?.assetInfo?.assetZone?.coordinates.lat === area?.lat &&
+        asset.assetInfo?.assetZone?.coordinates.lng === area?.lng,
     )[0];
+
+    return this.masterAssets?.filter(
+      (item: MasterAsset) =>
+        item?.assetInformation?.type === asset?.assetInfo?.assetParentType,
+    )[0];
+  };
 }

@@ -15,7 +15,8 @@ import {
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { DndEvent } from "ngx-drag-drop/lib/dnd-utils";
-import { AssetZoneModel } from "src/app/store/models/map.model";
+import { MasterAsset } from "src/app/store/models/asset.model";
+// import { AssetZoneModel } from "src/app/store/models/map.model";
 
 @Component({
   standalone: true,
@@ -30,7 +31,7 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   isAssetInfoMenuOpen = model(false);
   recievedDraggedAsset = input.required<any>();
   sendForDeleteAsset = output<any>();
-  selectedMappedAsset = input<AssetZoneModel>();
+  selectedMappedAsset = input<MasterAsset>();
   recievedAssetFromSidebar: any;
   subAssets: any[] = [
     {

@@ -1,7 +1,11 @@
 // * Asset Zone Model * //
 interface AssetZoneModel {
-  id: string;
-  area: string;
+  id?: string;
+  area?: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
 }
 
 // * Image Model * //
@@ -56,14 +60,15 @@ interface AssetSimCategoryModel {
 
 // * Asset Info Model * //
 export interface AssetInfoModel {
-  sapId: string;
+  sapId?: string;
   assetName: string;
   assetType: string;
-  assetStatus: string;
+  assetStatus?: string;
   assetParentType: string;
-  assetCostCenter: string;
-  assetZone: AssetZoneModel;
-  assetImages: AssetImageModel[];
+  assetCostCenter?: string;
+  assetZone?: AssetZoneModel;
+  assetImages?: AssetImageModel[];
+  iconPath: string;
 }
 
 export interface AssetDraftStatus {

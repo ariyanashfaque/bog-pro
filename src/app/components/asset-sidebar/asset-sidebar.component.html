@@ -89,10 +89,7 @@
           : 'max-h-0'
       "
     >
-      @for (
-        asset of selectedMappedAsset()?.selectedAsset?.recommended;
-        track $index
-      ) {
+      @for (asset of selectedMappedAsset()?.recommended; track $index) {
         <div class="">
           <div
             class="cursor-pointer mx-auto"
@@ -159,10 +156,7 @@
         activeAccordion == 'others' ? ' max-h-[calc(100vh-270px)]  ' : 'max-h-0'
       "
     >
-      @for (
-        asset of selectedMappedAsset()?.selectedAsset?.others;
-        track $index
-      ) {
+      @for (asset of selectedMappedAsset()?.others; track $index) {
         <div class="">
           <div
             class="cursor-pointer mx-auto"
