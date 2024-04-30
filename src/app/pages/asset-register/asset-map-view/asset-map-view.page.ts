@@ -9,6 +9,7 @@ import {
   WritableSignal,
   model,
   output,
+  effect,
 } from "@angular/core";
 import {
   IonFab,
@@ -23,6 +24,7 @@ import {
   IonBackdrop,
   IonProgressBar,
   AlertController,
+  Platform,
 } from "@ionic/angular/standalone";
 import {
   SiteModel,
@@ -74,6 +76,7 @@ import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/s
   styleUrls: ["./asset-map-view.page.scss"],
 })
 export class AssetMapViewPage implements OnInit {
+  platform = inject(Platform);
   mapService = inject(MapService);
   private map: google.maps.Map;
   private mapMptions: google.maps.MapOptions;
@@ -87,7 +90,6 @@ export class AssetMapViewPage implements OnInit {
   @ViewChild("mapRef", { static: true }) mapRef: ElementRef<HTMLDivElement>;
   display: any;
   plantId: string;
-  pressed: number;
   assets: AssetModel[];
   store = inject(Store);
   isDragging: boolean = false;
@@ -99,12 +101,16 @@ export class AssetMapViewPage implements OnInit {
   isChildOpen = signal<boolean>(false);
   subAssetActiveIndex = signal<number>(-1);
   assetModalActiveIndex = signal<number>(-1);
+  pressed: WritableSignal<number> = signal(0);
   isAssetInfoMenuOpen = signal<boolean>(false);
   isSubAssetModalOpen = signal<boolean>(false);
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
   assetSentForDelete: any;
+  // private pressCounter: WritableSignal<number> = signal(0);
+  private pressTimer: ReturnType<typeof setTimeout>;
+  private pressCounter: WritableSignal<number> = signal(0);
 
   @Input()
   set id(plantId: string) {
@@ -138,6 +144,27 @@ export class AssetMapViewPage implements OnInit {
 
   deleteSubAsset(data: any) {
     this.recievedAssetForDelete = data;
+  }
+
+  constructor(private alertController: AlertController) {
+    this.assets = [];
+    this.plantId = "";
+    this.groupedAssets = [];
+
+    this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
+    this.mapMptions = {
+      zoom: 16,
+      minZoom: 6,
+      maxZoom: 20,
+      mapId: "g-maps",
+      mapTypeId: "roadmap",
+      mapTypeControl: false,
+      center: this.mapCenter,
+      disableDefaultUI: true,
+      streetViewControl: false,
+      keyboardShortcuts: false,
+      disableDoubleClickZoom: true,
+    };
   }
 
   ngOnInit() {
@@ -199,28 +226,6 @@ export class AssetMapViewPage implements OnInit {
     this.loader.deleteScript();
   }
 
-  constructor(private alertController: AlertController) {
-    this.assets = [];
-    this.pressed = 0;
-    this.plantId = "";
-    this.groupedAssets = [];
-
-    this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
-    this.mapMptions = {
-      zoom: 16,
-      minZoom: 6,
-      maxZoom: 20,
-      mapId: "g-maps",
-      mapTypeId: "roadmap",
-      mapTypeControl: false,
-      center: this.mapCenter,
-      disableDefaultUI: true,
-      streetViewControl: false,
-      keyboardShortcuts: false,
-      disableDoubleClickZoom: true,
-    };
-  }
-
   public async initializeMap(mapRef: ElementRef) {
     const { Map } = await this.importMapsLibrary("maps");
     this.map = new Map(mapRef.nativeElement, this.mapMptions);
@@ -247,8 +252,6 @@ export class AssetMapViewPage implements OnInit {
 
     this.isDragging = false;
     this.addMarker(latLng.toJSON());
-
-    // console.log("secondary", latLng?.toJSON());
   }
 
   pointToLatLng(point: any, map: any) {
@@ -295,31 +298,90 @@ export class AssetMapViewPage implements OnInit {
     mapMarker.appendChild(markerImage);
     mapMarker.appendChild(counterElement);
 
+    // parent.addEventListener("click", () => {
+    //   console.log("Parent Bubble");
+    // });
+    if (this.platform.is("ios") || this.platform.is("android")) {
+      mapMarker.addEventListener(
+        "touchstart",
+        (e) => {
+          e.preventDefault();
+
+          console.log("touch start");
+          this.handleLongPress();
+        },
+        { passive: false },
+      );
+      mapMarker.addEventListener(
+        "touchend",
+        (e) => {
+          e.preventDefault();
+
+          console.log("touch end");
+          console.log(this.pressCounter());
+
+          if (this.pressCounter() === 0) {
+            this.toggleInfoMenu();
+          }
+          if (this.pressCounter() >= 3) {
+            this.toggleChildMenu();
+          }
+        },
+        { passive: false },
+      );
+    } else {
+      mapMarker.addEventListener(
+        "mousedown",
+        (e) => {
+          e.preventDefault();
+          this.handleLongPress();
+          console.log(this.pressCounter());
+        },
+        { passive: false },
+      );
+      mapMarker.addEventListener(
+        "mouseup",
+        (e) => {
+          e.preventDefault();
+          console.log(this.pressCounter());
+
+          if (this.pressCounter() === 0) {
+            this.toggleInfoMenu();
+          }
+          if (this.pressCounter() >= 3) {
+            this.toggleChildMenu();
+          }
+        },
+        { passive: false },
+      );
+    }
+
     const marker = new AdvancedMarkerElement({
       map: this.map,
       position: position,
       gmpClickable: true,
+      // gmpDraggable: true,
       content: mapMarker,
     });
 
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
-      console.log("Single Clicked");
-
-      this.pressed++;
-
-      // Set a timeout to increment pressed variable every 1000ms (1 second)
-      setInterval(() => {
-        this.pressed++;
-      }, 1000);
-      // this.toggleChildMenu();
-
-      console.log(this.pressed);
-    });
-    marker.addListener("dblclick", (event: google.maps.MapMouseEvent) => {
-      console.log("Double Clicked");
-
       // this.toggleInfoMenu();
+      //   this.toggleChildMenu();
     });
+  }
+
+  handleLongPress() {
+    this.pressTimer = setInterval(() => {
+      this.pressCounter.update((counter) => counter + 1);
+      if (this.pressCounter() > 5) {
+        this.pressCounter.set(0);
+        this.handleLongPressRelease();
+      }
+    }, 1000);
+  }
+
+  handleLongPressRelease() {
+    clearTimeout(this.pressTimer);
   }
 
   private async importMapsLibrary(type: Library) {
@@ -370,6 +432,5 @@ export class AssetMapViewPage implements OnInit {
       this.isSubAssetModalOpen.set(false);
       this.selectedAsset.set({});
     }
-    console.log("Selected Asset: ", this.selectedAsset());
   }
 }
