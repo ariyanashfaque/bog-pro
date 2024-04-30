@@ -1,7 +1,11 @@
 // * Asset Zone Model * //
 interface AssetZoneModel {
-  id: string;
-  area: MarkerModel;
+  id?: string;
+  area?: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
 }
 
 interface Keyable {

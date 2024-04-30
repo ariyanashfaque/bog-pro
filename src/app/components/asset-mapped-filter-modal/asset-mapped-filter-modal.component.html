@@ -66,13 +66,33 @@
                     "
                   >
                     @if (filter.key === "assetType") {
-                      Asset Type ({{ selectedTypeCount.assetType || 0 }})
+                      Asset Type
+                      {{
+                        selectedTypeCount.assetType
+                          ? "(" + selectedTypeCount.assetType + ")"
+                          : ""
+                      }}
                     } @else if (filter.key === "assetArea") {
-                      Area ({{ selectedTypeCount.assetArea || 0 }})
+                      Area
+                      {{
+                        selectedTypeCount.assetArea
+                          ? "(" + selectedTypeCount.assetArea + ")"
+                          : ""
+                      }}
                     } @else if (filter.key === "assetSource") {
-                      Source ({{ selectedTypeCount.assetSource || 0 }})
+                      Source
+                      {{
+                        selectedTypeCount.assetSource
+                          ? "(" + selectedTypeCount.assetSource + ")"
+                          : ""
+                      }}
                     } @else if (filter.key === "assetStatus") {
-                      Status ({{ selectedTypeCount.assetStatus || 0 }})
+                      Status
+                      {{
+                        selectedTypeCount.assetStatus
+                          ? "(" + selectedTypeCount.assetStatus + ")"
+                          : ""
+                      }}
                     } @else {
                       {{ filter.key }}
                     }
@@ -136,6 +156,10 @@
                               Asset Decommission Rejected
                             } @else if (
                               filter.type === "assetDemolitionRejected"
+                            ) {
+                              Asset Decommission Approved
+                            } @else if (
+                              filter.type === "assetDecommissionApproved"
                             ) {
                               Asset Decommission Approved
                             } @else if (

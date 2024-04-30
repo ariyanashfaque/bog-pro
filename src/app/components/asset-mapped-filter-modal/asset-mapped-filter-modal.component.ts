@@ -146,6 +146,19 @@ export class AssetMappedFilterModalComponent implements OnInit {
         });
       }
 
+      // Populate assetArea
+      // const assetArea = asset.assetArea?.area;
+      // const existingArea = this.filter.assetArea?.find(
+      //   (type: any) => type.area === assetArea,
+      // );
+      // if (!existingArea) {
+      //   this.filter.assetArea?.push({
+      //     type: assetArea,
+      //     title: assetArea,
+      //     isSelected: false,
+      //   });
+      // }
+
       // Populate assetSource
 
       // selected source separetion

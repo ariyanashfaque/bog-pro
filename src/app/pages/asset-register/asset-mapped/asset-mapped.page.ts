@@ -94,11 +94,8 @@ export class AssetMappedPage implements OnInit {
   filterCounts: number;
   toggleChecked: boolean;
   draftAssets: AssetModel[];
-  filteredByType: AssetModel[];
   filteredAssets: AssetModel[];
   registeredAssets: AssetModel[];
-  filteredBySource: AssetModel[];
-  filteredByStatus: AssetModel[];
   draftFilteredAssets: AssetModel[];
   isFilterMenuOpen: boolean = false;
   isApprovalMenuOpen: boolean = false;
@@ -142,7 +139,6 @@ export class AssetMappedPage implements OnInit {
   ngOnInit() {
     this.store.select("plant").subscribe({
       next: (plant: SiteModel) => {
-        console.log(plant.assets);
         if (plant?.assets) {
           this.assets = plant.assets;
           plant.assets?.forEach((asset) => {
@@ -213,6 +209,17 @@ export class AssetMappedPage implements OnInit {
               );
             });
 
+      // assetArea filter type
+      const filteredByArea =
+        assetFilter.assetArea.length === 0
+          ? this.draftAssets
+          : this.draftAssets.filter((asset: any) => {
+              return assetFilter.assetArea.some(
+                (type: any) =>
+                  type.isSelected && type.area === asset.assetArea.area,
+              );
+            });
+
       // source filter type
       const filteredBySource =
         assetFilter.assetSource.length === 0
@@ -237,10 +244,11 @@ export class AssetMappedPage implements OnInit {
 
       this.filteredAssets = this.draftAssets.filter((asset: any) => {
         const passesTypeFilter = filteredByType.includes(asset);
+        const passesAreaFilter = filteredByArea.includes(asset);
         const passesSourceFilter = filteredBySource.includes(asset);
         const passesStatusFilter = filteredByStatus.includes(asset);
 
-        // single filter 
+        // single filter
         if (
           counts.assetType !== 0 &&
           counts.assetSource === 0 &&
@@ -258,12 +266,19 @@ export class AssetMappedPage implements OnInit {
         } else if (
           counts.assetType === 0 &&
           counts.assetSource === 0 &&
+          counts.assetStatus === 0 &&
+          counts.assetArea !== 0
+        ) {
+          return passesAreaFilter;
+        } else if (
+          counts.assetType === 0 &&
+          counts.assetSource === 0 &&
           counts.assetStatus !== 0 &&
           counts.assetArea === 0
         ) {
           return passesStatusFilter;
-        } 
-        // multiple filter 
+        }
+        // multiple filter
         else if (
           counts.assetType !== 0 &&
           counts.assetSource !== 0 &&
