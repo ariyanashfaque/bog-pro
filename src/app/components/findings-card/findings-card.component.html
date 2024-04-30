@@ -1,7 +1,16 @@
 <div class="max-w-full mx-auto pb-3">
   <div class="rounded-md">
     <div class="">
-      <div class="bg-[#EDF5F5] rounded-md p-2.5 text-sm">
+      <div
+        class="rounded-md p-2.5 text-sm"
+        [class]="
+          forDashboard
+            ? isOverdue
+              ? 'border-2 border-[#F00014] bg-white'
+              : 'border-2 border-[#FF6E00] bg-white'
+            : 'bg-[#EDF5F5]'
+        "
+      >
         <div>
           <!-- top part -->
           <div class="flex gap-3">
@@ -20,7 +29,13 @@
           </div>
           <div
             class="my-2 border-t-[1.5px]"
-            [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+            [class]="
+              forDashboard
+                ? isOverdue
+                  ? 'border-red-100'
+                  : 'border-[#FFEAD9]'
+                : 'border-[#CDE2E2]'
+            "
           ></div>
           <!-- middle part -->
           <div class="flex justify-between mt-2">
@@ -34,15 +49,31 @@
             </div>
             <div
               class="border-l-[1.5px]"
-              [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+              [class]="
+                forDashboard
+                  ? isOverdue
+                    ? 'border-red-100'
+                    : 'border-[#FFEAD9]'
+                  : 'border-[#CDE2E2]'
+              "
             ></div>
             <div class="">
               <p class="text-xs">Due date</p>
-              <p class="font-bold text-xs">1<sup>st</sup> Jan 2023</p>
+              <p class="font-bold text-xs">
+                1
+                <sup>st</sup>
+                Jan 2023
+              </p>
             </div>
             <div
               class="border-l-[1.5px]"
-              [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+              [class]="
+                forDashboard
+                  ? isOverdue
+                    ? 'border-red-100'
+                    : 'border-[#FFEAD9]'
+                  : 'border-[#CDE2E2]'
+              "
             ></div>
             <div class="">
               <p class="text-xs">Created by</p>
@@ -51,12 +82,18 @@
           </div>
           <div
             class="my-2 border-t-[1.5px]"
-            [class]="isOverdue ? 'border-red-100' : 'border-[#CDE2E2]'"
+            [class]="
+              forDashboard
+                ? isOverdue
+                  ? 'border-red-100'
+                  : 'border-[#FFEAD9]'
+                : 'border-[#CDE2E2]'
+            "
           ></div>
           <!-- bottom part -->
           <div clsss="">
             <p class="text-xs">Actions (2)</p>
-            <a class="text-[#2674D1] font-bold"> <u>100% closure</u> </a>
+            <a class="text-[#2674D1] font-bold"><u>100% closure</u></a>
           </div>
         </div>
       </div>

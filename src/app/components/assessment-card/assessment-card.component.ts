@@ -32,8 +32,9 @@ import {
 })
 export class AssessmentCardComponent implements OnInit {
   @Input() isOpen: boolean = false;
+  @Input() isOverdue: boolean = false;
   @Input() data: any = {};
-  @Input() forDashboard: boolean = true;
+  @Input() forDashboard: boolean = false;
 
   constructor() {}
 

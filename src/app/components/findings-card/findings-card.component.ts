@@ -10,6 +10,7 @@ import { IonIcon, IonButton } from "@ionic/angular/standalone";
 })
 export class FindingsCardComponent implements OnInit {
   @Input() isOverdue: boolean = false;
+  @Input() forDashboard: boolean = false;
   constructor() {}
 
   ngOnInit() {}
