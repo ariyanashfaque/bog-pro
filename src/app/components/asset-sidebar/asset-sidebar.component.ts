@@ -83,7 +83,13 @@ export class AssetSidebarComponent implements OnInit {
     effect(() => {
       console.log("selectedMappedAsset->", this.selectedMappedAsset());
     });
-
+    effect(() => {
+      console.log(
+        "this.isChildOpen(): ",
+        this.isChildOpen(),
+        this.isMenuOpen(),
+      );
+    });
     // console.log("assetData", this.assetData());
   }
 
