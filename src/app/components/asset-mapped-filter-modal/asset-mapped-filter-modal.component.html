@@ -21,13 +21,6 @@
         />
       </svg>
     </div>
-
-    <!-- <div class="h-full w-full">
-      <ion-img
-        class="-ml-12 -mt-[16.5px]"
-        src="../../../../assets/curvenew.png"
-      ></ion-img>
-    </div> -->
     <div class="w-auto h-full relative">
       <div
         (click)="menuToggle()"
@@ -64,24 +57,46 @@
                   [class.selected]="filter.key === filterName"
                   class="bg-[#edf5f5] border-b-2 border-r-2 border-[#00738233] h-14 p-3"
                 >
-                  <ion-label class="text-xl ml-5">
+                  <ion-label
+                    class="text-xl ml-5 text-[28px]"
+                    [class]="
+                      filter.key === filterName
+                        ? 'font-gotham_medium'
+                        : 'font-gotham_book'
+                    "
+                  >
                     @if (filter.key === "assetType") {
                       Asset Type
+                      {{
+                        selectedTypeCount.assetType
+                          ? "(" + selectedTypeCount.assetType + ")"
+                          : ""
+                      }}
                     } @else if (filter.key === "assetArea") {
                       Area
+                      {{
+                        selectedTypeCount.assetArea
+                          ? "(" + selectedTypeCount.assetArea + ")"
+                          : ""
+                      }}
                     } @else if (filter.key === "assetSource") {
                       Source
+                      {{
+                        selectedTypeCount.assetSource
+                          ? "(" + selectedTypeCount.assetSource + ")"
+                          : ""
+                      }}
                     } @else if (filter.key === "assetStatus") {
                       Status
+                      {{
+                        selectedTypeCount.assetStatus
+                          ? "(" + selectedTypeCount.assetStatus + ")"
+                          : ""
+                      }}
                     } @else {
                       {{ filter.key }}
                     }
                   </ion-label>
-                  <ion-label></ion-label>
-
-                  <!-- @if (filter === filterName) {
-                    <ion-label>({{ selectedTypesCount }})</ion-label>
-                  } -->
                 </ion-col>
               }
             </ion-row>
@@ -103,25 +118,62 @@
                             (ionChange)="handlefilterbytype(filters, filter)"
                             labelPlacement="end"
                             [checked]="filter.isSelected"
+                            class="font-gotham_book text-[22px]"
                           >
-                            @if (filter.title === "assetSapSync") {
+                            @if (filter.type === "assetSapSync") {
                               Sap
-                            } @else if (
-                              filter.title === "assetManualCreation"
-                            ) {
+                            } @else if (filter.type === "assetManualCreation") {
                               Manual
-                            } @else if (filter.title === "assetBulkUpload") {
+                            } @else if (filter.type === "assetBulkUpload") {
                               Bulk
                             } @else if (
-                              filter.title === "assetApprovalPending"
+                              filter.type === "assetApprovalPending"
                             ) {
                               Asset Approval Pending
-                            } @else if (filter.title === "assetApproved") {
+                            } @else if (filter.type === "assetApproved") {
                               Asset Approved
-                            } @else if (filter.title === "assetRejected") {
+                            } @else if (filter.type === "assetRejected") {
                               Asset Rejected
-                            } @else if (filter.title === "assetInDraft") {
+                            } @else if (filter.type === "assetInDraft") {
                               Asset in Draft
+                            } @else if (filter.type === "assetRegistered") {
+                              Asset Registered
+                            } @else if (
+                              filter.type === "assetDemolishedPending"
+                            ) {
+                              Asset Demolished Pending
+                            } @else if (
+                              filter.type === "assetDemolitionApproved"
+                            ) {
+                              Asset Demolition Approved
+                            } @else if (
+                              filter.type === "assetDemolitionRejected"
+                            ) {
+                              Asset DemolitionRejected
+                            } @else if (
+                              filter.type === "assetDecommissionRejected"
+                            ) {
+                              Asset Decommission Rejected
+                            } @else if (
+                              filter.type === "assetDemolitionRejected"
+                            ) {
+                              Asset Decommission Approved
+                            } @else if (
+                              filter.type === "assetDecommissionApproved"
+                            ) {
+                              Asset Decommission Approved
+                            } @else if (
+                              filter.type === "assetDecommissionedPending"
+                            ) {
+                              Asset Decommissioned Pending
+                            } @else if (filter.type === "silo") {
+                              Silo
+                            } @else if (filter.title === "hopper") {
+                              Hopper
+                            } @else if (filter.title === "bin") {
+                              Bin
+                            } @else if (filter.title === "bridge") {
+                              Bridge
                             } @else {
                               {{ filter.title }}
                             }
@@ -146,6 +198,7 @@
           expand="full"
           color="textwhite"
           class="w-full text-[16px] font-gotham_book"
+          (click)="Reset()"
         >
           Reset
         </ion-button>
@@ -153,7 +206,7 @@
           expand="full"
           color="textwhite"
           class="w-full text-[16px] font-gotham_book"
-          (click)="Filter($event)"
+          (click)="Filter()"
         >
           Apply
         </ion-button>

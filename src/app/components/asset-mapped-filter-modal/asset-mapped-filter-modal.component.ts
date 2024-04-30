@@ -5,8 +5,6 @@ import {
   Output,
   Component,
   EventEmitter,
-  WritableSignal,
-  signal,
 } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
@@ -74,52 +72,99 @@ import { Filter, AssetModel } from "src/app/store/models/asset.model";
 export class AssetMappedFilterModalComponent implements OnInit {
   filter: Filter;
   selectedTypes: any;
+  selectedTypeCount: any;
   selectedTypesCount: number;
   filterName: string = "assetType";
+  savedFilter = input.required<Filter>();
   assets = input.required<AssetModel[]>();
+  filterCounts = input.required<number>();
   @Input() isFilterMenuOpen: boolean = false;
   keyValuePairs: { key: string; value: any }[] = [];
   @Output() filterByTypes = new EventEmitter<any>();
-  isFilterToggleOpen: WritableSignal<boolean> = signal(false);
+  @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
 
+  filterCount: number;
   constructor() {
     this.selectedTypes = [];
-    this.filter = {
-      assetType: [],
-      assetArea: [],
-      assetSource: [],
-      assetStatus: [],
-    };
+    this.selectedTypeCount = {};
   }
 
   ngOnInit() {
-    console.log(this.assets());
+    this.filterCount = this.filterCounts();
+    if (this.savedFilter()) {
+      this.filter = this.savedFilter();
+    } else {
+      this.filter = {
+        assetType: [],
+        assetArea: [],
+        assetSource: [],
+        assetStatus: [],
+      };
+    }
+    const countSelectedItems = (category: any) => {
+      return category.reduce((count: any, item: any) => {
+        return count + (item.isSelected ? 1 : 0);
+      }, 0);
+    };
+
+    // Count selected items for each Type
+    this.selectedTypeCount = {
+      assetType: countSelectedItems(this.filter.assetType),
+      assetArea: countSelectedItems(this.filter.assetArea),
+      assetSource: countSelectedItems(this.filter.assetSource),
+      assetStatus: countSelectedItems(this.filter.assetStatus),
+    };
 
     const keyValuePairs: { key: string; value: any }[] = [];
     for (const [key, value] of Object.entries(this.filter)) {
       keyValuePairs.push({ key, value });
     }
     this.selectedTypes = keyValuePairs;
+
     console.log(this.selectedTypes);
 
-    // Populate assetType
     this.assets().forEach((asset: any) => {
+      // function to filter existing types
+      const filterStatusTypes = (status: any) => {
+        const statusKeys = Object.keys(status);
+        const trueStatusTypes = statusKeys.filter(
+          (key) => status[key] === true,
+        );
+        return trueStatusTypes;
+      };
+
+      // Populate assetType
       const assetType = asset.assetInfo?.assetType;
-      const assetTitle = asset.assetInfo?.assetName;
       const existingType = this.filter.assetType?.find(
         (type: any) => type.type === assetType,
       );
       if (!existingType) {
         this.filter.assetType?.push({
           type: assetType,
-          title: assetTitle,
+          title: assetType,
           isSelected: false,
         });
       }
 
+      // Populate assetArea
+      // const assetArea = asset.assetArea?.area;
+      // const existingArea = this.filter.assetArea?.find(
+      //   (type: any) => type.area === assetArea,
+      // );
+      // if (!existingArea) {
+      //   this.filter.assetArea?.push({
+      //     type: assetArea,
+      //     title: assetArea,
+      //     isSelected: false,
+      //   });
+      // }
+
       // Populate assetSource
-      if (asset.assetSource) {
-        Object.keys(asset.assetSource).forEach((sourceKey) => {
+
+      // selected source separetion
+      const sourceArray = filterStatusTypes(asset.assetSource);
+      if (sourceArray) {
+        sourceArray.forEach((sourceKey: string) => {
           const sourceType = sourceKey;
           const existingSource = this.filter.assetSource.find(
             (source: any) => source.type === sourceType,
@@ -133,9 +178,13 @@ export class AssetMappedFilterModalComponent implements OnInit {
           }
         });
       }
-      // Populate assetStatus if it is defined
-      if (asset.assetStatus) {
-        Object.keys(asset.assetStatus.status).forEach((statusKey: string) => {
+
+      // Populate assetStatus
+
+      // selected status separetion
+      const statusArray = filterStatusTypes(asset.assetStatus.status);
+      if (statusArray) {
+        statusArray.forEach((statusKey: string) => {
           const statusType = statusKey;
           const existingStatus = this.filter.assetStatus.find(
             (status: any) => status.type === statusType,
@@ -154,21 +203,57 @@ export class AssetMappedFilterModalComponent implements OnInit {
 
   menuToggle() {
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
-    this.isFilterToggleOpen.set(this.isFilterMenuOpen);
+    this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   }
 
   handleFilterCategory(categoryName: string) {
-    this.selectedTypesCount = 0;
-
     this.filterName = categoryName;
   }
   //  by Asset filter type
   handlefilterbytype(fieldType: any, type: any) {
     type.isSelected = !type.isSelected;
+
+    const countSelectedItems = (category: any) => {
+      return category.reduce((count: any, item: any) => {
+        return count + (item.isSelected ? 1 : 0);
+      }, 0);
+    };
+
+    // Count selected items for each Type
+    this.selectedTypeCount = {
+      assetType: countSelectedItems(this.filter.assetType),
+      assetArea: countSelectedItems(this.filter.assetArea),
+      assetSource: countSelectedItems(this.filter.assetSource),
+      assetStatus: countSelectedItems(this.filter.assetStatus),
+    };
   }
 
   // Save button
-  Filter(event: any) {
+  Filter() {
     this.filterByTypes.emit(this.filter);
+  }
+
+  // Reset Selected
+  Reset() {
+    this.filterCount = 0;
+    for (const categoryKey in this.filter) {
+      if (Object.prototype.hasOwnProperty.call(this.filter, categoryKey)) {
+        const category = this.filter[categoryKey as keyof Filter];
+        category.forEach((item: any) => {
+          item.isSelected = false;
+        });
+      }
+    }
+    const countSelectedItems = (category: any) => {
+      return category.reduce((count: any, item: any) => {
+        return count + (item.isSelected ? 0 : 0);
+      }, 0);
+    };
+    this.selectedTypeCount = {
+      assetType: countSelectedItems(this.filter.assetType),
+      assetArea: countSelectedItems(this.filter.assetArea),
+      assetSource: countSelectedItems(this.filter.assetSource),
+      assetStatus: countSelectedItems(this.filter.assetStatus),
+    };
   }
 }
