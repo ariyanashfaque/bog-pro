@@ -93,17 +93,28 @@
 ></app-asset-info-menu>
 
 <!-- Sub-Assets sidebar -->
-<app-sub-asset-sidebar
+<!-- <app-sub-asset-sidebar
   [(selectedAsset)]="selectedAsset"
   [(isMenuOpen)]="isSubAssetModalOpen"
+  (draggedAsset)="sendDraggedSubAsset($event)"
+></app-sub-asset-sidebar> -->
+<app-sub-asset-sidebar
+  [(selectedAsset)]="selectedAsset"
   (draggedAsset)="sendDraggedSubAsset($event)"
 ></app-sub-asset-sidebar>
 
 <!-- Asset Sidebar -->
-<app-asset-sidebar
+<!-- <app-asset-sidebar
   [assetData]="masterAssets"
   [selectedMappedAsset]="selectedMappedAsset()"
   [(isChildOpen)]="isChildOpen"
+  [(isMenuOpen)]="isAssetInfoMenuOpen"
+  [(activeIndex)]="assetModalActiveIndex"
+  (selectedAsset)="onAssetReceived($event)"
+></app-asset-sidebar> -->
+<app-asset-sidebar
+  [assetData]="masterAssets"
+  [selectedMappedAsset]="selectedMappedAsset()"
   [(isMenuOpen)]="isAssetInfoMenuOpen"
   [(activeIndex)]="assetModalActiveIndex"
   (selectedAsset)="onAssetReceived($event)"

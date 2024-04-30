@@ -5,6 +5,7 @@ import {
   effect,
   signal,
   output,
+  inject,
 } from "@angular/core";
 import {
   IonRow,
@@ -26,6 +27,7 @@ import {
 } from "@ionic/angular/standalone";
 import { DndModule } from "ngx-drag-drop";
 import { DndEvent } from "ngx-drag-drop/lib/dnd-utils";
+import { MapSidebarService } from "src/app/services/map-sidebar/map-sidebar.service";
 
 @Component({
   selector: "app-sub-asset-sidebar",
@@ -53,13 +55,18 @@ import { DndEvent } from "ngx-drag-drop/lib/dnd-utils";
   ],
 })
 export class SubAssetSidebarComponent implements OnInit {
-  isMenuOpen = model(false);
+  mapSidebarService = inject(MapSidebarService);
+  // isMenuOpen = model(false);
+  isMenuOpen = signal(false);
   selectedAsset = model<any>({});
   draggedAsset = output<any>();
 
   constructor() {
     effect(() => {
       console.log("selectedAsset in sub asset modal", this.selectedAsset());
+    });
+    this.mapSidebarService.getisSubAssetModalOpen.subscribe((data) => {
+      this.isMenuOpen.set(data);
     });
   }
 

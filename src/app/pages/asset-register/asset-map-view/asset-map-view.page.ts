@@ -49,6 +49,7 @@ import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-si
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
+import { MapSidebarService } from "src/app/services/map-sidebar/map-sidebar.service";
 
 @Component({
   imports: [
@@ -79,6 +80,7 @@ import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/s
 })
 export class AssetMapViewPage implements OnInit {
   mapService = inject(MapService);
+  mapSidebarService = inject(MapSidebarService);
   private map: google.maps.Map;
   private mapMptions: google.maps.MapOptions;
   private mapCenter: google.maps.LatLngLiteral;
@@ -363,6 +365,8 @@ export class AssetMapViewPage implements OnInit {
   }
 
   toggleChildMenu = () => {
+    this.mapSidebarService.setIsChildOpen(!this.isChildOpen());
+    this.mapSidebarService.setisSubAssetModalOpen(false);
     this.isChildOpen.update((isChildOpen) => !isChildOpen);
     this.isSubAssetModalOpen.update((isSubAssetModalOpen) => false);
   };

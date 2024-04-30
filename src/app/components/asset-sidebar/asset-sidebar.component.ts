@@ -15,6 +15,7 @@ import {
 import { IonIcon, IonText } from "@ionic/angular/standalone";
 import { DndModule } from "ngx-drag-drop";
 import { MasterAsset } from "src/app/store/models/asset.model";
+import { MapSidebarService } from "src/app/services/map-sidebar/map-sidebar.service";
 // import { AssetZoneModel } from "src/app/store/models/map.model";
 
 @Component({
@@ -25,8 +26,10 @@ import { MasterAsset } from "src/app/store/models/asset.model";
   imports: [IonText, IonIcon, DndModule],
 })
 export class AssetSidebarComponent implements OnInit {
+  mapSidebarService = inject(MapSidebarService);
   isMenuOpen = model<boolean>();
-  isChildOpen = model<boolean>();
+  // isChildOpen = model<boolean>();
+  isChildOpen = signal<boolean>(false);
   isSubAssetModalOpen = model<boolean>(false);
   activeAccordion: string = "recommended";
   assetData = input<MasterAsset[]>();
@@ -71,14 +74,17 @@ export class AssetSidebarComponent implements OnInit {
   }
 
   constructor() {
+    this.mapSidebarService.getIsChildOpen.subscribe((data: boolean) => {
+      this.isChildOpen.set(data);
+    });
     effect(() => {
-      console.log("assetData", this.assetData);
+      console.log("assetData", this.assetData());
     });
     effect(() => {
       console.log("selectedMappedAsset->", this.selectedMappedAsset());
     });
 
-    console.log("assetData", this.assetData);
+    // console.log("assetData", this.assetData());
   }
 
   ngOnInit() {}
