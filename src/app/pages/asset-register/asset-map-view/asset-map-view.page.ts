@@ -22,6 +22,7 @@ import {
   IonToolbar,
   IonBackdrop,
   IonProgressBar,
+  LoadingController,
 } from "@ionic/angular/standalone";
 import { Store } from "@ngrx/store";
 import {
@@ -81,6 +82,7 @@ import { MapSidebarService } from "src/app/services/map-sidebar/map-sidebar.serv
 export class AssetMapViewPage implements OnInit {
   mapService = inject(MapService);
   mapSidebarService = inject(MapSidebarService);
+  loadingCtrl = inject(LoadingController);
   private map: google.maps.Map;
   private mapMptions: google.maps.MapOptions;
   private mapCenter: google.maps.LatLngLiteral;
@@ -118,22 +120,7 @@ export class AssetMapViewPage implements OnInit {
   set id(plantId: string) {
     this.plantId = plantId;
     this.isLoading.set(true);
-    this.httpService.GetAllAssets({ plantId }).subscribe({
-      next: (response: AssetsResponseModel) => {
-        this.store.dispatch(
-          UPDATE_PLANT({
-            assets: response?.data,
-          }),
-        );
-      },
-      error: (error: HttpErrorResponse) => {
-        this.isLoading.set(false);
-        this.toastService.toastFailed(error.error.message);
-      },
-      complete: () => {
-        this.isLoading.set(false);
-      },
-    });
+    this.GetAllAssets(plantId);
   }
 
   ngAfterViewInit(): void {
@@ -179,6 +166,12 @@ export class AssetMapViewPage implements OnInit {
 
   GetAllMasterAsset = async () => {
     this.isLoading.set(true);
+    const loading = await this.loadingCtrl.create({
+      duration: 3000,
+      spinner: "bubbles",
+    });
+    loading.present();
+
     this.httpService.GetAllMasterAsset().subscribe({
       next: (response: MasterAssetResponseModel) => {
         // this.store.dispatch(ADD_PLANTS(response?.data?.sites));
@@ -189,10 +182,40 @@ export class AssetMapViewPage implements OnInit {
         }
       },
       error: (error: HttpErrorResponse) => {
+        loading.dismiss();
         this.isLoading.set(false);
         this.toastService.toastFailed(error.error.message);
       },
       complete: () => {
+        loading.dismiss();
+        this.isLoading.set(false);
+      },
+    });
+  };
+
+  GetAllAssets = async (plantId: string) => {
+    this.isLoading.set(true);
+    const loading = await this.loadingCtrl.create({
+      duration: 3000,
+      spinner: "bubbles",
+    });
+    loading.present();
+
+    this.httpService.GetAllAssets({ plantId }).subscribe({
+      next: (response: AssetsResponseModel) => {
+        this.store.dispatch(
+          UPDATE_PLANT({
+            assets: response?.data,
+          }),
+        );
+      },
+      error: (error: HttpErrorResponse) => {
+        loading.dismiss();
+        this.isLoading.set(false);
+        this.toastService.toastFailed(error.error.message);
+      },
+      complete: () => {
+        loading.dismiss();
         this.isLoading.set(false);
       },
     });
