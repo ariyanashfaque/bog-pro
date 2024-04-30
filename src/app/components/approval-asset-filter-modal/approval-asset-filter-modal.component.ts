@@ -65,11 +65,11 @@ import { Filter, AssetModel } from "src/app/store/models/asset.model";
     ReactiveFormsModule,
   ],
   standalone: true,
-  selector: "app-asset-mapped-filter-modal",
-  templateUrl: "./asset-mapped-filter-modal.component.html",
-  styleUrls: ["./asset-mapped-filter-modal.component.scss"],
+  selector: "app-approval-asset-filter-modal",
+  templateUrl: "./approval-asset-filter-modal.component.html",
+  styleUrls: ["./approval-asset-filter-modal.component.scss"],
 })
-export class AssetMappedFilterModalComponent implements OnInit {
+export class ApprovalAssetFilterModalComponent implements OnInit {
   filter: Filter;
   selectedTypes: any;
   selectedTypeCount: any;
@@ -209,6 +209,7 @@ export class AssetMappedFilterModalComponent implements OnInit {
   handleFilterCategory(categoryName: string) {
     this.filterName = categoryName;
   }
+  
   //  by Asset filter type
   handlefilterbytype(fieldType: any, type: any) {
     type.isSelected = !type.isSelected;
@@ -230,6 +231,7 @@ export class AssetMappedFilterModalComponent implements OnInit {
 
   // Save button
   Filter() {
+    console.log(this.filter);
     this.filterByTypes.emit(this.filter);
   }
 

@@ -1,4 +1,8 @@
-<app-header headerTitle="Asset Approval" [isDefaultHref]="true"></app-header>
+<app-header
+  headerTitle="Asset Approval"
+  [isBackgroundTransparent]="false"
+  [isDefaultHref]="true"
+></app-header>
 <ion-content [fullscreen]="true" color="background">
   <ion-grid>
     <ion-row>
@@ -22,6 +26,7 @@
               shape="round"
               color="primary"
               class="mr-2 w-32"
+              (click)="handleFilterModal($event, filter)"
             >
               <div class="flex mx-auto">
                 <ion-text
@@ -42,292 +47,335 @@
 
         <div class="max-w-full mx-auto bg-white p-4 shadowpart2">
           <ion-grid>
-            @for (asset of assets; track asset.id) {
-              <ion-row>
-                <ion-col size="12">
-                  <div class="w-full">
-                    <div class="border rounded CardBgColor">
-                      <ion-grid class="">
-                        <ion-row class="flex items-center justify-center">
-                          <ion-col size="1.2">
-                            <div
-                              class="p-2 flex ion-align-items-center ion-justify-content-center"
-                            >
-                              <div>
-                                <div
-                                  class="p-2 h-16 w-16 border-2 imagebox rounded-md"
-                                >
-                                  <ion-img
-                                    src="../../../assets/element-image/silo.png"
-                                  ></ion-img>
+            @defer (when !isLoading()) {
+              @for (asset of draftFilteredAssets; track $index) {
+                <ion-row>
+                  <ion-col size="12">
+                    <div class="w-full">
+                      <div class="border rounded CardBgColor">
+                        <ion-grid class="">
+                          <ion-row class="flex items-center justify-center">
+                            <ion-col size="1.2">
+                              <div
+                                class="p-2 flex ion-align-items-center ion-justify-content-center"
+                              >
+                                <div>
+                                  <div
+                                    class="p-2 h-16 w-16 border-2 imagebox rounded-md"
+                                  >
+                                    <ion-img
+                                      src="../../../assets/element-image/silo.png"
+                                    ></ion-img>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </ion-col>
-                          <ion-col size="1.5">
-                            <div>
-                              <ion-text
-                                color="black"
-                                class="font-gotham_light text-[14px]"
-                              >
-                                {{ asset.assetInfo?.assetType }}
-                              </ion-text>
-                            </div>
-                            <div>
-                              <ion-text
-                                color="black"
-                                class="font-gotham_medium text-[16px]"
-                              >
-                                {{ asset.assetInfo?.assetName }}
-                              </ion-text>
-                            </div>
-                          </ion-col>
-                          <ion-col size="3.3">
-                            <div>
-                              <ion-text
-                                color="black"
-                                class="font-gotham_light text-[14px]"
-                              >
-                                Asset name
-                              </ion-text>
-                            </div>
-                            <div>
-                              <ion-text
-                                color="black"
-                                class="font-gotham_medium text-[16px]"
-                              >
-                                Hopper situated near silo zone 1
-                              </ion-text>
-                            </div>
-                          </ion-col>
-                          <ion-col size="3">
-                            <div class="my-1 -mt-1">
-                              <ion-text class="text-[14px] font-gotham_light">
-                                Status
-                              </ion-text>
-                            </div>
-
-                            <div class="">
-                              @switch (true) {
-                                @case (
-                                  asset?.assetStatus?.status
-                                    ?.assetApprovalPending
-                                ) {
-                                  <!-- asset approval pending  -->
-                                  <ion-badge
-                                    color="approvalpending"
-                                    class="p-2"
-                                  >
-                                    <ion-text
-                                      color="black"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>
-                                        Asset Approval Pending
-                                      </ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-                                @case (
-                                  asset?.assetStatus?.status?.assetApproved
-                                ) {
-                                  <!-- asset Approved  -->
-                                  <ion-badge color="assetapproved" class="p-2">
-                                    <ion-text
-                                      color="textwhite"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>Asset Approved</ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-                                @case (
-                                  asset?.assetStatus?.status?.assetRejected
-                                ) {
-                                  <!-- Asset Rejected  -->
-                                  <ion-badge color="rejected" class="p-2">
-                                    <ion-text
-                                      color="textwhite"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>Asset Rejected</ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-
-                                @case (
-                                  asset?.assetStatus?.status?.assetInDraft
-                                ) {
-                                  <!-- Asset Rejected  -->
-                                  <ion-badge color="grey" class="p-2">
-                                    <ion-text
-                                      color="black"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>Asset In Draft</ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-
-                                @case (
-                                  asset?.assetStatus?.status?.assetRegistered
-                                ) {
-                                  <!-- Asset Registered -->
-                                  <ion-badge
-                                    color="registerationpending"
-                                    class="p-2"
-                                  >
-                                    <ion-text
-                                      color="black"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>Asset Registered</ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-
-                                @case (
-                                  asset?.assetStatus?.status
-                                    ?.assetDemolishedPending
-                                ) {
-                                  <!-- Asset Demolished Pending -->
-                                  <ion-badge color="rejected" class="p-2">
-                                    <ion-text
-                                      color="black"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>
-                                        Asset Demolished Pending
-                                      </ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-
-                                @case (
-                                  asset?.assetStatus?.status
-                                    ?.assetDemolitionApproved
-                                ) {
-                                  <!-- Asset Demolition Approved -->
-                                  <ion-badge color="rejected" class="p-2">
-                                    <ion-text
-                                      color="black"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>
-                                        Asset Demolition Approved
-                                      </ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-
-                                @case (
-                                  asset?.assetStatus?.status
-                                    ?.assetDemolitionRejected
-                                ) {
-                                  <!-- Asset Demolition Rejected -->
-                                  <ion-badge color="rejected" class="p-2">
-                                    <ion-text
-                                      color="black"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>
-                                        Asset Demolition Rejected
-                                      </ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-
-                                @case (
-                                  asset?.assetStatus?.status
-                                    ?.assetDecommissionRejected
-                                ) {
-                                  <!-- Asset Decommission Rejected -->
-                                  <ion-badge color="rejected" class="p-2">
-                                    <ion-text
-                                      color="black"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>
-                                        Asset Decommission Rejected
-                                      </ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-
-                                @case (
-                                  asset?.assetStatus?.status
-                                    ?.assetDecommissionApproved
-                                ) {
-                                  <!-- Asset Decommission Approved -->
-                                  <ion-badge color="rejected" class="p-2">
-                                    <ion-text
-                                      color="black"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>
-                                        Asset Decommission Approved
-                                      </ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-
-                                @case (
-                                  asset?.assetStatus?.status
-                                    ?.assetDecommissionedPending
-                                ) {
-                                  <!-- Asset Decommissioned Pending -->
-                                  <ion-badge color="rejected" class="p-2">
-                                    <ion-text
-                                      color="black"
-                                      class="text-[14px] font-gotham_medium"
-                                    >
-                                      <ion-label>
-                                        Asset Decommissioned Pending
-                                      </ion-label>
-                                    </ion-text>
-                                  </ion-badge>
-                                }
-                              }
-                            </div>
-                          </ion-col>
-                          <ion-col size="1.5">
-                            <div>
-                              <div class="my-1 -mt-1">
-                                <ion-text class="text-[14px] font-gotham_light">
-                                  source
+                            </ion-col>
+                            <ion-col size="1.5">
+                              <div>
+                                <ion-text
+                                  color="black"
+                                  class="font-gotham_light text-[14px]"
+                                >
+                                  Asset Type
                                 </ion-text>
                               </div>
+                              <div>
+                                <ion-text
+                                  color="black"
+                                  class="font-gotham_medium text-[16px]"
+                                >
+                                  {{ asset.assetInfo?.assetType }}
+                                </ion-text>
+                              </div>
+                            </ion-col>
+                            <ion-col size="3.3">
+                              <div>
+                                <ion-text
+                                  color="black"
+                                  class="font-gotham_light text-[14px]"
+                                >
+                                  Asset Name
+                                </ion-text>
+                              </div>
+                              <div>
+                                <ion-text
+                                  color="black"
+                                  class="font-gotham_medium text-[16px]"
+                                >
+                                  {{ asset.assetInfo?.assetName }}
+                                </ion-text>
+                              </div>
+                            </ion-col>
+                            <ion-col size="3">
+                              <div class="my-1 -mt-1">
+                                <ion-text class="text-[14px] font-gotham_light">
+                                  Status
+                                </ion-text>
+                              </div>
+
                               <div class="">
-                                <ion-badge class="p-2 sourceBadge">
+                                @switch (true) {
+                                  @case (
+                                    asset?.assetStatus?.status
+                                      ?.assetApprovalPending
+                                  ) {
+                                    <!-- asset approval pending  -->
+                                    <ion-badge
+                                      color="approvalpending"
+                                      class="p-2"
+                                    >
+                                      <ion-text
+                                        color="black"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>
+                                          Asset Approval Pending
+                                        </ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+                                  @case (
+                                    asset?.assetStatus?.status?.assetApproved
+                                  ) {
+                                    <!-- asset Approved  -->
+                                    <ion-badge
+                                      color="assetapproved"
+                                      class="p-2"
+                                    >
+                                      <ion-text
+                                        color="textwhite"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>Asset Approved</ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+                                  @case (
+                                    asset?.assetStatus?.status?.assetRejected
+                                  ) {
+                                    <!-- Asset Rejected  -->
+                                    <ion-badge color="rejected" class="p-2">
+                                      <ion-text
+                                        color="textwhite"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>Asset Rejected</ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+
+                                  @case (
+                                    asset?.assetStatus?.status?.assetInDraft
+                                  ) {
+                                    <!-- Asset Rejected  -->
+                                    <ion-badge color="grey" class="p-2">
+                                      <ion-text
+                                        color="black"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>Asset In Draft</ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+
+                                  @case (
+                                    asset?.assetStatus?.status?.assetRegistered
+                                  ) {
+                                    <!-- Asset Registered -->
+                                    <ion-badge
+                                      color="registerationpending"
+                                      class="p-2"
+                                    >
+                                      <ion-text
+                                        color="black"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>Asset Registered</ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+
+                                  @case (
+                                    asset?.assetStatus?.status
+                                      ?.assetDemolishedPending
+                                  ) {
+                                    <!-- Asset Demolished Pending -->
+                                    <ion-badge color="rejected" class="p-2">
+                                      <ion-text
+                                        color="black"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>
+                                          Asset Demolished Pending
+                                        </ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+
+                                  @case (
+                                    asset?.assetStatus?.status
+                                      ?.assetDemolitionApproved
+                                  ) {
+                                    <!-- Asset Demolition Approved -->
+                                    <ion-badge color="rejected" class="p-2">
+                                      <ion-text
+                                        color="black"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>
+                                          Asset Demolition Approved
+                                        </ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+
+                                  @case (
+                                    asset?.assetStatus?.status
+                                      ?.assetDemolitionRejected
+                                  ) {
+                                    <!-- Asset Demolition Rejected -->
+                                    <ion-badge color="rejected" class="p-2">
+                                      <ion-text
+                                        color="black"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>
+                                          Asset Demolition Rejected
+                                        </ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+
+                                  @case (
+                                    asset?.assetStatus?.status
+                                      ?.assetDecommissionRejected
+                                  ) {
+                                    <!-- Asset Decommission Rejected -->
+                                    <ion-badge color="rejected" class="p-2">
+                                      <ion-text
+                                        color="black"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>
+                                          Asset Decommission Rejected
+                                        </ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+
+                                  @case (
+                                    asset?.assetStatus?.status
+                                      ?.assetDecommissionApproved
+                                  ) {
+                                    <!-- Asset Decommission Approved -->
+                                    <ion-badge color="rejected" class="p-2">
+                                      <ion-text
+                                        color="black"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>
+                                          Asset Decommission Approved
+                                        </ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+
+                                  @case (
+                                    asset?.assetStatus?.status
+                                      ?.assetDecommissionedPending
+                                  ) {
+                                    <!-- Asset Decommissioned Pending -->
+                                    <ion-badge color="rejected" class="p-2">
+                                      <ion-text
+                                        color="light"
+                                        class="text-[14px] font-gotham_medium"
+                                      >
+                                        <ion-label>
+                                          Asset Decommissioned Pending
+                                        </ion-label>
+                                      </ion-text>
+                                    </ion-badge>
+                                  }
+                                }
+                              </div>
+                            </ion-col>
+                            <ion-col size="1.5">
+                              <div>
+                                <div class="my-1 -mt-1">
                                   <ion-text
-                                    color="black"
-                                    class="text-[14px] font-gotham_medium"
+                                    class="text-[14px] font-gotham_light"
                                   >
-                                    <p>SAP</p>
+                                    Source
                                   </ion-text>
-                                </ion-badge>
+                                </div>
+                                <div class="">
+                                  <ion-badge
+                                    color="medium"
+                                    class="p-2 sourceBadge"
+                                  >
+                                    <ion-text
+                                      color="black"
+                                      class="text-[14px] font-gotham_medium"
+                                    >
+                                      @switch (true) {
+                                        @case (
+                                          asset?.assetSource?.assetBulkUpload
+                                        ) {
+                                          <p>Bulk</p>
+                                        }
+                                        @case (
+                                          asset?.assetSource
+                                            ?.assetManualCreation
+                                        ) {
+                                          <p>Manual</p>
+                                        }
+                                        @case (
+                                          asset?.assetSource?.assetSapSync
+                                        ) {
+                                          <p>SAP</p>
+                                        }
+                                      }
+                                    </ion-text>
+                                  </ion-badge>
+                                </div>
                               </div>
-                            </div>
-                          </ion-col>
-                          <ion-col size="1.5">
-                            <div class="flex items-center justify-center gap-8">
+                            </ion-col>
+                            <ion-col size="1.5">
                               <div
-                                class="inline-flex items-center bgEditBtn justify-center w-10 h-10 rounded-full"
+                                class="flex items-center justify-center gap-8"
                               >
-                                <ion-icon
-                                  color="white"
-                                  name="eye-outline"
-                                ></ion-icon>
+                                <div
+                                  class="inline-flex items-center bgEditBtn justify-center w-10 h-10 rounded-full"
+                                >
+                                  <ion-icon
+                                    color="white"
+                                    name="eye-outline"
+                                  ></ion-icon>
+                                </div>
+                                <ion-checkbox
+                                  [checked]="radioChecked()"
+                                  (ionChange)="assetChecked($event, asset)"
+                                ></ion-checkbox>
                               </div>
-                              <ion-checkbox
-                                [checked]="radioChecked()"
-                                (ionChange)="assetChecked($event, asset)"
-                              ></ion-checkbox>
-                            </div>
-                          </ion-col>
-                        </ion-row>
-                      </ion-grid>
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid>
+                      </div>
                     </div>
+                  </ion-col>
+                </ion-row>
+              }
+            } @placeholder {
+              <ion-row>
+                <ion-col size="12">
+                  <div class="w-full mb-3">
+                    <app-loading-skeleton></app-loading-skeleton>
+                  </div>
+                  <div class="w-full mb-3">
+                    <app-loading-skeleton></app-loading-skeleton>
+                  </div>
+                  <div class="w-full">
+                    <app-loading-skeleton></app-loading-skeleton>
                   </div>
                 </ion-col>
               </ion-row>
@@ -338,6 +386,7 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
 @if (sendForApproval.length) {
   <ion-footer>
     <ion-toolbar color="secondary">
@@ -359,4 +408,18 @@
       </ion-grid>
     </ion-toolbar>
   </ion-footer>
+}
+
+@if (isFilterMenuOpen) {
+  <app-approval-asset-filter-modal
+    [assets]="draftFilteredAssets"
+    [savedFilter]="filter"
+    [filterCounts]="filterCounts"
+    [isFilterMenuOpen]="isFilterMenuOpen"
+    (filterByTypes)="handlefilterby($event)"
+    (isFilterToggleOpen)="handleFilterModal($event, filter)"
+  ></app-approval-asset-filter-modal>
+}
+@if (isFilterMenuOpen) {
+  <ion-backdrop [visible]="isFilterMenuOpen"></ion-backdrop>
 }

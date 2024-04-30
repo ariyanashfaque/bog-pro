@@ -1,7 +1,11 @@
 // * Asset Zone Model * //
 interface AssetZoneModel {
-  id: string;
-  area: MarkerModel;
+  id?: string;
+  area?: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
 }
 
 interface Keyable {
@@ -60,7 +64,11 @@ interface LocationModel {
   location_code: string;
   work_group_status: string;
 }
-
+export interface FilteredAssetModel extends AssetModel {
+  filteredByType?: boolean;
+  filteredBySource?: boolean;
+  filteredByStatus?: boolean;
+}
 export interface Filter {
   assetType: { type?: string; title?: string; isSelected: boolean }[];
   assetArea: { type?: string; title?: string; isSelected: boolean }[];
