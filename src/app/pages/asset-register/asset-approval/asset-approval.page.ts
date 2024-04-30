@@ -22,6 +22,7 @@ import {
   IonButton,
   IonFooter,
   IonContent,
+  IonButtons,
   IonToolbar,
   IonCheckbox,
   IonThumbnail,
@@ -34,6 +35,7 @@ import {
   AssetsResponseModel,
 } from "src/app/store/models/asset.model";
 import { Store } from "@ngrx/store";
+import { LoadingController } from "@ionic/angular";
 import { HttpErrorResponse } from "@angular/common/http";
 import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
@@ -48,8 +50,8 @@ import { LoadingSkeletonComponent } from "../../../components/loading-skeleton/l
   styleUrls: ["./asset-approval.page.scss"],
   imports: [
     IonImg,
-    IonRow,
     IonCol,
+    IonRow,
     IonIcon,
     IonText,
     IonGrid,
@@ -60,6 +62,7 @@ import { LoadingSkeletonComponent } from "../../../components/loading-skeleton/l
     IonFooter,
     IonButton,
     IonToggle,
+    IonButtons,
     IonToolbar,
     IonContent,
     IonCheckbox,
@@ -101,7 +104,7 @@ export class AssetApprovalPage implements OnInit {
     });
   }
 
-  constructor() {
+  constructor(private loadingCtrl: LoadingController) {
     this.assets = [];
   }
 
@@ -122,6 +125,82 @@ export class AssetApprovalPage implements OnInit {
       this.sendForApproval.push(asset);
     } else {
       this.sendForApproval.pop();
+    }
+  }
+
+  //Asset approval API
+  async hanldeAssetsApproval() {
+    if (this.sendForApproval.length) {
+      let plantId = this.siteId;
+      let assets: any[] = [];
+
+      this.sendForApproval.forEach((_assetId) => {
+        assets.push(_assetId?.id);
+      });
+
+      const loading = await this.loadingCtrl.create({
+        spinner: "bubbles",
+        keyboardClose: true,
+      });
+      loading.present();
+      this.httpService.AssetApproval({ plantId, assets }).subscribe({
+        next: (response: AssetsResponseModel) => {
+          console.log(response);
+        },
+        error: (error: HttpErrorResponse) => {
+          loading.dismiss();
+          this.toastService.toastFailed(error.error.message);
+        },
+        complete: () => {
+          loading.dismiss();
+          this.toastService.toastSuccess(
+            "Asset" +
+              (this.sendForApproval.length > 1 ? "s" : "") +
+              "approved successfully",
+          );
+        },
+      });
+    } else {
+      this.toastService.toastFailed("Select assets for approval !!");
+    }
+  }
+
+  async handleAssetsApprovalRejection() {
+    if (this.sendForApproval.length) {
+      let plantId = this.siteId;
+      let assets: string[] = [];
+      let rejectionNote: string[] = [];
+
+      this.sendForApproval.forEach((_assetId) => {
+        assets.push(_assetId?.id);
+      });
+
+      const loading = await this.loadingCtrl.create({
+        spinner: "bubbles",
+        keyboardClose: true,
+      });
+      loading.present();
+      this.httpService
+        .AssetRejection({ plantId, assets, rejectionNote })
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+          },
+          error: (error: HttpErrorResponse) => {
+            loading.dismiss();
+            this.toastService.toastFailed(error.error.message);
+          },
+          complete: () => {
+            loading.dismiss();
+            this.toastService.toastSuccess(
+              "Asset" +
+                (this.sendForApproval.length > 1 ? "s" : "") +
+                "rejected !!",
+            );
+          },
+        });
+    } else {
+      this.toastService.toastFailed("Select assets for approval !!");
     }
   }
 }
