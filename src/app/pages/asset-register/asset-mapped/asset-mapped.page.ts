@@ -96,6 +96,7 @@ export class AssetMappedPage implements OnInit {
   draftAssets: AssetModel[];
   filteredAssets: AssetModel[];
   registeredAssets: AssetModel[];
+  filterAbleAssets: AssetModel[];
   draftFilteredAssets: AssetModel[];
   isFilterMenuOpen: boolean = false;
   isApprovalMenuOpen: boolean = false;
@@ -132,6 +133,7 @@ export class AssetMappedPage implements OnInit {
     this.filteredAssets = [];
     this.toggleChecked = true;
     this.registeredAssets = [];
+    this.filterAbleAssets = [];
     this.draftFilteredAssets = [];
     this.isApprovalMenuOpen = false;
   }
@@ -152,7 +154,10 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
-    this.draftFilteredAssets = this.draftAssets;
+    if (this.toggleChecked) {
+      this.filterAbleAssets = this.draftAssets;
+      this.draftFilteredAssets = this.draftAssets;
+    }
   }
 
   handleErrorModal = (event: any) => {
@@ -197,196 +202,112 @@ export class AssetMappedPage implements OnInit {
     };
 
     // draft aseets
-    if (this.toggleChecked) {
-      // assetType filter type
-      const filteredByType =
-        assetFilter.assetType.length === 0
-          ? this.draftAssets
-          : this.draftAssets.filter((asset: any) => {
-              return assetFilter.assetType.some(
-                (type: any) =>
-                  type.isSelected && type.type === asset.assetInfo.assetType,
-              );
-            });
+    // assetType filter type
+    const filteredByType =
+      assetFilter.assetType.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetType.some(
+              (type: any) =>
+                type.isSelected && type.type === asset.assetInfo.assetType,
+            );
+          });
 
-      // assetArea filter type
-      const filteredByArea =
-        assetFilter.assetArea.length === 0
-          ? this.draftAssets
-          : this.draftAssets.filter((asset: any) => {
-              return assetFilter.assetArea.some(
-                (type: any) =>
-                  type.isSelected && type.area === asset.assetArea.area,
-              );
-            });
+    // assetArea filter type
+    const filteredByArea =
+      assetFilter.assetArea.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetArea.some(
+              (type: any) =>
+                type.isSelected && type.area === asset.assetArea.area,
+            );
+          });
 
-      // source filter type
-      const filteredBySource =
-        assetFilter.assetSource.length === 0
-          ? this.draftAssets
-          : this.draftAssets.filter((asset: any) => {
-              return assetFilter.assetSource.some(
-                (source: any) =>
-                  source.isSelected && asset.assetSource[source.type],
-              );
-            });
+    // source filter type
+    const filteredBySource =
+      assetFilter.assetSource.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetSource.some(
+              (source: any) =>
+                source.isSelected && asset.assetSource[source.type],
+            );
+          });
 
-      // status filter type
-      const filteredByStatus =
-        assetFilter.assetStatus.length === 0
-          ? this.draftAssets
-          : this.draftAssets.filter((asset: any) => {
-              return assetFilter.assetStatus.some(
-                (status: any) =>
-                  status.isSelected && asset.assetStatus.status[status.type],
-              );
-            });
+    // status filter type
+    const filteredByStatus =
+      assetFilter.assetStatus.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetStatus.some(
+              (status: any) =>
+                status.isSelected && asset.assetStatus.status[status.type],
+            );
+          });
 
-      this.filteredAssets = this.draftAssets.filter((asset: any) => {
-        const passesTypeFilter = filteredByType.includes(asset);
-        const passesAreaFilter = filteredByArea.includes(asset);
-        const passesSourceFilter = filteredBySource.includes(asset);
-        const passesStatusFilter = filteredByStatus.includes(asset);
+    this.filteredAssets = this.filterAbleAssets.filter((asset: any) => {
+      const passesTypeFilter = filteredByType.includes(asset);
+      const passesAreaFilter = filteredByArea.includes(asset);
+      const passesSourceFilter = filteredBySource.includes(asset);
+      const passesStatusFilter = filteredByStatus.includes(asset);
 
-        // single filter
-        if (
-          counts.assetType !== 0 &&
-          counts.assetSource === 0 &&
-          counts.assetStatus === 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesTypeFilter;
-        } else if (
-          counts.assetType === 0 &&
-          counts.assetSource !== 0 &&
-          counts.assetStatus === 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesSourceFilter;
-        } else if (
-          counts.assetType === 0 &&
-          counts.assetSource === 0 &&
-          counts.assetStatus === 0 &&
-          counts.assetArea !== 0
-        ) {
-          return passesAreaFilter;
-        } else if (
-          counts.assetType === 0 &&
-          counts.assetSource === 0 &&
-          counts.assetStatus !== 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesStatusFilter;
-        }
-        // multiple filter
-        else if (
-          counts.assetType !== 0 &&
-          counts.assetSource !== 0 &&
-          counts.assetStatus === 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesTypeFilter && passesSourceFilter;
-        } else if (
-          counts.assetType !== 0 &&
-          counts.assetSource === 0 &&
-          counts.assetStatus !== 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesStatusFilter && passesTypeFilter;
-        } else if (
-          counts.assetType === 0 &&
-          counts.assetSource !== 0 &&
-          counts.assetStatus !== 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesStatusFilter && passesSourceFilter;
-        } else
-          return passesTypeFilter && passesSourceFilter && passesStatusFilter;
-      });
-    }
-    // register assets
-    else {
-      const filteredByType =
-        assetFilter.assetType.length === 0
-          ? this.registeredAssets
-          : this.registeredAssets.filter((asset: any) => {
-              return assetFilter.assetType.some(
-                (type: any) =>
-                  type.isSelected && type.type === asset.assetInfo.assetType,
-              );
-            });
+      // single filter
+      if (
+        counts.assetType !== 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesTypeFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource !== 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesSourceFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea !== 0
+      ) {
+        return passesAreaFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus !== 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesStatusFilter;
+      }
+      // multiple filter
+      else if (
+        counts.assetType !== 0 &&
+        counts.assetSource !== 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesTypeFilter && passesSourceFilter;
+      } else if (
+        counts.assetType !== 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus !== 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesStatusFilter && passesTypeFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource !== 0 &&
+        counts.assetStatus !== 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesStatusFilter && passesSourceFilter;
+      } else
+        return passesTypeFilter && passesSourceFilter && passesStatusFilter;
+    });
 
-      const filteredBySource =
-        assetFilter.assetSource.length === 0
-          ? this.registeredAssets
-          : this.registeredAssets.filter((asset: any) => {
-              return assetFilter.assetSource.some(
-                (source: any) =>
-                  source.isSelected && asset.assetSource[source.type],
-              );
-            });
-
-      const filteredByStatus =
-        assetFilter.assetStatus.length === 0
-          ? this.registeredAssets
-          : this.registeredAssets.filter((asset: any) => {
-              return assetFilter.assetStatus.some(
-                (status: any) =>
-                  status.isSelected && asset.assetStatus.status[status.type],
-              );
-            });
-
-      this.filteredAssets = this.registeredAssets.filter((asset: any) => {
-        const passesTypeFilter = filteredByType.includes(asset);
-        const passesSourceFilter = filteredBySource.includes(asset);
-        const passesStatusFilter = filteredByStatus.includes(asset);
-
-        if (
-          counts.assetType !== 0 &&
-          counts.assetSource === 0 &&
-          counts.assetStatus === 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesTypeFilter;
-        } else if (
-          counts.assetType === 0 &&
-          counts.assetSource !== 0 &&
-          counts.assetStatus === 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesSourceFilter;
-        } else if (
-          counts.assetType === 0 &&
-          counts.assetSource === 0 &&
-          counts.assetStatus !== 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesStatusFilter;
-        } else if (
-          counts.assetType !== 0 &&
-          counts.assetSource !== 0 &&
-          counts.assetStatus === 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesTypeFilter && passesSourceFilter;
-        } else if (
-          counts.assetType !== 0 &&
-          counts.assetSource === 0 &&
-          counts.assetStatus !== 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesStatusFilter && passesTypeFilter;
-        } else if (
-          counts.assetType === 0 &&
-          counts.assetSource !== 0 &&
-          counts.assetStatus !== 0 &&
-          counts.assetArea === 0
-        ) {
-          return passesStatusFilter && passesSourceFilter;
-        } else
-          return passesTypeFilter && passesSourceFilter && passesStatusFilter;
-      });
-    }
     this.draftFilteredAssets = this.filteredAssets;
   };
 
@@ -402,15 +323,14 @@ export class AssetMappedPage implements OnInit {
       assetSource: [],
       assetStatus: [],
     };
+
     if (event.detail.checked) {
-      this.draftFilteredAssets = [];
+      this.filterAbleAssets = this.draftAssets;
       this.draftFilteredAssets = this.draftAssets;
     } else {
-      this.draftFilteredAssets = [];
+      this.filterAbleAssets = this.registeredAssets;
       this.draftFilteredAssets = this.registeredAssets;
     }
-    console.log(this.draftFilteredAssets);
-
     this.toggleChecked = event.detail.checked;
   }
 }
