@@ -67,3 +67,8 @@ ion-checkbox::part(container) {
 .selectAll {
   --checkbox-background: #ffffff;
 }
+ion-backdrop {
+  background: var(--ion-color-dark);
+  opacity: 0.6;
+  z-index: 40;
+}

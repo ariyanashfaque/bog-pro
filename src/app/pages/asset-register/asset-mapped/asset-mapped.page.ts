@@ -143,6 +143,8 @@ export class AssetMappedPage implements OnInit {
       next: (plant: SiteModel) => {
         if (plant?.assets) {
           this.assets = plant.assets;
+          console.log(this.assets);
+
           plant.assets?.forEach((asset) => {
             if (asset?.assetStatus?.isDraft) {
               this.draftAssets.push(asset);
@@ -154,6 +156,7 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
+
     if (this.toggleChecked) {
       this.filterAbleAssets = this.draftAssets;
       this.draftFilteredAssets = this.draftAssets;

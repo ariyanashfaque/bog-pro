@@ -6,6 +6,8 @@ import {
   Component,
   WritableSignal,
   model,
+  Output,
+  EventEmitter,
 } from "@angular/core";
 import {
   IonCol,
@@ -27,11 +29,13 @@ import {
   IonThumbnail,
   IonRadioGroup,
   IonSkeletonText,
+  IonBackdrop,
 } from "@ionic/angular/standalone";
 import {
   SiteModel,
   AssetModel,
   AssetsResponseModel,
+  Filter,
 } from "src/app/store/models/asset.model";
 import { Store } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -40,6 +44,7 @@ import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HttpService } from "src/app/services/http-service/http-client.service";
 import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { LoadingSkeletonComponent } from "../../../components/loading-skeleton/loading-skeleton.component";
+import { ApprovalAssetFilterModalComponent } from "../../../components/approval-asset-filter-modal/approval-asset-filter-modal.component";
 
 @Component({
   standalone: true,
@@ -47,6 +52,7 @@ import { LoadingSkeletonComponent } from "../../../components/loading-skeleton/l
   templateUrl: "./asset-approval.page.html",
   styleUrls: ["./asset-approval.page.scss"],
   imports: [
+    IonBackdrop,
     IonImg,
     IonRow,
     IonCol,
@@ -68,12 +74,16 @@ import { LoadingSkeletonComponent } from "../../../components/loading-skeleton/l
     IonSkeletonText,
     HeaderComponent,
     LoadingSkeletonComponent,
+    ApprovalAssetFilterModalComponent,
   ],
 })
 export class AssetApprovalPage implements OnInit {
   siteId: string;
-  assetId: string;
-  assets: AssetModel[];
+  assets: any[];
+  filter: Filter;
+  @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
+
+  filteredAssets: AssetModel[];
   store = inject(Store);
   radioChecked = model();
   sendForApproval: any[] = [];
@@ -82,10 +92,10 @@ export class AssetApprovalPage implements OnInit {
   toastService = inject(ToastService);
   isFilterMenuOpen: boolean = false;
   isApprovalMenuOpen: boolean = false;
-  // isFilterToggleOpen: WritableSignal<boolean> = signal(false);
   draftFilteredAssets: AssetModel[];
-
+  filterCounts: number;
   isLoading: WritableSignal<boolean> = signal(false);
+  filterAbleAssets: any[];
 
   @Input()
   set id(siteId: string) {
@@ -107,10 +117,18 @@ export class AssetApprovalPage implements OnInit {
   }
 
   constructor() {
+    this.filterCounts = 0;
+    this.filteredAssets = [];
+    this.draftFilteredAssets = [];
+    this.isApprovalMenuOpen = false;
     this.assets = [];
+    this.filterAbleAssets = [];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.draftFilteredAssets = this.assets;
+    this.filterAbleAssets = this.assets;
+  }
 
   selectAllAsset(event: CustomEvent) {
     this.radioChecked.set(event.detail.checked);
@@ -134,41 +152,154 @@ export class AssetApprovalPage implements OnInit {
     this.isApprovalMenuOpen = event;
   };
 
-  handleFilterModal = (event: any) => {
+  handleFilterModal = (event: any, filter: any) => {
     this.isFilterMenuOpen = event;
-    // this.isFilterToggleOpen.set(this.isFilterMenuOpen);
-    console.log(this.isFilterMenuOpen);
+    this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   };
 
   handlefilterby = (assetFilter: any) => {
-    // console.log(assetFilter);
-    // this.isFilterMenuOpen = !this.isFilterMenuOpen;
-    // console.log(assetFilter);
-    // this.draftFilteredAssets = this.assets.filter((asset: any) => {
-    //   const isSourceSelected = assetFilter.assetSource.some(
-    //     (source: any) => source.isSelected && asset.assetSource[source.type],
-    //   );
-    //   let selectedCount = 1;
-    //   const isTypeSelected = assetFilter.assetType.some(
-    //     (type: any) =>
-    //       type.isSelected && type.type === asset.assetInfo.assetType,
-    //     // if (type.isSelected) {
-    //     //   selectedCount++;
-    //     // }
-    //   );
-    //   const isStatusSelected = assetFilter.assetStatus.some(
-    //     (status: any) =>
-    //       status.isSelected && asset.assetStatus.status[status.type],
-    //   );
-    //   if (isTypeSelected && isSourceSelected && isStatusSelected)
-    //     return isTypeSelected && isSourceSelected && isStatusSelected;
-    //   // if (selectedCount <= 1) return isTypeSelected;
-    //   // else if(selectedCount <= 1) return isSourceSelected;
-    //   // else if (selectedCount <= 1) return isStatusSelected;
-    //   // if (isTypeSelected) return isTypeSelected;
-    //   // if (isSourceSelected) return isSourceSelected;
-    //   // if (isStatusSelected) return isStatusSelected;
-    // });
-    // console.log(this.draftFilteredAssets);
+    console.log(this.filterAbleAssets);
+
+    this.filter = assetFilter;
+    console.log(this.filter);
+    this.isFilterMenuOpen = !this.isFilterMenuOpen;
+    const getSelectedCount = (array: any) => {
+      return array.reduce((count: any, item: any) => {
+        return count + (item.isSelected ? 1 : 0);
+      }, 0);
+    };
+
+    const countSelectedItems = (filter: any) => {
+      let totalCount = 0;
+      for (const categoryKey in filter) {
+        if (filter.hasOwnProperty(categoryKey)) {
+          totalCount += filter[categoryKey].reduce((acc: any, item: any) => {
+            return acc + (item.isSelected ? 1 : 0);
+          }, 0);
+        }
+      }
+      return totalCount;
+    };
+
+    this.filterCounts = countSelectedItems(assetFilter);
+
+    // Get the count of selected items in each category
+    const counts = {
+      assetType: getSelectedCount(assetFilter.assetType),
+      assetArea: getSelectedCount(assetFilter.assetArea),
+      assetSource: getSelectedCount(assetFilter.assetSource),
+      assetStatus: getSelectedCount(assetFilter.assetStatus),
+    };
+
+    // assetType filter type
+    const filteredByType =
+      assetFilter.assetType.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetType.some(
+              (type: any) =>
+                type.isSelected && type.type === asset.assetInfo.assetType,
+            );
+          });
+
+    // assetArea filter type
+    const filteredByArea =
+      assetFilter.assetArea.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetArea.some(
+              (type: any) =>
+                type.isSelected && type.area === asset.assetArea.area,
+            );
+          });
+
+    // source filter type
+    const filteredBySource =
+      assetFilter.assetSource.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetSource.some(
+              (source: any) =>
+                source.isSelected && asset.assetSource[source.type],
+            );
+          });
+
+    // status filter type
+    const filteredByStatus =
+      assetFilter.assetStatus.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetStatus.some(
+              (status: any) =>
+                status.isSelected && asset.assetStatus.status[status.type],
+            );
+          });
+
+    this.filteredAssets = this.filterAbleAssets.filter((asset: any) => {
+      const passesTypeFilter = filteredByType.includes(asset);
+      const passesAreaFilter = filteredByArea.includes(asset);
+      const passesSourceFilter = filteredBySource.includes(asset);
+      const passesStatusFilter = filteredByStatus.includes(asset);
+
+      // single filter
+      if (
+        counts.assetType !== 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesTypeFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource !== 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesSourceFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea !== 0
+      ) {
+        return passesAreaFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus !== 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesStatusFilter;
+      }
+      // multiple filter
+      else if (
+        counts.assetType !== 0 &&
+        counts.assetSource !== 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesTypeFilter && passesSourceFilter;
+      } else if (
+        counts.assetType !== 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus !== 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesStatusFilter && passesTypeFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource !== 0 &&
+        counts.assetStatus !== 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesStatusFilter && passesSourceFilter;
+      } else
+        return passesTypeFilter && passesSourceFilter && passesStatusFilter;
+    });
+
+    this.draftFilteredAssets = [];
+    this.draftFilteredAssets = this.filteredAssets;
+    console.log(this.filteredAssets);
+    console.log(this.draftFilteredAssets);
   };
 }
