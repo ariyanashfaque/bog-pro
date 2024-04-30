@@ -8,6 +8,8 @@ export const ApiEndPoint = {
   updateAsset: `${config.serverURL}updateAsset`,
   getAllSites: `${config.serverURL}getAllSites`,
   getAllAssets: `${config.serverURL}getAllAssets`,
+  assetApproval: `${config.serverURL}assetApproval`,
+  assetRejection: `${config.serverURL}assetRejection`,
   sapConfiguration: `${config.serverURL}sapConfiguration`,
   getRequestedAssets: `${config.serverURL}getRequestedAssets`,
   addGuidedInspection: `${config.serverURL}addGuidedInspection`,

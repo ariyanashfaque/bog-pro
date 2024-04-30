@@ -49,6 +49,14 @@ export class HttpService {
   AddGuidedInspection = (data?: any): Observable<any> => {
     return this.http.post<any>(ApiEndPoint.addGuidedInspection, data);
   };
+
+  AssetRejection = (data?: any): Observable<any> => {
+    return this.http.post<any>(ApiEndPoint.assetRejection, data);
+  };
+
+  AssetApproval = (data?: any): Observable<any> => {
+    return this.http.post<any>(ApiEndPoint.assetApproval, data);
+  };
   GetGuidedInspection = (data?: any): Observable<any> => {
     return this.http.post<any>(ApiEndPoint.getGuidedInspection, data);
   };
