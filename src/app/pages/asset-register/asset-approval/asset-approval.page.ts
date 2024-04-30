@@ -89,6 +89,7 @@ export class AssetApprovalPage implements OnInit {
     this.httpService.GetRequestedAssets({ siteId }).subscribe({
       next: (response: AssetsResponseModel) => {
         this.assets = response.data;
+        console.log(this.assets);
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);

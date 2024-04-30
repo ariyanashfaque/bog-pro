@@ -1,4 +1,8 @@
-<app-header headerTitle="Asset Approval" [isDefaultHref]="true"></app-header>
+<app-header
+  headerTitle="Asset Approval"
+  [isBackgroundTransparent]="false"
+  [isDefaultHref]="true"
+></app-header>
 <ion-content [fullscreen]="true" color="background">
   <ion-grid>
     <ion-row>
@@ -282,7 +286,7 @@
                                     <!-- Asset Decommissioned Pending -->
                                     <ion-badge color="rejected" class="p-2">
                                       <ion-text
-                                        color="black"
+                                        color="light"
                                         class="text-[14px] font-gotham_medium"
                                       >
                                         <ion-label>
@@ -300,16 +304,36 @@
                                   <ion-text
                                     class="text-[14px] font-gotham_light"
                                   >
-                                    source
+                                    Source
                                   </ion-text>
                                 </div>
                                 <div class="">
-                                  <ion-badge class="p-2 sourceBadge">
+                                  <ion-badge
+                                    color="medium"
+                                    class="p-2 sourceBadge"
+                                  >
                                     <ion-text
                                       color="black"
                                       class="text-[14px] font-gotham_medium"
                                     >
-                                      <p>SAP</p>
+                                      @switch (true) {
+                                        @case (
+                                          asset?.assetSource?.assetBulkUpload
+                                        ) {
+                                          <p>Bulk</p>
+                                        }
+                                        @case (
+                                          asset?.assetSource
+                                            ?.assetManualCreation
+                                        ) {
+                                          <p>Manual</p>
+                                        }
+                                        @case (
+                                          asset?.assetSource?.assetSapSync
+                                        ) {
+                                          <p>SAP</p>
+                                        }
+                                      }
                                     </ion-text>
                                   </ion-badge>
                                 </div>
