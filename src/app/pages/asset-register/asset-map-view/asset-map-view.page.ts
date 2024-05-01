@@ -33,6 +33,7 @@ import {
   MasterAsset,
   MasterAssetResponseModel,
   AssetInfoModel,
+  SelectedMasterAssetModel,
 } from "src/app/store/models/asset.model";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -113,7 +114,7 @@ export class AssetMapViewPage implements OnInit {
   masterAssets: MasterAsset[];
   recievedAssetForDelete: any;
   mappedAssets = signal<AssetModel[]>([]);
-  selectedMappedAsset = signal<MasterAsset>({});
+  selectedMappedAsset = signal<SelectedMasterAssetModel>({});
   markers: any[] = [];
 
   @Input()
@@ -349,8 +350,12 @@ export class AssetMapViewPage implements OnInit {
           this.markers,
           event?.latLng?.toJSON(),
         );
-        console.log("data: ", data);
-        this.selectedMappedAsset.set(data);
+        console.log("data: ", data, position);
+        const _data: SelectedMasterAssetModel = {
+          ...data,
+          coordinates: position,
+        };
+        this.selectedMappedAsset.set(_data);
       }
     });
   }

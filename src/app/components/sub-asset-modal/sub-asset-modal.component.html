@@ -52,11 +52,18 @@
       />
       <div class="w-full text-xs text-center">
         <span class="text-[#000000DE]">
-          {{ selectedMappedAsset()?.assetInformation?.title }}
+          {{
+            (selectedMappedAsset()?.assetInformation?.title?.length ?? 0) > 7
+              ? (selectedMappedAsset()?.assetInformation?.title
+                  | slice: 0 : 7) + "..."
+              : selectedMappedAsset()?.assetInformation?.title
+          }}
         </span>
       </div>
       <div class="w-full text-xs text-center">
-        <span class="text-[#000000DE] font-bold">09/09</span>
+        <span class="text-[#000000DE] font-bold">
+          {{ this.subAssetCont() }}
+        </span>
       </div>
     </div>
   </div>
@@ -65,13 +72,11 @@
       class="w-full max-h-[236px] px-2 py-2 flex items-start gap-2 flex-wrap overflow-y-auto"
     >
       <!-- Assets -->
-      @for (subAsset of subAssets; track $index) {
+      @for (subAsset of _subAssets(); track $index) {
         <div
           dndDropzone
           dndDraggable
-          [dndDisableDragIf]="
-            subAsset?.subAsset?.assetRegisteredStatus?.assetRegistered
-          "
+          [dndDisableDragIf]="subAsset?.assetStatus?.isRegistered ?? false"
           class="cursor-pointer"
           (click)="onAssetClick(subAsset, $index)"
           (dndDrop)="onDrop($event, $index)"
@@ -83,16 +88,23 @@
               activeIndex() == $index ? 'border-[#007382]' : 'border-[#D6EAEB]'
             "
           >
-            @if (subAsset?.assetImage) {
+            @if (subAsset?.assetInfo?.iconPath) {
               <img
                 class="object-cover w-full h-full"
-                [src]="subAsset?.assetImage"
+                [src]="subAsset?.assetInfo?.iconPath"
+                alt="{{ subAsset.assetInfo?.assetName }}"
               />
             }
           </div>
 
           <div class="w-[70px] text-xs text-center mt-1">
-            <span class="text-[#000000DE]">{{ subAsset.name }}</span>
+            <span class="text-[#000000DE]">
+              {{
+                (subAsset?.assetInfo?.assetName?.length ?? 0) > 7
+                  ? (subAsset?.assetInfo?.assetName | slice: 0 : 7) + "..."
+                  : subAsset?.assetInfo?.assetName
+              }}
+            </span>
           </div>
         </div>
       }

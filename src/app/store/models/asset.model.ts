@@ -205,6 +205,19 @@ export interface MasterAsset {
   total_recommended?: number;
 }
 
+export interface SelectedMasterAssetModel {
+  id?: string;
+  assetInformation?: AssetInformation;
+  recommended?: AssetInformation[];
+  others?: AssetInformation[];
+  total_others?: number;
+  total_recommended?: number;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+}
+
 export interface MasterAssetResponseModel {
   message: string;
   status: boolean;
