@@ -106,7 +106,7 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
                   assetName: item?.title,
                   assetType: item?.type,
                   assetParentType: item?.type,
-                  iconPath: `../../../assets/${item?.icon}`,
+                  iconPath: item?.icon,
                   assetZone: {
                     coordinates: this.selectedMappedAsset()?.coordinates,
                   },
