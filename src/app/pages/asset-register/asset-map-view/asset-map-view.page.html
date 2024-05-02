@@ -14,11 +14,11 @@
   <div class="h-full w-full overflow-scroll bg-gray-200">
     <!-- Content Body -->
     <div
-      (dndDrop)="onDrop($event)"
-      dndDropzone
       #mapRef
-      class="maps"
       id="map"
+      dndDropzone
+      class="maps"
+      (dndDrop)="onDrop($event)"
     ></div>
   </div>
 </ion-content>
@@ -82,6 +82,7 @@
     (sendForDeleteAsset)="deleteSubAsset($event)"
     [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
     [selectedMappedAsset]="selectedMappedAsset()"
+    [confirmDeleteAsset]="assetSentForDelete"
   ></app-sub-asset-modal>
 }
 

@@ -32,6 +32,7 @@ import {
   IonAccordionGroup,
 } from "@ionic/angular/standalone";
 import {
+  Filter,
   SiteModel,
   AssetModel,
   AssetsResponseModel,
@@ -40,8 +41,8 @@ import { Store } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
 import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { AssetMappedCardComponent } from "src/app/components/asset-mapped-card/asset-mapped-card.component";
 import { AssetApprovalModalComponent } from "../../../components/asset-approval-modal/asset-approval-modal.component";
@@ -82,23 +83,25 @@ import { AssetMappedFilterModalComponent } from "../../../components/asset-mappe
   ],
 })
 export class AssetMappedPage implements OnInit {
+  store = inject(Store);
+  httpService = inject(HttpService);
+  toastService = inject(ToastService);
+
+  filter: Filter;
   assetId: string;
   plantId: string;
-  assetFilter: any;
   assets: AssetModel[];
-  store = inject(Store);
+  filterCounts: number;
   toggleChecked: boolean;
   draftAssets: AssetModel[];
-  filteredAsset: AssetModel[];
+  filteredAssets: AssetModel[];
   registeredAssets: AssetModel[];
-  FilterByTypeAssets: AssetModel[];
-  httpService = inject(HttpService);
+  filterAbleAssets: AssetModel[];
+  draftFilteredAssets: AssetModel[];
   isFilterMenuOpen: boolean = false;
-  toastService = inject(ToastService);
   isApprovalMenuOpen: boolean = false;
   isLoading: WritableSignal<boolean> = signal(false);
   @Output() isFilterToggleOpen = new EventEmitter<boolean>(false);
-
   @Input()
   set id(plantId: string) {
     this.plantId = plantId;
@@ -126,28 +129,13 @@ export class AssetMappedPage implements OnInit {
     this.plantId = "";
     this.assetId = "";
     this.draftAssets = [];
-    this.filteredAsset = [];
-    this.FilterByTypeAssets = [];
+    this.filterCounts = 0;
+    this.filteredAssets = [];
     this.toggleChecked = true;
     this.registeredAssets = [];
+    this.filterAbleAssets = [];
+    this.draftFilteredAssets = [];
     this.isApprovalMenuOpen = false;
-
-    this.assetFilter = {
-      assetType: ["silo", "roof"],
-      assetArea: ["zone1", "zone2"],
-
-      assetSoruce: {
-        assetSapSync: true,
-        assetBulkUpload: false,
-        assetManualCreation: false,
-      },
-      assetStatus: {
-        assetInDraft: false,
-        assetRejected: false,
-        assetApproved: false,
-        assetApprovalPendinng: true,
-      },
-    };
   }
 
   ngOnInit() {
@@ -155,10 +143,11 @@ export class AssetMappedPage implements OnInit {
       next: (plant: SiteModel) => {
         if (plant?.assets) {
           this.assets = plant.assets;
+          console.log(this.assets);
+
           plant.assets?.forEach((asset) => {
             if (asset?.assetStatus?.isDraft) {
               this.draftAssets.push(asset);
-              console.log(asset);
             }
             if (asset?.assetStatus?.isRegistered) {
               this.registeredAssets.push(asset);
@@ -167,47 +156,162 @@ export class AssetMappedPage implements OnInit {
         }
       },
     });
+
+    if (this.toggleChecked) {
+      this.filterAbleAssets = this.draftAssets;
+      this.draftFilteredAssets = this.draftAssets;
+    }
   }
 
   handleErrorModal = (event: any) => {
     this.isApprovalMenuOpen = event;
   };
 
-  handleFilterModal = (event: any) => {
+  handleFilterModal = (event: any, filter: any) => {
     this.isFilterMenuOpen = event;
     this.isFilterToggleOpen.emit(this.isFilterMenuOpen);
   };
 
-  handlefilterby = (event: any) => {
-    // this.filteredAsset = this.draftAssets.filter((assets: any) => {
-    //   const selectedAssetTypes = this.FilterByTypeAssets.forEach(
-    //     (item: any) => {
-    //       item.filterType === assets.assetInfo.assetType;
-    //     },
-    //   );
-    //   console.log(selectedAssetTypes);
-    // });
-    // this.draftAssets.filter(item=>{
-    //   this.FilterByTypeAssets.forEach(type=>{
-    //     typeof item
-    //   })
-    // })
-    // this.FilterByTypeAssets.map((asset: any) => {
-    //   console.log(asset);
-    // asset.filters.forEach((a: any) => {
-    //   console.log(a);
-    // });
-    // asset.forEach(element => {
-    // });
-    // this.draftAssets = [];
-    // this.isFilterMenuOpen = false;
-    // this.FilterByTypeAssets.forEach((assets: any) => {
-    //   assets.forEach((asset: any) => {
-    //     if (asset?.assetStatus?.isDraft) {
-    //       this.draftAssets.push(asset);
-    //     }
-    //   });
-    // });
+  handlefilterby = (assetFilter: any) => {
+    this.filter = assetFilter;
+    console.log(this.filter);
+    this.isFilterMenuOpen = !this.isFilterMenuOpen;
+    const getSelectedCount = (array: any) => {
+      return array.reduce((count: any, item: any) => {
+        return count + (item.isSelected ? 1 : 0);
+      }, 0);
+    };
+
+    const countSelectedItems = (filter: any) => {
+      let totalCount = 0;
+      for (const categoryKey in filter) {
+        if (filter.hasOwnProperty(categoryKey)) {
+          totalCount += filter[categoryKey].reduce((acc: any, item: any) => {
+            return acc + (item.isSelected ? 1 : 0);
+          }, 0);
+        }
+      }
+      return totalCount;
+    };
+
+    this.filterCounts = countSelectedItems(assetFilter);
+
+    // Get the count of selected items in each category
+    const counts = {
+      assetType: getSelectedCount(assetFilter.assetType),
+      assetArea: getSelectedCount(assetFilter.assetArea),
+      assetSource: getSelectedCount(assetFilter.assetSource),
+      assetStatus: getSelectedCount(assetFilter.assetStatus),
+    };
+
+    // draft aseets
+    // assetType filter type
+    const filteredByType =
+      assetFilter.assetType.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetType.some(
+              (type: any) =>
+                type.isSelected && type.type === asset.assetInfo.assetType,
+            );
+          });
+
+    // assetArea filter type
+    const filteredByArea =
+      assetFilter.assetArea.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetArea.some(
+              (type: any) =>
+                type.isSelected && type.area === asset.assetArea.area,
+            );
+          });
+
+    // source filter type
+    const filteredBySource =
+      assetFilter.assetSource.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetSource.some(
+              (source: any) =>
+                source.isSelected && asset.assetSource[source.type],
+            );
+          });
+
+    // status filter type
+    const filteredByStatus =
+      assetFilter.assetStatus.length === 0
+        ? this.filterAbleAssets
+        : this.filterAbleAssets.filter((asset: any) => {
+            return assetFilter.assetStatus.some(
+              (status: any) =>
+                status.isSelected && asset.assetStatus.status[status.type],
+            );
+          });
+
+    this.filteredAssets = this.filterAbleAssets.filter((asset: any) => {
+      const passesTypeFilter = filteredByType.includes(asset);
+      const passesAreaFilter = filteredByArea.includes(asset);
+      const passesSourceFilter = filteredBySource.includes(asset);
+      const passesStatusFilter = filteredByStatus.includes(asset);
+
+      // single filter
+      if (
+        counts.assetType !== 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesTypeFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource !== 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesSourceFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea !== 0
+      ) {
+        return passesAreaFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus !== 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesStatusFilter;
+      }
+      // multiple filter
+      else if (
+        counts.assetType !== 0 &&
+        counts.assetSource !== 0 &&
+        counts.assetStatus === 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesTypeFilter && passesSourceFilter;
+      } else if (
+        counts.assetType !== 0 &&
+        counts.assetSource === 0 &&
+        counts.assetStatus !== 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesStatusFilter && passesTypeFilter;
+      } else if (
+        counts.assetType === 0 &&
+        counts.assetSource !== 0 &&
+        counts.assetStatus !== 0 &&
+        counts.assetArea === 0
+      ) {
+        return passesStatusFilter && passesSourceFilter;
+      } else
+        return passesTypeFilter && passesSourceFilter && passesStatusFilter;
+    });
+
+    this.draftFilteredAssets = this.filteredAssets;
   };
 
   handleAssetId = (event: any) => {
@@ -215,23 +319,21 @@ export class AssetMappedPage implements OnInit {
   };
 
   handleToggle(event: any) {
+    this.filterCounts = 0;
+    this.filter = {
+      assetType: [],
+      assetArea: [],
+      assetSource: [],
+      assetStatus: [],
+    };
+
+    if (event.detail.checked) {
+      this.filterAbleAssets = this.draftAssets;
+      this.draftFilteredAssets = this.draftAssets;
+    } else {
+      this.filterAbleAssets = this.registeredAssets;
+      this.draftFilteredAssets = this.registeredAssets;
+    }
     this.toggleChecked = event.detail.checked;
-  }
-
-  handleApplyFilter(asset: any): boolean {
-    const assetTypeMatch = this.assetFilter.assetType.includes(
-      asset.assetInfo.assetType,
-    );
-
-    const assetSourceMatch = Object.keys(this.assetFilter.assetSoruce).every(
-      (key) => this.assetFilter.assetSoruce[key] === asset.assetSource[key],
-    );
-
-    const assetStatusMatch = Object.keys(this.assetFilter.assetStatus).every(
-      (key) =>
-        this.assetFilter.assetStatus[key] === asset.assetStatus.status[key],
-    );
-
-    return assetStatusMatch && assetTypeMatch && assetSourceMatch;
   }
 }

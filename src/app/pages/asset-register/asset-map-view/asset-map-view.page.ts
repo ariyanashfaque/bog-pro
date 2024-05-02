@@ -1,6 +1,5 @@
 import {
   Input,
-  effect,
   inject,
   OnInit,
   signal,
@@ -9,6 +8,8 @@ import {
   ElementRef,
   WritableSignal,
   model,
+  output,
+  effect,
 } from "@angular/core";
 import {
   IonFab,
@@ -23,8 +24,9 @@ import {
   IonBackdrop,
   IonProgressBar,
   LoadingController,
+  AlertController,
+  Platform,
 } from "@ionic/angular/standalone";
-import { Store } from "@ngrx/store";
 import {
   SiteModel,
   AssetModel,
@@ -35,6 +37,7 @@ import {
   AssetInfoModel,
   SelectedMasterAssetModel,
 } from "src/app/store/models/asset.model";
+import { Store } from "@ngrx/store";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { HttpErrorResponse } from "@angular/common/http";
 import { environment } from "src/environments/environment";
@@ -44,8 +47,8 @@ import { UPDATE_PLANT } from "src/app/store/actions/asset.action";
 import { MapService } from "src/app/services/map-service/map.service";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { HttpService } from "src/app/services/http-service/http-client.service";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { MapViewComponent } from "src/app/components/map-view-component/map-view.component";
 import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-sidebar.component";
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
@@ -81,6 +84,7 @@ import { MapSidebarService } from "src/app/services/map-sidebar/map-sidebar.serv
   styleUrls: ["./asset-map-view.page.scss"],
 })
 export class AssetMapViewPage implements OnInit {
+  platform = inject(Platform);
   mapService = inject(MapService);
   mapSidebarService = inject(MapSidebarService);
   loadingCtrl = inject(LoadingController);
@@ -99,6 +103,7 @@ export class AssetMapViewPage implements OnInit {
   assets: AssetModel[];
   store = inject(Store);
   isDragging: boolean = false;
+  recievedAssetForDelete: any;
   childAsset = signal<any>({});
   selectedAsset = signal<any>({});
   httpService = inject(HttpService);
@@ -106,16 +111,20 @@ export class AssetMapViewPage implements OnInit {
   isChildOpen = signal<boolean>(false);
   subAssetActiveIndex = signal<number>(-1);
   assetModalActiveIndex = signal<number>(-1);
+  pressed: WritableSignal<number> = signal(0);
   isAssetInfoMenuOpen = signal<boolean>(false);
   isSubAssetModalOpen = signal<boolean>(false);
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
   masterAssets: MasterAsset[];
-  recievedAssetForDelete: any;
   mappedAssets = signal<AssetModel[]>([]);
   selectedMappedAsset = signal<SelectedMasterAssetModel>({});
   markers: any[] = [];
+  assetSentForDelete: any;
+  // private pressCounter: WritableSignal<number> = signal(0);
+  private pressTimer: ReturnType<typeof setTimeout>;
+  private pressCounter: WritableSignal<number> = signal(0);
 
   @Input()
   set id(plantId: string) {
@@ -134,9 +143,28 @@ export class AssetMapViewPage implements OnInit {
   }
 
   deleteSubAsset(data: any) {
-    console.log(data);
-
     this.recievedAssetForDelete = data;
+  }
+
+  constructor(private alertController: AlertController) {
+    this.assets = [];
+    this.plantId = "";
+    this.groupedAssets = [];
+
+    this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
+    this.mapMptions = {
+      zoom: 16,
+      minZoom: 6,
+      maxZoom: 20,
+      mapId: "g-maps",
+      mapTypeId: "roadmap",
+      mapTypeControl: false,
+      center: this.mapCenter,
+      disableDefaultUI: true,
+      streetViewControl: false,
+      keyboardShortcuts: false,
+      disableDoubleClickZoom: true,
+    };
   }
 
   ngOnInit() {
@@ -222,40 +250,39 @@ export class AssetMapViewPage implements OnInit {
     });
   };
 
-  deleteOnDrop(e: DndDropEvent) {
+  async deleteOnDrop(e: DndDropEvent) {
     if (this.recievedAssetForDelete?.subAsset) {
-      if (this.recievedAssetForDelete?.subAsset?.assetStatus?.isDraft) {
-        console.log("Draft asset");
-      }
-    }
+      if (this.recievedAssetForDelete?.subAsset?.assetStatus) {
+        const alert = await this.alertController.create({
+          header: "Cannot delete asset !!",
+          message: "This asset is in registered state",
+          buttons: [
+            {
+              text: "Understood",
+              role: "confirm",
+              handler: () => {
+                console.log("Alert confirmed");
+                this.assetSentForDelete = this.recievedAssetForDelete;
+              },
+            },
+          ],
+        });
 
-    console.log(e.event.dataTransfer?.getData("text/plain"));
+        await alert.present();
+      }
+    } else {
+      // this.assetSentForDelete.emit(this.recievedAssetForDelete);
+      // const alert = await this.alertController.create({
+      //   header: "Nothing to remove",
+      //   message: "Please drag boxes that have assets",
+      //   buttons: ["Understood"],
+      // });
+      // await alert.present();
+    }
   }
 
   ngOnDestroy(): void {
     this.loader.deleteScript();
-  }
-
-  constructor() {
-    this.assets = [];
-    this.plantId = "";
-    this.groupedAssets = [];
-    console.log(this.dragRecieved);
-
-    this.mapCenter = { lat: 18.4085962, lng: 77.0994331 };
-    this.mapMptions = {
-      zoom: 16,
-      minZoom: 6,
-      maxZoom: 20,
-      mapId: "g-maps",
-      mapTypeId: "roadmap",
-      mapTypeControl: false,
-      center: this.mapCenter,
-      disableDefaultUI: true,
-      streetViewControl: false,
-      keyboardShortcuts: false,
-      disableDoubleClickZoom: true,
-    };
   }
 
   public async initializeMap(mapRef: ElementRef) {
@@ -295,6 +322,30 @@ export class AssetMapViewPage implements OnInit {
 
   async onDrop(event: DndDropEvent) {
     this.isDragging = true;
+
+    const x = event.event.clientX;
+    const y = event.event.clientY;
+    const point = new google.maps.Point(x, y);
+    const latLng = this.pointToLatLng(point, this.map);
+
+    this.isDragging = false;
+    // this.addMarker(latLng.toJSON());
+    console.log("this.selectedAsset() on drop: ", this.selectedAsset());
+  }
+
+  pointToLatLng(point: any, map: any) {
+    var topRight = map
+      .getProjection()
+      .fromLatLngToPoint(map.getBounds().getNorthEast());
+    var bottomLeft = map
+      .getProjection()
+      .fromLatLngToPoint(map.getBounds().getSouthWest());
+    var scale = Math.pow(2, map.getZoom());
+    var worldPoint = new google.maps.Point(
+      point.x / scale + bottomLeft.x,
+      point.y / scale + topRight.y,
+    );
+    return map.getProjection().fromPointToLatLng(worldPoint);
   }
 
   private async addMapStyles() {
@@ -331,10 +382,69 @@ export class AssetMapViewPage implements OnInit {
     mapMarker.appendChild(markerImage);
     mapMarker.appendChild(counterElement);
 
+    // parent.addEventListener("click", () => {
+    //   console.log("Parent Bubble");
+    // });
+    if (this.platform.is("ios") || this.platform.is("android")) {
+      mapMarker.addEventListener(
+        "touchstart",
+        (e) => {
+          e.preventDefault();
+
+          console.log("touch start");
+          this.handleLongPress();
+        },
+        { passive: false },
+      );
+      mapMarker.addEventListener(
+        "touchend",
+        (e) => {
+          e.preventDefault();
+
+          console.log("touch end");
+          console.log(this.pressCounter());
+
+          if (this.pressCounter() === 0) {
+            this.toggleInfoMenu();
+          }
+          if (this.pressCounter() >= 3) {
+            this.toggleChildMenu();
+          }
+        },
+        { passive: false },
+      );
+    } else {
+      mapMarker.addEventListener(
+        "mousedown",
+        (e) => {
+          e.preventDefault();
+          this.handleLongPress();
+          console.log(this.pressCounter());
+        },
+        { passive: false },
+      );
+      mapMarker.addEventListener(
+        "mouseup",
+        (e) => {
+          e.preventDefault();
+          console.log(this.pressCounter());
+
+          if (this.pressCounter() === 0) {
+            this.toggleInfoMenu();
+          }
+          if (this.pressCounter() >= 3) {
+            this.toggleChildMenu();
+          }
+        },
+        { passive: false },
+      );
+    }
+
     const marker = new AdvancedMarkerElement({
       map: this.map,
       position: position,
       gmpClickable: true,
+      // gmpDraggable: true,
       content: mapMarker,
     });
 
@@ -358,6 +468,20 @@ export class AssetMapViewPage implements OnInit {
         this.selectedMappedAsset.set(_data);
       }
     });
+  }
+
+  handleLongPress() {
+    this.pressTimer = setInterval(() => {
+      this.pressCounter.update((counter) => counter + 1);
+      if (this.pressCounter() > 5) {
+        this.pressCounter.set(0);
+        this.handleLongPressRelease();
+      }
+    }, 1000);
+  }
+
+  handleLongPressRelease() {
+    clearTimeout(this.pressTimer);
   }
 
   private async importMapsLibrary(type: Library) {
@@ -412,7 +536,6 @@ export class AssetMapViewPage implements OnInit {
       this.isSubAssetModalOpen.set(false);
       this.selectedAsset.set({});
     }
-    console.log("Selected Asset: ", this.selectedAsset());
   }
 
   findSelectedAsset = (

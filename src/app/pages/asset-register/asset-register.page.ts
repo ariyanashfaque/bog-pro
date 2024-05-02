@@ -36,10 +36,10 @@ import {
 import { Store } from "@ngrx/store";
 import { RouterModule } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
-import { ToastService } from "src/app/services/toast-service/toast.service";
-import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { CountryHseHead, Champion } from "src/app/store/models/role.model";
+import { ToastService } from "src/app/services/toast-service/toast.service";
 import { HttpService } from "src/app/services/http-service/http-client.service";
+import { HeaderComponent } from "src/app/components/header-component/header.component";
 import { PlantCardComponent } from "src/app/components/plant-card/plant-card.component";
 import { LoadingSkeletonComponent } from "src/app/components/loading-skeleton/loading-skeleton.component";
 import { PlantCardErrorModalComponent } from "src/app/components/plant-card-error-modal/plant-card-error-modal.component";
@@ -116,7 +116,7 @@ export class AssetRegisterPage implements OnInit {
       .select("plants")
       .subscribe({ next: (plants) => (this.plants = plants) });
 
-    this.GetAllPlants();
+    this.GetAllSites();
     this.role = this.country_hse_head;
   }
 
@@ -124,9 +124,9 @@ export class AssetRegisterPage implements OnInit {
     this.isMenuOpen = event;
   };
 
-  GetAllPlants = async () => {
+  GetAllSites = async () => {
     this.isLoading.set(true);
-    this.httpService.GetAllPlants().subscribe({
+    this.httpService.GetAllSites().subscribe({
       next: (response: SitesResponseModel) => {
         this.store.dispatch(ADD_PLANTS(response?.data?.sites));
         this.store.dispatch(ADD_CATEGORIES(response?.data?.categories));

@@ -18,12 +18,11 @@
       class="w-full max-h-[calc(100vh-170px)] bg-transparent flex flex-col items-center overflow-y-scroll"
     >
       @for (asset of assetData(); track $index) {
-        <div class="">
+        <div>
           <div
             dndDraggable
-            (dndStart)="onDragStart($event, asset)"
             class="cursor-pointer mx-auto"
-            (click)="onAssetClick(asset, $index)"
+            (dndStart)="onDragStart($event, asset)"
           >
             <div
               class="mx-auto relative mt-3 text-3xl h-[70px] w-[70px] border-2 rounded-md flex justify-center items-center"
@@ -34,6 +33,7 @@
               "
             >
               <img
+                alt="silo"
                 class="object-cover w-full h-full rounded-md"
                 src="../../../assets/{{ asset?.assetInformation?.icon }}"
                 alt="{{ asset?.assetInformation?.title }}"

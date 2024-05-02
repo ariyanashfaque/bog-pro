@@ -25,11 +25,6 @@
     "strictTemplates": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "enableI18nLegacyMessageIdFormat": false,
-    "extendedDiagnostics": {
-      "checks": {
-        "optionalChainNotNullable": "suppress"
-      }
-    }
+    "enableI18nLegacyMessageIdFormat": false
   }
 }

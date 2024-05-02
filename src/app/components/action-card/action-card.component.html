@@ -1,9 +1,15 @@
-<div class="max-w-full mx-auto pb-10">
+<div class="max-w-full mx-auto">
   <div class="rounded-md">
     <div class="">
       <div
-        class="bg-[#EDF5F5] rounded-md p-2.5 text-sm"
-        [class]="isOverdue ? 'border-red-600' : 'border-blue-900'"
+        class="rounded-md p-2.5 text-sm"
+        [class]="
+          forDashboard
+            ? isOverdue
+              ? 'bg-white border-2 border-red-600'
+              : 'bg-white border-2 border-blue-900'
+            : 'bg-[#EDF5F5]'
+        "
       >
         <div>
           <!-- top part -->
@@ -91,7 +97,11 @@
             ></div>
             <div class="">
               <p class="text-xs">Due date</p>
-              <p class="font-bold text-xs">1<sup>st</sup> Jan 2023</p>
+              <p class="font-bold text-xs">
+                1
+                <sup>st</sup>
+                Jan 2023
+              </p>
             </div>
             <button (click)="toggleIcon()">
               <ion-icon

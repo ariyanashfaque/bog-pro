@@ -11,6 +11,7 @@ import { IonIcon } from "@ionic/angular/standalone";
 export class ActionCardComponent implements OnInit {
   showLess = true;
   isStarOutline = true;
+  @Input() forDashboard: boolean = false;
   @Input() isOverdue: boolean = false;
   constructor() {}
 

@@ -39,8 +39,8 @@ export class HttpService {
     );
   };
 
-  GetAllPlants = (data?: any): Observable<SitesResponseModel> => {
-    return this.http.post<SitesResponseModel>(ApiEndPoint.getAllPlants, data);
+  GetAllSites = (): Observable<SitesResponseModel> => {
+    return this.http.get<SitesResponseModel>(ApiEndPoint.getAllSites);
   };
 
   GetAllAssets = (data?: any): Observable<AssetsResponseModel> => {
@@ -49,6 +49,14 @@ export class HttpService {
 
   AddGuidedInspection = (data?: any): Observable<any> => {
     return this.http.post<any>(ApiEndPoint.addGuidedInspection, data);
+  };
+
+  AssetRejection = (data?: any): Observable<any> => {
+    return this.http.post<any>(ApiEndPoint.assetRejection, data);
+  };
+
+  AssetApproval = (data?: any): Observable<any> => {
+    return this.http.post<any>(ApiEndPoint.assetApproval, data);
   };
   GetGuidedInspection = (data?: any): Observable<any> => {
     return this.http.post<any>(ApiEndPoint.getGuidedInspection, data);
@@ -70,6 +78,9 @@ export class HttpService {
   };
   SapConfiguration = (data?: any): Observable<any> => {
     return this.http.post<any>(ApiEndPoint.sapConfiguration, data);
+  };
+  GetRequestedAssets = (data?: any): Observable<any> => {
+    return this.http.post<any>(ApiEndPoint.getRequestedAssets, data);
   };
   GetAllSapConfiguration = (data?: any): Observable<SitesResponseModel> => {
     return this.http.post<SitesResponseModel>(

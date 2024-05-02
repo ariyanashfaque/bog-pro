@@ -12,88 +12,42 @@ import {
   signal,
   WritableSignal,
 } from "@angular/core";
-import { IonIcon, IonText } from "@ionic/angular/standalone";
-import { DndModule } from "ngx-drag-drop";
 import { MasterAsset } from "src/app/store/models/asset.model";
 import { MapSidebarService } from "src/app/services/map-sidebar/map-sidebar.service";
-// import { AssetZoneModel } from "src/app/store/models/map.model";
+import { DndModule } from "ngx-drag-drop";
+import { polyfill } from "mobile-drag-drop";
+import { IonIcon, IonText } from "@ionic/angular/standalone";
+import { scrollBehaviourDragImageTranslateOverride } from "mobile-drag-drop/scroll-behaviour";
+
+polyfill({
+  dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride,
+});
 
 @Component({
+  standalone: true,
   selector: "app-asset-sidebar",
+  imports: [IonText, IonIcon, DndModule],
   templateUrl: "./asset-sidebar.component.html",
   styleUrls: ["./asset-sidebar.component.scss"],
-  standalone: true,
-  imports: [IonText, IonIcon, DndModule],
 })
 export class AssetSidebarComponent implements OnInit {
   mapSidebarService = inject(MapSidebarService);
+
+  isDraggable: boolean;
   isMenuOpen = model<boolean>();
-  // isChildOpen = model<boolean>();
-  isChildOpen = signal<boolean>(false);
-  isSubAssetModalOpen = model<boolean>(false);
-  activeAccordion: string = "recommended";
-  assetData = input<MasterAsset[]>();
-  selectedMappedAsset = input<MasterAsset>();
   selectedAsset = output<any>();
   activeIndex = model<number>(-1);
-
-  toggleVisibility(buttonId: string) {
-    if (this.activeAccordion === buttonId) {
-      this.activeAccordion = "";
-    } else {
-      this.activeAccordion = buttonId;
-    }
-    this.structures.forEach((structure) => {
-      structure.child = false;
-    });
-  }
-
-  menuToggle() {
-    this.isMenuOpen.update((isMenuOpen) => !isMenuOpen);
-    this.structures.forEach((structure) => {
-      structure.child = false;
-    });
-    this.activeAccordion = "";
-    this.activeIndex.update(() => -1);
-  }
-
-  onAssetClick(asset: any, index: number) {
-    this.selectedAsset.emit(asset);
-    if (this.activeIndex() === index) {
-      this.activeIndex.update(() => -1);
-    } else {
-      this.activeIndex.update(() => index);
-    }
-    console.log("Index: ", this.activeIndex());
-  }
-
-  onDragStart(event: MouseEvent, asset: any) {
-    // console.log(asset);
-    event.stopPropagation();
-    this.selectedAsset.emit(asset);
-  }
-
-  constructor() {
-    this.mapSidebarService.getIsChildOpen.subscribe((data: boolean) => {
-      this.isChildOpen.set(data);
-    });
-    effect(() => {
-      console.log("assetData", this.assetData());
-    });
-    effect(() => {
-      console.log("selectedMappedAsset->", this.selectedMappedAsset());
-    });
-    effect(() => {
-      console.log(
-        "this.isChildOpen(): ",
-        this.isChildOpen(),
-        this.isMenuOpen(),
-      );
-    });
-    // console.log("assetData", this.assetData());
-  }
-
-  ngOnInit() {}
+  assetData = input<MasterAsset[]>();
+  isChildOpen = signal<boolean>(false);
+  activeAccordion: string = "recommended";
+  selectedMappedAsset = input<MasterAsset>();
+  isSubAssetModalOpen = model<boolean>(false);
+  draggable = {
+    handle: false,
+    disable: false,
+    data: "myDragData",
+    effectAllowed: "all",
+  };
 
   structures = [
     {
@@ -133,4 +87,61 @@ export class AssetSidebarComponent implements OnInit {
       child: false,
     },
   ];
+
+  constructor() {
+    this.mapSidebarService.getIsChildOpen.subscribe((data: boolean) => {
+      this.isChildOpen.set(data);
+    });
+    effect(() => {
+      console.log("assetData", this.assetData());
+    });
+    effect(() => {
+      console.log("selectedMappedAsset->", this.selectedMappedAsset());
+    });
+    effect(() => {
+      console.log(
+        "this.isChildOpen(): ",
+        this.isChildOpen(),
+        this.isMenuOpen(),
+      );
+    });
+    // console.log("assetData", this.assetData());
+  }
+
+  ngOnInit() {}
+
+  toggleVisibility(buttonId: string) {
+    if (this.activeAccordion === buttonId) {
+      this.activeAccordion = "";
+    } else {
+      this.activeAccordion = buttonId;
+    }
+    this.structures.forEach((structure) => {
+      structure.child = false;
+    });
+  }
+
+  menuToggle() {
+    this.isMenuOpen.update((isMenuOpen) => !isMenuOpen);
+    this.structures.forEach((structure) => {
+      structure.child = false;
+    });
+    this.activeAccordion = "";
+    this.activeIndex.update(() => -1);
+  }
+
+  onAssetClick(asset: any, index: number) {
+    this.selectedAsset.emit(asset);
+    if (this.activeIndex() === index) {
+      this.activeIndex.update(() => -1);
+    } else {
+      this.activeIndex.update(() => index);
+    }
+  }
+
+  onDragStart(event: MouseEvent, asset: any) {
+    event.stopPropagation();
+
+    this.selectedAsset.emit(asset);
+  }
 }
