@@ -1,8 +1,22 @@
+import { on } from "@ngrx/store";
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  Input,
+  model,
+  OnInit,
+  output,
+  signal,
+  WritableSignal,
+} from "@angular/core";
+import { MasterAsset } from "src/app/store/models/asset.model";
+import { MapSidebarService } from "src/app/services/map-sidebar/map-sidebar.service";
 import { DndModule } from "ngx-drag-drop";
 import { polyfill } from "mobile-drag-drop";
 import { IonIcon, IonText } from "@ionic/angular/standalone";
-import { AssetModel } from "src/app/store/models/asset.model";
-import { Component, input, model, OnInit, output } from "@angular/core";
 import { scrollBehaviourDragImageTranslateOverride } from "mobile-drag-drop/scroll-behaviour";
 
 polyfill({
@@ -17,27 +31,23 @@ polyfill({
   styleUrls: ["./asset-sidebar.component.scss"],
 })
 export class AssetSidebarComponent implements OnInit {
+  mapSidebarService = inject(MapSidebarService);
+
   isDraggable: boolean;
-  assetData = input<any[]>();
   isMenuOpen = model<boolean>();
   selectedAsset = output<any>();
-  isChildOpen = model<boolean>();
   activeIndex = model<number>(-1);
+  assetData = input<MasterAsset[]>();
+  isChildOpen = signal<boolean>(false);
   activeAccordion: string = "recommended";
+  selectedMappedAsset = input<MasterAsset>();
   isSubAssetModalOpen = model<boolean>(false);
-
   draggable = {
     handle: false,
     disable: false,
     data: "myDragData",
     effectAllowed: "all",
   };
-
-  constructor() {
-    this.isDraggable = false;
-  }
-
-  ngOnInit() {}
 
   structures = [
     {
@@ -77,6 +87,28 @@ export class AssetSidebarComponent implements OnInit {
       child: false,
     },
   ];
+
+  constructor() {
+    this.mapSidebarService.getIsChildOpen.subscribe((data: boolean) => {
+      this.isChildOpen.set(data);
+    });
+    effect(() => {
+      console.log("assetData", this.assetData());
+    });
+    effect(() => {
+      console.log("selectedMappedAsset->", this.selectedMappedAsset());
+    });
+    effect(() => {
+      console.log(
+        "this.isChildOpen(): ",
+        this.isChildOpen(),
+        this.isMenuOpen(),
+      );
+    });
+    // console.log("assetData", this.assetData());
+  }
+
+  ngOnInit() {}
 
   toggleVisibility(buttonId: string) {
     if (this.activeAccordion === buttonId) {

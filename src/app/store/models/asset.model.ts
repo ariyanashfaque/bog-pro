@@ -101,15 +101,15 @@ interface AssetSimCategoryModel {
 
 // * Asset Info Model * //
 export interface AssetInfoModel {
-  sapId: string;
-  iconPath: string;
+  sapId?: string;
   assetName: string;
   assetType: string;
-  assetStatus: string;
+  assetStatus?: string;
   assetParentType: string;
-  assetCostCenter: string;
-  assetZone: AssetZoneModel;
-  assetImages: AssetImageModel[];
+  assetCostCenter?: string;
+  assetZone?: AssetZoneModel;
+  assetImages?: AssetImageModel[];
+  iconPath: string;
 }
 
 export interface AssetDraftStatus {
@@ -225,4 +225,42 @@ export interface SitesResponseModel {
   message: string;
   status: boolean;
   data: { sites: SiteModel[]; categories: AssetCategoryModel[] };
+}
+
+export interface AssetInformation {
+  id?: string;
+  type?: string;
+  title?: string;
+  icon?: string;
+  onlyParent?: boolean;
+  onlyChild?: boolean;
+  auto?: boolean;
+}
+
+export interface MasterAsset {
+  id?: string;
+  assetInformation?: AssetInformation;
+  recommended?: AssetInformation[];
+  others?: AssetInformation[];
+  total_others?: number;
+  total_recommended?: number;
+}
+
+export interface SelectedMasterAssetModel {
+  id?: string;
+  assetInformation?: AssetInformation;
+  recommended?: AssetInformation[];
+  others?: AssetInformation[];
+  total_others?: number;
+  total_recommended?: number;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+}
+
+export interface MasterAssetResponseModel {
+  message: string;
+  status: boolean;
+  data: MasterAsset[];
 }

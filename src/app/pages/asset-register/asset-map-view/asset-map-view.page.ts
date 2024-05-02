@@ -23,6 +23,7 @@ import {
   IonToolbar,
   IonBackdrop,
   IonProgressBar,
+  LoadingController,
   AlertController,
   Platform,
 } from "@ionic/angular/standalone";
@@ -30,6 +31,11 @@ import {
   SiteModel,
   AssetModel,
   AssetsResponseModel,
+  SitesResponseModel,
+  MasterAsset,
+  MasterAssetResponseModel,
+  AssetInfoModel,
+  SelectedMasterAssetModel,
 } from "src/app/store/models/asset.model";
 import { Store } from "@ngrx/store";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
@@ -48,6 +54,8 @@ import { AssetSidebarComponent } from "src/app/components/asset-sidebar/asset-si
 import { AssetInfoMenuComponent } from "src/app/components/asset-info-menu/asset-info-menu.component";
 import { SubAssetModalComponent } from "src/app/components/sub-asset-modal/sub-asset-modal.component";
 import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/sub-asset-sidebar.component";
+import { MapSidebarService } from "src/app/services/map-sidebar/map-sidebar.service";
+
 @Component({
   imports: [
     IonFab,
@@ -78,6 +86,8 @@ import { SubAssetSidebarComponent } from "src/app/components/sub-asset-sidebar/s
 export class AssetMapViewPage implements OnInit {
   platform = inject(Platform);
   mapService = inject(MapService);
+  mapSidebarService = inject(MapSidebarService);
+  loadingCtrl = inject(LoadingController);
   private map: google.maps.Map;
   private mapMptions: google.maps.MapOptions;
   private mapCenter: google.maps.LatLngLiteral;
@@ -107,6 +117,10 @@ export class AssetMapViewPage implements OnInit {
   dragRecieved: WritableSignal<any> = signal({});
   isLoading: WritableSignal<boolean> = signal(false);
   groupedAssets: { assetParentType?: string; assets?: AssetModel[] }[];
+  masterAssets: MasterAsset[];
+  mappedAssets = signal<AssetModel[]>([]);
+  selectedMappedAsset = signal<SelectedMasterAssetModel>({});
+  markers: any[] = [];
   assetSentForDelete: any;
   // private pressCounter: WritableSignal<number> = signal(0);
   private pressTimer: ReturnType<typeof setTimeout>;
@@ -116,22 +130,7 @@ export class AssetMapViewPage implements OnInit {
   set id(plantId: string) {
     this.plantId = plantId;
     this.isLoading.set(true);
-    this.httpService.GetAllAssets({ plantId }).subscribe({
-      next: (response: AssetsResponseModel) => {
-        this.store.dispatch(
-          UPDATE_PLANT({
-            assets: response?.data,
-          }),
-        );
-      },
-      error: (error: HttpErrorResponse) => {
-        this.isLoading.set(false);
-        this.toastService.toastFailed(error.error.message);
-      },
-      complete: () => {
-        this.isLoading.set(false);
-      },
-    });
+    this.GetAllAssets(plantId);
   }
 
   ngAfterViewInit(): void {
@@ -139,6 +138,7 @@ export class AssetMapViewPage implements OnInit {
   }
 
   sendDraggedSubAsset(data: any) {
+    console.log("dragged: ", data);
     this.dragRecieved.set(data);
   }
 
@@ -189,7 +189,66 @@ export class AssetMapViewPage implements OnInit {
         }
       },
     });
+
+    this.GetAllMasterAsset();
   }
+
+  GetAllMasterAsset = async () => {
+    this.isLoading.set(true);
+    const loading = await this.loadingCtrl.create({
+      duration: 3000,
+      spinner: "bubbles",
+    });
+    loading.present();
+
+    this.httpService.GetAllMasterAsset().subscribe({
+      next: (response: MasterAssetResponseModel) => {
+        // this.store.dispatch(ADD_PLANTS(response?.data?.sites));
+        // this.store.dispatch(ADD_CATEGORIES(response?.data?.categories));
+        if (response?.status) {
+          console.log("fetched data: ", response);
+          this.masterAssets = response?.data;
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        loading.dismiss();
+        this.isLoading.set(false);
+        this.toastService.toastFailed(error.error.message);
+      },
+      complete: () => {
+        loading.dismiss();
+        this.isLoading.set(false);
+      },
+    });
+  };
+
+  GetAllAssets = async (plantId: string) => {
+    this.isLoading.set(true);
+    const loading = await this.loadingCtrl.create({
+      duration: 3000,
+      spinner: "bubbles",
+    });
+    loading.present();
+
+    this.httpService.GetAllAssets({ plantId }).subscribe({
+      next: (response: AssetsResponseModel) => {
+        this.store.dispatch(
+          UPDATE_PLANT({
+            assets: response?.data,
+          }),
+        );
+      },
+      error: (error: HttpErrorResponse) => {
+        loading.dismiss();
+        this.isLoading.set(false);
+        this.toastService.toastFailed(error.error.message);
+      },
+      complete: () => {
+        loading.dismiss();
+        this.isLoading.set(false);
+      },
+    });
+  };
 
   async deleteOnDrop(e: DndDropEvent) {
     if (this.recievedAssetForDelete?.subAsset) {
@@ -231,15 +290,34 @@ export class AssetMapViewPage implements OnInit {
     this.map = new Map(mapRef.nativeElement, this.mapMptions);
     this.addMapStyles();
 
-    // this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
-    //   const position = event?.latLng?.toJSON()!;
-    //   if (this.isDragging === true && position) {
-    //     this.addMarker(position);
-    //     this.isDragging = false;
+    this.map.addListener("mousemove", (event: google.maps.MapMouseEvent) => {
+      const position = event?.latLng?.toJSON()!;
+      if (this.isDragging === true && position) {
+        console.log("postion: ", position);
 
-    //     console.log("primary", position);
-    //   }
-    // });
+        console.log("this.selectedAsset(): ", this.selectedAsset());
+
+        this.mappedAssets.set([
+          ...this.mappedAssets(),
+          {
+            assetInfo: {
+              assetName: this.selectedAsset()?.assetInformation?.title,
+              assetType: this.selectedAsset()?.assetInformation?.type,
+              assetParentType: this.selectedAsset()?.assetInformation?.type,
+              iconPath: this.selectedAsset()?.assetInformation?.icon,
+              assetZone: {
+                coordinates: position,
+              },
+            },
+          },
+        ]);
+        const icon = `../assets/${this.selectedAsset()?.assetInformation?.icon ?? "check-in/plant.svg"}`;
+        this.addMarker(position, icon, this.mappedAssets());
+        this.isDragging = false;
+        console.log("mapped: ", this.mappedAssets());
+        this.selectedAsset.set({});
+      }
+    });
   }
 
   async onDrop(event: DndDropEvent) {
@@ -251,7 +329,24 @@ export class AssetMapViewPage implements OnInit {
     const latLng = this.pointToLatLng(point, this.map);
 
     this.isDragging = false;
-    this.addMarker(latLng.toJSON());
+    // this.addMarker(latLng.toJSON());
+    this.mappedAssets.set([
+      ...this.mappedAssets(),
+      {
+        assetInfo: {
+          assetName: this.selectedAsset()?.assetInformation?.title,
+          assetType: this.selectedAsset()?.assetInformation?.type,
+          assetParentType: this.selectedAsset()?.assetInformation?.type,
+          iconPath: this.selectedAsset()?.assetInformation?.icon,
+          assetZone: {
+            coordinates: latLng.toJSON(),
+          },
+        },
+      },
+    ]);
+    const icon = `../assets/${this.selectedAsset()?.assetInformation?.icon ?? "check-in/plant.svg"}`;
+    this.addMarker(latLng.toJSON(), icon, this.mappedAssets());
+    console.log("this.selectedAsset() on drop: ", this.mappedAssets());
   }
 
   pointToLatLng(point: any, map: any) {
@@ -276,11 +371,16 @@ export class AssetMapViewPage implements OnInit {
     this.map.setMapTypeId("styled_map");
   }
 
-  public async addMarker(position: google.maps.LatLngLiteral) {
+  public async addMarker(
+    position: google.maps.LatLngLiteral,
+    icon: string,
+    droppedAsset: any,
+  ) {
     const { AdvancedMarkerElement } = await this.importMarkersLibrary("marker");
+    let markerData = droppedAsset;
 
     const markerImage = document.createElement("img");
-    markerImage.src = "../assets/check-in/plant.svg";
+    markerImage.src = icon;
     markerImage.width = 60;
     markerImage.height = 60;
 
@@ -364,9 +464,25 @@ export class AssetMapViewPage implements OnInit {
       content: mapMarker,
     });
 
+    this.markers.push(marker, ...markerData);
+
     marker.addListener("click", (event: google.maps.MapMouseEvent) => {
-      // this.toggleInfoMenu();
-      //   this.toggleChildMenu();
+      // console.log(event?.latLng?.toJSON());
+      console.log("clicked");
+      this.toggleChildMenu();
+
+      if (event?.latLng?.toJSON()) {
+        const data = this.findSelectedAsset(
+          this.markers,
+          event?.latLng?.toJSON(),
+        );
+        console.log("data: ", data, position);
+        const _data: SelectedMasterAssetModel = {
+          ...data,
+          coordinates: position,
+        };
+        this.selectedMappedAsset.set(_data);
+      }
     });
   }
 
@@ -417,14 +533,18 @@ export class AssetMapViewPage implements OnInit {
   }
 
   toggleChildMenu = () => {
+    this.mapSidebarService.setIsChildOpen(!this.isChildOpen());
+    this.mapSidebarService.setisSubAssetModalOpen(false);
     this.isChildOpen.update((isChildOpen) => !isChildOpen);
     this.isSubAssetModalOpen.update((isSubAssetModalOpen) => false);
   };
 
   onAssetReceived(asset: any) {
+    console.log("onAssetReceived: ", asset);
     if (
       this.selectedAsset() === null ||
-      (this.selectedAsset() != asset && asset.assets.length > 0)
+      this.selectedAsset()
+      // (this.selectedAsset() != asset && asset?.assets?.length > 0) // this condition will be used after sap
     ) {
       this.isSubAssetModalOpen.set(true);
       this.selectedAsset.set(asset);
@@ -433,4 +553,20 @@ export class AssetMapViewPage implements OnInit {
       this.selectedAsset.set({});
     }
   }
+
+  findSelectedAsset = (
+    assets: AssetModel[],
+    area: { lng: number; lat: number },
+  ) => {
+    const asset = assets?.filter(
+      (asset) =>
+        asset?.assetInfo?.assetZone?.coordinates.lat === area?.lat &&
+        asset.assetInfo?.assetZone?.coordinates.lng === area?.lng,
+    )[0];
+
+    return this.masterAssets?.filter(
+      (item: MasterAsset) =>
+        item?.assetInformation?.type === asset?.assetInfo?.assetParentType,
+    )[0];
+  };
 }

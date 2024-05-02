@@ -81,6 +81,7 @@
     [recievedDraggedAsset]="dragRecieved()"
     (sendForDeleteAsset)="deleteSubAsset($event)"
     [(isAssetInfoMenuOpen)]="isAssetInfoMenuOpen"
+    [selectedMappedAsset]="selectedMappedAsset()"
     [confirmDeleteAsset]="assetSentForDelete"
   ></app-sub-asset-modal>
 }
@@ -98,11 +99,23 @@
   [(isMenuOpen)]="isSubAssetModalOpen"
   (draggedAsset)="sendDraggedSubAsset($event)"
 ></app-sub-asset-sidebar> -->
+<app-sub-asset-sidebar
+  [(selectedAsset)]="selectedAsset"
+  (draggedAsset)="sendDraggedSubAsset($event)"
+></app-sub-asset-sidebar>
 
 <!-- Asset Sidebar -->
-<app-asset-sidebar
-  [assetData]="groupedAssets"
+<!-- <app-asset-sidebar
+  [assetData]="masterAssets"
+  [selectedMappedAsset]="selectedMappedAsset()"
   [(isChildOpen)]="isChildOpen"
+  [(isMenuOpen)]="isAssetInfoMenuOpen"
+  [(activeIndex)]="assetModalActiveIndex"
+  (selectedAsset)="onAssetReceived($event)"
+></app-asset-sidebar> -->
+<app-asset-sidebar
+  [assetData]="masterAssets"
+  [selectedMappedAsset]="selectedMappedAsset()"
   [(isMenuOpen)]="isAssetInfoMenuOpen"
   [(activeIndex)]="assetModalActiveIndex"
   (selectedAsset)="onAssetReceived($event)"

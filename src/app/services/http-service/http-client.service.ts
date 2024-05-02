@@ -4,6 +4,7 @@ import {
   AssetResponseModel,
   SitesResponseModel,
   AssetsResponseModel,
+  MasterAssetResponseModel,
 } from "src/app/store/models/asset.model";
 import { Observable } from "rxjs";
 import { ApiEndPoint } from "./endPoint";
@@ -85,6 +86,11 @@ export class HttpService {
     return this.http.post<SitesResponseModel>(
       ApiEndPoint.getAllSapConfiguration,
       data,
+    );
+  };
+  GetAllMasterAsset = (): Observable<MasterAssetResponseModel> => {
+    return this.http.get<MasterAssetResponseModel>(
+      ApiEndPoint.getAllMasterAsset,
     );
   };
 }

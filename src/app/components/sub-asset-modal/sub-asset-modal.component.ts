@@ -11,15 +11,25 @@ import {
   EventEmitter,
   SimpleChanges,
   output,
+  signal,
 } from "@angular/core";
 import { DndDropEvent, DndModule } from "ngx-drag-drop";
 import { RoundProgressComponent } from "angular-svg-round-progressbar";
 import { DndEvent } from "ngx-drag-drop/lib/dnd-utils";
+import {
+  AssetInformation,
+  AssetModel,
+  SelectedMasterAssetModel,
+} from "src/app/store/models/asset.model";
+import { IonChip } from "@ionic/angular/standalone";
+import { CommonModule } from "@angular/common";
+
+// import { AssetZoneModel } from "src/app/store/models/map.model";
 
 @Component({
   standalone: true,
   selector: "app-sub-asset-modal",
-  imports: [RoundProgressComponent, DndModule],
+  imports: [IonChip, RoundProgressComponent, DndModule, CommonModule],
   templateUrl: "./sub-asset-modal.component.html",
   styleUrls: ["./sub-asset-modal.component.scss"],
 })
@@ -29,6 +39,7 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   isAssetInfoMenuOpen = model(false);
   recievedDraggedAsset = input.required<any>();
   sendForDeleteAsset = output<any>();
+  selectedMappedAsset = input<SelectedMasterAssetModel>();
   confirmDeleteAsset = input<any>();
 
   recievedAssetFromSidebar: any;
@@ -55,6 +66,9 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
       assetIndex: 6,
     },
   ];
+  _subAssets = signal<AssetModel[]>([]);
+  subAssetCont = signal<string>("");
+
   imageUrl: any;
   _recievedDraggedAsset: any;
 
@@ -77,10 +91,41 @@ export class SubAssetModalComponent implements OnInit, OnChanges {
   }
 
   constructor(private injector: Injector) {
-    effect(() => {
-      this.deleteDropzoneBox(this.confirmDeleteAsset());
-      // console.log("Confirm delete: ", this.confirmDeleteAsset());
-    });
+    effect(
+      () => {
+        console.log("Received Dragged Asset: ", this.selectedMappedAsset());
+
+        let totalAuto = 0;
+        const _recommended = this.selectedMappedAsset()
+          ?.recommended?.sort((a, b) => {
+            return b.auto === a.auto ? 0 : b.auto ? 1 : -1;
+          })
+          ?.map((item: AssetInformation) => {
+            if (item?.auto) {
+              totalAuto++;
+              return {
+                assetInfo: {
+                  assetName: item?.title,
+                  assetType: item?.type,
+                  assetParentType: item?.type,
+                  iconPath: item?.icon,
+                  assetZone: {
+                    coordinates: this.selectedMappedAsset()?.coordinates,
+                  },
+                },
+              };
+            }
+            return {};
+          });
+        // console.log("_recommended: ", _recommended);
+        this._subAssets.set(_recommended as AssetModel[]);
+        this.subAssetCont.update(
+          (val) =>
+            `0${totalAuto}/${(this.selectedMappedAsset()?.total_recommended ?? 0) > 9 ? this.selectedMappedAsset()?.total_recommended : `0${this.selectedMappedAsset()?.total_recommended}`}`,
+        );
+      },
+      { allowSignalWrites: true },
+    );
   }
 
   ngOnInit() {}
