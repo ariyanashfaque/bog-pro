@@ -11,6 +11,7 @@ export const ApiEndPoint = {
   assetApproval: `${config.serverURL}assetApproval`,
   assetRejection: `${config.serverURL}assetRejection`,
   sapConfiguration: `${config.serverURL}sapConfiguration`,
+  getAllMasterAsset: `${config.serverURL}getAllMasterAsset`,
   getRequestedAssets: `${config.serverURL}getRequestedAssets`,
   addGuidedInspection: `${config.serverURL}addGuidedInspection`,
   getGuidedInspection: `${config.serverURL}getGuidedInspection`,
@@ -21,5 +22,4 @@ export const ApiEndPoint = {
   getAllGuidedInspection: `${config.serverURL}getAllGuidedInspection`,
   getAllSapConfiguration: `${config.serverURL}getAllSapConfiguration`,
   getGuidedInspectionDetails: `${config.serverURL}getGuidedInspectionDetails`,
-  getAllMasterAsset: `${config.serverURL}getAllMasterAsset`,
 };

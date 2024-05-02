@@ -330,7 +330,23 @@ export class AssetMapViewPage implements OnInit {
 
     this.isDragging = false;
     // this.addMarker(latLng.toJSON());
-    console.log("this.selectedAsset() on drop: ", this.selectedAsset());
+    this.mappedAssets.set([
+      ...this.mappedAssets(),
+      {
+        assetInfo: {
+          assetName: this.selectedAsset()?.assetInformation?.title,
+          assetType: this.selectedAsset()?.assetInformation?.type,
+          assetParentType: this.selectedAsset()?.assetInformation?.type,
+          iconPath: this.selectedAsset()?.assetInformation?.icon,
+          assetZone: {
+            coordinates: latLng.toJSON(),
+          },
+        },
+      },
+    ]);
+    const icon = `../assets/${this.selectedAsset()?.assetInformation?.icon ?? "check-in/plant.svg"}`;
+    this.addMarker(latLng.toJSON(), icon, this.mappedAssets());
+    console.log("this.selectedAsset() on drop: ", this.mappedAssets());
   }
 
   pointToLatLng(point: any, map: any) {
